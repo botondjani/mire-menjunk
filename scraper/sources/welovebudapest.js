@@ -1,11 +1,19 @@
 import * as cheerio from 'cheerio';
-import { clean, detectCategory, detectVenue, parseHuDateRange } from '../lib/util.js';
+import { clean, detectCategory, detectVenue, parseHuDateRange, todayBudapest } from '../lib/util.js';
 
 const BASE = 'https://welovebudapest.com/programok/';
+const DAYS_AHEAD = 45; // the list caps out at ~50 cards, so we also ask day by day
+
+const addDays = (iso, n) => {
+  const d = new Date(`${iso}T12:00:00Z`);
+  d.setUTCDate(d.getUTCDate() + n);
+  return d.toISOString().slice(0, 10);
+};
 
 export default {
   id: 'welovebudapest',
   name: 'We Love Budapest',
+  delayMs: 1500,
   fixtures: [{ file: 'wlb.html' }],
   // The main list is a curated mix; category pages surface more events.
   urls: [
@@ -16,6 +24,21 @@ export default {
     `${BASE}?kategoria=gasztro`,
     `${BASE}?kategoria=shopping`,
   ],
+
+  async crawl(get) {
+    const today = todayBudapest();
+    const urls = [...this.urls];
+    for (let i = 0; i < DAYS_AHEAD; i++) {
+      const day = addDays(today, i);
+      urls.push(`${BASE}?tol=${day}&ig=${day}`);
+    }
+    const pages = [];
+    for (const url of urls) {
+      const html = await get(url);
+      if (html) pages.push({ url, html });
+    }
+    return pages;
+  },
 
   parse(html) {
     const $ = cheerio.load(html);

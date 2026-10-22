@@ -13,8 +13,11 @@ Budapest programjai egy helyen: koncertek, bulik, kiállítások, színház. Nap
 ## Források
 | Forrás | Mit ad |
 |---|---|
-| We Love Budapest (`/programok` + kategóriaoldalak) | válogatott programok, kiállítások |
+| We Love Budapest (`/programok`, kategóriák, és a következő 45 nap napról napra) | válogatott programok, kiállítások, fesztiválok |
 | Akvárium Klub | koncertek, bulik |
+| Tixa (főoldal + budapesti helyszínoldalak JSON-LD-je) | klubkoncertek: Dürer, Turbina, Budapest Park, Instant/Fogas, Gödör, Muzikum |
+
+A cél a válogatott, érdekes programok – a nagy jegyértékesítők teljes kínálatát (pl. jegy.hu) szándékosan nem húzzuk le.
 
 Új forrás: másold le az egyik adaptert, írd meg a szelektorokat, add hozzá a `SOURCES` listához a `run.js`-ben, és tegyél mellé egy fixture-tesztet.
 
@@ -23,7 +26,7 @@ Budapest programjai egy helyen: koncertek, bulik, kiállítások, színház. Nap
 npm ci
 npm test          # parser tesztek mentett HTML-en
 npm run scrape    # éles gyűjtés
-npm run seed      # gyűjtés a mentett fixture-ökből (offline)
+npm run seed      # gyűjtés a mentett fixture-ökből (offline) – a public/data és public/e ebből jön létre helyben
 npm run dev       # helyi szerver: http://localhost:5173
 ```
 

@@ -1,1 +1,7 @@
 node_modules/
+
+# a scraper generálja (CI-ban minden futáskor; helyben: npm run seed)
+public/e/
+public/data/
+public/sitemap.xml
+public/404.html

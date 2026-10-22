@@ -50,15 +50,6 @@ test('detectCategory: hosszú szöveg, szóhatárok', async () => {
   assert.equal(detectCategory('Borkóstoló a Várban'), 'Gasztró');
 });
 
-test('Jegy.hu koncertlista (microdata)', async () => {
-  const { default: jegy } = await import('../sources/jegy.js');
-  const events = jegy.parse(fixture('jegy-koncert'), { url: 'https://www.jegy.hu/event/category/koncert-zene-3/city/budapest' });
-  assert.ok(events.length >= 30, `csak ${events.length}`);
-  const e = events.find((x) => x.title === 'Zorán koncert');
-  assert.deepEqual([e.start, e.time, e.venue, e.category], ['2026-11-17', '20:00', 'Müpa', 'Koncert']);
-  assert.ok(events.every((x) => !/aj[aá]nd[eé]k|gift/i.test(x.title)));
-});
-
 test('Tixa helyszínoldal (JSON-LD)', async () => {
   const { default: tixa } = await import('../sources/tixa.js');
   const events = tixa.parse(fixture('tixa-durer'), { today: '2026-10-22' });

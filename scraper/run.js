@@ -8,12 +8,11 @@ import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import welovebudapest from './sources/welovebudapest.js';
 import akvarium from './sources/akvarium.js';
-import jegy from './sources/jegy.js';
 import tixa from './sources/tixa.js';
 import { slugify, todayBudapest } from './lib/util.js';
 
 // Curated sources first: on duplicates their description and image win.
-const SOURCES = [welovebudapest, akvarium, tixa, jegy];
+const SOURCES = [welovebudapest, akvarium, tixa];
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const PUBLIC = join(ROOT, 'public');
 const SITE_URL = (process.env.SITE_URL || '').replace(/\/?$/, '/');
