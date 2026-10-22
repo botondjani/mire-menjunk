@@ -8,42 +8,62 @@ import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import welovebudapest from './sources/welovebudapest.js';
 import akvarium from './sources/akvarium.js';
+import jegy from './sources/jegy.js';
+import tixa from './sources/tixa.js';
 import { slugify, todayBudapest } from './lib/util.js';
 
-const SOURCES = [welovebudapest, akvarium];
+// Curated sources first: on duplicates their description and image win.
+const SOURCES = [welovebudapest, akvarium, tixa, jegy];
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const PUBLIC = join(ROOT, 'public');
 const SITE_URL = (process.env.SITE_URL || '').replace(/\/?$/, '/');
 const today = todayBudapest();
 
-async function fetchHtml(url) {
+const UA = 'MireMenjunkBot/0.2 (+https://github.com/botondjani/mire-menjunk; programajánló aggregátor)';
+const lastHit = new Map(); // host -> timestamp, so every source respects its own crawl delay
+
+async function fetchHtml(url, delayMs = 1000) {
+  const host = new URL(url).host;
+  const wait = (lastHit.get(host) ?? 0) + delayMs - Date.now();
+  if (wait > 0) await new Promise((r) => setTimeout(r, wait));
+  lastHit.set(host, Date.now());
   const res = await fetch(url, {
-    headers: {
-      'User-Agent': 'MireMenjunkBot/0.1 (+https://github.com/; programajánló aggregátor)',
-      'Accept-Language': 'hu-HU,hu;q=0.9',
-    },
-    signal: AbortSignal.timeout(20_000),
+    headers: { 'User-Agent': UA, 'Accept-Language': 'hu-HU,hu;q=0.9' },
+    signal: AbortSignal.timeout(30_000),
   });
   if (!res.ok) throw new Error(`${res.status} ${url}`);
   return res.text();
 }
 
-async function collect(source) {
-  const pages = process.env.FIXTURES
-    ? [await readFile(join(ROOT, 'scraper/test/fixtures', `${source.id === 'welovebudapest' ? 'wlb' : source.id}.html`), 'utf8')]
-    : [];
-  if (!process.env.FIXTURES) {
-    for (const url of source.urls) {
-      try {
-        pages.push(await fetchHtml(url));
-      } catch (err) {
-        console.warn(`  ! ${source.id}: ${err.message}`);
-      }
-      await new Promise((r) => setTimeout(r, 1000)); // be polite
-    }
+/** Returns [{ url, html }] for a source: saved fixtures, its own crawl(), or its static url list. */
+async function pagesOf(source) {
+  if (process.env.FIXTURES) {
+    return Promise.all(source.fixtures.map(async ({ file, url }) => ({
+      url, html: await readFile(join(ROOT, 'scraper/test/fixtures', file), 'utf8'),
+    })));
   }
-  const events = pages.flatMap((html) => source.parse(html, { today }));
-  console.log(`  ${source.name}: ${events.length} találat`);
+  const get = async (url) => {
+    try {
+      return await fetchHtml(url, source.delayMs);
+    } catch (err) {
+      console.warn(`  ! ${source.id}: ${err.message}`);
+      return null;
+    }
+  };
+  if (source.crawl) return source.crawl(get);
+  const pages = [];
+  for (const url of source.urls) {
+    const html = await get(url);
+    if (html) pages.push({ url, html });
+  }
+  return pages;
+}
+
+async function collect(source) {
+  const started = Date.now();
+  const pages = await pagesOf(source);
+  const events = pages.flatMap(({ url, html }) => source.parse(html, { today, url }));
+  console.log(`  ${source.name}: ${events.length} találat, ${pages.length} oldal, ${Math.round((Date.now() - started) / 1000)} mp`);
   return events.map((e) => ({ ...e, source: source.id, sourceName: source.name }));
 }
 
@@ -66,14 +86,23 @@ const sameShow = (a, b) => a.venue && a.venue === b.venue
  */
 function dedupe(events) {
   const out = [];
+  const byUrl = new Map();
+  const byDay = new Map(); // start date -> events, keeps this linear-ish with thousands of events
   for (const e of events) {
-    const twin = out.find(
-      (o) => o.url === e.url
-        || (o.start === e.start && (norm(o.title).includes(norm(e.title)) || norm(e.title).includes(norm(o.title)) || sameShow(o, e))),
+    const nt = norm(e.title);
+    const twin = byUrl.get(e.url) || (byDay.get(e.start) || []).find(
+      (o) => norm(o.title).includes(nt) || nt.includes(norm(o.title)) || sameShow(o, e),
     );
-    if (!twin) { out.push({ ...e, links: [{ name: e.sourceName, url: e.url }] }); continue; }
+    if (!twin) {
+      const ev = { ...e, links: [{ name: e.sourceName, url: e.url }] };
+      out.push(ev);
+      byUrl.set(e.url, ev);
+      if (!byDay.has(e.start)) byDay.set(e.start, []);
+      byDay.get(e.start).push(ev);
+      continue;
+    }
     if (twin.url !== e.url && !twin.links.some((l) => l.url === e.url)) twin.links.push({ name: e.sourceName, url: e.url });
-    for (const k of ['image', 'description', 'venue', 'time', 'end']) twin[k] ??= e[k];
+    for (const k of ['image', 'description', 'venue', 'time', 'end', 'more']) twin[k] ??= e[k];
     // Same source listing a show twice (e.g. seated + accessible tickets): keep the plainer title.
     if (e.source === twin.source && e.title.length < twin.title.length) twin.title = e.title;
   }

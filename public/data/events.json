@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-22T14:19:22.937Z",
+ "updated": "2026-10-22T14:59:02.745Z",
  "events": [
   {
    "title": "Vintage Toy Show a Ferencvárosi Művelődési Központban",
@@ -296,6 +296,26 @@
    "id": "gerhart-hauptmann-patkanyok-emberek-eloadas-a-radnoti-szinhazban-10-20"
   },
   {
+   "title": "BOHEMIAN BETYARS - BUDAPEST - POGO @ DÜRER KERT",
+   "url": "https://www.tixa.hu/bohemian-betyars-budapest-pogo-durer-kert-20261022",
+   "image": "https://www.tixa.hu/kepek/0044/44851-1_20260818085727.jpg",
+   "start": "2026-10-22",
+   "end": null,
+   "time": "19:00",
+   "category": "Koncert",
+   "venue": "Dürer Kert",
+   "description": null,
+   "source": "tixa",
+   "sourceName": "Tixa",
+   "links": [
+    {
+     "name": "Tixa",
+     "url": "https://www.tixa.hu/bohemian-betyars-budapest-pogo-durer-kert-20261022"
+    }
+   ],
+   "id": "bohemian-betyars-budapest-pogo-durer-kert-10-22"
+  },
+  {
    "title": "Next Level 12th Birthday – ZOMBOY, LAYZ, VYLE",
    "url": "https://akvariumklub.hu/programok/next-level-12th-birthday-zomboy-layz-vyle/",
    "image": "https://akvariumklub.hu/wp-content/uploads/2026/09/791757265_1491539209675135_8302590011880286573_n-300x157.jpg",
@@ -399,6 +419,26 @@
     }
    ],
    "id": "twilight-the-vampire-party-back-to-2010s-halloween-10-22"
+  },
+  {
+   "title": "Vendégségben Bécsben",
+   "url": "https://www.jegy.hu/program/vendegsegben-becsben-190122",
+   "image": "https://pb2.programinfo.hu/imgs/system-4/program/000/190/122/vendegsegben-becsben-222-131-282909.webp",
+   "start": "2026-10-22",
+   "end": null,
+   "time": "19:30",
+   "category": "Koncert",
+   "venue": "Magyar Rádió Művészeti Együttesei",
+   "description": null,
+   "source": "jegy",
+   "sourceName": "Jegy.hu",
+   "links": [
+    {
+     "name": "Jegy.hu",
+     "url": "https://www.jegy.hu/program/vendegsegben-becsben-190122"
+    }
+   ],
+   "id": "vendegsegben-becsben-10-22"
   },
   {
    "title": "CSÍK LACI – RÉGI VILÁG ÉLŐZENEKAROS NAGYKONCERT",
@@ -548,6 +588,26 @@
    "id": "wannabe-best-of-90s-00s-10-23"
   },
   {
+   "title": "Beethoven / Liszt / Kodály - Concerto Budapest 26/27 F1",
+   "url": "https://www.jegy.hu/program/beethoven-liszt-kodaly-concerto-budapest-2627-f1-192102",
+   "image": "https://pb2.programinfo.hu/imgs/system-4/program/000/192/102/beethoven-liszt-kodaly-concerto-budapest-2627-f1-222-131-289220.webp",
+   "start": "2026-10-24",
+   "end": null,
+   "time": "19:30",
+   "category": "Koncert",
+   "venue": "Concerto Budapest",
+   "description": null,
+   "source": "jegy",
+   "sourceName": "Jegy.hu",
+   "links": [
+    {
+     "name": "Jegy.hu",
+     "url": "https://www.jegy.hu/program/beethoven-liszt-kodaly-concerto-budapest-2627-f1-192102"
+    }
+   ],
+   "id": "beethoven-liszt-kodaly-concerto-budapest-26-27-f1-10-24"
+  },
+  {
    "title": "Budapest Jungle pres. Photek",
    "url": "https://akvariumklub.hu/programok/budapest-jungle-pres-photek/",
    "image": "https://akvariumklub.hu/wp-content/uploads/2026/08/768372462_1497954702370162_1811885103327503353_n-300x157.jpg",
@@ -678,6 +738,66 @@
    "id": "slam-poetry-orszagos-bajnoksag-2026-10-24"
   },
   {
+   "title": "Dürer Varázskert - Kámfor bábszínház: Kacor király és a Kalóz",
+   "url": "https://www.tixa.hu/durer-varazskert-kamfor-babszinhaz-kacor-kiraly-es-a-kaloz-20261025",
+   "image": "https://www.tixa.hu/kepek/0045/45957-1_20261002072920.jpg",
+   "start": "2026-10-25",
+   "end": null,
+   "time": "15:00",
+   "category": "Színház",
+   "venue": "Dürer Kert",
+   "description": null,
+   "source": "tixa",
+   "sourceName": "Tixa",
+   "links": [
+    {
+     "name": "Tixa",
+     "url": "https://www.tixa.hu/durer-varazskert-kamfor-babszinhaz-kacor-kiraly-es-a-kaloz-20261025"
+    }
+   ],
+   "id": "durer-varazskert-kamfor-babszinhaz-kacor-kiraly-es-a-kaloz-10-25"
+  },
+  {
+   "title": "HOLLYWOOD! - Danubia Zenekar",
+   "url": "https://www.jegy.hu/program/hollywood-danubia-zenekar-190463",
+   "image": "https://pb2.programinfo.hu/imgs/system-4/program/000/190/463/hollywood-danubia-zenekar-222-131-285449.webp",
+   "start": "2026-10-25",
+   "end": null,
+   "time": "17:00",
+   "category": "Koncert",
+   "venue": "Budapest Kongresszusi Központ",
+   "description": null,
+   "source": "jegy",
+   "sourceName": "Jegy.hu",
+   "links": [
+    {
+     "name": "Jegy.hu",
+     "url": "https://www.jegy.hu/program/hollywood-danubia-zenekar-190463"
+    }
+   ],
+   "id": "hollywood-danubia-zenekar-10-25"
+  },
+  {
+   "title": "Tosca - Opera IC Audiofil sorozat",
+   "url": "https://www.jegy.hu/program/tosca-opera-ic-audiofil-sorozat-189424",
+   "image": "https://pb2.programinfo.hu/imgs/system-4/program/000/189/424/tosca-opera-ic-audiofil-sorozat-222-131-281587.webp",
+   "start": "2026-10-25",
+   "end": null,
+   "time": "19:00",
+   "category": "Koncert",
+   "venue": "Magyar Állami Operaház",
+   "description": null,
+   "source": "jegy",
+   "sourceName": "Jegy.hu",
+   "links": [
+    {
+     "name": "Jegy.hu",
+     "url": "https://www.jegy.hu/program/tosca-opera-ic-audiofil-sorozat-189424"
+    }
+   ],
+   "id": "tosca-opera-ic-audiofil-sorozat-10-25"
+  },
+  {
    "title": "Hétfői társasozás az Akváriumban – 10.26.",
    "url": "https://akvariumklub.hu/programok/hetfoi-tarsasozas-az-akvariumban-10-26/",
    "image": "https://akvariumklub.hu/wp-content/uploads/2026/10/okt26-300x157.jpeg",
@@ -749,7 +869,7 @@
    "url": "https://akvariumklub.hu/programok/10-magyar-klipszemle-dijatado/",
    "image": "https://akvariumklub.hu/wp-content/uploads/2026/10/10.-MAGYAR-KLIPSZEMLE-DIJATADO-300x195.jpg",
    "start": "2026-10-29",
-   "end": null,
+   "end": "2026-10-30",
    "time": null,
    "category": "Film",
    "venue": "Akvárium Klub",
@@ -761,9 +881,33 @@
     {
      "name": "Akvárium Klub",
      "url": "https://akvariumklub.hu/programok/10-magyar-klipszemle-dijatado/"
+    },
+    {
+     "name": "Tixa",
+     "url": "https://www.tixa.hu/klipszemle2026"
     }
    ],
    "id": "10-magyar-klipszemle-dijatado-10-29"
+  },
+  {
+   "title": "Krallice, Rivers Ablaze // Budapest, Dürer Kert",
+   "url": "https://www.tixa.hu/krallice-budapest",
+   "image": "https://www.tixa.hu/kepek/0043/43705-1_20260828143443.jpg",
+   "start": "2026-10-29",
+   "end": null,
+   "time": "19:00",
+   "category": "Koncert",
+   "venue": "Dürer Kert",
+   "description": null,
+   "source": "tixa",
+   "sourceName": "Tixa",
+   "links": [
+    {
+     "name": "Tixa",
+     "url": "https://www.tixa.hu/krallice-budapest"
+    }
+   ],
+   "id": "krallice-rivers-ablaze-budapest-durer-kert-10-29"
   },
   {
    "title": "Magyar Klipszemle 2026",
@@ -997,6 +1141,26 @@
    "id": "sicc-production-janikovszky-eva-velem-mindig-tortenik-valami-11-01-11-01"
   },
   {
+   "title": "Mozart: Requiem",
+   "url": "https://www.jegy.hu/program/mozart-requiem-53666",
+   "image": "https://pb2.programinfo.hu/imgs/system-4/program/000/053/666/mozart-requiem-222-131-56162.webp",
+   "start": "2026-11-02",
+   "end": null,
+   "time": "20:00",
+   "category": "Koncert",
+   "venue": "Szent István Bazilika",
+   "description": null,
+   "source": "jegy",
+   "sourceName": "Jegy.hu",
+   "links": [
+    {
+     "name": "Jegy.hu",
+     "url": "https://www.jegy.hu/program/mozart-requiem-53666"
+    }
+   ],
+   "id": "mozart-requiem-11-02"
+  },
+  {
    "title": "Házasság extrákkal",
    "url": "https://akvariumklub.hu/programok/hazassag-extrakkal/",
    "image": "https://akvariumklub.hu/wp-content/uploads/2026/09/akvarium-11.03-300x169.jpg",
@@ -1039,6 +1203,26 @@
    "id": "techno-yoga-halloween-uv-yoga-11-03"
   },
   {
+   "title": "Brahms: Német Requiem – két kórus, egy zenekar, egy felejthetetlen mű a Rumbachban",
+   "url": "https://www.jegy.hu/program/brahms-nemet-requiem-ket-korus-egy-zenekar-egy-felejthetetlen-mu-a-rumbachban-198669",
+   "image": "https://pb2.programinfo.hu/imgs/system-4/program/000/198/669/brahms-nemet-requiem-ket-korus-egy-zenekar-egy-felejthetetlen-mu-a-rumbachban-222-131-296137.webp",
+   "start": "2026-11-05",
+   "end": null,
+   "time": "19:00",
+   "category": "Koncert",
+   "venue": "Rumbach utcai zsinagóga",
+   "description": null,
+   "source": "jegy",
+   "sourceName": "Jegy.hu",
+   "links": [
+    {
+     "name": "Jegy.hu",
+     "url": "https://www.jegy.hu/program/brahms-nemet-requiem-ket-korus-egy-zenekar-egy-felejthetetlen-mu-a-rumbachban-198669"
+    }
+   ],
+   "id": "brahms-nemet-requiem-ket-korus-egy-zenekar-egy-felejthetetlen-mu-a-rum-11-05"
+  },
+  {
    "title": "Be Massive-buli az Északi Járműjavítóban",
    "url": "https://welovebudapest.com/program/be-massive-buli-eszaki-jarmujavito-2026-november/",
    "image": "https://kep.index.hu/1/0/7216/72164/721642/72164265_5318809_91994724b195738dd44f5bf2d582f4ed_wm.jpg",
@@ -1058,6 +1242,46 @@
     }
    ],
    "id": "be-massive-buli-az-eszaki-jarmujavitoban-11-06"
+  },
+  {
+   "title": "Jazzbois // Dürer Kert",
+   "url": "https://www.tixa.hu/jazzbois-durer-20261106",
+   "image": "https://www.tixa.hu/kepek/0045/45454-1_20260914084836.jpg",
+   "start": "2026-11-06",
+   "end": null,
+   "time": "20:00",
+   "category": "Koncert",
+   "venue": "Dürer Kert",
+   "description": null,
+   "source": "tixa",
+   "sourceName": "Tixa",
+   "links": [
+    {
+     "name": "Tixa",
+     "url": "https://www.tixa.hu/jazzbois-durer-20261106"
+    }
+   ],
+   "id": "jazzbois-durer-kert-11-06"
+  },
+  {
+   "title": "KOCSIS ZOLTÁN EMLÉKKONCERT",
+   "url": "https://www.jegy.hu/program/kocsis-zoltan-emlekkoncert-190074",
+   "image": "https://pb2.programinfo.hu/imgs/system-4/program/000/190/074/kocsis-zoltan-emlekkoncert-222-131-284671.webp",
+   "start": "2026-11-06",
+   "end": null,
+   "time": "19:30",
+   "category": "Koncert",
+   "venue": "Nemzeti Filharmonikusok",
+   "description": null,
+   "source": "jegy",
+   "sourceName": "Jegy.hu",
+   "links": [
+    {
+     "name": "Jegy.hu",
+     "url": "https://www.jegy.hu/program/kocsis-zoltan-emlekkoncert-190074"
+    }
+   ],
+   "id": "kocsis-zoltan-emlekkoncert-11-06"
   },
   {
    "title": "Kollár Klemencz Kamarazenekar: A lányok nem sírnak – koncert",
@@ -1165,6 +1389,26 @@
    "id": "black-out-esonap-jubileum-11-07"
   },
   {
+   "title": "Chaplin: Modern Idők (1936) – filmkoncert / NÉMA – FILM – ZENE",
+   "url": "https://www.jegy.hu/program/chaplin-modern-idok-1936-filmkoncert-nema-film-zene-194322",
+   "image": "https://pb2.programinfo.hu/imgs/system-4/program/000/194/322/chaplin-modern-idok-1936-filmkoncert-nema-film-zene-222-131-293655.webp",
+   "start": "2026-11-07",
+   "end": null,
+   "time": "19:00",
+   "category": "Koncert",
+   "venue": "Müpa",
+   "description": null,
+   "source": "jegy",
+   "sourceName": "Jegy.hu",
+   "links": [
+    {
+     "name": "Jegy.hu",
+     "url": "https://www.jegy.hu/program/chaplin-modern-idok-1936-filmkoncert-nema-film-zene-194322"
+    }
+   ],
+   "id": "chaplin-modern-idok-1936-filmkoncert-nema-film-zene-11-07"
+  },
+  {
    "title": "GTA RADIO PARTY – All Eras All Hits",
    "url": "https://akvariumklub.hu/programok/gta-radio-party-all-eras-all-hits/",
    "image": "https://akvariumklub.hu/wp-content/uploads/2026/10/843143333_1598825682042064_2187404911895769325_n-2-300x112.jpg",
@@ -1184,6 +1428,46 @@
     }
    ],
    "id": "gta-radio-party-all-eras-all-hits-11-07"
+  },
+  {
+   "title": "IAMYANK",
+   "url": "https://www.tixa.hu/iamyank-hiraeth-durer-kert",
+   "image": "https://www.tixa.hu/kepek/0044/44220-1_20261005072507.jpg",
+   "start": "2026-11-07",
+   "end": null,
+   "time": "19:00",
+   "category": "Koncert",
+   "venue": "Dürer Kert",
+   "description": null,
+   "source": "tixa",
+   "sourceName": "Tixa",
+   "links": [
+    {
+     "name": "Tixa",
+     "url": "https://www.tixa.hu/iamyank-hiraeth-durer-kert"
+    }
+   ],
+   "id": "iamyank-11-07"
+  },
+  {
+   "title": "János vitéz – zenés színjáték / MÜPA MATINÉ",
+   "url": "https://www.jegy.hu/program/janos-vitez-zenes-szinjatek-mupa-matine-191849",
+   "image": "https://pb2.programinfo.hu/imgs/system-4/program/000/191/849/janos-vitez-zenes-szinjatek-mupa-matine-222-131-286466.webp",
+   "start": "2026-11-07",
+   "end": null,
+   "time": "11:00",
+   "category": "Koncert",
+   "venue": "Müpa",
+   "description": null,
+   "source": "jegy",
+   "sourceName": "Jegy.hu",
+   "links": [
+    {
+     "name": "Jegy.hu",
+     "url": "https://www.jegy.hu/program/janos-vitez-zenes-szinjatek-mupa-matine-191849"
+    }
+   ],
+   "id": "janos-vitez-zenes-szinjatek-mupa-matine-11-07"
   },
   {
    "title": "Kieza – hol a hiba",
@@ -1249,6 +1533,46 @@
    "id": "sterbinszky-x-mynea-birthday-all-night-long-11-07"
   },
   {
+   "title": "Vágtázó Halottkémek, Sturle Dagsland, Psycho Mutants, Itinera // Budapest, Dürer Kert",
+   "url": "https://www.tixa.hu/vhk-durer2026",
+   "image": "https://www.tixa.hu/kepek/0045/45697-1_20260921163026.jpg",
+   "start": "2026-11-07",
+   "end": null,
+   "time": "18:00",
+   "category": "Koncert",
+   "venue": "Dürer Kert",
+   "description": null,
+   "source": "tixa",
+   "sourceName": "Tixa",
+   "links": [
+    {
+     "name": "Tixa",
+     "url": "https://www.tixa.hu/vhk-durer2026"
+    }
+   ],
+   "id": "vagtazo-halottkemek-sturle-dagsland-psycho-mutants-itinera-budapest-du-11-07"
+  },
+  {
+   "title": "XV. Whisky & Fine Spirit Show 2026",
+   "url": "https://www.tixa.hu/xv-whisky-and-fine-spirit-show-2026-20261107",
+   "image": "https://www.tixa.hu/kepek/0043/43117-1_20260415085018.jpg",
+   "start": "2026-11-07",
+   "end": "2026-11-08",
+   "time": null,
+   "category": "Gasztró",
+   "venue": "Corinthia Hotel Budapest",
+   "description": null,
+   "source": "tixa",
+   "sourceName": "Tixa",
+   "links": [
+    {
+     "name": "Tixa",
+     "url": "https://www.tixa.hu/xv-whisky-and-fine-spirit-show-2026-20261107"
+    }
+   ],
+   "id": "xv-whisky-fine-spirit-show-2026-11-07"
+  },
+  {
    "title": "zïp.zip lemezbemutató // vendég: ZSÉ live band",
    "url": "https://akvariumklub.hu/programok/zip-zip-lemezbemutato-vendeg-zse-live-band/",
    "image": "https://akvariumklub.hu/wp-content/uploads/2026/09/zip.zip_cover-300x157.jpg",
@@ -1268,6 +1592,46 @@
     }
    ],
    "id": "zip-zip-lemezbemutato-vendeg-zse-live-band-11-07"
+  },
+  {
+   "title": "A film forog tovább",
+   "url": "https://www.jegy.hu/program/a-film-forog-tovabb-196043",
+   "image": "https://pb2.programinfo.hu/imgs/system-4/program/000/196/043/a-film-forog-tovabb-222-131-293651.webp",
+   "start": "2026-11-08",
+   "end": null,
+   "time": "20:00",
+   "category": "Koncert",
+   "venue": "Müpa",
+   "description": null,
+   "source": "jegy",
+   "sourceName": "Jegy.hu",
+   "links": [
+    {
+     "name": "Jegy.hu",
+     "url": "https://www.jegy.hu/program/a-film-forog-tovabb-196043"
+    }
+   ],
+   "id": "a-film-forog-tovabb-11-08"
+  },
+  {
+   "title": "A sláger DNS-e",
+   "url": "https://www.jegy.hu/program/a-slager-dns-e-196681",
+   "image": "https://pb2.programinfo.hu/imgs/system-4/program/000/196/681/a-slager-dns-e-222-131-294139.webp",
+   "start": "2026-11-08",
+   "end": null,
+   "time": "11:00",
+   "category": "Koncert",
+   "venue": "MOM Kulturális Központ",
+   "description": null,
+   "source": "jegy",
+   "sourceName": "Jegy.hu",
+   "links": [
+    {
+     "name": "Jegy.hu",
+     "url": "https://www.jegy.hu/program/a-slager-dns-e-196681"
+    }
+   ],
+   "id": "a-slager-dns-e-11-08"
   },
   {
    "title": "Altin Gün",
@@ -1291,6 +1655,26 @@
    "id": "altin-gun-11-08"
   },
   {
+   "title": "Héra Barnabás | kis szoba X Dürer Kert",
+   "url": "https://www.tixa.hu/hera-barnabas-kis-szoba-x-durer-kert-20261108",
+   "image": "https://www.tixa.hu/kepek/0046/46039-1_20261006223238.jpg",
+   "start": "2026-11-08",
+   "end": null,
+   "time": "18:00",
+   "category": "Koncert",
+   "venue": "Dürer Kert",
+   "description": null,
+   "source": "tixa",
+   "sourceName": "Tixa",
+   "links": [
+    {
+     "name": "Tixa",
+     "url": "https://www.tixa.hu/hera-barnabas-kis-szoba-x-durer-kert-20261108"
+    }
+   ],
+   "id": "hera-barnabas-kis-szoba-x-durer-kert-11-08"
+  },
+  {
    "title": "Momoko Gill a Turbinában",
    "url": "https://welovebudapest.com/program/momoko-gill-koncert-turbina-2026-november/",
    "image": "https://kep.index.hu/1/0/7138/71388/713887/71388785_5264095_e7e7d0b723ac0496c2b87fd89bc620d7_wm.jpg",
@@ -1310,6 +1694,46 @@
     }
    ],
    "id": "momoko-gill-a-turbinaban-11-08"
+  },
+  {
+   "title": "The Klezmatics: We Were Made For These Times",
+   "url": "https://www.jegy.hu/program/the-klezmatics-we-were-made-for-these-times-191851",
+   "image": "https://pb2.programinfo.hu/imgs/system-4/program/000/191/851/the-klezmatics-we-were-made-for-these-times-222-131-286467.webp",
+   "start": "2026-11-09",
+   "end": null,
+   "time": "20:00",
+   "category": "Koncert",
+   "venue": "Müpa",
+   "description": null,
+   "source": "jegy",
+   "sourceName": "Jegy.hu",
+   "links": [
+    {
+     "name": "Jegy.hu",
+     "url": "https://www.jegy.hu/program/the-klezmatics-we-were-made-for-these-times-191851"
+    }
+   ],
+   "id": "the-klezmatics-we-were-made-for-these-times-11-09"
+  },
+  {
+   "title": "Monolord (SWE), Mars Red Sky (FR) - Dürer Kert",
+   "url": "https://www.tixa.hu/monolord-durerkert-2026",
+   "image": "https://www.tixa.hu/kepek/0044/44670-1_20260805151848.jpg",
+   "start": "2026-11-10",
+   "end": null,
+   "time": "18:30",
+   "category": "Koncert",
+   "venue": "Dürer Kert",
+   "description": null,
+   "source": "tixa",
+   "sourceName": "Tixa",
+   "links": [
+    {
+     "name": "Tixa",
+     "url": "https://www.tixa.hu/monolord-durerkert-2026"
+    }
+   ],
+   "id": "monolord-swe-mars-red-sky-fr-durer-kert-11-10"
   },
   {
    "title": "SICC Production: Janikovszky Éva: Velem Mindig Történik Valami – 11.10.",
@@ -1352,6 +1776,26 @@
     }
    ],
    "id": "telekom-talks-a-hangzas-kulisszai-mitol-szol-igazan-jol-egy-koncert-11-10"
+  },
+  {
+   "title": "Erdling, Johnny Tupolev // Budapest, Dürer Kert",
+   "url": "https://www.tixa.hu/erdling-budapest",
+   "image": "https://www.tixa.hu/kepek/0042/42446-1_20260309141700.jpg",
+   "start": "2026-11-11",
+   "end": null,
+   "time": "19:00",
+   "category": "Koncert",
+   "venue": "Dürer Kert",
+   "description": null,
+   "source": "tixa",
+   "sourceName": "Tixa",
+   "links": [
+    {
+     "name": "Tixa",
+     "url": "https://www.tixa.hu/erdling-budapest"
+    }
+   ],
+   "id": "erdling-johnny-tupolev-budapest-durer-kert-11-11"
   },
   {
    "title": "BP Clothing 15. Birthday Party – MEHRINGER // 11.12.",
@@ -1438,6 +1882,26 @@
    "id": "lithium-night-classic-11-13"
   },
   {
+   "title": "Danielle Nicole Band @ Analog Music Hall, Budapest",
+   "url": "https://www.tixa.hu/danielle-nicole-band-analog-music-hall-budapest-20261114",
+   "image": "https://www.tixa.hu/kepek/0040/40910-1_20260923082713.jpg",
+   "start": "2026-11-14",
+   "end": null,
+   "time": "20:00",
+   "category": "Koncert",
+   "venue": "Analog Music Hall",
+   "description": null,
+   "source": "tixa",
+   "sourceName": "Tixa",
+   "links": [
+    {
+     "name": "Tixa",
+     "url": "https://www.tixa.hu/danielle-nicole-band-analog-music-hall-budapest-20261114"
+    }
+   ],
+   "id": "danielle-nicole-band-analog-music-hall-budapest-11-14"
+  },
+  {
    "title": "EDM 2010 x AVICII FOREVER PARTY",
    "url": "https://akvariumklub.hu/programok/edm-2010-x-avicii-forever-party/",
    "image": "https://akvariumklub.hu/wp-content/uploads/2026/10/843411079_1599105498680749_1898167956551035085_n-300x169.jpg",
@@ -1457,6 +1921,26 @@
     }
    ],
    "id": "edm-2010-x-avicii-forever-party-11-14"
+  },
+  {
+   "title": "MÖRK - You Are Free To Choose 10 Years Anniversary @Dürer",
+   "url": "https://www.tixa.hu/mork-you-are-free-to-choose-10-years-anniversary-durer-20261114",
+   "image": "https://www.tixa.hu/kepek/0043/43580-1_20260515091509.jpg",
+   "start": "2026-11-14",
+   "end": null,
+   "time": "19:00",
+   "category": "Koncert",
+   "venue": "Dürer Kert - Nagyterem",
+   "description": null,
+   "source": "tixa",
+   "sourceName": "Tixa",
+   "links": [
+    {
+     "name": "Tixa",
+     "url": "https://www.tixa.hu/mork-you-are-free-to-choose-10-years-anniversary-durer-20261114"
+    }
+   ],
+   "id": "mork-you-are-free-to-choose-10-years-anniversary-durer-11-14"
   },
   {
    "title": "Rubor Labii 26",
@@ -1543,6 +2027,26 @@
    "id": "telthaz-bongor-az-utolso-extazis-11-14"
   },
   {
+   "title": "A zenegyűlölő 3.0 - Leszámolás a FILMZENÉVEL - Janklovics Péter és a Danubia Zenekar",
+   "url": "https://www.jegy.hu/program/a-zenegyulolo-30-leszamolas-a-filmzenevel-janklovics-peter-es-a-danubia-zenekar-179698",
+   "image": "https://pb2.programinfo.hu/imgs/system-4/program/000/179/698/a-zenegyulolo-30-leszamolas-a-filmzenevel-janklovics-peter-es-a-danubia-zenekar-222-131-292492.webp",
+   "start": "2026-11-15",
+   "end": null,
+   "time": "18:00",
+   "category": "Koncert",
+   "venue": "Budapest Kongresszusi Központ",
+   "description": null,
+   "source": "jegy",
+   "sourceName": "Jegy.hu",
+   "links": [
+    {
+     "name": "Jegy.hu",
+     "url": "https://www.jegy.hu/program/a-zenegyulolo-30-leszamolas-a-filmzenevel-janklovics-peter-es-a-danubia-zenekar-179698"
+    }
+   ],
+   "id": "a-zenegyulolo-3-0-leszamolas-a-filmzenevel-janklovics-peter-es-a-danub-11-15"
+  },
+  {
    "title": "Ana Moura",
    "url": "https://akvariumklub.hu/programok/ana-moura/",
    "image": "https://akvariumklub.hu/wp-content/uploads/2026/08/ana-moura-2026-bp-16x9-logo-300x169.jpg",
@@ -1562,6 +2066,26 @@
     }
    ],
    "id": "ana-moura-11-15"
+  },
+  {
+   "title": "The Answer Lies In The Black Void (HU/NL), Officium Triste (NL), Mortajas (RCH) - Dürer Kert",
+   "url": "https://www.tixa.hu/talitbv-officium-triste-mortajas-durer",
+   "image": "https://www.tixa.hu/kepek/0044/44801-1_20260814122842.jpg",
+   "start": "2026-11-15",
+   "end": null,
+   "time": "18:00",
+   "category": "Koncert",
+   "venue": "Dürer Kert",
+   "description": null,
+   "source": "tixa",
+   "sourceName": "Tixa",
+   "links": [
+    {
+     "name": "Tixa",
+     "url": "https://www.tixa.hu/talitbv-officium-triste-mortajas-durer"
+    }
+   ],
+   "id": "the-answer-lies-in-the-black-void-hu-nl-officium-triste-nl-mortajas-rc-11-15"
   },
   {
    "title": "TECHNO PILATES / UV Pilates November / powered by TECHNO YOGA",
@@ -1604,6 +2128,46 @@
     }
    ],
    "id": "redzed-11-17"
+  },
+  {
+   "title": "Zorán koncert",
+   "url": "https://www.jegy.hu/program/zoran-koncert-198279",
+   "image": "https://pb2.programinfo.hu/imgs/system-4/venue/000/000/819/mupa-222-131-228339.webp",
+   "start": "2026-11-17",
+   "end": null,
+   "time": "20:00",
+   "category": "Koncert",
+   "venue": "Müpa",
+   "description": null,
+   "source": "jegy",
+   "sourceName": "Jegy.hu",
+   "links": [
+    {
+     "name": "Jegy.hu",
+     "url": "https://www.jegy.hu/program/zoran-koncert-198279"
+    }
+   ],
+   "id": "zoran-koncert-11-17"
+  },
+  {
+   "title": "ALLT // Analog Music Hall",
+   "url": "https://www.tixa.hu/allt-dk-2026",
+   "image": "https://www.tixa.hu/kepek/0042/42079-1_20260528094232.jpg",
+   "start": "2026-11-18",
+   "end": null,
+   "time": null,
+   "category": "Koncert",
+   "venue": "Analog Music Hall",
+   "description": null,
+   "source": "tixa",
+   "sourceName": "Tixa",
+   "links": [
+    {
+     "name": "Tixa",
+     "url": "https://www.tixa.hu/allt-dk-2026"
+    }
+   ],
+   "id": "allt-analog-music-hall-11-18"
   },
   {
    "title": "Mentális Egészség Konferencia a Gyermekekért",
@@ -1667,6 +2231,26 @@
     }
    ],
    "id": "carpenter-brut-health-vowws-a-barba-negraban-11-19"
+  },
+  {
+   "title": "SIX",
+   "url": "https://www.jegy.hu/program/six-159517",
+   "image": "https://pb2.programinfo.hu/imgs/system-4/program/000/159/517/six-222-131-257117.webp",
+   "start": "2026-11-19",
+   "end": null,
+   "time": "19:00",
+   "category": "Koncert",
+   "venue": "Madách Színház",
+   "description": null,
+   "source": "jegy",
+   "sourceName": "Jegy.hu",
+   "links": [
+    {
+     "name": "Jegy.hu",
+     "url": "https://www.jegy.hu/program/six-159517"
+    }
+   ],
+   "id": "six-11-19"
   },
   {
    "title": "Eddig későn feküdtem le – cserihanna lemezbemutató koncert",
@@ -1774,6 +2358,26 @@
    "id": "skins-club-night-but-make-it-brat-11-20"
   },
   {
+   "title": "11.21. // SOAD Tribute by Anett & Livi Acoustic + Radó Éden // BARHOLE",
+   "url": "https://www.tixa.hu/soad-tribute-barhole-1121",
+   "image": "https://www.tixa.hu/kepek/0045/45367-1_20260910002357.jpg",
+   "start": "2026-11-21",
+   "end": null,
+   "time": null,
+   "category": "Koncert",
+   "venue": "BARhole Music",
+   "description": null,
+   "source": "tixa",
+   "sourceName": "Tixa",
+   "links": [
+    {
+     "name": "Tixa",
+     "url": "https://www.tixa.hu/soad-tribute-barhole-1121"
+    }
+   ],
+   "id": "11-21-soad-tribute-by-anett-livi-acoustic-rado-eden-barhole-11-21"
+  },
+  {
    "title": "fannisza x tendo lemezbemutató²",
    "url": "https://akvariumklub.hu/programok/fannisza-x-tendo-lemezbemutato/",
    "image": "https://akvariumklub.hu/wp-content/uploads/2026/09/2026_11_21_Fannisza_v2_FB_EVENT_COVER_1920_x_1080-300x169.png",
@@ -1858,6 +2462,26 @@
    "id": "arlo-parks-az-akvarium-klubban-11-22"
   },
   {
+   "title": "Az elvarázsolt menyasszony - MÜPA MATINÉ",
+   "url": "https://www.jegy.hu/program/az-elvarazsolt-menyasszony-mupa-matine-192120",
+   "image": "https://pb2.programinfo.hu/imgs/system-4/program/000/192/120/az-elvarazsolt-menyasszony-mupa-matine-222-131-288332.webp",
+   "start": "2026-11-22",
+   "end": null,
+   "time": "11:00",
+   "category": "Koncert",
+   "venue": "Müpa",
+   "description": null,
+   "source": "jegy",
+   "sourceName": "Jegy.hu",
+   "links": [
+    {
+     "name": "Jegy.hu",
+     "url": "https://www.jegy.hu/program/az-elvarazsolt-menyasszony-mupa-matine-192120"
+    }
+   ],
+   "id": "az-elvarazsolt-menyasszony-mupa-matine-11-22"
+  },
+  {
    "title": "Eagle Eye Cherry | Budapest 2026",
    "url": "https://akvariumklub.hu/programok/eagle-eye-cherry-budapest-2026/",
    "image": "https://akvariumklub.hu/wp-content/uploads/2026/07/EAGLE-EYE-CHERRY-FB-COVER-300x157.jpg",
@@ -1919,6 +2543,46 @@
     }
    ],
    "id": "pete-bas-a-durer-kertben-11-25"
+  },
+  {
+   "title": "Duckshell // Dürer Kert",
+   "url": "https://www.tixa.hu/duckshell1127",
+   "image": "https://www.tixa.hu/kepek/0045/45688-1_20260926155715.jpg",
+   "start": "2026-11-27",
+   "end": null,
+   "time": "19:00",
+   "category": "Koncert",
+   "venue": "Dürer Kert",
+   "description": null,
+   "source": "tixa",
+   "sourceName": "Tixa",
+   "links": [
+    {
+     "name": "Tixa",
+     "url": "https://www.tixa.hu/duckshell1127"
+    }
+   ],
+   "id": "duckshell-durer-kert-11-27"
+  },
+  {
+   "title": "Cinefonic 2026",
+   "url": "https://www.jegy.hu/program/cinefonic-2026-197519",
+   "image": "https://pb2.programinfo.hu/imgs/system-4/program/000/197/519/cinefonic-2026-222-131-294341.webp",
+   "start": "2026-11-28",
+   "end": null,
+   "time": "19:30",
+   "category": "Koncert",
+   "venue": "Budapest Kongresszusi Központ",
+   "description": null,
+   "source": "jegy",
+   "sourceName": "Jegy.hu",
+   "links": [
+    {
+     "name": "Jegy.hu",
+     "url": "https://www.jegy.hu/program/cinefonic-2026-197519"
+    }
+   ],
+   "id": "cinefonic-2026-11-28"
   },
   {
    "title": "FILO – Minden elmúlik lemezbemutató",
@@ -2110,6 +2774,86 @@
    "id": "iam-productions-presents-marie-vaunt-12-04"
   },
   {
+   "title": "Punnany Massif - Dürer Kert",
+   "url": "https://www.tixa.hu/punnany-massif-durer-kert-2026",
+   "image": "https://www.tixa.hu/kepek/0046/46240-1_20261015080229.jpg",
+   "start": "2026-12-04",
+   "end": null,
+   "time": "19:00",
+   "category": "Koncert",
+   "venue": "Dürer Kert",
+   "description": null,
+   "source": "tixa",
+   "sourceName": "Tixa",
+   "links": [
+    {
+     "name": "Tixa",
+     "url": "https://www.tixa.hu/punnany-massif-durer-kert-2026"
+    }
+   ],
+   "id": "punnany-massif-durer-kert-12-04"
+  },
+  {
+   "title": "KILLUS, THE BIRTHDAY MASSACRE, WEDNESDAY 13 // Dürer Kert",
+   "url": "https://www.tixa.hu/KILLUS-THE-BIRTHDAY-MASSACRE-WEDNESDAY-13-DK",
+   "image": "https://www.tixa.hu/kepek/0043/43756-1_20260528132400.jpg",
+   "start": "2026-12-05",
+   "end": null,
+   "time": null,
+   "category": "Koncert",
+   "venue": "Dürer Kert",
+   "description": null,
+   "source": "tixa",
+   "sourceName": "Tixa",
+   "links": [
+    {
+     "name": "Tixa",
+     "url": "https://www.tixa.hu/KILLUS-THE-BIRTHDAY-MASSACRE-WEDNESDAY-13-DK"
+    }
+   ],
+   "id": "killus-the-birthday-massacre-wednesday-13-durer-kert-12-05"
+  },
+  {
+   "title": "Machine Mouse, Mátyás Attila Band - Dürer Kert",
+   "url": "https://www.tixa.hu/machine-mouse-matyas-attila-band-durer",
+   "image": "https://www.tixa.hu/kepek/0046/46152-1_20261012083447.jpg",
+   "start": "2026-12-05",
+   "end": null,
+   "time": "20:00",
+   "category": "Koncert",
+   "venue": "Dürer Kert",
+   "description": null,
+   "source": "tixa",
+   "sourceName": "Tixa",
+   "links": [
+    {
+     "name": "Tixa",
+     "url": "https://www.tixa.hu/machine-mouse-matyas-attila-band-durer"
+    }
+   ],
+   "id": "machine-mouse-matyas-attila-band-durer-kert-12-05"
+  },
+  {
+   "title": "Macskafogó 40 – élőzenés filmvetítés",
+   "url": "https://www.jegy.hu/program/macskafogo-40-elozenes-filmvetites-192331",
+   "image": "https://pb2.programinfo.hu/imgs/system-4/program/000/192/331/macskafogo-40-elozenes-filmvetites-222-131-286607.webp",
+   "start": "2026-12-05",
+   "end": null,
+   "time": "16:00",
+   "category": "Koncert",
+   "venue": "Müpa",
+   "description": null,
+   "source": "jegy",
+   "sourceName": "Jegy.hu",
+   "links": [
+    {
+     "name": "Jegy.hu",
+     "url": "https://www.jegy.hu/program/macskafogo-40-elozenes-filmvetites-192331"
+    }
+   ],
+   "id": "macskafogo-40-elozenes-filmvetites-12-05"
+  },
+  {
    "title": "Néhány nap – Groovehouse – Nagykoncert",
    "url": "https://akvariumklub.hu/programok/nehany-nap-groovehouse-nagykoncert/",
    "image": "https://akvariumklub.hu/wp-content/uploads/2026/09/FB_EVENT_AKVA1-300x157.jpg",
@@ -2215,6 +2959,26 @@
    "id": "chelsea-wolfe-the-dark-world-tour-12-07"
   },
   {
+   "title": "101 HANG - Depeche Mode Special Tribute 2026",
+   "url": "https://www.jegy.hu/program/101-hang-depeche-mode-special-tribute-2026-184125",
+   "image": "https://pb2.programinfo.hu/imgs/system-4/program/000/184/125/101-hang-depeche-mode-special-tribute-2026-222-131-296659.webp",
+   "start": "2026-12-10",
+   "end": null,
+   "time": "20:00",
+   "category": "Koncert",
+   "venue": "MVM Dome",
+   "description": null,
+   "source": "jegy",
+   "sourceName": "Jegy.hu",
+   "links": [
+    {
+     "name": "Jegy.hu",
+     "url": "https://www.jegy.hu/program/101-hang-depeche-mode-special-tribute-2026-184125"
+    }
+   ],
+   "id": "101-hang-depeche-mode-special-tribute-2026-12-10"
+  },
+  {
    "title": "ELEFÁNT – IDŐGÉP vol.: 2 – MINDEN + EL // DUPLA AKVÁRIUM",
    "url": "https://akvariumklub.hu/programok/elefant-minden-el-dupla-akvarium/",
    "image": "https://akvariumklub.hu/wp-content/uploads/2026/10/elefant-300x157.png",
@@ -2234,6 +2998,26 @@
     }
    ],
    "id": "elefant-idogep-vol-2-minden-el-dupla-akvarium-12-11"
+  },
+  {
+   "title": "Vive la France! – francia klasszikusok ünnepe - Danubia Zenekar",
+   "url": "https://www.jegy.hu/program/vive-la-france-francia-klasszikusok-unnepe-danubia-zenekar-176028",
+   "image": "https://pb2.programinfo.hu/imgs/system-4/program/000/176/028/vive-la-france-francia-klasszikusok-unnepe-danubia-zenekar-222-131-267335.webp",
+   "start": "2026-12-11",
+   "end": null,
+   "time": "19:30",
+   "category": "Koncert",
+   "venue": "Danubia Zenekar",
+   "description": null,
+   "source": "jegy",
+   "sourceName": "Jegy.hu",
+   "links": [
+    {
+     "name": "Jegy.hu",
+     "url": "https://www.jegy.hu/program/vive-la-france-francia-klasszikusok-unnepe-danubia-zenekar-176028"
+    }
+   ],
+   "id": "vive-la-france-francia-klasszikusok-unnepe-danubia-zenekar-12-11"
   },
   {
    "title": "Apollo Brown x Skyzoo: The Easy Luxury Tour.",
@@ -2387,6 +3171,46 @@
    "id": "fiesta-nyar-a-telben-12-19"
   },
   {
+   "title": "Magyar Állami Népi Együttes: Csodaváró betlehemes",
+   "url": "https://www.jegy.hu/program/magyar-allami-nepi-egyuttes-csodavaro-betlehemes-106640",
+   "image": "https://pb2.programinfo.hu/imgs/system-4/program/000/106/640/magyar-allami-nepi-egyuttes-csodavaro-betlehemes-222-131-259143.webp",
+   "start": "2026-12-19",
+   "end": null,
+   "time": "18:00",
+   "category": "Koncert",
+   "venue": "Müpa",
+   "description": null,
+   "source": "jegy",
+   "sourceName": "Jegy.hu",
+   "links": [
+    {
+     "name": "Jegy.hu",
+     "url": "https://www.jegy.hu/program/magyar-allami-nepi-egyuttes-csodavaro-betlehemes-106640"
+    }
+   ],
+   "id": "magyar-allami-nepi-egyuttes-csodavaro-betlehemes-12-19"
+  },
+  {
+   "title": "Nagy Karácsonyi PunkÜnnep",
+   "url": "https://www.tixa.hu/nagy-karacsonyi-punkunnep-20261219",
+   "image": "https://www.tixa.hu/kepek/0044/44078-1_20261014132806.jpg",
+   "start": "2026-12-19",
+   "end": "2026-12-20",
+   "time": "16:30",
+   "category": "Koncert",
+   "venue": "Dürer Kert",
+   "description": null,
+   "source": "tixa",
+   "sourceName": "Tixa",
+   "links": [
+    {
+     "name": "Tixa",
+     "url": "https://www.tixa.hu/nagy-karacsonyi-punkunnep-20261219"
+    }
+   ],
+   "id": "nagy-karacsonyi-punkunnep-12-19"
+  },
+  {
    "title": "Ghostface Killah",
    "url": "https://akvariumklub.hu/programok/ghostface-killah/",
    "image": "https://akvariumklub.hu/wp-content/uploads/2026/09/ghostface-killah-1-e1790667354130-300x136.jpeg",
@@ -2406,6 +3230,26 @@
     }
    ],
    "id": "ghostface-killah-12-20"
+  },
+  {
+   "title": "Klasszikus karácsony 2026 - Danubia Zenekar",
+   "url": "https://www.jegy.hu/program/klasszikus-karacsony-2026-danubia-zenekar-189277",
+   "image": "https://pb2.programinfo.hu/imgs/system-4/program/000/189/277/klasszikus-karacsony-2026-danubia-zenekar-222-131-282382.webp",
+   "start": "2026-12-20",
+   "end": null,
+   "time": "15:00",
+   "category": "Koncert",
+   "venue": "Budapest Kongresszusi Központ",
+   "description": null,
+   "source": "jegy",
+   "sourceName": "Jegy.hu",
+   "links": [
+    {
+     "name": "Jegy.hu",
+     "url": "https://www.jegy.hu/program/klasszikus-karacsony-2026-danubia-zenekar-189277"
+    }
+   ],
+   "id": "klasszikus-karacsony-2026-danubia-zenekar-12-20"
   },
   {
    "title": "Secret Market – 12.20.",
@@ -2492,6 +3336,26 @@
    "id": "jamie-winchester-hrutka-robert-back-underground-12-23"
   },
   {
+   "title": "Titokkoncert",
+   "url": "https://www.jegy.hu/program/titokkoncert-198386",
+   "image": "https://pb2.programinfo.hu/imgs/system-4/venue/000/001/264/budapesti-fesztivalzenekar-222-131-260862.webp",
+   "start": "2026-12-26",
+   "end": null,
+   "time": "19:45",
+   "category": "Koncert",
+   "venue": "Budapesti Fesztiválzenekar",
+   "description": null,
+   "source": "jegy",
+   "sourceName": "Jegy.hu",
+   "links": [
+    {
+     "name": "Jegy.hu",
+     "url": "https://www.jegy.hu/program/titokkoncert-198386"
+    }
+   ],
+   "id": "titokkoncert-12-26"
+  },
+  {
    "title": "MOLNÁR TAMÁS ✶ DECEMBER 27",
    "url": "https://akvariumklub.hu/programok/molnar-tamas-nagyhall/",
    "image": "https://akvariumklub.hu/wp-content/uploads/2026/09/MT_1227_event-300x157.jpg",
@@ -2532,6 +3396,26 @@
     }
    ],
    "id": "teeth-marks-vendegek-wasted-struggle-kazal-stall-12-27"
+  },
+  {
+   "title": "Téli Zaj 2026 // Dürer Kert",
+   "url": "https://www.tixa.hu/telizaj26",
+   "image": "https://www.tixa.hu/kepek/0045/45693-1_20260921155834.jpg",
+   "start": "2026-12-27",
+   "end": "2026-12-28",
+   "time": "17:30",
+   "category": "Koncert",
+   "venue": "Dürer Kert",
+   "description": null,
+   "source": "tixa",
+   "sourceName": "Tixa",
+   "links": [
+    {
+     "name": "Tixa",
+     "url": "https://www.tixa.hu/telizaj26"
+    }
+   ],
+   "id": "teli-zaj-2026-durer-kert-12-27"
   },
   {
    "title": "Artur Rambo",
@@ -2597,6 +3481,126 @@
    "id": "kozmosz-evzaro-support-zuhano-honapok-negativ-rekord-12-29"
   },
   {
+   "title": "DEMJÉN 80 - \"NEKEM 8van\"",
+   "url": "https://www.jegy.hu/program/demjen-80-nekem-8van-186635",
+   "image": "https://pb2.programinfo.hu/imgs/system-4/program/000/186/635/demjen-80-nekem-8van-222-131-287236.webp",
+   "start": "2026-12-30",
+   "end": null,
+   "time": "20:00",
+   "category": "Koncert",
+   "venue": "Papp László Budapest Sportaréna",
+   "description": null,
+   "source": "jegy",
+   "sourceName": "Jegy.hu",
+   "links": [
+    {
+     "name": "Jegy.hu",
+     "url": "https://www.jegy.hu/program/demjen-80-nekem-8van-186635"
+    }
+   ],
+   "id": "demjen-80-nekem-8van-12-30"
+  },
+  {
+   "title": "ESTI KORNÉL 20 BUDAPEST, DÜRER KERT 12.30.",
+   "url": "https://www.tixa.hu/esti-kornel-20-durer-kert",
+   "image": "https://www.tixa.hu/kepek/0046/46223-1_20261014124342.jpg",
+   "start": "2026-12-30",
+   "end": null,
+   "time": "19:00",
+   "category": "Koncert",
+   "venue": "Dürer Kert",
+   "description": null,
+   "source": "tixa",
+   "sourceName": "Tixa",
+   "links": [
+    {
+     "name": "Tixa",
+     "url": "https://www.tixa.hu/esti-kornel-20-durer-kert"
+    }
+   ],
+   "id": "esti-kornel-20-budapest-durer-kert-12-30-12-30"
+  },
+  {
+   "title": "Budapest Bár - Szilveszteri koncert",
+   "url": "https://www.jegy.hu/program/budapest-bar-szilveszteri-koncert-167416",
+   "image": "https://pb2.programinfo.hu/imgs/system-4/program/000/167/416/budapest-bar-szilveszteri-koncert-222-131-295665.webp",
+   "start": "2026-12-31",
+   "end": null,
+   "time": "15:00",
+   "category": "Koncert",
+   "venue": "MOM Kulturális Központ",
+   "description": null,
+   "source": "jegy",
+   "sourceName": "Jegy.hu",
+   "links": [
+    {
+     "name": "Jegy.hu",
+     "url": "https://www.jegy.hu/program/budapest-bar-szilveszteri-koncert-167416"
+    }
+   ],
+   "id": "budapest-bar-szilveszteri-koncert-12-31"
+  },
+  {
+   "title": "Újév az Operaházban",
+   "url": "https://www.jegy.hu/program/ujev-az-operahazban-160349",
+   "image": "https://pb2.programinfo.hu/imgs/system-4/program/000/160/349/ujev-az-operahazban-222-131-281597.webp",
+   "start": "2027-01-01",
+   "end": null,
+   "time": "20:00",
+   "category": "Koncert",
+   "venue": "Magyar Állami Operaház",
+   "description": null,
+   "source": "jegy",
+   "sourceName": "Jegy.hu",
+   "links": [
+    {
+     "name": "Jegy.hu",
+     "url": "https://www.jegy.hu/program/ujev-az-operahazban-160349"
+    }
+   ],
+   "id": "ujev-az-operahazban-01-01"
+  },
+  {
+   "title": "Újévi koncert fiataloknak - Haydn: A teremtés – részletek",
+   "url": "https://www.jegy.hu/program/ujevi-koncert-fiataloknak-haydn-a-teremtes-reszletek-97181",
+   "image": "https://pb2.programinfo.hu/imgs/system-4/program/000/097/181/ujevi-koncert-fiataloknak-haydn-a-teremtes-reszletek-222-131-268938.webp",
+   "start": "2027-01-01",
+   "end": null,
+   "time": "16:00",
+   "category": "Koncert",
+   "venue": "Müpa",
+   "description": null,
+   "source": "jegy",
+   "sourceName": "Jegy.hu",
+   "links": [
+    {
+     "name": "Jegy.hu",
+     "url": "https://www.jegy.hu/program/ujevi-koncert-fiataloknak-haydn-a-teremtes-reszletek-97181"
+    }
+   ],
+   "id": "ujevi-koncert-fiataloknak-haydn-a-teremtes-reszletek-01-01"
+  },
+  {
+   "title": "Dimeday XXII. - Dürer Kert",
+   "url": "https://www.tixa.hu/dimeday-xxii-durer-kert",
+   "image": "https://www.tixa.hu/kepek/0046/46209-1_20261014121920.jpg",
+   "start": "2027-01-08",
+   "end": null,
+   "time": "19:30",
+   "category": "Koncert",
+   "venue": "Dürer Kert",
+   "description": null,
+   "source": "tixa",
+   "sourceName": "Tixa",
+   "links": [
+    {
+     "name": "Tixa",
+     "url": "https://www.tixa.hu/dimeday-xxii-durer-kert"
+    }
+   ],
+   "id": "dimeday-xxii-durer-kert-01-08"
+  },
+  {
    "title": "Melody Maker & Luxfunk® Presents: Funk Fusion Live",
    "url": "https://akvariumklub.hu/programok/melody-maker-luxfunk-presents-funk-fusion-live/",
    "image": "https://akvariumklub.hu/wp-content/uploads/2026/09/807877944_122147094272999004_567184447797299704_n-300x157.jpg",
@@ -2616,6 +3620,26 @@
     }
    ],
    "id": "melody-maker-luxfunk-presents-funk-fusion-live-01-08"
+  },
+  {
+   "title": "Korai Öröm évnyitó koncert - Dürer Kert",
+   "url": "https://www.tixa.hu/korai-orom-evnyito-koncert-durer-kert-2027",
+   "image": "https://www.tixa.hu/kepek/0046/46154-1_20261012093139.jpg",
+   "start": "2027-01-09",
+   "end": "2027-01-10",
+   "time": "20:00",
+   "category": "Koncert",
+   "venue": "Dürer Kert",
+   "description": null,
+   "source": "tixa",
+   "sourceName": "Tixa",
+   "links": [
+    {
+     "name": "Tixa",
+     "url": "https://www.tixa.hu/korai-orom-evnyito-koncert-durer-kert-2027"
+    }
+   ],
+   "id": "korai-orom-evnyito-koncert-durer-kert-01-09"
   },
   {
    "title": "A Várhegyutca bemutatja: MAXIHESSZ",
@@ -2660,6 +3684,46 @@
    "id": "balkan-vip-01-15"
   },
   {
+   "title": "OSSIAN 40",
+   "url": "https://www.jegy.hu/program/ossian-40-188082",
+   "image": "https://pb2.programinfo.hu/imgs/system-4/program/000/188/082/ossian-40-222-131-279670.webp",
+   "start": "2027-01-16",
+   "end": null,
+   "time": "20:00",
+   "category": "Koncert",
+   "venue": "Papp László Budapest Sportaréna",
+   "description": null,
+   "source": "jegy",
+   "sourceName": "Jegy.hu",
+   "links": [
+    {
+     "name": "Jegy.hu",
+     "url": "https://www.jegy.hu/program/ossian-40-188082"
+    }
+   ],
+   "id": "ossian-40-01-16"
+  },
+  {
+   "title": "Stagediving Fesztivál 2027 - Dürer Kert",
+   "url": "https://www.tixa.hu/stagediving-fesztival-durer-2027",
+   "image": "https://www.tixa.hu/kepek/0046/46208-1_20261014082938.jpg",
+   "start": "2027-01-16",
+   "end": "2027-01-17",
+   "time": "18:00",
+   "category": "Fesztivál",
+   "venue": "Dürer Kert",
+   "description": null,
+   "source": "tixa",
+   "sourceName": "Tixa",
+   "links": [
+    {
+     "name": "Tixa",
+     "url": "https://www.tixa.hu/stagediving-fesztival-durer-2027"
+    }
+   ],
+   "id": "stagediving-fesztival-2027-durer-kert-01-16"
+  },
+  {
    "title": "TELT HÁZ! Mehringer | DAY 1 – SZABADSÁG",
    "url": "https://akvariumklub.hu/programok/mehringer-day-1-szabadsag/",
    "image": "https://akvariumklub.hu/wp-content/uploads/2026/09/22-fb-300x157.png",
@@ -2702,6 +3766,66 @@
    "id": "telt-haz-mehringer-day-2-szerelem-01-23"
   },
   {
+   "title": "Boros Misi zongoraestje a Müpában - 2027. január 24.",
+   "url": "https://www.jegy.hu/program/boros-misi-zongoraestje-a-mupaban-2027-januar-24-197863",
+   "image": "https://pb2.programinfo.hu/imgs/system-4/program/000/197/863/boros-misi-zongoraestje-a-mupaban-2027-januar-24-222-131-295887.webp",
+   "start": "2027-01-24",
+   "end": null,
+   "time": "19:30",
+   "category": "Koncert",
+   "venue": "Müpa",
+   "description": null,
+   "source": "jegy",
+   "sourceName": "Jegy.hu",
+   "links": [
+    {
+     "name": "Jegy.hu",
+     "url": "https://www.jegy.hu/program/boros-misi-zongoraestje-a-mupaban-2027-januar-24-197863"
+    }
+   ],
+   "id": "boros-misi-zongoraestje-a-mupaban-2027-januar-24-01-24"
+  },
+  {
+   "title": "NTX - Budapest, Dürer Kert",
+   "url": "https://www.tixa.hu/ntx-budapest-durer-kert-2027",
+   "image": "https://www.tixa.hu/kepek/0046/46102-1_20261009110705.jpg",
+   "start": "2027-01-26",
+   "end": null,
+   "time": "18:30",
+   "category": "Koncert",
+   "venue": "Dürer Kert",
+   "description": null,
+   "source": "tixa",
+   "sourceName": "Tixa",
+   "links": [
+    {
+     "name": "Tixa",
+     "url": "https://www.tixa.hu/ntx-budapest-durer-kert-2027"
+    }
+   ],
+   "id": "ntx-budapest-durer-kert-01-26"
+  },
+  {
+   "title": "The Black Dahlia Murder (US) - Two Decades of Nocturnal / Fuming Mouth (US) - Dürer Kert",
+   "url": "https://www.tixa.hu/tbdm-noctural-durer",
+   "image": "https://www.tixa.hu/kepek/0044/44202-1_20260630123050.jpg",
+   "start": "2027-01-27",
+   "end": null,
+   "time": "18:00",
+   "category": "Koncert",
+   "venue": "Dürer Kert",
+   "description": null,
+   "source": "tixa",
+   "sourceName": "Tixa",
+   "links": [
+    {
+     "name": "Tixa",
+     "url": "https://www.tixa.hu/tbdm-noctural-durer"
+    }
+   ],
+   "id": "the-black-dahlia-murder-us-two-decades-of-nocturnal-fuming-mouth-us-du-01-27"
+  },
+  {
    "title": "I AM Production pres.: ALIGNMENT",
    "url": "https://akvariumklub.hu/programok/i-am-production-pres-alignment/",
    "image": "https://akvariumklub.hu/wp-content/uploads/2026/10/831475863_1925606961949776_565003082831943818_n-1-300x300.jpg",
@@ -2721,6 +3845,166 @@
     }
    ],
    "id": "i-am-production-pres-alignment-01-29"
+  },
+  {
+   "title": "GESZTI POPTIMISTA",
+   "url": "https://www.jegy.hu/program/geszti-poptimista-187767",
+   "image": "https://pb2.programinfo.hu/imgs/system-4/program/000/187/767/geszti-poptimista-222-131-279103.webp",
+   "start": "2027-01-30",
+   "end": null,
+   "time": "20:00",
+   "category": "Koncert",
+   "venue": "MVM Dome",
+   "description": null,
+   "source": "jegy",
+   "sourceName": "Jegy.hu",
+   "links": [
+    {
+     "name": "Jegy.hu",
+     "url": "https://www.jegy.hu/program/geszti-poptimista-187767"
+    }
+   ],
+   "id": "geszti-poptimista-01-30"
+  },
+  {
+   "title": "Beethoven / Brahms - Concerto Budapest 26/27",
+   "url": "https://www.jegy.hu/program/beethoven-brahms-concerto-budapest-2627-194712",
+   "image": "https://pb2.programinfo.hu/imgs/system-4/program/000/194/712/beethoven-brahms-concerto-budapest-2627-222-131-292334.webp",
+   "start": "2027-01-31",
+   "end": null,
+   "time": "19:30",
+   "category": "Koncert",
+   "venue": "Concerto Budapest",
+   "description": null,
+   "source": "jegy",
+   "sourceName": "Jegy.hu",
+   "links": [
+    {
+     "name": "Jegy.hu",
+     "url": "https://www.jegy.hu/program/beethoven-brahms-concerto-budapest-2627-194712"
+    }
+   ],
+   "id": "beethoven-brahms-concerto-budapest-26-27-01-31"
+  },
+  {
+   "title": "Comeback Kid (CAN), Haywire (US), Whispers (T), Speedway (SWE) - Dürer Kert",
+   "url": "https://www.tixa.hu/cbk-chosen-hell-durerkert",
+   "image": "https://www.tixa.hu/kepek/0044/44990-1_20260828085834.jpg",
+   "start": "2027-01-31",
+   "end": null,
+   "time": "17:00",
+   "category": "Koncert",
+   "venue": "Dürer Kert",
+   "description": null,
+   "source": "tixa",
+   "sourceName": "Tixa",
+   "links": [
+    {
+     "name": "Tixa",
+     "url": "https://www.tixa.hu/cbk-chosen-hell-durerkert"
+    }
+   ],
+   "id": "comeback-kid-can-haywire-us-whispers-t-speedway-swe-durer-kert-01-31"
+  },
+  {
+   "title": "Gilla Band (IRL) - Dürer Kert",
+   "url": "https://www.tixa.hu/gilla-band-durer",
+   "image": "https://www.tixa.hu/kepek/0044/44671-1_20260805152355.jpg",
+   "start": "2027-02-02",
+   "end": null,
+   "time": "19:00",
+   "category": "Koncert",
+   "venue": "Dürer Kert",
+   "description": null,
+   "source": "tixa",
+   "sourceName": "Tixa",
+   "links": [
+    {
+     "name": "Tixa",
+     "url": "https://www.tixa.hu/gilla-band-durer"
+    }
+   ],
+   "id": "gilla-band-irl-durer-kert-02-02"
+  },
+  {
+   "title": "RHAPSODY OF FIRE // SERIOUS BLACK // Silver Dust / Aeon Gods / Melodius Deite // Analog Music Hall",
+   "url": "https://www.tixa.hu/RHAPSODY-OF-FIRE-SERIOUS-BLACK-AMH-2027",
+   "image": "https://www.tixa.hu/kepek/0043/43536-1_20260515132256.jpg",
+   "start": "2027-02-02",
+   "end": null,
+   "time": null,
+   "category": "Koncert",
+   "venue": "Analog Music Hall",
+   "description": null,
+   "source": "tixa",
+   "sourceName": "Tixa",
+   "links": [
+    {
+     "name": "Tixa",
+     "url": "https://www.tixa.hu/RHAPSODY-OF-FIRE-SERIOUS-BLACK-AMH-2027"
+    }
+   ],
+   "id": "rhapsody-of-fire-serious-black-silver-dust-aeon-gods-melodius-deite-an-02-02"
+  },
+  {
+   "title": "Napalm Death (UK), Misery Index (US), Author & Punisher (US), Habak (MEX), Piece (DE) - Dürer Kert",
+   "url": "https://www.tixa.hu/napalm-death-2027-durer",
+   "image": "https://www.tixa.hu/kepek/0046/46396-1_20261020160728.jpg",
+   "start": "2027-02-03",
+   "end": null,
+   "time": "18:00",
+   "category": "Koncert",
+   "venue": "Dürer Kert",
+   "description": null,
+   "source": "tixa",
+   "sourceName": "Tixa",
+   "links": [
+    {
+     "name": "Tixa",
+     "url": "https://www.tixa.hu/napalm-death-2027-durer"
+    }
+   ],
+   "id": "napalm-death-uk-misery-index-us-author-punisher-us-habak-mex-piece-de-02-03"
+  },
+  {
+   "title": "Máté Péter 80. születésnapi emlékkoncert",
+   "url": "https://www.jegy.hu/program/mate-peter-80-szuletesnapi-emlekkoncert-194220",
+   "image": "https://pb2.programinfo.hu/imgs/system-4/program/000/194/220/mate-peter-80-szuletesnapi-emlekkoncert-222-131-295460.webp",
+   "start": "2027-02-04",
+   "end": null,
+   "time": "19:30",
+   "category": "Koncert",
+   "venue": "Papp László Budapest Sportaréna",
+   "description": null,
+   "source": "jegy",
+   "sourceName": "Jegy.hu",
+   "links": [
+    {
+     "name": "Jegy.hu",
+     "url": "https://www.jegy.hu/program/mate-peter-80-szuletesnapi-emlekkoncert-194220"
+    }
+   ],
+   "id": "mate-peter-80-szuletesnapi-emlekkoncert-02-04"
+  },
+  {
+   "title": "Nickless (CH) - Dürer Kert, Budapest",
+   "url": "https://www.tixa.hu/nickless-durer-kert-budapest",
+   "image": "https://www.tixa.hu/kepek/0046/46358-1_20261019151304.jpg",
+   "start": "2027-02-04",
+   "end": null,
+   "time": "19:00",
+   "category": "Koncert",
+   "venue": "Dürer Kert",
+   "description": null,
+   "source": "tixa",
+   "sourceName": "Tixa",
+   "links": [
+    {
+     "name": "Tixa",
+     "url": "https://www.tixa.hu/nickless-durer-kert-budapest"
+    }
+   ],
+   "id": "nickless-ch-durer-kert-budapest-02-04"
   },
   {
    "title": "CLOUD 9+ | 15. szülinap",
@@ -2744,6 +4028,26 @@
    "id": "cloud-9-15-szulinap-02-06"
   },
   {
+   "title": "Spite (US), Emmure (US), Distant (NL), Mauled (US) - Dürer Kert",
+   "url": "https://www.tixa.hu/spite-emmure-durer2027",
+   "image": "https://www.tixa.hu/kepek/0044/44672-1_20260805152841.jpg",
+   "start": "2027-02-09",
+   "end": null,
+   "time": "17:09",
+   "category": "Koncert",
+   "venue": "Dürer Kert",
+   "description": null,
+   "source": "tixa",
+   "sourceName": "Tixa",
+   "links": [
+    {
+     "name": "Tixa",
+     "url": "https://www.tixa.hu/spite-emmure-durer2027"
+    }
+   ],
+   "id": "spite-us-emmure-us-distant-nl-mauled-us-durer-kert-02-09"
+  },
+  {
    "title": "RZMVS",
    "url": "https://akvariumklub.hu/programok/rzmvs/",
    "image": "https://akvariumklub.hu/wp-content/uploads/2026/09/RZMVS_eventcover-300x169.jpg",
@@ -2763,6 +4067,26 @@
     }
    ],
    "id": "rzmvs-02-12"
+  },
+  {
+   "title": "Hans Zimmer filmzenei koncert",
+   "url": "https://www.jegy.hu/program/hans-zimmer-filmzenei-koncert-183933",
+   "image": "https://pb2.programinfo.hu/imgs/system-4/program/000/183/933/hans-zimmer-filmzenei-koncert-222-131-272242.webp",
+   "start": "2027-02-13",
+   "end": null,
+   "time": "19:00",
+   "category": "Koncert",
+   "venue": "Riz Levente Sport- és Rendezvényközpont",
+   "description": null,
+   "source": "jegy",
+   "sourceName": "Jegy.hu",
+   "links": [
+    {
+     "name": "Jegy.hu",
+     "url": "https://www.jegy.hu/program/hans-zimmer-filmzenei-koncert-183933"
+    }
+   ],
+   "id": "hans-zimmer-filmzenei-koncert-02-13"
   },
   {
    "title": "HENGE",
@@ -2849,6 +4173,26 @@
    "id": "akvawaves-pres-kollektiv-turmstrasse-live-02-19"
   },
   {
+   "title": "Laibach // Budapest, Dürer Kert",
+   "url": "https://www.tixa.hu/laibach-durerkert",
+   "image": "https://www.tixa.hu/kepek/0045/45332-1_20260909094725.jpg",
+   "start": "2027-02-19",
+   "end": null,
+   "time": "19:00",
+   "category": "Koncert",
+   "venue": "Dürer Kert",
+   "description": null,
+   "source": "tixa",
+   "sourceName": "Tixa",
+   "links": [
+    {
+     "name": "Tixa",
+     "url": "https://www.tixa.hu/laibach-durerkert"
+    }
+   ],
+   "id": "laibach-budapest-durer-kert-02-19"
+  },
+  {
    "title": "Giant Rooks",
    "url": "https://akvariumklub.hu/programok/giant-rooks/",
    "image": "https://akvariumklub.hu/wp-content/uploads/2026/10/GIANT-ROOKS-FB-COVER-300x157.jpg",
@@ -2870,6 +4214,46 @@
    "id": "giant-rooks-02-21"
   },
   {
+   "title": "Morricone legendás filmzenéi - Élő szimfonikus koncert– Andrea Morricone",
+   "url": "https://www.jegy.hu/program/morricone-legendas-filmzenei-elo-szimfonikus-koncert-andrea-morricone-197978",
+   "image": "https://pb2.programinfo.hu/imgs/system-4/program/000/197/978/morricone-legendas-filmzenei-elo-szimfonikus-koncert-andrea-morricone-222-131-294800.webp",
+   "start": "2027-02-28",
+   "end": null,
+   "time": "20:00",
+   "category": "Koncert",
+   "venue": "Papp László Budapest Sportaréna",
+   "description": null,
+   "source": "jegy",
+   "sourceName": "Jegy.hu",
+   "links": [
+    {
+     "name": "Jegy.hu",
+     "url": "https://www.jegy.hu/program/morricone-legendas-filmzenei-elo-szimfonikus-koncert-andrea-morricone-197978"
+    }
+   ],
+   "id": "morricone-legendas-filmzenei-elo-szimfonikus-koncert-andrea-morricone-02-28"
+  },
+  {
+   "title": "Lebanon Hanover // Budapest, Dürer Kert",
+   "url": "https://www.tixa.hu/lebanonhanover-budapest",
+   "image": "https://www.tixa.hu/kepek/0044/44688-1_20260806142945.jpg",
+   "start": "2027-03-01",
+   "end": null,
+   "time": "19:00",
+   "category": "Koncert",
+   "venue": "Dürer Kert",
+   "description": null,
+   "source": "tixa",
+   "sourceName": "Tixa",
+   "links": [
+    {
+     "name": "Tixa",
+     "url": "https://www.tixa.hu/lebanonhanover-budapest"
+    }
+   ],
+   "id": "lebanon-hanover-budapest-durer-kert-03-01"
+  },
+  {
    "title": "Deep Forest",
    "url": "https://akvariumklub.hu/programok/deep-forest/",
    "image": "https://akvariumklub.hu/wp-content/uploads/2026/08/deepforest-budapest-FBevent-v2-300x158.png",
@@ -2889,6 +4273,26 @@
     }
    ],
    "id": "deep-forest-03-04"
+  },
+  {
+   "title": "BILL emlékére",
+   "url": "https://www.jegy.hu/program/bill-emlekere-198659",
+   "image": "https://pb2.programinfo.hu/imgs/system-4/program/000/198/659/bill-emlekere-222-131-296242.webp",
+   "start": "2027-03-06",
+   "end": null,
+   "time": "19:00",
+   "category": "Koncert",
+   "venue": "Papp László Budapest Sportaréna",
+   "description": null,
+   "source": "jegy",
+   "sourceName": "Jegy.hu",
+   "links": [
+    {
+     "name": "Jegy.hu",
+     "url": "https://www.jegy.hu/program/bill-emlekere-198659"
+    }
+   ],
+   "id": "bill-emlekere-03-06"
   },
   {
    "title": "Haiden Henderson",
@@ -2933,6 +4337,86 @@
    "id": "telthaz-nagy-bogi-03-20"
   },
   {
+   "title": "Barbed Wire, Neck Sprain, Archaic - Dürer Kert",
+   "url": "https://www.tixa.hu/barbed-wire-35-durer",
+   "image": "https://www.tixa.hu/kepek/0046/46252-1_20261016082613.jpg",
+   "start": "2027-03-26",
+   "end": null,
+   "time": "18:00",
+   "category": "Koncert",
+   "venue": "Dürer Kert",
+   "description": null,
+   "source": "tixa",
+   "sourceName": "Tixa",
+   "links": [
+    {
+     "name": "Tixa",
+     "url": "https://www.tixa.hu/barbed-wire-35-durer"
+    }
+   ],
+   "id": "barbed-wire-neck-sprain-archaic-durer-kert-03-26"
+  },
+  {
+   "title": "Nazareth // Budapest, Dürer Kert",
+   "url": "https://www.tixa.hu/nazareth-dk-2027",
+   "image": "https://www.tixa.hu/kepek/0045/45109-1_20260910101022.jpg",
+   "start": "2027-03-31",
+   "end": null,
+   "time": null,
+   "category": "Koncert",
+   "venue": "Dürer Kert - Nagyterem",
+   "description": null,
+   "source": "tixa",
+   "sourceName": "Tixa",
+   "links": [
+    {
+     "name": "Tixa",
+     "url": "https://www.tixa.hu/nazareth-dk-2027"
+    }
+   ],
+   "id": "nazareth-budapest-durer-kert-03-31"
+  },
+  {
+   "title": "Gary Moore Emlékest 2027 @ Analog Music Hall, Budapest",
+   "url": "https://www.tixa.hu/gary-moore-emlekest-2027-analog-music-hall-budapest-20270403",
+   "image": "https://www.tixa.hu/kepek/0044/44574-1_20260730090449.jpg",
+   "start": "2027-04-03",
+   "end": null,
+   "time": "19:30",
+   "category": "Koncert",
+   "venue": "Analog Music Hall",
+   "description": null,
+   "source": "tixa",
+   "sourceName": "Tixa",
+   "links": [
+    {
+     "name": "Tixa",
+     "url": "https://www.tixa.hu/gary-moore-emlekest-2027-analog-music-hall-budapest-20270403"
+    }
+   ],
+   "id": "gary-moore-emlekest-2027-analog-music-hall-budapest-04-03"
+  },
+  {
+   "title": "LAZARVS, vendég: She Loves Pablo, Devoid // Dürer Kert // 04.10.",
+   "url": "https://www.tixa.hu/lazarvs-durer0410",
+   "image": "https://www.tixa.hu/kepek/0046/46359-1_20261019151548.jpg",
+   "start": "2027-04-10",
+   "end": null,
+   "time": null,
+   "category": "Koncert",
+   "venue": "Dürer Kert",
+   "description": null,
+   "source": "tixa",
+   "sourceName": "Tixa",
+   "links": [
+    {
+     "name": "Tixa",
+     "url": "https://www.tixa.hu/lazarvs-durer0410"
+    }
+   ],
+   "id": "lazarvs-vendeg-she-loves-pablo-devoid-durer-kert-04-10-04-10"
+  },
+  {
    "title": "Stereo MC’s",
    "url": "https://akvariumklub.hu/programok/stereo-mcs/",
    "image": "https://akvariumklub.hu/wp-content/uploads/2026/10/STEREO-MCS-FB-COVER-300x157.jpg",
@@ -2952,6 +4436,46 @@
     }
    ],
    "id": "stereo-mc-s-05-21"
+  },
+  {
+   "title": "The Doors Alive (UK) - Dürer Kert",
+   "url": "https://www.tixa.hu/the-doors-alive-durer-kert",
+   "image": "https://www.tixa.hu/kepek/0044/44954-1_20260826155048.jpg",
+   "start": "2027-06-05",
+   "end": null,
+   "time": "19:00",
+   "category": "Koncert",
+   "venue": "Dürer Kert",
+   "description": null,
+   "source": "tixa",
+   "sourceName": "Tixa",
+   "links": [
+    {
+     "name": "Tixa",
+     "url": "https://www.tixa.hu/the-doors-alive-durer-kert"
+    }
+   ],
+   "id": "the-doors-alive-uk-durer-kert-06-05"
+  },
+  {
+   "title": "ANDRÉ RIEU 2027",
+   "url": "https://www.jegy.hu/program/andre-rieu-2027-198512",
+   "image": "https://pb2.programinfo.hu/imgs/system-4/program/000/198/512/andre-rieu-2027-222-131-296169.webp",
+   "start": "2027-11-05",
+   "end": null,
+   "time": "19:30",
+   "category": "Koncert",
+   "venue": "MVM Dome",
+   "description": null,
+   "source": "jegy",
+   "sourceName": "Jegy.hu",
+   "links": [
+    {
+     "name": "Jegy.hu",
+     "url": "https://www.jegy.hu/program/andre-rieu-2027-198512"
+    }
+   ],
+   "id": "andre-rieu-2027-11-05"
   }
  ]
 }

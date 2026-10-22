@@ -6,6 +6,7 @@ const BASE = 'https://welovebudapest.com/programok/';
 export default {
   id: 'welovebudapest',
   name: 'We Love Budapest',
+  fixtures: [{ file: 'wlb.html' }],
   // The main list is a curated mix; category pages surface more events.
   urls: [
     BASE,

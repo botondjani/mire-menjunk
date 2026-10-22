@@ -63,6 +63,8 @@ const state = {
   saved: new Set(store.get('saved', [])),
   events: [],
   byId: new Map(),
+  limit: 60,
+  ongoingLimit: 12,
 };
 
 // ---------- adat ----------
@@ -125,6 +127,8 @@ function card(e) {
   </article>`;
 }
 
+const PAGE = 60;
+
 function render() {
   const items = filtered();
   syncQuery();
@@ -134,27 +138,41 @@ function render() {
       : '<p class="empty">Erre nincs találat. Próbálj másik napot vagy kategóriát! 🙂</p>';
     return;
   }
-  // Napi csoportok; a hosszan futó (kiállítás-szerű) programok külön a végén.
+  // Napi csoportok; a hosszan futó (kiállítás-szerű) programok külön blokkban, saját lapozással.
   const [from] = range(state.day);
-  const groups = new Map();
+  const dated = [];
   const ongoing = [];
-  for (const e of items) {
-    if (isLong(e) && state.day !== 'mentett') { ongoing.push(e); continue; }
-    const key = e.start < from ? from : e.start;
-    if (!groups.has(key)) groups.set(key, []);
-    groups.get(key).push(e);
+  for (const e of items) (isLong(e) && state.day !== 'mentett' ? ongoing : dated).push(e);
+  const dayOf = (e) => (e.start < from ? from : e.start);
+  dated.sort((a, b) => dayOf(a).localeCompare(dayOf(b)) || (a.time || '99').localeCompare(b.time || '99'));
+  ongoing.sort((a, b) => a.end.localeCompare(b.end));
+
+  const groups = new Map();
+  for (const e of dated.slice(0, state.limit)) {
+    if (!groups.has(dayOf(e))) groups.set(dayOf(e), []);
+    groups.get(dayOf(e)).push(e);
   }
   let html = '';
-  for (const [day, evs] of [...groups].sort(([a], [b]) => a.localeCompare(b))) {
+  for (const [day, evs] of groups) {
     html += `<section><h2 class="day">${dayName(day)}</h2><div class="grid">${evs.map(card).join('')}</div></section>`;
   }
+  if (dated.length > state.limit) {
+    html += `<button class="btn more" data-more="limit">Még ${Math.min(PAGE, dated.length - state.limit)} program (összesen ${dated.length})</button>`;
+  }
   if (ongoing.length) {
-    ongoing.sort((a, b) => a.end.localeCompare(b.end));
-    html += `<section><h2 class="day">Most is látogatható <small>kiállítások, sorozatok</small></h2><div class="grid">${ongoing.map(card).join('')}</div></section>`;
+    html += `<section><h2 class="day">Most is látogatható <small>kiállítások, sorozatok · ${ongoing.length}</small></h2><div class="grid">${ongoing.slice(0, state.ongoingLimit).map(card).join('')}</div></section>`;
+    if (ongoing.length > state.ongoingLimit) html += `<button class="btn more" data-more="ongoingLimit">Még ${Math.min(PAGE, ongoing.length - state.ongoingLimit)} kiállítás, sorozat</button>`;
   }
   const upd = state.updated ? new Date(state.updated).toLocaleString('hu-HU', { dateStyle: 'medium', timeStyle: 'short' }) : '';
-  html += `<footer class="foot">${items.length} program · frissítve: ${upd}<br>Források: We Love Budapest, Akvárium Klub. A részletekért és jegyekért mindig a forrásoldal az irányadó.</footer>`;
+  const sources = [...new Set(state.events.flatMap((e) => e.links.map((l) => l.name)))].join(', ');
+  html += `<footer class="foot">${items.length} program · frissítve: ${upd}<br>Források: ${esc(sources)}. A részletekért és jegyekért mindig a forrásoldal az irányadó.</footer>`;
   list.innerHTML = html;
+}
+
+/** Szűrőváltáskor újra az első oldalról indulunk. */
+function resetPaging() {
+  state.limit = PAGE;
+  state.ongoingLimit = 12;
 }
 
 function syncQuery() {
@@ -287,12 +305,13 @@ function toast(msg) {
 
 // ---------- események ----------
 document.addEventListener('click', (ev) => {
-  const el = ev.target.closest('[data-day],[data-cat],[data-open],[data-save],[data-share],[data-copy],[data-ics],[data-close],[data-home]');
+  const el = ev.target.closest('[data-more],[data-day],[data-cat],[data-open],[data-save],[data-share],[data-copy],[data-ics],[data-close],[data-home]');
   if (!el) return;
-  const { day, cat, open, save, share: sh, copy: cp, ics } = el.dataset;
+  const { more, day, cat, open, save, share: sh, copy: cp, ics } = el.dataset;
   const ev_ = (id) => state.byId.get(id);
-  if (day !== undefined) { state.day = day; renderFilters(); render(); window.scrollTo({ top: 0 }); }
-  else if (cat !== undefined) { state.cat = cat; renderFilters(); render(); }
+  if (more) { state[more] += PAGE; render(); }
+  else if (day !== undefined) { state.day = day; resetPaging(); renderFilters(); render(); window.scrollTo({ top: 0 }); }
+  else if (cat !== undefined) { state.cat = cat; resetPaging(); renderFilters(); render(); }
   else if (open) { ev.preventDefault(); openEvent(ev_(open)); }
   else if (save) toggleSave(save);
   else if (sh) share(ev_(sh));
@@ -309,7 +328,7 @@ window.addEventListener('popstate', route);
 let qTimer;
 $('#q').addEventListener('input', (ev) => {
   clearTimeout(qTimer);
-  qTimer = setTimeout(() => { state.q = ev.target.value; render(); }, 150);
+  qTimer = setTimeout(() => { state.q = ev.target.value; resetPaging(); render(); }, 200);
 });
 
 // ---------- PWA ----------

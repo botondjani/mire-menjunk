@@ -80,7 +80,7 @@ export function detectCategory(text, fallback = 'Szabadidő') {
     [/film|-mozi|vetites|klipszemle/, 'Film'],
     [/fesztival|het-budapest|showcase/, 'Fesztivál'],
     [/gyerek|csalad|halloweeni-csaladi|workshop-gyerek/, 'Családi'],
-    [/gasztro|vacsora|-bor-|borfesztival|-sor-|sorfesztival|fozes|kostolo|street-food/, 'Gasztró'],
+    [/gasztro|vacsora|-bor-|borfesztival|-sor-|sorfesztival|fozes|kostolo|street-food|whisky|spirit|-wine-/, 'Gasztró'],
     [/vasar|placc|toy-show|market|bolhapiac/, 'Vásár'],
   ];
   for (const [re, cat] of rules) if (re.test(t)) return cat;

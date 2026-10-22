@@ -4,6 +4,7 @@ import { clean, detectCategory, parseShortDate, todayBudapest } from '../lib/uti
 export default {
   id: 'akvarium',
   name: 'Akvárium Klub',
+  fixtures: [{ file: 'akvarium.html' }],
   urls: ['https://akvariumklub.hu/programok/', 'https://akvariumklub.hu/programok/page/2/'],
 
   parse(html, { today = todayBudapest() } = {}) {
