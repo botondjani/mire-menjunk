@@ -5,6 +5,8 @@ import { clean, detectCategory, todayBudapest } from '../lib/util.js';
 const HOME = 'https://www.tixa.hu/';
 const VENUES = [
   'durerkert', 'turbina-kulturalis-kozpont', 'budapest_park', 'fogashaz_budapest', 'Godor_Budapest', 'muzikum_klub',
+  // fiatalok kedvenc klubjai
+  'toldiklub', 'robot', 'kazi', 'haromholloszinpad',
 ];
 const JUNK = /b[eé]rlet|\bpass\b|csomag|aj[aá]nd[eé]k|gift|voucher|utalv[aá]ny|early bird pass/i;
 

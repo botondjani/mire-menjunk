@@ -7,7 +7,7 @@ Budapest programjai egy helyen: koncertek, bulik, kiállítások, színház. Nap
   - `public/data/events.json` – az app adatai
   - `public/e/<id>/index.html` – megosztó oldalak Open Graph előnézettel (kép + cím Messengerben, FB-n, WhatsAppon) és schema.org Event adatokkal (Google)
   - `public/sitemap.xml`
-- **App** (`public/`): build nélküli, vanilla JS PWA. Szűrés napra/kategóriára, keresés, mentés (♥), megosztás (Web Share API + WhatsApp/FB/Viber/link), naptárba (.ics), útvonal, offline mód.
+- **App** (`public/`): build nélküli, vanilla JS PWA. Szűrés napra/kategóriára, keresés, mentés (♥), megosztás (Web Share API + WhatsApp/FB/Viber/link), útvonal, offline mód.
 - A szűrők az URL-ben vannak (pl. `?nap=hetvege&kat=Koncert`), így ezek is megoszthatók.
 
 ## Források
@@ -20,7 +20,9 @@ Budapest programjai egy helyen: koncertek, bulik, kiállítások, színház. Nap
 | A38 Hajó (iCal feed) | koncertek, bulik |
 | Trafó | kortárs tánc, színház, koncert |
 | Magyar Zene Háza (a naptár szerveroldali adatai) | koncertek, családi programok |
-| Tixa (főoldal + budapesti helyszínoldalak JSON-LD-je) | klubkoncertek: Dürer, Turbina, Budapest Park, Instant/Fogas, Gödör, Muzikum |
+| Tixa (főoldal + budapesti helyszínoldalak JSON-LD-je) | klubkoncertek: Dürer, Turbina, Budapest Park, Instant/Fogas, Gödör, Muzikum, Toldi, Robot, KAZI, Három Holló |
+
+A **Fiataloknak** címkét a scraper adja (`isYouth` a `run.js`-ben): bulik, egyetemisták kedvelt klubjainak koncertjei, és kulcsszavak (egyetem, diák, slam, stand-up, kvíz, techno…).
 
 A Müpa naptára kattintásra, szerverhívással tölti a heteket, ezért közvetlenül nem húzzuk le – a fontosabb Müpa-programok a WLB-n és a Funzine-on keresztül bejönnek.
 

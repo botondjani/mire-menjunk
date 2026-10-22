@@ -78,13 +78,30 @@ async function collect(source) {
 }
 
 const CANCELLED = /\belmarad|\bcancel+ed\b|\bt[oö]r[oö]lve\b/i;
-const MUSIC_VENUES = new Set(['Akvárium Klub', 'Dürer Kert', 'A38 Hajó', 'Turbina', 'Barba Negra', 'Müpa', 'Magyar Zene Háza', 'Gödör', 'Szimpla Kert', 'Muzikum']);
+const MUSIC_VENUES = new Set(['Akvárium Klub', 'Dürer Kert', 'A38 Hajó', 'Turbina', 'Barba Negra', 'Müpa', 'Magyar Zene Háza', 'Gödör', 'Szimpla Kert', 'Muzikum', 'Toldi Klub', 'Robot', 'KAZI', 'Három Holló', 'Instant & Fogas', 'Lärm']);
+
+// "Fiataloknak": klubok, ahová az egyetemisták járnak, plusz műfajok és kulcsszavak.
+const YOUTH_VENUES = new Set([
+  'Dürer Kert', 'Turbina', 'Gödör', 'Toldi Klub', 'Robot', 'KAZI', 'Három Holló',
+  'Instant & Fogas', 'Lärm', 'MANYI', 'Eötvös10', 'Szimpla Kert', 'Budapest Park',
+]);
+const YOUTH_WORDS = /egyetem|\belte\b|\bbme\b|corvinus|semmelweis|g[oó]ly|di[aá]k|student|erasmus|\besn\b|hallgat[oó]|open ?mic|slam|stand-?up|kv[ií]z|quiz|karaoke|\bjam\b|techno|\bhouse\b|drum ?(?:and|&|n) ?bass|\bdnb\b|rave|hip-?hop|\brap\b|indie|punk|pub ?night|beer ?pong|s[oö]rfeszt|ingyenes|free entry|warm-?up|afterparty|lemezbemutat/i;
+const NOT_YOUTH = /gyerek|csal[aá]d|nyugd[ií]j|szenior|baba|ovis|nosztalg|eml[eé]k(?:koncert|est)|jubileumi|operett|nagykoncert|tribute|tárlatvezet|kiáll[ií]t/i;
+
+function isYouth(e) {
+  if (e.category === 'Családi' || NOT_YOUTH.test(e.title)) return false;
+  return e.category === 'Buli'
+    || (YOUTH_VENUES.has(e.venue) && ['Koncert', 'Buli', 'Szabadidő'].includes(e.category))
+    || YOUTH_WORDS.test(`${e.title} ${e.description || ''}`);
+}
 
 /** Shared clean-up so sources agree: canonical venue names, no cancelled shows, better category fallback. */
 function normalize(e) {
   const venue = e.venue ? detectVenue(e.venue) || e.venue : null;
   const category = e.category === 'Szabadidő' && MUSIC_VENUES.has(venue) ? 'Koncert' : e.category;
-  return { ...e, venue, category };
+  const out = { ...e, venue, category };
+  if (isYouth(out)) out.youth = true;
+  return out;
 }
 
 const norm = (s) => slugify(s).replace(/-/g, ' ');
@@ -122,7 +139,7 @@ function dedupe(events) {
       continue;
     }
     if (twin.url !== e.url && !twin.links.some((l) => l.url === e.url)) twin.links.push({ name: e.sourceName, url: e.url });
-    for (const k of ['image', 'description', 'venue', 'time', 'end', 'more']) twin[k] ??= e[k];
+    for (const k of ['image', 'description', 'venue', 'time', 'end', 'youth']) twin[k] ??= e[k];
     // Same source listing a show twice (e.g. seated + accessible tickets): keep the plainer title.
     if (e.source === twin.source && e.title.length < twin.title.length) twin.title = e.title;
   }

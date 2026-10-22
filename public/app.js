@@ -16,11 +16,14 @@ const GROUPS = [
   { key: 'egyeb', label: 'Fesztivál & más', emoji: '✨', hue: 55, cats: ['Fesztivál', 'Gasztró', 'Vásár', 'Szabadidő', 'Kultúra'] },
 ];
 const groupOf = (e) => GROUPS.find((g) => g.cats.includes(e.category)) || GROUPS[GROUPS.length - 1];
+// Kategóriákon átívelő szűrő: a scraper jelöli (klubok, bulik, egyetemi és diákprogramok).
+const YOUTH = { key: 'fiatal', label: 'Fiataloknak', emoji: '🎓', hue: 265 };
+const matchesFilter = (e, key) => !key || (key === YOUTH.key ? e.youth : groupOf(e).key === key);
 const DAYS = [['ma', 'Ma'], ['holnap', 'Holnap'], ['hetvege', 'Hétvégén'], ['het', 'Ezen a héten'], ['mind', 'Bármikor']];
 const WEEKDAYS = ['vasárnap', 'hétfő', 'kedd', 'szerda', 'csütörtök', 'péntek', 'szombat'];
 const WD_SHORT = ['V', 'H', 'K', 'SZE', 'CS', 'P', 'SZO'];
 const MONTHS = ['jan.', 'febr.', 'márc.', 'ápr.', 'máj.', 'jún.', 'júl.', 'aug.', 'szept.', 'okt.', 'nov.', 'dec.'];
-const SUGGESTIONS = ['Dürer', 'Akvárium', 'A38', 'Trafó', 'jazz', 'fesztivál', 'kiállítás', 'stand-up'];
+const SUGGESTIONS = ['Dürer', 'Akvárium', 'A38', 'Toldi', 'techno', 'jazz', 'slam', 'stand-up', 'ingyenes'];
 
 // ---------- dátumok (Budapest időzóna, YYYY-MM-DD stringekkel) ----------
 const today = new Intl.DateTimeFormat('sv-SE', { timeZone: 'Europe/Budapest' }).format(new Date());
@@ -76,7 +79,7 @@ const params = new URLSearchParams(location.search);
 const state = {
   view: VIEWS[params.get('v')] || 'home',
   day: DAYS.some(([k]) => k === params.get('nap')) ? params.get('nap') : 'mind',
-  group: GROUPS.some((g) => g.key === params.get('kat')) ? params.get('kat') : '',
+  group: [YOUTH, ...GROUPS].some((g) => g.key === params.get('kat')) ? params.get('kat') : '',
   q: params.get('q') || '',
   saved: new Set(store.get('saved', [])),
   events: [],
@@ -154,6 +157,7 @@ function homeView() {
     <h1>Mi legyen ma?</h1>
   </header>`;
   html += rail('Ma este', evening.length >= 4 ? evening : on('ma'), listHref({ nap: 'ma' }));
+  html += rail(`${YOUTH.emoji} Fiataloknak`, soon.filter((e) => e.youth), listHref({ kat: YOUTH.key }), 'klubok, bulik, diákprogramok');
   html += rail('Holnap', on('holnap'), listHref({ nap: 'holnap' }));
   html += rail('Hétvégén', on('hetvege'), listHref({ nap: 'hetvege' }));
   for (const g of GROUPS) {
@@ -166,8 +170,7 @@ function homeView() {
 
 function filteredList() {
   const r = range(state.day);
-  const g = GROUPS.find((x) => x.key === state.group);
-  return state.events.filter((e) => overlaps(e, r) && (!g || groupOf(e) === g));
+  return state.events.filter((e) => overlaps(e, r) && matchesFilter(e, state.group));
 }
 
 function listBody(items) {
@@ -192,7 +195,7 @@ function listBody(items) {
 
 function listView() {
   const items = filteredList();
-  const g = GROUPS.find((x) => x.key === state.group);
+  const g = [YOUTH, ...GROUPS].find((x) => x.key === state.group);
   const title = [g?.label, DAYS.find(([k]) => k === state.day)?.[1]].filter((x) => x && x !== 'Bármikor').join(' · ') || 'Minden program';
   return `<header class="page-head">
       <button class="icon-btn back" data-nav="./" aria-label="Vissza">${icons.back}</button>
@@ -201,7 +204,7 @@ function listView() {
     <nav class="seg" aria-label="Időszak">${DAYS.map(([k, l]) => `<button data-day="${k}" aria-pressed="${state.day === k}">${l}</button>`).join('')}</nav>
     <nav class="cats" aria-label="Kategória">
       <button data-group="" aria-pressed="${!state.group}">Mind</button>
-      ${GROUPS.map((x) => `<button data-group="${x.key}" aria-pressed="${state.group === x.key}">${x.emoji} ${x.label}</button>`).join('')}
+      ${[YOUTH, ...GROUPS].map((x) => `<button data-group="${x.key}" aria-pressed="${state.group === x.key}">${x.emoji} ${x.label}</button>`).join('')}
     </nav>
     ${listBody(items)}${footer()}`;
 }
@@ -216,7 +219,7 @@ function searchResults() {
 }
 
 function searchView() {
-  const counts = Object.fromEntries(GROUPS.map((g) => [g.key, state.events.filter((e) => groupOf(e) === g).length]));
+  const counts = Object.fromEntries([YOUTH, ...GROUPS].map((g) => [g.key, state.events.filter((e) => matchesFilter(e, g.key)).length]));
   return `<header class="page-head"><div><h1>Keresés</h1></div></header>
     <label class="search">
       ${icons.search}
@@ -225,7 +228,7 @@ function searchView() {
     <div id="results">${state.q ? searchResults() : `
       <div class="suggest">${SUGGESTIONS.map((s) => `<button data-q="${esc(s)}">${esc(s)}</button>`).join('')}</div>
       <h2 class="day">Kategóriák</h2>
-      <div class="tiles">${GROUPS.map((g) => `<a class="tile" href="${listHref({ kat: g.key })}" data-nav="${listHref({ kat: g.key })}" style="--hue:${g.hue}">
+      <div class="tiles">${[YOUTH, ...GROUPS].map((g) => `<a class="tile" href="${listHref({ kat: g.key })}" data-nav="${listHref({ kat: g.key })}" style="--hue:${g.hue}">
         <span class="tile-emoji">${g.emoji}</span><b>${g.label}</b><small>${counts[g.key]} program</small></a>`).join('')}</div>`}
     </div>`;
 }
@@ -395,7 +398,6 @@ document.addEventListener('click', (ev) => {
     state.limit = PAGE;
     render();
     window.scrollTo({ top: 0 });
-    if (d.tab === 'search') $('#q')?.focus();
   } else if (d.nav) { ev.preventDefault(); go(d.nav); }
   else if ('more' in d) { state.limit += PAGE; state.view === 'search' ? ($('#results').innerHTML = searchResults()) : render(); }
   else if (d.day !== undefined) { state.day = d.day; state.limit = PAGE; render(); }
