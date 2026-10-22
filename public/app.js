@@ -1,4 +1,4 @@
-// Mire menjünk? – kliens. Nincs build lépés: sima ES modul.
+// Hova menjünk? – kliens. Nincs build lépés: sima ES modul.
 // Nézetek: felfedezés (vízszintes szekciók), lista (szűrt, napokra bontva), keresés, mentett.
 // Minden nézetnek van betöltő, üres és hibaállapota; a visszafordítható lépések (mentés) visszavonhatók.
 
@@ -28,7 +28,6 @@ const DAY_SHORT = { ma: 'Ma', holnap: 'Holnap', hetvege: 'Hétvége', het: 'Hét
 const WEEKDAYS = ['vasárnap', 'hétfő', 'kedd', 'szerda', 'csütörtök', 'péntek', 'szombat'];
 const WD_SHORT = ['V', 'H', 'K', 'SZE', 'CS', 'P', 'SZO'];
 const MONTHS = ['jan.', 'febr.', 'márc.', 'ápr.', 'máj.', 'jún.', 'júl.', 'aug.', 'szept.', 'okt.', 'nov.', 'dec.'];
-const SUGGESTIONS = ['Dürer', 'Akvárium', 'A38', 'Toldi', 'techno', 'jazz', 'slam', 'stand-up', 'ingyenes'];
 const STALE_HOURS = 36;
 
 // ---------- dátumok (Budapest időzóna, YYYY-MM-DD stringekkel) ----------
@@ -222,7 +221,7 @@ const listHref = (p) => `?${new URLSearchParams({ v: 'lista', ...p })}`;
 /** Lejárt megosztott link: nem hiba, hanem esély – megmutatjuk, mi hasonló jön most. */
 function expiredNotice() {
   if (!state.expired) return '';
-  const words = state.expired.replace(/-\d{2}-\d{2}x*$/, '').split('-').filter((w) => w.length >= 4);
+  const words = state.expired.replace(/-(?:\d{2}-\d{2}|[a-z]{3,4}\d{1,2})x*$/, '').split('-').filter((w) => w.length >= 4);
   const similar = state.events.filter((e) => words.some((w) => norm(`${e.title} ${e.venue || ''}`).includes(w)));
   const picks = (similar.length ? similar : state.events.filter((e) => e.start <= addDays(today, 3))).slice(0, 12);
   return `<section class="notice" role="status">
@@ -332,8 +331,8 @@ function searchResults() {
     return stateBox({
       icon: '🤔',
       title: `Nincs találat erre: „${esc(state.q)}”`,
-      text: 'Nézd meg a helyesírást, írj rövidebb szót, vagy próbáld ezeket:',
-      actions: `<div class="suggest center">${SUGGESTIONS.slice(0, 6).map((s) => `<button data-q="${esc(s)}">${esc(s)}</button>`).join('')}</div>`,
+      text: 'Nézd meg a helyesírást, vagy írj rövidebb szót – például csak az előadó vagy a helyszín nevét.',
+      actions: '<button class="btn" data-clear>Keresés törlése</button>',
     });
   }
   return `<p class="count">${hits.length} találat</p><div class="rows">${hits.slice(0, state.limit).map((e) => row(e, { withDate: true })).join('')}</div>${hits.length > state.limit ? '<button class="btn more" data-more>Továbbiak</button>' : ''}`;
@@ -341,8 +340,7 @@ function searchResults() {
 
 function searchIdle() {
   const counts = Object.fromEntries(FILTERS.map((g) => [g.key, state.events.filter((e) => matchesFilter(e, g.key)).length]));
-  return `<div class="suggest">${SUGGESTIONS.map((s) => `<button data-q="${esc(s)}">${esc(s)}</button>`).join('')}</div>
-    <h2 class="day">Kategóriák</h2>
+  return `<h2 class="day">Kategóriák</h2>
     <div class="tiles">${FILTERS.map((g) => `<a class="tile" href="${listHref({ kat: g.key })}" data-nav="${listHref({ kat: g.key })}" style="--hue:${g.hue}">
       <span class="tile-emoji">${g.emoji}</span><b>${g.label}</b><small>${counts[g.key]} program</small></a>`).join('')}</div>`;
 }
@@ -426,7 +424,7 @@ function back() {
 // ---------- részletek ----------
 const eventUrl = (e) => new URL(`e/${e.id}/`, ROOT).href;
 
-function openEvent(e, push = true) {
+function openEvent(e, push = true, { shared = false } = {}) {
   if (!e) return;
   if (push) history.pushState({ id: e.id }, '', eventUrl(e));
   const saved = state.saved.has(e.id);
@@ -438,6 +436,7 @@ function openEvent(e, push = true) {
     <button class="fab close" data-close aria-label="Bezárás">${icons.close}</button>
     ${media(e, 'hero')}
     <div class="detail-body">
+      ${shared ? '<p class="shared-note">🔗 Valaki megosztotta veled ezt a programot</p>' : ''}
       <span class="kicker">${g.emoji} ${esc(e.category)}${e.youth ? ' · 🎓 Fiataloknak' : ''}</span>
       <h2 id="sheetTitle">${esc(e.title)}</h2>
       <ul class="facts">
@@ -459,17 +458,18 @@ function openEvent(e, push = true) {
         <a href="viber://forward?text=${encodeURIComponent(shareText(e))}">Viber</a>
         <button data-copy="${e.id}">Link másolása</button>
       </div>
+      ${shared ? '<button class="btn wide" data-close>Több program ma estére →</button>' : ''}
       <p class="fineprint">Az időpont és az ár változhat – indulás előtt nézd meg a forrásoldalon.</p>
     </div>
   </article>`;
   if (!sheet.open) sheet.showModal();
   sheet.scrollTop = 0;
-  document.title = `${e.title} | Mire menjünk?`;
+  document.title = `${e.title} | Hova menjünk?`;
 }
 
 function closeEvent(push = true) {
   if (sheet.open) sheet.close();
-  document.title = 'Mire menjünk? – Budapest legjobb programjai';
+  document.title = 'Hova menjünk? – Budapest legjobb programjai';
   if (push && location.pathname.includes('/e/')) {
     history.pushState(null, '', ROOT);
     syncQuery();
@@ -481,7 +481,7 @@ function route() {
   if (!m) return closeEvent(false);
   const id = decodeURIComponent(m[1]);
   const e = state.byId.get(id);
-  if (e && (e.end || e.start) >= today) return openEvent(e, false);
+  if (e && (e.end || e.start) >= today) return openEvent(e, false, { shared: !history.state });
   // Lejárt vagy eltűnt program: a kezdőlapon elmagyarázzuk, és hasonlókat ajánlunk.
   state.expired = id;
   state.view = 'home';
@@ -491,10 +491,15 @@ function route() {
 }
 
 // ---------- megosztás, mentés ----------
-const shareText = (e) => `${e.title} – ${dateLabel(e)}${e.venue ? `, ${e.venue}` : ''} 👉 ${eventUrl(e)}`;
+/** Úgy szól, mintha egy barát írná: "Ezt nézd: … 🪩 Csütörtök 19:00 · Dürer Kert. Jössz?" */
+function shareLine(e) {
+  const when = e.end ? `${short(e.start)} – ${short(e.end)}` : `${cap(dayName(e.start) === 'Ma' ? 'ma' : dayName(e.start) === 'Holnap' ? 'holnap' : WEEKDAYS[weekday(e.start)])}${e.time ? ` ${e.time}` : ''}`;
+  return `Ezt nézd: ${e.title} ${groupOf(e).emoji} ${[when, e.venue].filter(Boolean).join(' · ')}. Jössz?`;
+}
+const shareText = (e) => `${shareLine(e)} 👉 ${eventUrl(e)}`;
 
 async function share(e) {
-  const data = { title: e.title, text: `${e.title} – ${dateLabel(e)}${e.venue ? `, ${e.venue}` : ''}`, url: eventUrl(e) };
+  const data = { title: e.title, text: shareLine(e), url: eventUrl(e) };
   if (navigator.share) {
     try { await navigator.share(data); return; } catch (err) { if (err.name === 'AbortError') return; }
   }

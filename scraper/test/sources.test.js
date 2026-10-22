@@ -126,3 +126,11 @@ test('Zene Háza: occasions-init JSON', async () => {
   assert.deepEqual([events[0].url, events[0].time, events[0].category], ['https://zenehaza.hu/esemeny/autechre-uk', '20:00', 'Koncert']);
   assert.deepEqual([events[1].time, events[1].image], ['09:30', 'https://zenehaza.hu/x.jpg']);
 });
+
+test('tidyTitle: csupa nagybetűs címek', async () => {
+  const { tidyTitle } = await import('../lib/util.js');
+  assert.equal(tidyTitle('10. MAGYAR KLIPSZEMLE DÍJÁTADÓ'), '10. Magyar Klipszemle Díjátadó');
+  assert.equal(tidyTitle('CSÍK LACI – RÉGI VILÁG ÉLŐZENEKAROS NAGYKONCERT'), 'Csík Laci – Régi Világ Élőzenekaros Nagykoncert');
+  assert.equal(tidyTitle('DJ Krush az Akvárium Klubban'), 'DJ Krush az Akvárium Klubban');
+  assert.equal(tidyTitle('FLESHLESS (CZ) // SPECTRAL DESPAIR'), 'Fleshless (CZ) // Spectral Despair');
+});

@@ -301,6 +301,8 @@ main {
 .soon { color: var(--accent); font-weight: 700; font-style: normal; }
 :root[data-theme="light"] .soon, :root[data-theme="light"] .link { color: var(--hot); }
 @media (prefers-color-scheme: light) { :root:not([data-theme="dark"]) .soon, :root:not([data-theme="dark"]) .link { color: var(--hot); } }
+.shared-note { margin: 0 0 12px; padding: 8px 12px; border-radius: 10px; background: var(--surface-2); font-size: .88rem; font-weight: 600; }
+.btn.wide { width: 100%; margin-top: 16px; }
 .fineprint { color: var(--muted); font-size: .8rem; margin: 18px 0 0; }
 .btn.more small { color: var(--muted); font-weight: 500; }
 .rail-head a span { color: var(--muted); font-weight: 500; margin-left: 2px; }

@@ -1,11 +1,12 @@
-# Mire menjünk? – Budapest programjai (PWA)
+# Hova menjünk? – Budapest programjai (PWA)
 
 Budapest programjai egy helyen: koncertek, bulik, kiállítások, színház. Naponta többször frissül, minden programnak saját, megosztható linkje van.
 
 ## Hogyan működik
 - **Scraper** (`scraper/`): Node + cheerio. Minden forrás egy adapter (`sources/*.js`), ami `{urls, parse(html)}`-t ad. A `run.js` lehúzza a listákat, egységes kategóriákba sorolja, összevonja a duplikátumokat, és legenerálja:
   - `public/data/events.json` – az app adatai
-  - `public/e/<id>/index.html` – megosztó oldalak Open Graph előnézettel (kép + cím Messengerben, FB-n, WhatsAppon) és schema.org Event adatokkal (Google)
+  - `public/e/<id>/index.html` – megosztó oldalak rövid, olvasható linkkel (pl. `e/dj-krush-akvarium-okt24/`), Open Graph előnézettel és schema.org Event adatokkal (Google)
+  - `public/og/<id>.jpg` – márkázott 1200×630-as előnézeti kép programonként (`scraper/og.js`: fotó vagy kategóriaszínes poszter, dátum, cím, helyszín, logó)
   - `public/sitemap.xml`
 - **App** (`public/`): build nélküli, vanilla JS PWA. Szűrés napra/kategóriára, keresés, mentés (♥), megosztás (Web Share API + WhatsApp/FB/Viber/link), útvonal, offline mód.
 - A szűrők az URL-ben vannak (pl. `?nap=hetvege&kat=Koncert`), így ezek is megoszthatók.

@@ -14,7 +14,8 @@ import timeout from './sources/timeout.js';
 import a38 from './sources/a38.js';
 import trafo from './sources/trafo.js';
 import zenehaza from './sources/zenehaza.js';
-import { detectVenue, slugify, todayBudapest } from './lib/util.js';
+import { addDays, detectVenue, slugify, tidyTitle, todayBudapest } from './lib/util.js';
+import { renderOg } from './og.js';
 
 // Curated sources first: on duplicates their description and image win.
 const SOURCES = [welovebudapest, funzine, timeout, akvarium, a38, trafo, zenehaza, tixa];
@@ -23,7 +24,7 @@ const PUBLIC = join(ROOT, 'public');
 const SITE_URL = (process.env.SITE_URL || '').replace(/\/?$/, '/');
 const today = todayBudapest();
 
-const UA = 'MireMenjunkBot/0.2 (+https://github.com/botondjani/mire-menjunk; programajánló aggregátor)';
+const UA = 'HovaMenjunkBot/0.3 (+https://github.com/botondjani/mire-menjunk; programajánló aggregátor)';
 const lastHit = new Map(); // host -> timestamp, so every source respects its own crawl delay
 
 async function fetchHtml(url, delayMs = 1000, retried = false) {
@@ -99,7 +100,7 @@ function isYouth(e) {
 function normalize(e) {
   const venue = e.venue ? detectVenue(e.venue) || e.venue : null;
   const category = e.category === 'Szabadidő' && MUSIC_VENUES.has(venue) ? 'Koncert' : e.category;
-  const out = { ...e, venue, category };
+  const out = { ...e, title: tidyTitle(e.title), venue, category };
   if (isYouth(out)) out.youth = true;
   return out;
 }
@@ -189,10 +190,15 @@ async function enrichImages(events) {
   console.log(`  Képek: ${missing.length} hiányzott, ${found} pótolva az eseményoldalakról.`);
 }
 
+const ID_MONTHS = ['jan', 'feb', 'mar', 'apr', 'maj', 'jun', 'jul', 'aug', 'szep', 'okt', 'nov', 'dec'];
+
+/** Short, readable link ids: the first few words of the title plus the day, e.g. "dj-krush-akvarium-okt24". */
 function assignIds(events) {
   const seen = new Set();
   for (const e of events) {
-    let id = `${slugify(e.title)}-${e.start.slice(5)}`;
+    let slug = slugify(e.title);
+    if (slug.length > 32) slug = slug.slice(0, 33).replace(/-[^-]*$/, '').replace(/(?:-(?:a|az|es|and|the|of|x|vs))+$/, '') || slug.slice(0, 32);
+    let id = `${slug}-${ID_MONTHS[+e.start.slice(5, 7) - 1]}${+e.start.slice(8)}`;
     while (seen.has(id)) id += 'x';
     seen.add(id);
     e.id = id;
@@ -205,9 +211,19 @@ const MONTHS = ['jan.', 'febr.', 'márc.', 'ápr.', 'máj.', 'jún.', 'júl.', '
 const shortDate = (iso) => `${MONTHS[+iso.slice(5, 7) - 1]} ${+iso.slice(8)}.`;
 const dateLabel = (e) => (e.end ? `${shortDate(e.start)} – ${shortDate(e.end)}` : shortDate(e.start) + (e.time ? ` ${e.time}` : ''));
 
+const WEEKDAYS = ['vasárnap', 'hétfő', 'kedd', 'szerda', 'csütörtök', 'péntek', 'szombat'];
+/** "Csütörtök, okt. 22. 19:00" – what a friend would write in a message. */
+function prettyWhen(e) {
+  if (e.end) return `${shortDate(e.start)} – ${shortDate(e.end)}`;
+  const wd = WEEKDAYS[new Date(`${e.start}T12:00:00Z`).getUTCDay()];
+  return `${wd[0].toUpperCase()}${wd.slice(1)}, ${shortDate(e.start)}${e.time ? ` ${e.time}` : ''}`;
+}
+
 function sharePage(template, e) {
-  const title = `${e.title} – ${dateLabel(e)}`;
-  const desc = [e.venue, e.category, e.description].filter(Boolean).join(' · ').slice(0, 200);
+  const title = e.title;
+  const when = [prettyWhen(e), e.venue].filter(Boolean).join(' · ');
+  const desc = `${when} – Jössz? Nézd meg a részleteket, és mentsd el egy koppintással.`;
+  const image = e.og && SITE_URL !== '/' ? `${SITE_URL}og/${e.id}.jpg` : e.image;
   const ld = {
     '@context': 'https://schema.org',
     '@type': 'Event',
@@ -220,16 +236,43 @@ function sharePage(template, e) {
     url: e.url,
   };
   const head = `<base href="../../">
-    <title>${esc(title)} | Mire menjünk?</title>
+    <title>${esc(title)} – ${esc(when)} | Hova menjünk?</title>
     <meta name="description" content="${esc(desc)}">
     <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Hova menjünk?">
+    <meta property="og:locale" content="hu_HU">
     <meta property="og:title" content="${esc(title)}">
-    <meta property="og:description" content="${esc(desc || 'Budapest legjobb programjai egy helyen')}">
-    ${e.image ? `<meta property="og:image" content="${esc(e.image)}">` : ''}
+    <meta property="og:description" content="${esc(desc)}">
+    ${image ? `<meta property="og:image" content="${esc(image)}">
+    <meta property="og:image:alt" content="${esc(`${title} – ${when}`)}">` : ''}
+    ${e.og && SITE_URL !== '/' ? '<meta property="og:image:width" content="1200">\n    <meta property="og:image:height" content="630">' : ''}
     ${SITE_URL !== '/' ? `<meta property="og:url" content="${esc(`${SITE_URL}e/${e.id}/`)}">` : ''}
     <meta name="twitter:card" content="summary_large_image">
+    ${image ? `<meta name="twitter:image" content="${esc(image)}">` : ''}
     <script type="application/ld+json">${JSON.stringify(ld).replace(/</g, '\\u003c')}</script>`;
   return template.replace(/<!--OG-->[\s\S]*?<!--\/OG-->/, head);
+}
+
+/** Branded share images for events in the next 60 days (and ongoing ones); 6 at a time. */
+async function renderShareImages(events) {
+  if (process.env.FIXTURES && !process.env.OG) return;
+  await rm(join(PUBLIC, 'og'), { recursive: true, force: true });
+  await mkdir(join(PUBLIC, 'og'), { recursive: true });
+  const horizon = addDays(today, 60);
+  const queue = events.filter((e) => e.start <= horizon);
+  let done = 0;
+  await Promise.all(Array.from({ length: 6 }, async () => {
+    for (let e = queue.shift(); e; e = queue.shift()) {
+      try {
+        await writeFile(join(PUBLIC, 'og', `${e.id}.jpg`), await renderOg(e));
+        e.og = true;
+        done++;
+      } catch (err) {
+        console.warn(`  ! og ${e.id}: ${err.message}`);
+      }
+    }
+  }));
+  console.log(`  Megosztási képek: ${done} elkészült.`);
 }
 
 async function main() {
@@ -248,7 +291,15 @@ async function main() {
     JSON.stringify({ updated: new Date().toISOString(), events }, null, 1),
   );
 
-  const template = await readFile(join(PUBLIC, 'index.html'), 'utf8');
+  let template = await readFile(join(PUBLIC, 'index.html'), 'utf8');
+  if (SITE_URL !== '/') {
+    // Link previews need absolute URLs; the deployed home page gets them too.
+    template = template.replace('content="icons/og.png"', `content="${SITE_URL}icons/og.png"`)
+      .replace('<meta name="twitter:card"', `<meta property="og:url" content="${SITE_URL}">\n  <meta name="twitter:card"`);
+    await writeFile(join(PUBLIC, 'index.html'), template);
+  }
+  await renderShareImages(events);
+
   await rm(join(PUBLIC, 'e'), { recursive: true, force: true });
   for (const e of events) {
     await mkdir(join(PUBLIC, 'e', e.id), { recursive: true });

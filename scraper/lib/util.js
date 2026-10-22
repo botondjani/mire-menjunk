@@ -194,3 +194,18 @@ export function weekdayDate(text, after) {
   }
   return null;
 }
+
+const SMALL_WORDS = new Set(['és', 'a', 'az', 'de', 'vagy', 'with', 'the', 'and', 'of', 'in', 'at', 'feat.', 'vs.', 'x']);
+
+/** "10. MAGYAR KLIPSZEMLE DÍJÁTADÓ" → "10. Magyar Klipszemle Díjátadó"; short tokens (DJ, UK, A38) stay as they are. */
+export function tidyTitle(t) {
+  const letters = t.replace(/[^a-záéíóöőúüűA-ZÁÉÍÓÖŐÚÜŰ]/g, '');
+  const upper = letters.replace(/[^A-ZÁÉÍÓÖŐÚÜŰ]/g, '').length;
+  if (letters.length < 8 || upper / letters.length < 0.8) return t;
+  return t.split(' ').map((w, i) => {
+    const lw = w.toLocaleLowerCase('hu');
+    if (i > 0 && SMALL_WORDS.has(lw)) return lw;
+    if (/\d/.test(w) || w.replace(/[^\p{L}]/gu, '').length <= 2) return w;
+    return lw.replace(/^(\P{L}*)(\p{L})/u, (_, pre, c) => pre + c.toLocaleUpperCase('hu'));
+  }).join(' ');
+}
