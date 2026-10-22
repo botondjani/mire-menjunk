@@ -1,6 +1,8 @@
 // Hova menjünk? – kliens. Nincs build lépés: sima ES modul.
-// Nézetek: felfedezés (vízszintes szekciók), lista (szűrt, napokra bontva), keresés, mentett.
+// Nézetek: felfedezés (vízszintes szekciók), lista (szűrt, napokra bontva), keresés, mentett, profil.
 // Minden nézetnek van betöltő, üres és hibaállapota; a visszafordítható lépések (mentés) visszavonhatók.
+
+import * as auth from './auth.js?v=11';
 
 const ROOT = new URL('./', import.meta.url);
 const $ = (s, el = document) => el.querySelector(s);
@@ -104,15 +106,20 @@ const store = {
   get(k, d) { try { return JSON.parse(localStorage.getItem(k)) ?? d; } catch { return d; } },
   set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch { /* privát mód: a mentés csak erre a látogatásra él */ } },
 };
-const VIEWS = { lista: 'list', kereses: 'search', mentett: 'saved' };
+const VIEWS = { lista: 'list', kereses: 'search', mentett: 'saved', profil: 'profile' };
 const params = new URLSearchParams(location.search);
 const state = {
   view: VIEWS[params.get('v')] || 'home',
   day: validDay(params.get('nap')) || DEFAULT_DAY,
-  tab: { search: 'search', saved: 'saved' }[VIEWS[params.get('v')]] || 'home', // melyik alsó fül aktív
+  tab: { search: 'search', saved: 'saved', profile: 'profile' }[VIEWS[params.get('v')]] || 'home', // melyik alsó fül aktív
   group: FILTERS.some((g) => g.key === params.get('kat')) ? params.get('kat') : '',
   q: params.get('q') || '',
   saved: new Set(store.get('saved', [])),
+  interests: store.get('interests', []),   // érdeklődési körök (FILTERS kulcsai); belépve a profilból szinkronizálva
+  user: null,                              // belépett felhasználó (Supabase), vagy null
+  profile: null,
+  authBusy: false,
+  confirmDelete: false,
   events: [],
   byId: new Map(),
   limit: 40,
@@ -145,9 +152,131 @@ async function load() {
     return;
   }
   view.removeAttribute('aria-busy');
+  // Google-ről visszatérve előbb a belépést fejezzük be, különben a címsor takarítása elvinné a ?code=-ot.
+  if (auth.hasPendingSession()) await initAuth();
   render();
   route();
   updateBanner();
+  authError();
+}
+
+// ---------- fiók ----------
+async function initAuth() {
+  try {
+    state.user = await auth.currentUser();
+    if (state.user) await afterSignIn();
+  } catch {
+    // Kilépett felhasználónak nem szólunk: neki a belépés gombnál derül ki, ha nem elérhető.
+    if (auth.hasPendingSession()) toast('A fiókodhoz most nem tudtunk kapcsolódni – a mentéseid a telefonodon megvannak.');
+    initAuth.started = false;
+    return;
+  }
+  if (!initAuth.subscribed) {
+    initAuth.subscribed = true;
+    auth.onAuthChange(async (user) => {
+      const changed = (user?.id ?? null) !== (state.user?.id ?? null);
+      state.user = user;
+      if (!changed) return;
+      if (user) await afterSignIn();
+      else state.profile = null;
+      if (!sheet.open) render();
+    });
+  }
+}
+
+/** Belépés után: a telefonon és a fiókban lévő mentések összefésülése, érdeklődési körök átvétele. */
+async function afterSignIn() {
+  const user = state.user;
+  try {
+    const [profile, remote] = await Promise.all([auth.loadProfile(user.id), auth.loadSaved()]);
+    state.profile = profile;
+    const localOnly = [...state.saved].filter((id) => !remote.includes(id));
+    await auth.addSaved(user.id, localOnly.map((id) => state.byId.get(id)).filter(Boolean));
+    state.saved = new Set([...state.saved, ...remote]);
+    store.set('saved', [...state.saved]);
+    if (profile?.interests?.length) {
+      state.interests = profile.interests;
+      store.set('interests', state.interests);
+    } else if (state.interests.length) {
+      await auth.saveInterests(user.id, state.interests);
+    }
+  } catch {
+    toast('A mentések szinkronja most nem sikerült – később újrapróbáljuk.');
+  }
+}
+
+/** Ha a Google-belépés hibával tért vissza (pl. megszakítva), azt elmondjuk, nem némán nyeljük el. */
+function authError() {
+  const p = new URLSearchParams(location.search + location.hash.replace(/^#/, '&'));
+  if (!p.get('error')) return;
+  toast(p.get('error') === 'access_denied' ? 'A bejelentkezést megszakítottad – semmi sem változott.' : 'A bejelentkezés most nem sikerült. Próbáld újra pár perc múlva.');
+}
+
+async function signIn() {
+  state.authBusy = true;
+  render();
+  try {
+    await auth.signIn(new URL('?v=profil', ROOT).href);
+  } catch {
+    state.authBusy = false;
+    render();
+    toast(navigator.onLine ? 'A Google-bejelentkezés most nem érhető el. Próbáld újra később.' : 'Nincs internetkapcsolat – a belépéshez net kell.');
+  }
+}
+
+async function signOut() {
+  await auth.signOut().catch(() => {});
+  state.user = null;
+  state.profile = null;
+  render();
+  toast('Kijelentkeztél. A mentéseid ezen a telefonon megmaradnak.');
+}
+
+async function deleteAccount() {
+  state.authBusy = true;
+  render();
+  try {
+    await auth.deleteAccount();
+    state.user = null;
+    state.profile = null;
+    state.confirmDelete = false;
+    toast('A fiókodat és a hozzá tartozó adatokat töröltük.');
+  } catch {
+    toast('A fiók törlése most nem sikerült. Próbáld újra, vagy írj nekünk.');
+  }
+  state.authBusy = false;
+  render();
+}
+
+async function toggleInterest(key) {
+  const set = new Set(state.interests);
+  set.has(key) ? set.delete(key) : set.add(key);
+  state.interests = FILTERS.map((g) => g.key).filter((k) => set.has(k));
+  store.set('interests', state.interests);
+  render();
+  if (state.user) auth.saveInterests(state.user.id, state.interests).catch(() => toast('Nem sikerült elmenteni a fiókodba – ezen a telefonon megvan.'));
+}
+
+/** "Neked ajánljuk": a választott érdeklődési körök és a mentett programok helyszínei, kategóriái alapján. */
+function recommendations() {
+  const savedEvents = state.events.filter((e) => state.saved.has(e.id));
+  const venues = new Set(savedEvents.map((e) => e.venue).filter(Boolean));
+  const groups = new Set(savedEvents.map((e) => groupOf(e).key));
+  if (!state.interests.length && !savedEvents.length) return [];
+  const horizon = addDays(today, 14);
+  return state.events
+    .filter((e) => !isLong(e) && e.start <= horizon && !state.saved.has(e.id))
+    .map((e) => {
+      let score = 0;
+      if (state.interests.some((k) => matchesFilter(e, k))) score += 3;
+      if (venues.has(e.venue)) score += 2;
+      if (groups.has(groupOf(e).key)) score += 1;
+      if (score && e.image) score += 0.5;
+      return { e, score };
+    })
+    .filter((x) => x.score >= 1)
+    .sort((a, b) => b.score - a.score || byTime(a.e, b.e))
+    .map((x) => x.e);
 }
 
 /** Felső sáv: offline vagy elavult adat esetén megmondja, mit lát a felhasználó, és mit tehet. */
@@ -294,6 +423,10 @@ function homeView() {
   html += rail('Ma este', pick(tonight, 10, false), listHref({ nap: 'ma' }), { total: tonight.length })
     || '<p class="hint">Mára már nincs több programunk – nézd meg a holnapiakat.</p>';
 
+  const recs = recommendations();
+  if (recs.length) html += rail('✨ Neked ajánljuk', pick(recs, 12), null, { size: 'mini' });
+  else if (!state.interests.length) html += `<button class="nudge" data-tab="profile"><span>✨</span><b>Mi érdekel?</b> Jelöld be a kedvenc műfajaidat, és ajánlunk neked programokat.</button>`;
+
   html += `<nav class="shortcuts" aria-label="Kategóriák">${[...FILTERS, { key: '', label: 'Minden', emoji: '🗂️', hue: 230 }].map((g) => `<a href="${listHref(g.key ? { kat: g.key } : {})}" data-nav="${listHref(g.key ? { kat: g.key } : {})}" style="--hue:${g.hue}"><span>${g.emoji}</span>${esc(g.label.replace(' & ', ' &\u00a0'))}</a>`).join('')}</nav>`;
 
   const youth = soon.filter((e) => e.youth);
@@ -435,6 +568,49 @@ function savedView() {
     : stateBox({ icon: '♡', title: 'Még nincs mentett programod', text: 'Nyomd meg a szív gombot egy kártyán, és itt megtalálod – akkor is, ha legközelebb nincs net.', actions: '<button class="btn primary" data-tab="home">Programok felfedezése</button>' })}`;
 }
 
+function profileView() {
+  const u = state.user;
+  const meta = u?.user_metadata || {};
+  const name = state.profile?.display_name || meta.full_name || meta.name || u?.email;
+  const avatar = state.profile?.avatar_url || meta.avatar_url;
+  const chips = FILTERS.map((g) => `<button data-interest="${g.key}" aria-pressed="${state.interests.includes(g.key)}">${g.emoji} ${esc(g.label)}</button>`).join('');
+  const interests = `<section class="panel">
+      <h2>Mi érdekel?</h2>
+      <p class="muted">Ezek alapján állítjuk össze a „Neked ajánljuk” sort a kezdőlapon.</p>
+      <div class="interest-chips">${chips}</div>
+    </section>`;
+  if (!u) {
+    return `<header class="page-head"><div><h1>Profil</h1></div></header>
+      <section class="login-card">
+        <h2>Lépj be, és mindenhol veled lesznek a mentéseid</h2>
+        <ul class="perks">
+          <li><span>♥</span>A mentett programjaid szinkronban a telefonodon és a gépeden</li>
+          <li><span>✨</span>Ajánlások a kedvenc műfajaid és helyeid alapján</li>
+          <li><span>🔔</span>Hamarosan: emlékeztető program előtt, és kedvenc helyek követése</li>
+        </ul>
+        <button class="btn google" data-signin ${state.authBusy ? 'disabled' : ''}>${icons.google}${state.authBusy ? 'Átirányítás a Google-höz…' : 'Belépés Google-fiókkal'}</button>
+        <p class="fineprint">Csak a neved, az e-mail-címed és a profilképed látjuk. Bármikor törölheted a fiókodat. <a href="adatvedelem.html">Adatvédelem</a></p>
+      </section>
+      ${interests}`;
+  }
+  const savedCount = state.events.filter((e) => state.saved.has(e.id)).length;
+  return `<header class="page-head"><div><h1>Profil</h1></div></header>
+    <section class="me">
+      ${avatar ? `<img src="${esc(avatar)}" alt="" referrerpolicy="no-referrer">` : `<span class="me-initial">${esc((name || '?')[0].toUpperCase())}</span>`}
+      <div><b>${esc(name)}</b><small>${esc(u.email || '')}</small></div>
+    </section>
+    <p class="muted sync-note">♥ ${savedCount} közelgő mentett program, szinkronban minden eszközödön.</p>
+    ${interests}
+    <section class="panel account">
+      <button class="btn" data-signout>Kijelentkezés</button>
+      ${state.confirmDelete
+        ? `<div class="danger-confirm"><p>Biztosan törlöd a fiókodat? A mentéseid a fiókodból végleg törlődnek (ezen a telefonon megmaradnak).</p>
+            <div class="state-actions"><button class="btn" data-delete-cancel>Mégse</button><button class="btn danger" data-delete-confirm ${state.authBusy ? 'disabled' : ''}>${state.authBusy ? 'Törlés…' : 'Igen, törlöm'}</button></div></div>`
+        : '<button class="link danger-link" data-delete>Fiókom törlése</button>'}
+      <p class="fineprint"><a href="adatvedelem.html">Adatvédelmi tájékoztató</a></p>
+    </section>`;
+}
+
 function footer() {
   const upd = state.updated ? new Date(state.updated).toLocaleString('hu-HU', { dateStyle: 'medium', timeStyle: 'short' }) : '';
   const sources = [...new Set(state.events.flatMap((e) => e.links.map((l) => l.name)))].join(', ');
@@ -442,7 +618,7 @@ function footer() {
 }
 
 function render() {
-  view.innerHTML = { home: homeView, list: listView, search: searchView, saved: savedView }[state.view]();
+  view.innerHTML = { home: homeView, list: listView, search: searchView, saved: savedView, profile: profileView }[state.view]();
   document.querySelectorAll('.tabbar [data-tab]').forEach((b) => b.setAttribute('aria-current', b.dataset.tab === state.tab ? 'page' : 'false'));
   updateBadge();
   syncQuery();
@@ -612,8 +788,17 @@ function toggleSave(id, { undo = false } = {}) {
     else b.setAttribute('aria-label', on ? 'Mentve – koppints az eltávolításhoz' : 'Mentés');
   });
   updateBadge();
+  if (state.user) {
+    const e = state.byId.get(id);
+    (on ? auth.addSaved(state.user.id, e ? [e] : []) : auth.removeSaved(state.user.id, [id]))
+      .catch(() => toast('A fiókodba most nem sikerült szinkronizálni – ezen a telefonon megvan.'));
+  }
   if (undo) toast(on ? 'Visszatéve a mentettek közé' : 'Mentés visszavonva');
-  else toast(on ? 'Elmentve – a Mentett fülön találod' : 'Eltávolítva a mentettek közül', { label: 'Visszavonás', fn: () => toggleSave(id, { undo: true }) });
+  else if (on && !state.user && !store.get('loginNudged', false)) {
+    // Egyszer, finoman: a belépés opcionális, a mentés enélkül is működik.
+    store.set('loginNudged', true);
+    toast('Elmentve ezen a telefonon. Belépve minden eszközödön meglesz.', { label: 'Belépés', fn: () => { state.view = 'profile'; state.tab = 'profile'; render(); window.scrollTo({ top: 0 }); } });
+  } else toast(on ? 'Elmentve – a Mentett fülön találod' : 'Eltávolítva a mentettek közül', { label: 'Visszavonás', fn: () => toggleSave(id, { undo: true }) });
   if (state.view === 'saved' && !sheet.open) render();
 }
 
@@ -637,13 +822,20 @@ $('#toast').addEventListener('click', (ev) => {
 
 // ---------- események ----------
 document.addEventListener('click', (ev) => {
-  const el = ev.target.closest('[data-pick],[data-tab],[data-nav],[data-back],[data-more],[data-day],[data-group],[data-q],[data-clear],[data-open],[data-save],[data-share],[data-copy],[data-close],[data-retry],[data-dismiss],[data-prune]');
+  const el = ev.target.closest('[data-signin],[data-signout],[data-delete],[data-delete-cancel],[data-delete-confirm],[data-interest],[data-pick],[data-tab],[data-nav],[data-back],[data-more],[data-day],[data-group],[data-q],[data-clear],[data-open],[data-save],[data-share],[data-copy],[data-close],[data-retry],[data-dismiss],[data-prune]');
   if (!el) return;
   const d = el.dataset;
   const find = (id) => state.byId.get(id);
+  if ('signin' in d) return signIn();
+  if ('signout' in d) return signOut();
+  if ('delete' in d) { state.confirmDelete = true; return render(); }
+  if ('deleteCancel' in d) { state.confirmDelete = false; return render(); }
+  if ('deleteConfirm' in d) return deleteAccount();
+  if (d.interest) return toggleInterest(d.interest);
   if (d.tab) {
     ev.preventDefault();
     closeEvent(false);
+    if (d.tab === 'profile' && !state.user && !initAuth.started) { initAuth.started = true; initAuth().then(() => state.view === 'profile' && render()); }
     state.view = d.tab;
     state.tab = d.tab;
     state.from = null;
@@ -669,6 +861,7 @@ document.addEventListener('click', (ev) => {
     const before = [...state.saved];
     state.saved = new Set(before.filter((id) => state.events.some((e) => e.id === id)));
     store.set('saved', [...state.saved]);
+    if (state.user) auth.removeSaved(state.user.id, before.filter((id) => !state.saved.has(id))).catch(() => {});
     render();
     toast('Lejárt programok törölve', { label: 'Visszavonás', fn: () => { state.saved = new Set(before); store.set('saved', before); render(); } });
   }
@@ -717,6 +910,7 @@ if ('serviceWorker' in navigator) navigator.serviceWorker.register(new URL('sw.j
 
 const svg = (body) => `<svg viewBox="0 0 24 24" aria-hidden="true">${body}</svg>`;
 const icons = {
+  google: '<svg viewBox="0 0 48 48" aria-hidden="true" class="g"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34.1 6.1 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.4-.4-3.5z"/><path fill="#FF3D00" d="m6.3 14.7 6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34.1 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-8l-6.5 5C9.5 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.4-.4-3.5z"/></svg>',
   heart: svg('<path d="M12 20.5s-7.5-4.6-7.5-10.3A4.2 4.2 0 0 1 12 7.6a4.2 4.2 0 0 1 7.5 2.6c0 5.7-7.5 10.3-7.5 10.3z"/>'),
   // a klasszikus "három összekötött pötty" megosztás ikon
   share: svg('<circle cx="18" cy="5" r="2.6"/><circle cx="6" cy="12" r="2.6"/><circle cx="18" cy="19" r="2.6"/><path d="m8.3 13.3 7.4 4.4M15.7 6.3 8.3 10.7"/>'),

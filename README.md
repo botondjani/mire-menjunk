@@ -34,6 +34,12 @@ A cél a válogatott, érdekes programok – a nagy jegyértékesítők teljes k
 
 Új forrás: másold le az egyik adaptert, írd meg a szelektorokat, add hozzá a `SOURCES` listához a `run.js`-ben, és tegyél mellé egy fixture-tesztet.
 
+## Profil (opcionális Google-belépés)
+- `public/auth.js`: Supabase (projekt `utybdwjrfnclyasbyuos`, EU-Frankfurt). A könyvtár csak belépéskor, vagy ha már volt belépve az eszközön, töltődik be (jsdelivr ESM).
+- Táblák: `profiles` (név, kép, érdeklődési körök) és `saved_events`, RLS-sel: mindenki csak a sajátját látja. Fióktörlés: `delete-account` Edge Function.
+- Belépés nélkül minden működik (a mentések a localStorage-ban vannak), belépéskor a helyi és a fiókban lévő mentések összefésülődnek.
+- Beállítás: Google Cloud OAuth-kliens → Supabase Authentication → Providers → Google; URL Configuration: Site URL és Redirect URL a Pages-cím (`…/mire-menjunk/**`).
+
 ## Parancsok
 ```bash
 npm ci
