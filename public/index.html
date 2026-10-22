@@ -16,7 +16,8 @@
     // Megosztott/ismeretlen /e/<id>/ útvonalon (404, offline) a relatív linkek a gyökérhez igazodjanak.
     if (location.pathname.includes('/e/') && !document.querySelector('base')) document.write('<base href="' + location.pathname.split('/e/')[0] + '/">');
   </script>
-  <meta name="theme-color" content="#ffcc00">
+  <meta name="theme-color" content="#0e0e10" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#f5f4f1" media="(prefers-color-scheme: light)">
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="icons/icon-192.png">
@@ -25,29 +26,35 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Figtree:wght@400;500;600;700&display=swap">
-  <link rel="stylesheet" href="styles.css">
-  <script type="module" src="app.js"></script>
+  <!-- ?v=… : új kiadásnál emeld, hogy a régi gyorsítótár ne keverje a fájlokat -->
+  <link rel="stylesheet" href="styles.css?v=3">
+  <script type="module" src="app.js?v=3"></script>
 </head>
 <body>
   <header class="top">
-    <div class="top-inner">
-      <div class="top-row">
-        <a class="brand" href="./" data-home>
-          <span class="logo" aria-hidden="true">BP</span>
-          <span class="brand-name">Mire menjünk?</span>
-        </a>
-        <label class="search">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
-          <input id="q" type="search" placeholder="Koncert, Dürer, kiállítás…" autocomplete="off" enterkeyhint="search" aria-label="Keresés">
-        </label>
-        <button class="install" id="installBtn" hidden>App telepítése</button>
-      </div>
-      <nav class="tabs" id="days" aria-label="Időszak"></nav>
-      <nav class="chips" id="cats" aria-label="Kategória"></nav>
-    </div>
+    <a class="brand" href="./" data-tab="home">
+      <span class="logo" aria-hidden="true">BP</span>
+      <span class="brand-name">Mire menjünk?</span>
+    </a>
+    <button class="install" id="installBtn" hidden>Telepítés</button>
   </header>
 
-  <main id="list" aria-live="polite"></main>
+  <main id="view" aria-live="polite"></main>
+
+  <nav class="tabbar" aria-label="Fő navigáció">
+    <a href="./" data-tab="home">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5l1.9 5.5h5.6l-4.5 3.4 1.7 5.6L12 14.6 7.3 18l1.7-5.6L4.5 9h5.6z"/></svg>
+      <span>Felfedezés</span>
+    </a>
+    <a href="./?v=kereses" data-tab="search">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <span>Keresés</span>
+    </a>
+    <a href="./?v=mentett" data-tab="saved">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.5s-7.5-4.6-7.5-10.3A4.2 4.2 0 0 1 12 7.6a4.2 4.2 0 0 1 7.5 2.6c0 5.7-7.5 10.3-7.5 10.3z"/></svg>
+      <span>Mentett</span><b class="count" hidden></b>
+    </a>
+  </nav>
 
   <dialog id="sheet" aria-labelledby="sheetTitle"></dialog>
   <div class="toast" id="toast" role="status"></div>

@@ -129,6 +129,49 @@ function dedupe(events) {
   return out;
 }
 
+/**
+ * Fills missing images: first from the last deployed events.json (so each page is fetched once),
+ * then from the event page's og:image. Hosts run in parallel, each at its own polite pace.
+ */
+async function enrichImages(events) {
+  const known = new Map();
+  if (SITE_URL !== '/' && !process.env.FIXTURES) {
+    try {
+      const prev = await (await fetch(`${SITE_URL}data/events.json`, { signal: AbortSignal.timeout(15_000) })).json();
+      for (const e of prev.events) if (e.image) for (const l of e.links || []) known.set(l.url, e.image);
+    } catch { /* first deploy or offline */ }
+  }
+  const missing = [];
+  for (const e of events) {
+    if (e.image) continue;
+    const hit = e.links.map((l) => known.get(l.url)).find(Boolean);
+    if (hit) e.image = hit;
+    else missing.push(e);
+  }
+  if (process.env.FIXTURES) return;
+  const byHost = new Map();
+  for (const e of missing) {
+    const link = e.links.find((l) => !/facebook\.com|instagram\.com|#/.test(l.url));
+    if (!link) continue;
+    const host = new URL(link.url).host;
+    if (!byHost.has(host)) byHost.set(host, []);
+    byHost.get(host).push([e, link.url]);
+  }
+  let found = 0;
+  await Promise.all([...byHost.values()].map(async (jobs) => {
+    for (const [e, url] of jobs.slice(0, 120)) {
+      try {
+        const html = await fetchHtml(url, 1200);
+        const m = html.match(/<meta[^>]+(?:property|name)=["'](?:og:image|twitter:image)["'][^>]+content=["']([^"']+)["']/i)
+          || html.match(/<meta[^>]+content=["']([^"']+)["'][^>]+(?:property|name)=["'](?:og:image|twitter:image)["']/i);
+        const img = m && new URL(m[1].replace(/&amp;/g, '&'), url).href;
+        if (img && !/logo|placeholder|default|favicon/i.test(img)) { e.image = img; found++; }
+      } catch { /* the poster fallback covers it */ }
+    }
+  }));
+  console.log(`  Képek: ${missing.length} hiányzott, ${found} pótolva az eseményoldalakról.`);
+}
+
 function assignIds(events) {
   const seen = new Set();
   for (const e of events) {
@@ -178,6 +221,7 @@ async function main() {
   const upcoming = all.filter((e) => (e.end || e.start) >= today && !CANCELLED.test(e.title)).map(normalize);
   const events = dedupe(upcoming).sort((a, b) => a.start.localeCompare(b.start) || a.title.localeCompare(b.title, 'hu'));
   assignIds(events);
+  await enrichImages(events);
 
   if (!events.length) throw new Error('Egyetlen esemény sem jött le – valószínűleg megváltozott egy forrás HTML-je.');
 
