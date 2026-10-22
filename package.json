@@ -1,0 +1,19 @@
+{
+  "name": "mire-menjunk",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Budapest legjobb programjai egy helyen – PWA",
+  "type": "module",
+  "scripts": {
+    "scrape": "node scraper/run.js",
+    "seed": "FIXTURES=1 node scraper/run.js",
+    "test": "node --test scraper/test/*.test.js",
+    "dev": "npx --yes serve public -l 5173"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "cheerio": "^1.2.0"
+  }
+}

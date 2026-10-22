@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="hu">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <base href="../../">
+    <title>TELTHÁZ! BONGOR – AZ UTOLSÓ EXTÁZIS – nov. 14. | Mire menjünk?</title>
+    <meta name="description" content="Akvárium Klub · Koncert">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="TELTHÁZ! BONGOR – AZ UTOLSÓ EXTÁZIS – nov. 14.">
+    <meta property="og:description" content="Akvárium Klub · Koncert">
+    <meta property="og:image" content="https://akvariumklub.hu/wp-content/uploads/2026/09/Extazis_Turne_Budapest_01-1-300x157.jpg">
+    
+    <meta name="twitter:card" content="summary_large_image">
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"Event","name":"TELTHÁZ! BONGOR – AZ UTOLSÓ EXTÁZIS","startDate":"2026-11-14","image":["https://akvariumklub.hu/wp-content/uploads/2026/09/Extazis_Turne_Budapest_01-1-300x157.jpg"],"location":{"@type":"Place","name":"Akvárium Klub","address":"Budapest"},"url":"https://akvariumklub.hu/programok/bongor-az-utolso-extazis/"}</script>
+  <script>
+    // Megosztott/ismeretlen /e/<id>/ útvonalon (404, offline) a relatív linkek a gyökérhez igazodjanak.
+    if (location.pathname.includes('/e/') && !document.querySelector('base')) document.write('<base href="' + location.pathname.split('/e/')[0] + '/">');
+  </script>
+  <meta name="theme-color" content="#ffcc00">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <link rel="stylesheet" href="styles.css">
+  <script type="module" src="app.js"></script>
+</head>
+<body>
+  <header class="top">
+    <div class="top-row">
+      <a class="brand" href="./" data-home>
+        <span class="logo" aria-hidden="true">BP</span>
+        <span>Mire menjünk?</span>
+      </a>
+      <button class="icon-btn" id="installBtn" hidden aria-label="Telepítés">
+        <svg viewBox="0 0 24 24"><path d="M12 3v12m0 0-4-4m4 4 4-4M5 21h14"/></svg>
+      </button>
+    </div>
+    <label class="search">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input id="q" type="search" placeholder="Keresés: koncert, Dürer, kiállítás…" autocomplete="off" enterkeyhint="search">
+    </label>
+    <nav class="tabs" id="days" aria-label="Időszak"></nav>
+    <nav class="chips" id="cats" aria-label="Kategória"></nav>
+  </header>
+
+  <main id="list" aria-live="polite"></main>
+
+  <dialog id="sheet" aria-labelledby="sheetTitle"></dialog>
+  <div class="toast" id="toast" role="status"></div>
+
+  <noscript><p class="empty">Az oldal használatához engedélyezd a JavaScriptet.</p></noscript>
+</body>
+</html>
