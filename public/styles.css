@@ -70,32 +70,35 @@ main {
 .hello h1 { margin: 2px 0 0; font: 800 clamp(1.8rem, 7.5vw, 2.6rem)/1.05 var(--display); letter-spacing: -.035em; }
 
 /* gyorsgombok: időszakok darabszámmal */
-.quick {
-  display: grid; grid-auto-flow: column; grid-auto-columns: max-content; gap: 8px; overflow-x: auto; scrollbar-width: none;
-  margin: 14px calc(-1 * var(--gutter-r)) 0 calc(-1 * var(--gutter-l)); padding: 2px var(--gutter-r) 2px var(--gutter-l);
-}
-.quick::-webkit-scrollbar { display: none; }
+.quick { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; margin-top: 14px; }
 .quick a {
-  display: grid; gap: 1px; padding: 9px 14px; border-radius: 14px; text-decoration: none;
-  background: var(--surface); border: 1px solid var(--line);
+  display: grid; gap: 2px; justify-items: center; text-align: center; padding: 10px 4px; border-radius: 14px; text-decoration: none;
+  background: var(--surface); border: 1px solid var(--line); min-width: 0;
 }
 .quick a:first-child { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
-.quick b { font-size: .95rem; }
-.quick span { font-size: .78rem; color: var(--muted); }
+.quick b { font-size: .88rem; white-space: nowrap; }
+.quick span { font-size: .72rem; color: var(--muted); white-space: nowrap; }
 .quick a:first-child span { color: var(--accent-ink); opacity: .7; }
 
 /* kategória-gyorssor */
-.shortcuts {
-  display: grid; grid-auto-flow: column; grid-auto-columns: 74px; gap: 10px; overflow-x: auto; scrollbar-width: none;
-  margin: 26px calc(-1 * var(--gutter-r)) 0 calc(-1 * var(--gutter-l)); padding: 2px var(--gutter-r) 2px var(--gutter-l);
-}
-.shortcuts::-webkit-scrollbar { display: none; }
+.shortcuts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px 8px; margin-top: 26px; }
 .shortcuts a { display: grid; justify-items: center; gap: 6px; text-decoration: none; font-size: .74rem; font-weight: 600; text-align: center; line-height: 1.15; color: var(--muted); }
 .shortcuts span {
-  display: grid; place-items: center; width: 58px; height: 58px; border-radius: 18px; font-size: 1.6rem;
+  display: grid; place-items: center; width: 54px; height: 54px; border-radius: 17px; font-size: 1.5rem;
   background: linear-gradient(140deg, oklch(.6 .15 var(--hue)), oklch(.34 .1 calc(var(--hue) + 40)));
 }
 .shortcuts a:hover { color: var(--ink); }
+
+/* másodlagos szekciók saját panelben, hogy jól elváljanak egymástól */
+.rail-mini {
+  margin-top: 16px; padding: 16px 0 16px; border-radius: 22px;
+  background: var(--surface); border: 1px solid var(--line);
+}
+.rail-mini .rail-head { padding: 0 14px 0 16px; }
+.rail-mini .rail-head a { background: var(--surface-2); }
+.rail-mini .rail-track { margin: 0; padding: 0 16px 2px; scroll-padding-left: 16px; }
+.rail-big + .shortcuts { margin-top: 22px; }
+.shortcuts + .rail-mini { margin-top: 22px; }
 
 /* kis, álló poszterkártya */
 .rail-mini .rail-track { grid-auto-columns: 148px; gap: 10px; }
@@ -267,6 +270,15 @@ main {
   font-size: .9rem; color: var(--muted); border-bottom: 2px solid var(--line);
 }
 .seg.compact button[aria-pressed="true"] { background: none; color: var(--ink); border-bottom-color: var(--accent); }
+.date-btn {
+  position: relative; flex: 0 0 auto; display: inline-flex; align-items: center; gap: 6px;
+  padding: 8px 10px 9px; color: var(--muted); border-bottom: 2px solid var(--line); font-size: .88rem; font-weight: 600; cursor: pointer;
+}
+.date-btn svg { width: 19px; height: 19px; }
+.date-btn[aria-pressed="true"] { color: var(--ink); border-bottom-color: var(--accent); }
+.date-btn[aria-pressed="true"] svg { color: var(--accent); }
+.date-btn input { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; border: 0; padding: 0; }
+.date-btn:focus-within { outline: 3px solid var(--accent); outline-offset: -3px; border-radius: 8px; }
 
 .day.sticky {
   position: sticky; top: calc(52px + env(safe-area-inset-top, 0px)); z-index: 4;

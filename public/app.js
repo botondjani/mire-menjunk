@@ -22,9 +22,11 @@ const groupOf = (e) => GROUPS.find((g) => g.cats.includes(e.category)) || GROUPS
 const YOUTH = { key: 'fiatal', label: 'Fiataloknak', emoji: '🎓', hue: 265 };
 const FILTERS = [YOUTH, ...GROUPS];
 const matchesFilter = (e, key) => !key || (key === YOUTH.key ? e.youth : groupOf(e).key === key);
-const DAYS = [['ma', 'Ma'], ['holnap', 'Holnap'], ['hetvege', 'Hétvégén'], ['het', 'Ezen a héten'], ['mind', 'Bármikor']];
+const DAYS = [['ma', 'Ma'], ['holnap', 'Holnap'], ['hetvege', 'Hétvégén'], ['het', 'Ezen a héten']];
 // Rövid címkék a lista kompakt idősávjához, hogy egy sorba férjenek.
-const DAY_SHORT = { ma: 'Ma', holnap: 'Holnap', hetvege: 'Hétvége', het: 'Héten', mind: 'Bármikor' };
+const DAY_SHORT = { ma: 'Ma', holnap: 'Holnap', hetvege: 'Hétvége', het: 'Héten' };
+const DEFAULT_DAY = 'het';
+const PICK_DAYS = 30; // a dátumválasztóval ennyi napra előre lehet konkrét napot választani
 const WEEKDAYS = ['vasárnap', 'hétfő', 'kedd', 'szerda', 'csütörtök', 'péntek', 'szombat'];
 const WD_SHORT = ['V', 'H', 'K', 'SZE', 'CS', 'P', 'SZO'];
 const MONTHS = ['jan.', 'febr.', 'márc.', 'ápr.', 'máj.', 'jún.', 'júl.', 'aug.', 'szept.', 'okt.', 'nov.', 'dec.'];
@@ -81,8 +83,16 @@ function range(key) {
     case 'holnap': return [tomorrow, tomorrow];
     case 'hetvege': { const fri = addDays(sunday, -2); return [fri > today ? fri : today, sunday]; }
     case 'het': return [today, sunday];
-    default: return [today, '9999-12-31'];
+    case 'jovohet': return [addDays(sunday, 1), addDays(sunday, 7)];
+    default: return /^\d{4}-\d{2}-\d{2}$/.test(key) ? [key, key] : [today, sunday];
   }
+}
+
+/** Elfogadott időszak: a gyorsgombok, a "jövő hét", vagy egy konkrét nap a következő 30 napból. */
+function validDay(k) {
+  if (!k) return null;
+  if (DAYS.some(([d]) => d === k) || k === 'jovohet') return k;
+  return /^\d{4}-\d{2}-\d{2}$/.test(k) && k >= today && k <= addDays(today, PICK_DAYS) ? k : null;
 }
 
 const isLong = (e) => e.end && daysBetween(e.start, e.end) > 3;
@@ -98,7 +108,8 @@ const VIEWS = { lista: 'list', kereses: 'search', mentett: 'saved' };
 const params = new URLSearchParams(location.search);
 const state = {
   view: VIEWS[params.get('v')] || 'home',
-  day: DAYS.some(([k]) => k === params.get('nap')) ? params.get('nap') : 'mind',
+  day: validDay(params.get('nap')) || DEFAULT_DAY,
+  tab: { search: 'search', saved: 'saved' }[VIEWS[params.get('v')]] || 'home', // melyik alsó fül aktív
   group: FILTERS.some((g) => g.key === params.get('kat')) ? params.get('kat') : '',
   q: params.get('q') || '',
   saved: new Set(store.get('saved', [])),
@@ -271,7 +282,7 @@ function homeView() {
     ['ma', 'Ma este', tonight.length],
     ['holnap', 'Holnap', on('holnap').length],
     ['hetvege', 'Hétvégén', on('hetvege').length],
-    ['het', 'Ezen a héten', on('het').length],
+    ['het', 'Héten', on('het').length],
   ].filter(([, , n]) => n);
 
   let html = `${expiredNotice()}<header class="hello">
@@ -283,7 +294,7 @@ function homeView() {
   html += rail('Ma este', pick(tonight, 10, false), listHref({ nap: 'ma' }), { total: tonight.length })
     || '<p class="hint">Mára már nincs több programunk – nézd meg a holnapiakat.</p>';
 
-  html += `<nav class="shortcuts" aria-label="Kategóriák">${FILTERS.map((g) => `<a href="${listHref({ kat: g.key })}" data-nav="${listHref({ kat: g.key })}" style="--hue:${g.hue}"><span>${g.emoji}</span>${esc(g.label)}</a>`).join('')}</nav>`;
+  html += `<nav class="shortcuts" aria-label="Kategóriák">${[...FILTERS, { key: '', label: 'Minden', emoji: '🗂️', hue: 230 }].map((g) => `<a href="${listHref(g.key ? { kat: g.key } : {})}" data-nav="${listHref(g.key ? { kat: g.key } : {})}" style="--hue:${g.hue}"><span>${g.emoji}</span>${esc(g.label.replace(' & ', ' &\u00a0'))}</a>`).join('')}</nav>`;
 
   const youth = soon.filter((e) => e.youth);
   html += rail(`${YOUTH.emoji} Fiataloknak`, pick(youth, 12), listHref({ kat: YOUTH.key }), { size: 'mini', total: youth.length });
@@ -291,8 +302,8 @@ function homeView() {
   html += rail('Hétvégén', pick(weekend, 12), listHref({ nap: 'hetvege' }), { size: 'mini', total: weekend.length });
   const ongoing = state.events.filter((e) => isLong(e) && e.start <= addDays(today, 7)).sort((a, b) => a.end.localeCompare(b.end));
   html += rail('Most is látogatható', pick(ongoing, 12), listHref({ nap: 'ma', kat: 'kiallitas' }), { size: 'mini', total: ongoing.length });
-  const later = soon.filter((e) => e.start > range('het')[1]);
-  html += rail('Jövő héten és utána', pick(later, 12), listHref({ nap: 'mind' }), { size: 'mini', total: later.length });
+  const nextWeek = on('jovohet');
+  html += rail('Jövő héten', pick(nextWeek, 12), listHref({ nap: 'jovohet' }), { size: 'mini', total: nextWeek.length });
   return html + footer();
 }
 
@@ -304,7 +315,7 @@ function filteredList() {
 function listBody(items) {
   if (!items.length) {
     const actions = [
-      state.day !== 'mind' ? '<button class="btn primary" data-day="mind">Mutasd bármikor</button>' : '',
+      state.day !== 'het' ? '<button class="btn primary" data-day="het">Nézd meg az egész hetet</button>' : '<button class="btn primary" data-day="jovohet">Jövő heti programok</button>',
       state.group ? '<button class="btn" data-group="">Minden kategória</button>' : '',
     ].join('');
     return stateBox({ icon: '🔍', title: 'Erre most nincs program', text: 'Ebben az időszakban és kategóriában nem találtunk semmit. Bővítsd a szűrést:', actions });
@@ -337,8 +348,21 @@ function listView() {
       </button>
       <span class="head-count">${items.length}</span>
     </header>
-    <nav class="seg compact" aria-label="Időszak">${DAYS.map(([k]) => `<button data-day="${k}" aria-pressed="${state.day === k}">${DAY_SHORT[k]}</button>`).join('')}</nav>
+    <nav class="seg compact" aria-label="Időszak">
+      ${DAYS.map(([k]) => `<button data-day="${k}" aria-pressed="${state.day === k}">${DAY_SHORT[k]}</button>`).join('')}
+      ${datePicker()}
+    </nav>
     ${listBody(items)}${footer()}`;
+}
+
+/** Naptár gomb: a natív dátumválasztó nyílik, a következő 30 napból lehet választani. */
+function datePicker() {
+  const custom = !DAYS.some(([k]) => k === state.day);
+  const label = state.day === 'jovohet' ? 'Jövő hét' : custom ? short(state.day).replace(/\.$/, '') : '';
+  return `<label class="date-btn" aria-pressed="${custom}" title="Válassz napot">
+    ${icons.calendar}${label ? `<span>${esc(label)}</span>` : ''}
+    <input type="date" id="pickDate" min="${today}" max="${addDays(today, PICK_DAYS)}" value="${/^\d/.test(state.day) ? state.day : ''}" aria-label="Válassz napot a következő ${PICK_DAYS} napból">
+  </label>`;
 }
 
 /** Kategóriaválasztó alsó lap – a lista fejlécéből nyílik, darabszámokkal az aktuális időszakra. */
@@ -410,7 +434,7 @@ function footer() {
 
 function render() {
   view.innerHTML = { home: homeView, list: listView, search: searchView, saved: savedView }[state.view]();
-  document.querySelectorAll('.tabbar [data-tab]').forEach((b) => b.setAttribute('aria-current', b.dataset.tab === state.view || (b.dataset.tab === 'home' && state.view === 'list') ? 'page' : 'false'));
+  document.querySelectorAll('.tabbar [data-tab]').forEach((b) => b.setAttribute('aria-current', b.dataset.tab === state.tab ? 'page' : 'false'));
   updateBadge();
   syncQuery();
 }
@@ -428,7 +452,7 @@ function syncQuery() {
   const v = Object.entries(VIEWS).find(([, val]) => val === state.view)?.[0];
   if (v) p.set('v', v);
   if (state.view === 'list') {
-    if (state.day !== 'mind') p.set('nap', state.day);
+    if (state.day !== DEFAULT_DAY) p.set('nap', state.day);
     if (state.group) p.set('kat', state.group);
   }
   if (state.view === 'search' && state.q) p.set('q', state.q);
@@ -441,7 +465,7 @@ function go(href) {
   const p = new URLSearchParams(href.split('?')[1] || '');
   state.from = { view: state.view, q: state.q, scroll: window.scrollY };
   state.view = VIEWS[p.get('v')] || 'home';
-  state.day = p.get('nap') || 'mind';
+  state.day = validDay(p.get('nap')) || DEFAULT_DAY;
   state.group = p.get('kat') || '';
   state.limit = PAGE;
   render();
@@ -522,6 +546,7 @@ function route() {
   // Lejárt vagy eltűnt program: a kezdőlapon elmagyarázzuk, és hasonlókat ajánlunk.
   state.expired = id;
   state.view = 'home';
+  state.tab = 'home';
   closeEvent(false);
   history.replaceState(null, '', ROOT);
   render();
@@ -611,6 +636,7 @@ document.addEventListener('click', (ev) => {
     ev.preventDefault();
     closeEvent(false);
     state.view = d.tab;
+    state.tab = d.tab;
     state.from = null;
     state.limit = PAGE;
     render();
@@ -637,6 +663,14 @@ document.addEventListener('click', (ev) => {
     render();
     toast('Lejárt programok törölve', { label: 'Visszavonás', fn: () => { state.saved = new Set(before); store.set('saved', before); render(); } });
   }
+});
+
+document.addEventListener('change', (ev) => {
+  if (ev.target.id !== 'pickDate' || !validDay(ev.target.value)) return;
+  state.day = ev.target.value;
+  state.limit = PAGE;
+  render();
+  window.scrollTo({ top: 0 });
 });
 
 let qTimer;
@@ -680,6 +714,7 @@ const icons = {
   search: svg('<circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/>'),
   back: svg('<path d="M15 5l-7 7 7 7"/>'),
   down: svg('<path d="m6 9 6 6 6-6"/>'),
+  calendar: svg('<rect x="3.5" y="5" width="17" height="15.5" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4"/>'),
   close: svg('<path d="M6 6l12 12M18 6 6 18"/>'),
   clock: svg('<circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/>'),
   pin: svg('<path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.3"/>'),
