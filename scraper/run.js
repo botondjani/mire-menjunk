@@ -9,10 +9,15 @@ import { fileURLToPath } from 'node:url';
 import welovebudapest from './sources/welovebudapest.js';
 import akvarium from './sources/akvarium.js';
 import tixa from './sources/tixa.js';
-import { slugify, todayBudapest } from './lib/util.js';
+import funzine from './sources/funzine.js';
+import timeout from './sources/timeout.js';
+import a38 from './sources/a38.js';
+import trafo from './sources/trafo.js';
+import zenehaza from './sources/zenehaza.js';
+import { detectVenue, slugify, todayBudapest } from './lib/util.js';
 
 // Curated sources first: on duplicates their description and image win.
-const SOURCES = [welovebudapest, akvarium, tixa];
+const SOURCES = [welovebudapest, funzine, timeout, akvarium, a38, trafo, zenehaza, tixa];
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const PUBLIC = join(ROOT, 'public');
 const SITE_URL = (process.env.SITE_URL || '').replace(/\/?$/, '/');
@@ -21,7 +26,7 @@ const today = todayBudapest();
 const UA = 'MireMenjunkBot/0.2 (+https://github.com/botondjani/mire-menjunk; programajánló aggregátor)';
 const lastHit = new Map(); // host -> timestamp, so every source respects its own crawl delay
 
-async function fetchHtml(url, delayMs = 1000) {
+async function fetchHtml(url, delayMs = 1000, retried = false) {
   const host = new URL(url).host;
   const wait = (lastHit.get(host) ?? 0) + delayMs - Date.now();
   if (wait > 0) await new Promise((r) => setTimeout(r, wait));
@@ -30,6 +35,12 @@ async function fetchHtml(url, delayMs = 1000) {
     headers: { 'User-Agent': UA, 'Accept-Language': 'hu-HU,hu;q=0.9' },
     signal: AbortSignal.timeout(30_000),
   });
+  if (res.status === 429 && !retried) {
+    // Rate limited: back off once, then give up on this page.
+    const after = Math.min(60, +res.headers.get('retry-after') || 20);
+    await new Promise((r) => setTimeout(r, after * 1000));
+    return fetchHtml(url, delayMs, true);
+  }
   if (!res.ok) throw new Error(`${res.status} ${url}`);
   return res.text();
 }
@@ -37,7 +48,7 @@ async function fetchHtml(url, delayMs = 1000) {
 /** Returns [{ url, html }] for a source: saved fixtures, its own crawl(), or its static url list. */
 async function pagesOf(source) {
   if (process.env.FIXTURES) {
-    return Promise.all(source.fixtures.map(async ({ file, url }) => ({
+    return Promise.all((source.fixtures || []).map(async ({ file, url }) => ({
       url, html: await readFile(join(ROOT, 'scraper/test/fixtures', file), 'utf8'),
     })));
   }
@@ -64,6 +75,16 @@ async function collect(source) {
   const events = pages.flatMap(({ url, html }) => source.parse(html, { today, url }));
   console.log(`  ${source.name}: ${events.length} találat, ${pages.length} oldal, ${Math.round((Date.now() - started) / 1000)} mp`);
   return events.map((e) => ({ ...e, source: source.id, sourceName: source.name }));
+}
+
+const CANCELLED = /\belmarad|\bcancel+ed\b|\bt[oö]r[oö]lve\b/i;
+const MUSIC_VENUES = new Set(['Akvárium Klub', 'Dürer Kert', 'A38 Hajó', 'Turbina', 'Barba Negra', 'Müpa', 'Magyar Zene Háza', 'Gödör', 'Szimpla Kert', 'Muzikum']);
+
+/** Shared clean-up so sources agree: canonical venue names, no cancelled shows, better category fallback. */
+function normalize(e) {
+  const venue = e.venue ? detectVenue(e.venue) || e.venue : null;
+  const category = e.category === 'Szabadidő' && MUSIC_VENUES.has(venue) ? 'Koncert' : e.category;
+  return { ...e, venue, category };
 }
 
 const norm = (s) => slugify(s).replace(/-/g, ' ');
@@ -154,7 +175,7 @@ function sharePage(template, e) {
 async function main() {
   console.log(`Gyűjtés (${today})…`);
   const all = (await Promise.all(SOURCES.map(collect))).flat();
-  const upcoming = all.filter((e) => (e.end || e.start) >= today);
+  const upcoming = all.filter((e) => (e.end || e.start) >= today && !CANCELLED.test(e.title)).map(normalize);
   const events = dedupe(upcoming).sort((a, b) => a.start.localeCompare(b.start) || a.title.localeCompare(b.title, 'hu'));
   assignIds(events);
 

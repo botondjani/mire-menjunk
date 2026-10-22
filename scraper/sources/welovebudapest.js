@@ -13,7 +13,7 @@ const addDays = (iso, n) => {
 export default {
   id: 'welovebudapest',
   name: 'We Love Budapest',
-  delayMs: 1500,
+  delayMs: 2500,
   fixtures: [{ file: 'wlb.html' }],
   // The main list is a curated mix; category pages surface more events.
   urls: [

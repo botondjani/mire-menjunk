@@ -15,7 +15,14 @@ Budapest programjai egy helyen: koncertek, bulik, kiállítások, színház. Nap
 |---|---|
 | We Love Budapest (`/programok`, kategóriák, és a következő 45 nap napról napra) | válogatott programok, kiállítások, fesztiválok |
 | Akvárium Klub | koncertek, bulik |
+| Funzine (a friss heti/havi programajánló cikkek) | szerkesztett válogatás: fesztiválok, kiállítások, koncertek, séták |
+| Time Out Budapest (havi válogatás) | a hónap kiemelt programjai |
+| A38 Hajó (iCal feed) | koncertek, bulik |
+| Trafó | kortárs tánc, színház, koncert |
+| Magyar Zene Háza (a naptár szerveroldali adatai) | koncertek, családi programok |
 | Tixa (főoldal + budapesti helyszínoldalak JSON-LD-je) | klubkoncertek: Dürer, Turbina, Budapest Park, Instant/Fogas, Gödör, Muzikum |
+
+A Müpa naptára kattintásra, szerverhívással tölti a heteket, ezért közvetlenül nem húzzuk le – a fontosabb Müpa-programok a WLB-n és a Funzine-on keresztül bejönnek.
 
 A cél a válogatott, érdekes programok – a nagy jegyértékesítők teljes kínálatát (pl. jegy.hu) szándékosan nem húzzuk le.
 

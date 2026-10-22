@@ -7,8 +7,8 @@ export const MONTHS = {
 
 // Short forms used on venue sites ("Okt.", "Nov.", "Szept.")
 const SHORT_MONTHS = {
-  jan: 1, feb: 2, febr: 2, már: 3, márc: 3, ápr: 4, máj: 5, jún: 6, júl: 7,
-  aug: 8, szep: 9, szept: 9, okt: 10, nov: 11, dec: 12,
+  jan: 1, feb: 2, febr: 2, már: 3, márc: 3, mar: 3, ápr: 4, apr: 4, máj: 5, maj: 5, may: 5,
+  jún: 6, jun: 6, júl: 7, jul: 7, aug: 8, szep: 9, szept: 9, sep: 9, okt: 10, oct: 10, nov: 11, dec: 12,
 };
 
 const pad = (n) => String(n).padStart(2, '0');
@@ -109,6 +109,8 @@ const VENUES = [
   [/dugatty[uú]s/i, 'Dugattyús'],
   [/v[aá]rosh[aá]za park/i, 'Városháza park'],
   [/arkki/i, 'Arkki Műhely'],
+  [/g[oö]d[oö]r/i, 'Gödör'],
+  [/muzikum/i, 'Muzikum'],
   [/borganik/i, 'Borganika'],
   [/klauz[aá]l t[eé]ri/i, 'Klauzál téri Vásárcsarnok'],
   [/ferencv[aá]rosi m[uű]vel[oő]d[eé]si/i, 'Ferencvárosi Művelődési Központ'],
@@ -125,5 +127,61 @@ const VENUES = [
 
 export function detectVenue(text) {
   for (const [re, name] of VENUES) if (re.test(text)) return name;
+  return null;
+}
+
+const MONTH_RE = '(január|február|március|április|május|június|július|augusztus|szeptember|október|november|december)';
+const WEEKDAYS = ['vasárnap', 'hétfő', 'kedd', 'szerda', 'csütörtök', 'péntek', 'szombat'];
+
+export function addDays(iso, n) {
+  const d = new Date(`${iso}T12:00:00Z`);
+  d.setUTCDate(d.getUTCDate() + n);
+  return d.toISOString().slice(0, 10);
+}
+
+const yearFor = (m, today) => {
+  const [ty, tm] = today.split('-').map(Number);
+  return m < tm - 2 ? ty + 1 : ty;
+};
+
+/**
+ * Pulls a date range out of Hungarian prose or headings:
+ *   "2026. október 21-25."  "október 21. – november 22."  "szeptember 18. és október 18. között"
+ *   "október 20-tól" (open ended: assumed to run `openDays`)  "október 25-ig" (runs until then)
+ */
+export function parseHuProse(text, today = todayBudapest(), { openDays = 45 } = {}) {
+  const re = new RegExp(`(?:(\\d{4})\\.\\s*)?${MONTH_RE}\\s+(\\d{1,2})(?:\\s*[-–]\\s*(\\d{1,2})(?![\\d:]))?\\.?(-?(?:t[oóöő]l|ig|i|[aáeé]n))?`, 'gi');
+  const dates = [];
+  let until = null;
+  let from = null;
+  for (const [, y, mon, d1, d2, suffix] of text.matchAll(re)) {
+    const m = MONTHS[mon.toLowerCase()];
+    const year = y ? +y : yearFor(m, today);
+    const a = isoDate(year, m, +d1);
+    dates.push(a);
+    if (d2 && +d2 > +d1) dates.push(isoDate(year, m, +d2));
+    const s = (suffix || '').toLowerCase().replace('-', '');
+    if (s === 'ig') until = d2 ? isoDate(year, m, +d2) : a;
+    if (/^t[oóöő]l$/.test(s)) from = a;
+  }
+  const time = text.match(/\b(\d{1,2}):(\d{2})\b/);
+  const t = time ? `${time[1].padStart(2, '0')}:${time[2]}` : null;
+  if (until && dates.length === 1) return { start: today, end: until, time: t };
+  if (from && dates.length === 1) return { start: from, end: addDays(from, openDays), time: t };
+  if (!dates.length) return null;
+  dates.sort();
+  const end = dates[dates.length - 1];
+  return { start: dates[0], end: end !== dates[0] ? end : null, time: t };
+}
+
+/** The first date on/after `after` that falls on the weekday named in the text ("Szombati programok"). */
+export function weekdayDate(text, after) {
+  const t = text.toLowerCase();
+  const wd = WEEKDAYS.findIndex((w) => t.includes(w));
+  if (wd < 0) return null;
+  for (let i = 0; i < 7; i++) {
+    const d = addDays(after, i);
+    if (new Date(`${d}T12:00:00Z`).getUTCDay() === wd) return d;
+  }
   return null;
 }

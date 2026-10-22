@@ -1,0 +1,1049 @@
+<!DOCTYPE html><html lang="hu-HU"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><style rel="stylesheet" type="text/css">@charset "utf-8";
+
+img:is([sizes="auto" i], [sizes^="auto," i]) { contain-intrinsic-size: 3000px 1500px; }</style><style rel="stylesheet" type="text/css">@charset "utf-8";
+
+.wp-block-button__link { color: rgb(255, 255, 255); background-color: rgb(50, 55, 60); border-radius: 9999px; box-shadow: none; text-decoration: none; padding: calc(0.667em + 2px) calc(1.333em + 2px); font-size: 1.125em; }
+
+.wp-block-file__button { background: rgb(50, 55, 60); color: rgb(255, 255, 255); text-decoration: none; }</style><style rel="stylesheet" type="text/css">@charset "utf-8";
+
+:root { --wp--preset--aspect-ratio--square: 1; --wp--preset--aspect-ratio--4-3: 4/3; --wp--preset--aspect-ratio--3-4: 3/4; --wp--preset--aspect-ratio--3-2: 3/2; --wp--preset--aspect-ratio--2-3: 2/3; --wp--preset--aspect-ratio--16-9: 16/9; --wp--preset--aspect-ratio--9-16: 9/16; --wp--preset--color--black: #000000; --wp--preset--color--cyan-bluish-gray: #abb8c3; --wp--preset--color--white: #ffffff; --wp--preset--color--pale-pink: #f78da7; --wp--preset--color--vivid-red: #cf2e2e; --wp--preset--color--luminous-vivid-orange: #ff6900; --wp--preset--color--luminous-vivid-amber: #fcb900; --wp--preset--color--light-green-cyan: #7bdcb5; --wp--preset--color--vivid-green-cyan: #00d084; --wp--preset--color--pale-cyan-blue: #8ed1fc; --wp--preset--color--vivid-cyan-blue: #0693e3; --wp--preset--color--vivid-purple: #9b51e0; --wp--preset--gradient--vivid-cyan-blue-to-vivid-purple: linear-gradient(135deg,rgb(6,147,227) 0%,rgb(155,81,224) 100%); --wp--preset--gradient--light-green-cyan-to-vivid-green-cyan: linear-gradient(135deg,rgb(122,220,180) 0%,rgb(0,208,130) 100%); --wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange: linear-gradient(135deg,rgb(252,185,0) 0%,rgb(255,105,0) 100%); --wp--preset--gradient--luminous-vivid-orange-to-vivid-red: linear-gradient(135deg,rgb(255,105,0) 0%,rgb(207,46,46) 100%); --wp--preset--gradient--very-light-gray-to-cyan-bluish-gray: linear-gradient(135deg,rgb(238,238,238) 0%,rgb(169,184,195) 100%); --wp--preset--gradient--cool-to-warm-spectrum: linear-gradient(135deg,rgb(74,234,220) 0%,rgb(151,120,209) 20%,rgb(207,42,186) 40%,rgb(238,44,130) 60%,rgb(251,105,98) 80%,rgb(254,248,76) 100%); --wp--preset--gradient--blush-light-purple: linear-gradient(135deg,rgb(255,206,236) 0%,rgb(152,150,240) 100%); --wp--preset--gradient--blush-bordeaux: linear-gradient(135deg,rgb(254,205,165) 0%,rgb(254,45,45) 50%,rgb(107,0,62) 100%); --wp--preset--gradient--luminous-dusk: linear-gradient(135deg,rgb(255,203,112) 0%,rgb(199,81,192) 50%,rgb(65,88,208) 100%); --wp--preset--gradient--pale-ocean: linear-gradient(135deg,rgb(255,245,203) 0%,rgb(182,227,212) 50%,rgb(51,167,181) 100%); --wp--preset--gradient--electric-grass: linear-gradient(135deg,rgb(202,248,128) 0%,rgb(113,206,126) 100%); --wp--preset--gradient--midnight: linear-gradient(135deg,rgb(2,3,129) 0%,rgb(40,116,252) 100%); --wp--preset--font-size--small: 13px; --wp--preset--font-size--medium: 20px; --wp--preset--font-size--large: 36px; --wp--preset--font-size--x-large: 42px; --wp--preset--spacing--20: 0.44rem; --wp--preset--spacing--30: 0.67rem; --wp--preset--spacing--40: 1rem; --wp--preset--spacing--50: 1.5rem; --wp--preset--spacing--60: 2.25rem; --wp--preset--spacing--70: 3.38rem; --wp--preset--spacing--80: 5.06rem; --wp--preset--shadow--natural: 6px 6px 9px rgba(0, 0, 0, 0.2); --wp--preset--shadow--deep: 12px 12px 50px rgba(0, 0, 0, 0.4); --wp--preset--shadow--sharp: 6px 6px 0px rgba(0, 0, 0, 0.2); --wp--preset--shadow--outlined: 6px 6px 0px -3px rgb(255, 255, 255), 6px 6px rgb(0, 0, 0); --wp--preset--shadow--crisp: 6px 6px 0px rgb(0, 0, 0); }
+
+:where(.is-layout-flex) { gap: 0.5em; }
+
+:where(.is-layout-grid) { gap: 0.5em; }
+
+body .is-layout-flex { display: flex; }
+
+.is-layout-flex { flex-wrap: wrap; align-items: center; }
+
+.is-layout-flex > :is(*, div) { margin: 0px; }
+
+body .is-layout-grid { display: grid; }
+
+.is-layout-grid > :is(*, div) { margin: 0px; }
+
+:where(.wp-block-columns.is-layout-flex) { gap: 2em; }
+
+:where(.wp-block-columns.is-layout-grid) { gap: 2em; }
+
+:where(.wp-block-post-template.is-layout-flex) { gap: 1.25em; }
+
+:where(.wp-block-post-template.is-layout-grid) { gap: 1.25em; }
+
+.has-black-color { color: var(--wp--preset--color--black) !important; }
+
+.has-cyan-bluish-gray-color { color: var(--wp--preset--color--cyan-bluish-gray) !important; }
+
+.has-white-color { color: var(--wp--preset--color--white) !important; }
+
+.has-pale-pink-color { color: var(--wp--preset--color--pale-pink) !important; }
+
+.has-vivid-red-color { color: var(--wp--preset--color--vivid-red) !important; }
+
+.has-luminous-vivid-orange-color { color: var(--wp--preset--color--luminous-vivid-orange) !important; }
+
+.has-luminous-vivid-amber-color { color: var(--wp--preset--color--luminous-vivid-amber) !important; }
+
+.has-light-green-cyan-color { color: var(--wp--preset--color--light-green-cyan) !important; }
+
+.has-vivid-green-cyan-color { color: var(--wp--preset--color--vivid-green-cyan) !important; }
+
+.has-pale-cyan-blue-color { color: var(--wp--preset--color--pale-cyan-blue) !important; }
+
+.has-vivid-cyan-blue-color { color: var(--wp--preset--color--vivid-cyan-blue) !important; }
+
+.has-vivid-purple-color { color: var(--wp--preset--color--vivid-purple) !important; }
+
+.has-black-background-color { background-color: var(--wp--preset--color--black) !important; }
+
+.has-cyan-bluish-gray-background-color { background-color: var(--wp--preset--color--cyan-bluish-gray) !important; }
+
+.has-white-background-color { background-color: var(--wp--preset--color--white) !important; }
+
+.has-pale-pink-background-color { background-color: var(--wp--preset--color--pale-pink) !important; }
+
+.has-vivid-red-background-color { background-color: var(--wp--preset--color--vivid-red) !important; }
+
+.has-luminous-vivid-orange-background-color { background-color: var(--wp--preset--color--luminous-vivid-orange) !important; }
+
+.has-luminous-vivid-amber-background-color { background-color: var(--wp--preset--color--luminous-vivid-amber) !important; }
+
+.has-light-green-cyan-background-color { background-color: var(--wp--preset--color--light-green-cyan) !important; }
+
+.has-vivid-green-cyan-background-color { background-color: var(--wp--preset--color--vivid-green-cyan) !important; }
+
+.has-pale-cyan-blue-background-color { background-color: var(--wp--preset--color--pale-cyan-blue) !important; }
+
+.has-vivid-cyan-blue-background-color { background-color: var(--wp--preset--color--vivid-cyan-blue) !important; }
+
+.has-vivid-purple-background-color { background-color: var(--wp--preset--color--vivid-purple) !important; }
+
+.has-black-border-color { border-color: var(--wp--preset--color--black) !important; }
+
+.has-cyan-bluish-gray-border-color { border-color: var(--wp--preset--color--cyan-bluish-gray) !important; }
+
+.has-white-border-color { border-color: var(--wp--preset--color--white) !important; }
+
+.has-pale-pink-border-color { border-color: var(--wp--preset--color--pale-pink) !important; }
+
+.has-vivid-red-border-color { border-color: var(--wp--preset--color--vivid-red) !important; }
+
+.has-luminous-vivid-orange-border-color { border-color: var(--wp--preset--color--luminous-vivid-orange) !important; }
+
+.has-luminous-vivid-amber-border-color { border-color: var(--wp--preset--color--luminous-vivid-amber) !important; }
+
+.has-light-green-cyan-border-color { border-color: var(--wp--preset--color--light-green-cyan) !important; }
+
+.has-vivid-green-cyan-border-color { border-color: var(--wp--preset--color--vivid-green-cyan) !important; }
+
+.has-pale-cyan-blue-border-color { border-color: var(--wp--preset--color--pale-cyan-blue) !important; }
+
+.has-vivid-cyan-blue-border-color { border-color: var(--wp--preset--color--vivid-cyan-blue) !important; }
+
+.has-vivid-purple-border-color { border-color: var(--wp--preset--color--vivid-purple) !important; }
+
+.has-vivid-cyan-blue-to-vivid-purple-gradient-background { background: var(--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple) !important; }
+
+.has-light-green-cyan-to-vivid-green-cyan-gradient-background { background: var(--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan) !important; }
+
+.has-luminous-vivid-amber-to-luminous-vivid-orange-gradient-background { background: var(--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange) !important; }
+
+.has-luminous-vivid-orange-to-vivid-red-gradient-background { background: var(--wp--preset--gradient--luminous-vivid-orange-to-vivid-red) !important; }
+
+.has-very-light-gray-to-cyan-bluish-gray-gradient-background { background: var(--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray) !important; }
+
+.has-cool-to-warm-spectrum-gradient-background { background: var(--wp--preset--gradient--cool-to-warm-spectrum) !important; }
+
+.has-blush-light-purple-gradient-background { background: var(--wp--preset--gradient--blush-light-purple) !important; }
+
+.has-blush-bordeaux-gradient-background { background: var(--wp--preset--gradient--blush-bordeaux) !important; }
+
+.has-luminous-dusk-gradient-background { background: var(--wp--preset--gradient--luminous-dusk) !important; }
+
+.has-pale-ocean-gradient-background { background: var(--wp--preset--gradient--pale-ocean) !important; }
+
+.has-electric-grass-gradient-background { background: var(--wp--preset--gradient--electric-grass) !important; }
+
+.has-midnight-gradient-background { background: var(--wp--preset--gradient--midnight) !important; }
+
+.has-small-font-size { font-size: var(--wp--preset--font-size--small) !important; }
+
+.has-medium-font-size { font-size: var(--wp--preset--font-size--medium) !important; }
+
+.has-large-font-size { font-size: var(--wp--preset--font-size--large) !important; }
+
+.has-x-large-font-size { font-size: var(--wp--preset--font-size--x-large) !important; }</style><style rel="stylesheet" type="text/css">@charset "utf-8";
+
+.wpml-ls-statics-shortcode_actions { background-color: rgb(238, 238, 238); }
+
+.wpml-ls-statics-shortcode_actions, .wpml-ls-statics-shortcode_actions .wpml-ls-sub-menu, .wpml-ls-statics-shortcode_actions a { border-color: rgb(205, 205, 205); }
+
+.wpml-ls-statics-shortcode_actions a, .wpml-ls-statics-shortcode_actions .wpml-ls-sub-menu a, .wpml-ls-statics-shortcode_actions .wpml-ls-sub-menu a:link, .wpml-ls-statics-shortcode_actions li:not(.wpml-ls-current-language) .wpml-ls-link, .wpml-ls-statics-shortcode_actions li:not(.wpml-ls-current-language) .wpml-ls-link:link { color: rgb(68, 68, 68); background-color: rgb(255, 255, 255); }
+
+.wpml-ls-statics-shortcode_actions a, .wpml-ls-statics-shortcode_actions .wpml-ls-sub-menu a:hover, .wpml-ls-statics-shortcode_actions .wpml-ls-sub-menu a:focus, .wpml-ls-statics-shortcode_actions .wpml-ls-sub-menu a:link:hover, .wpml-ls-statics-shortcode_actions .wpml-ls-sub-menu a:link:focus { color: rgb(0, 0, 0); background-color: rgb(238, 238, 238); }
+
+.wpml-ls-statics-shortcode_actions .wpml-ls-current-language > a { color: rgb(68, 68, 68); background-color: rgb(255, 255, 255); }
+
+.wpml-ls-statics-shortcode_actions .wpml-ls-current-language:hover > a, .wpml-ls-statics-shortcode_actions .wpml-ls-current-language > a:focus { color: rgb(0, 0, 0); background-color: rgb(238, 238, 238); }</style><style rel="stylesheet" type="text/css">@charset "utf-8";
+
+.content_cards_card * { box-sizing: border-box; }
+
+.content_cards_card { background-color: white; border-width: 1px; border-style: solid; border-image: none; border-color: rgb(233, 234, 237) rgb(218, 218, 218) rgb(204, 204, 204); padding: 3px; margin-bottom: 20px; max-width: 600px; margin-left: auto; margin-right: auto; }
+
+.content_cards_card .content_cards_image { width: 100%; display: block; text-align: center; }
+
+.content_cards_card .content_cards_image img { display: block; margin-left: auto; margin-right: auto; max-width: 100%; height: auto; }
+
+html body .content_cards_card a, html body .content_cards_card a:visited, html body .content_cards_card a:active { box-shadow: none; color: rgb(20, 20, 18); text-decoration: none; }
+
+html body .content_cards_card a:hover, html body .content_cards_card a:active { box-shadow: none; color: rgb(74, 74, 72); text-decoration: none; }
+
+.content_cards_card .content_cards_center_image > a { border: 0px; }
+
+.content_cards_card .content_cards_title { font-size: 22px; line-height: 1.5; color: rgb(20, 20, 18); font-weight: bold; margin: 10px 15px 7px; }
+
+.content_cards_card .content_cards_description { font-size: 100%; line-height: 1.5; color: rgb(20, 20, 18); margin: 7px 15px 10px; }
+
+.content_cards_card .content_cards_site_name { font-style: italic; font-size: 12px; line-height: 1.5; text-transform: uppercase; color: rgb(145, 151, 163); text-align: right; margin: 10px 15px; }
+
+.content_cards_card .content_cards_description > p { margin: 0px; padding: 0px; }
+
+.content_cards_favicon { max-height: 24px; }</style><style rel="stylesheet" type="text/css">@charset "utf-8";
+
+.tippy-box[data-theme~="wprm"] { background-color: rgb(51, 51, 51); color: rgb(255, 255, 255); }
+
+.tippy-box[data-theme~="wprm"][data-placement^="top"] > .tippy-arrow::before { border-top-color: rgb(51, 51, 51); }
+
+.tippy-box[data-theme~="wprm"][data-placement^="bottom"] > .tippy-arrow::before { border-bottom-color: rgb(51, 51, 51); }
+
+.tippy-box[data-theme~="wprm"][data-placement^="left"] > .tippy-arrow::before { border-left-color: rgb(51, 51, 51); }
+
+.tippy-box[data-theme~="wprm"][data-placement^="right"] > .tippy-arrow::before { border-right-color: rgb(51, 51, 51); }
+
+.tippy-box[data-theme~="wprm"] a { color: rgb(255, 255, 255); }
+
+.wprm-comment-rating svg { width: 18px !important; height: 18px !important; }
+
+img.wprm-comment-rating { width: 90px !important; height: 18px !important; }
+
+body { --comment-rating-star-color: #343434; }
+
+body { --wprm-popup-font-size: 16px; }
+
+body { --wprm-popup-background: #ffffff; }
+
+body { --wprm-popup-title: #000000; }
+
+body { --wprm-popup-content: #444444; }
+
+body { --wprm-popup-button-background: #444444; }
+
+body { --wprm-popup-button-text: #ffffff; }
+
+body { --wprm-popup-accent: #747B2D; }
+
+.wprm-recipe-template-compact { max-width: 100% !important; margin-right: 20px !important; border-color: rgb(204, 204, 204) !important; background-color: rgb(251, 251, 251) !important; }
+
+.wprm-recipe-instructions-container .wprm-recipe-instruction-text { font-size: 1em !important; line-height: 1.4em !important; }
+
+.wprm-recipe-details-container-table, .wprm-recipe-details-container-table .wprm-recipe-block-container-table { border-color: rgb(204, 204, 204) !important; }
+
+.wprm-recipe-template-compact li { font-size: 0.8em !important; }</style><style rel="stylesheet" type="text/css">@charset "utf-8";
+
+.wprm-glossary-term { color: rgb(90, 130, 43); text-decoration: underline; cursor: help; }</style><style rel="stylesheet" type="text/css">@charset "utf-8";
+
+.lazyload { background-image: none !important; }
+
+.lazyload::before { background-image: none !important; }</style><style rel="stylesheet" type="text/css">@charset "utf-8";
+
+.bwg-container { position: relative; }
+
+.bwg-container::before { width: 80px; height: 80px; position: absolute; margin: auto; left: 0px; top: 0px; z-index: 111; background: rgb(255, 255, 255); display: block; padding-top: 10px; content: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAACXBIWXMAAAsTAAALEwEAmpwYAAADMElEQVR4nO2ay2sUQRCHP8U8UMlBZkFB/4DgTRGDeongPXcRvBlFQUQEkRz0IIrG3PwDRNBTLgoqRBAUk6yIxkN84OviBkFBxVfQONJSQjHszPRkZ3d6Jv1BkZ2a7p6tX3fXdHcWPB6Px+PxeDyeXmAMmAPCilgDuAD/YktlzIEv3C4btRFgTgpvqdBk2KpGQiqhWNWwjitcpAB1YAp3sc4JoYUA+8XS6p0EzuAG1jkhtBDgo5QZTKg3JNdfgS6KR3+/xJwQWghwXso8VL5pYFJdz0qZEdwgGldsnGHMjeXqcx/wSoKM4wFwPzLPVlJSAQ4B89LzJnjDCqDb8uFrgIvAb0k+pRPgsPK/jfTkLuAW8AX4LlNhL7BMCfVG6v4BDlLSKTAEPAeeKgGOSVCmZ59I8D+k/mURYbnkBjMdBiiOlgWIsl2Cfw1sUv71wF1p4wDukLsAV6WcESLKWuCTjJjSC1BXPr3Se5Gytr4mdVantOO8ANPKN9mCAHHtlHYKXJFyO2KmwGfgGe6QuwDbJAmaV9xm5d8A3JM2hqmQAIPAY+ClGtZHm7wGf0r9S+o1WJe1wkZKKsCw8ptgetS9ncANyfrfZH7vUQuhLrUQ+gXspoQC7JOToiOL3Nn1yTJ6XhZPpc8BvbITNKMhDjMdHkU2Q3rktMoqsUIEGJEyswknQu3aDgfAOLAgNi6+jgnQLYccoewP0g5E3pMfJtAZafeDWCi+oJMj4Cxw3KLeCbG8gzd/a2IzliLkvg6IEj0RypMgIdCkex0VICvrZOeYhk0v24jgjAABcF0952ZCr2UZ4mkiOCFAkCGJZQm+WfvROoULEFgkMXNNgj/rc6ZcESBI6JlosP0tBK+fZ4K/44IANYuhrMsstBh8HIUIUMvQm/2yq2xH8IUIUJMtsk0Sy1K2FALUHAu+owLUVECzcjyWR9nCBKgrX9jk9dLsvit2Ow8Bpps0rNf8Ew4EGmcTeQhQFawFaMgNc9ZXFQYkpoaNAKMODN122TkbAXpFhP8joQrWkEPZnsVM9XCJ5ITUH042+xdYlXJCLKeXSE6IxfzE5RTwruI5wePxeDweD0uTvw1/b2mM+iSoAAAAAElFTkSuQmCC ") !important; }
+
+#cookiefirst-policy-page { display: none; }
+
+div.is-ajax-search-details, div.is-ajax-search-result { z-index: 2147483647 !important; }
+
+@media only screen and (max-width: 1024px) {
+  .is-ajax-search-items .is-ajax-search-posts { display: block !important; }
+  .mobile-menu-nav .secondary-menu #lang_selector { width: 100%; display: flex; }
+  .mobile-menu-nav .secondary-menu #lang_selector a { width: 60px; position: relative; text-transform: uppercase; }
+  #lang_selector span { width: 60px; position: relative; text-transform: uppercase; }
+}
+
+.bwg_nav_cont_0, .bwg_nav_cont_1, .bwg_nav_cont_2, .bwg_nav_cont_3, .bwg_nav_cont_4, .bwg_nav_cont_5 { display: none; }
+
+@media only screen and (max-width: 992px) {
+  pre { margin-left: 20px; }
+  .bwg_filmstrip_container { display: none !important; }
+}
+
+.bwg_close_btn { opacity: 1; font-size: 20px; color: rgb(255, 255, 255); }
+
+.bwg_filmstrip_left, .bwg_filmstrip_right { display: none !important; }
+
+.grid .grid-item .padder span { background-size: cover; }
+
+#site-navigation .menu-item a:hover { color: rgb(28, 122, 124); }
+
+.archive.category .page-header { color: rgb(28, 122, 124); }
+
+body.single article.post:not(.format-image) .entry-header h1.entry-title { }
+
+.entry-content > p { }
+
+.byline .img-circle { display: none; }
+
+.content-thumb header.entry-header .entry-meta { display: none; }
+
+.content-list header.entry-header .entry-meta, .content-list-event header.entry-header .entry-meta, .content-list-place header.entry-header .entry-meta { display: none; }
+
+.entry-header .fb-like.fb-like-custom { height: 30px !important; }
+
+@media only screen and (max-width: 992px) {
+  .floating-article article.content-list .close-btn { margin-left: -22px; width: 40px; height: 40px; margin-right: -18px; }
+  #adult_layer .layer-container { padding: 10px; width: calc(100% - 60px); }
+  #adult_layer .layer-container .buttons { display: flex; flex-direction: column; }
+  #adult_layer .layer-container h1 { font-size: 15px; }
+  #adult_layer .layer-container img { max-width: 120px; }
+  #adult_layer .layer-container p { font-size: 12px; }
+  #adult_layer .layer-container .buttons a { margin-bottom: 10px; }
+}
+
+#site-navigation .menu-item a { padding: 0px 13px !important; }
+
+pre { border: 1px solid rgb(204, 204, 204); padding: 20px; font-family: Raleway, sans-serif; line-height: 1.5; font-size: 18px; overflow: unset; white-space: break-spaces; background: transparent; margin-right: 20px; color: rgb(102, 102, 102); }
+
+@media only screen and (min-width: 768px) {
+  .post-thumbnail.col-md-3 { float: left !important; width: 25% !important; }
+  .entry-header.col-md-9 { float: left !important; width: 75% !important; }
+}
+
+#masthead { height: auto !important; }
+
+.wp-video { max-width: 100% !important; width: 100% !important; }
+
+.wp-video .wp-video-shortcode { max-width: 100% !important; width: 100% !important; }
+
+@media only screen and (max-width: 1024px) {
+  body #site-navigation { position: fixed !important; }
+  #masthead { height: 80px !important; }
+}
+
+a[href="http://burda.hu/"] { display: none !important; }</style><style rel="stylesheet" type="text/css">@charset "utf-8";
+
+.fb_hidden { position: absolute; top: -10000px; z-index: 10001; }
+
+.fb_reposition { overflow: hidden; position: relative; }
+
+.fb_invisible { display: none; }
+
+.fb_reset { background: none; border: 0px; border-spacing: 0px; color: rgb(0, 0, 0); cursor: auto; direction: ltr; font-family: "lucida grande", tahoma, verdana, arial, sans-serif; font-size: 11px; font-style: normal; font-variant: normal; font-weight: 400; letter-spacing: normal; line-height: 1; margin: 0px; overflow: visible; padding: 0px; text-align: left; text-decoration: none; text-indent: 0px; text-shadow: none; text-transform: none; visibility: visible; white-space: normal; word-spacing: normal; }
+
+.fb_reset > div { overflow: hidden; }
+
+@keyframes fb_transform { 
+  0% { opacity: 0; transform: scale(0.95); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+.fb_animate { animation: 0.3s ease 0s 1 normal forwards running fb_transform; }
+
+.fb_dialog { background: rgba(82, 82, 82, 0.7); position: absolute; top: -10000px; z-index: 10001; }
+
+.fb_dialog_advanced { border-radius: 8px; padding: 10px; }
+
+.fb_dialog_content { background: rgb(255, 255, 255); color: rgb(55, 55, 55); }
+
+.fb_dialog_close_icon { background: url("https://connect.facebook.net/rsrc.php/v4/yq/r/IE9JII6Z1Ys.png") 0px 0px no-repeat scroll transparent; cursor: pointer; display: block; height: 15px; position: absolute; right: 18px; top: 17px; width: 15px; }
+
+.fb_dialog_mobile .fb_dialog_close_icon { left: 5px; right: auto; top: 5px; }
+
+.fb_dialog_padding { background-color: transparent; position: absolute; width: 1px; z-index: -1; }
+
+.fb_dialog_close_icon:hover { background: url("https://connect.facebook.net/rsrc.php/v4/yq/r/IE9JII6Z1Ys.png") 0px -15px no-repeat scroll transparent; }
+
+.fb_dialog_close_icon:active { background: url("https://connect.facebook.net/rsrc.php/v4/yq/r/IE9JII6Z1Ys.png") 0px -30px no-repeat scroll transparent; }
+
+.fb_dialog_iframe { line-height: 0; }
+
+.fb_dialog_content .dialog_title { background: rgb(109, 132, 180); border: 1px solid rgb(54, 88, 153); color: rgb(255, 255, 255); font-size: 14px; font-weight: 700; margin: 0px; }
+
+.fb_dialog_content .dialog_title > span { background: url("https://connect.facebook.net/rsrc.php/v4/yd/r/Cou7n-nqK52.gif") 5px 50% no-repeat; float: left; padding: 5px 0px 7px 26px; }
+
+body.fb_hidden { height: 100%; left: 0px; margin: 0px; overflow: visible; position: absolute; top: -10000px; transform: none; width: 100%; }
+
+.fb_dialog.fb_dialog_mobile.loading { background: url("https://connect.facebook.net/rsrc.php/v4/ya/r/3rhSv5V8j3o.gif") 50% 50% no-repeat rgb(255, 255, 255); min-height: 100%; min-width: 100%; overflow: hidden; position: absolute; top: 0px; z-index: 10001; }
+
+.fb_dialog.fb_dialog_mobile.loading.centered { background: none; height: auto; min-height: initial; min-width: initial; width: auto; }
+
+.fb_dialog.fb_dialog_mobile.loading.centered #fb_dialog_loader_spinner { width: 100%; }
+
+.fb_dialog.fb_dialog_mobile.loading.centered .fb_dialog_content { background: none; }
+
+.loading.centered #fb_dialog_loader_close { clear: both; color: rgb(255, 255, 255); display: block; font-size: 18px; padding-top: 20px; }
+
+#fb-root #fb_dialog_ipad_overlay { background: rgba(0, 0, 0, 0.4); inset: 0px; min-height: 100%; position: absolute; width: 100%; z-index: 10000; }
+
+#fb-root #fb_dialog_ipad_overlay.hidden { display: none; }
+
+.fb_dialog.fb_dialog_mobile.loading iframe { visibility: hidden; }
+
+.fb_dialog_mobile .fb_dialog_iframe { position: sticky; top: 0px; }
+
+.fb_dialog_content .dialog_header { border-bottom: 1px solid rgb(4, 59, 135); border-top-color: rgb(4, 59, 135); border-right-color: rgb(4, 59, 135); border-left-color: rgb(4, 59, 135); box-shadow: rgb(255, 255, 255) 0px 1px 1px -1px inset; color: rgb(255, 255, 255); font: 700 14px Helvetica, sans-serif; text-overflow: ellipsis; text-shadow: rgba(0, 30, 84, 0.298) 0px -1px 0px; vertical-align: middle; white-space: nowrap; }
+
+.fb_dialog_content .dialog_header table { height: 43px; width: 100%; }
+
+.fb_dialog_content .dialog_header td.header_left { font-size: 12px; padding-left: 5px; vertical-align: middle; width: 60px; }
+
+.fb_dialog_content .dialog_header td.header_right { font-size: 12px; padding-right: 5px; vertical-align: middle; width: 60px; }
+
+.fb_dialog_content .touchable_button { background-clip: padding-box; border: 1px solid rgb(41, 72, 125); border-radius: 3px; display: inline-block; line-height: 18px; margin-top: 3px; max-width: 85px; padding: 4px 12px; position: relative; }
+
+.fb_dialog_content .dialog_header .touchable_button input { background: none; border-width: medium; border-style: none; border-color: currentcolor; border-image: none; color: rgb(255, 255, 255); font: 700 12px Helvetica, sans-serif; margin: 2px -12px; padding: 2px 6px 3px; text-shadow: rgba(0, 30, 84, 0.298) 0px -1px 0px; }
+
+.fb_dialog_content .dialog_header .header_center { color: rgb(255, 255, 255); font-size: 16px; font-weight: 700; line-height: 18px; text-align: center; vertical-align: middle; }
+
+.fb_dialog_content .dialog_content { background: url("https://connect.facebook.net/rsrc.php/v4/y9/r/jKEcVPZFk-2.gif") 50% 50% no-repeat; border-width: 0px 1px; border-style: none solid; border-color: currentcolor rgb(74, 74, 74); border-image: none; height: 150px; }
+
+.fb_dialog_content .dialog_footer { background: rgb(245, 246, 247); border-width: 1px; border-style: solid; border-color: rgb(204, 204, 204) rgb(74, 74, 74) rgb(74, 74, 74); border-image: none; height: 40px; }
+
+#fb_dialog_loader_close { float: left; }
+
+.fb_dialog.fb_dialog_mobile .fb_dialog_close_icon { visibility: hidden; }
+
+#fb_dialog_loader_spinner { animation: 1.2s linear 0s infinite normal none running rotateSpinner; background-color: transparent; background-image: url("https://connect.facebook.net/rsrc.php/v4/y2/r/onuUJj0tCqE.png"); background-position: 50% 50%; background-repeat: no-repeat; height: 24px; width: 24px; }
+
+@keyframes rotateSpinner { 
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.fb_iframe_widget { display: inline-block; position: relative; }
+
+.fb_iframe_widget span { display: inline-block; position: relative; text-align: justify; }
+
+.fb_iframe_widget iframe { position: absolute; }
+
+.fb_iframe_widget_fluid_desktop, .fb_iframe_widget_fluid_desktop span, .fb_iframe_widget_fluid_desktop iframe { max-width: 100%; }
+
+.fb_iframe_widget_fluid_desktop iframe { min-width: 220px; position: relative; }
+
+.fb_iframe_widget_lift { z-index: 1; }
+
+.fb_iframe_widget_fluid { display: inline; }
+
+.fb_iframe_widget_fluid span { width: 100%; }</style><style rel="stylesheet" type="text/css">@charset "utf-8";
+
+.cc-banner { border-top: 1px solid rgb(28, 122, 124); }
+
+@media only screen and (min-width: 768px) {
+  .post-thumbnail.col-md-3 { float: left !important; width: 25% !important; }
+  .entry-header.col-md-9 { float: left !important; width: 75% !important; }
+}</style>
+<meta name="robots" content="max-image-preview:large">
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="facebook-domain-verification" content="vsuilpksxh2hdvmgkgpryh1axz6cnw">
+<link rel="profile" href="http://gmpg.org/xfn/11">
+<script src="https://connect.facebook.net/hu_HU/bundle/sdk.js/" async="" crossorigin="anonymous"></script><script id="facebook-jssdk" src="https://connect.facebook.net/hu_HU/sdk.js"></script><script data-wpfc-render="false">(function(){let events=["mousemove", "wheel", "scroll", "touchstart", "touchmove"];let fired=false;events.forEach(function(event){window.addEventListener(event, function(){if(fired===false){fired=true;setTimeout(function(){ (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-KL9XSF9'); }, 100);}},{once: true});});})();</script>
+<script data-cfasync="false" data-no-defer="1" data-no-minify="1" data-no-optimize="1">var ewww_webp_supported=!1;function check_webp_feature(A,e){var w;e=void 0!==e?e:function(){},ewww_webp_supported?e(ewww_webp_supported):((w=new Image).onload=function(){ewww_webp_supported=0<w.width&&0<w.height,e&&e(ewww_webp_supported)},w.onerror=function(){e&&e(!1)},w.src="data:image/webp;base64,"+{alpha:"UklGRkoAAABXRUJQVlA4WAoAAAAQAAAAAAAAAAAAQUxQSAwAAAARBxAR/Q9ERP8DAABWUDggGAAAABQBAJ0BKgEAAQAAAP4AAA3AAP7mtQAAAA=="}[A])}check_webp_feature("alpha");</script><script data-cfasync="false" data-no-defer="1" data-no-minify="1" data-no-optimize="1">var Arrive=function(c,w){"use strict";if(c.MutationObserver&&"undefined"!=typeof HTMLElement){var r,a=0,u=(r=HTMLElement.prototype.matches||HTMLElement.prototype.webkitMatchesSelector||HTMLElement.prototype.mozMatchesSelector||HTMLElement.prototype.msMatchesSelector,{matchesSelector:function(e,t){return e instanceof HTMLElement&&r.call(e,t)},addMethod:function(e,t,r){var a=e[t];e[t]=function(){return r.length==arguments.length?r.apply(this,arguments):"function"==typeof a?a.apply(this,arguments):void 0}},callCallbacks:function(e,t){t&&t.options.onceOnly&&1==t.firedElems.length&&(e=[e[0]]);for(var r,a=0;r=e[a];a++)r&&r.callback&&r.callback.call(r.elem,r.elem);t&&t.options.onceOnly&&1==t.firedElems.length&&t.me.unbindEventWithSelectorAndCallback.call(t.target,t.selector,t.callback)},checkChildNodesRecursively:function(e,t,r,a){for(var i,n=0;i=e[n];n++)r(i,t,a)&&a.push({callback:t.callback,elem:i}),0<i.childNodes.length&&u.checkChildNodesRecursively(i.childNodes,t,r,a)},mergeArrays:function(e,t){var r,a={};for(r in e)e.hasOwnProperty(r)&&(a[r]=e[r]);for(r in t)t.hasOwnProperty(r)&&(a[r]=t[r]);return a},toElementsArray:function(e){return e=void 0!==e&&("number"!=typeof e.length||e===c)?[e]:e}}),e=(l.prototype.addEvent=function(e,t,r,a){a={target:e,selector:t,options:r,callback:a,firedElems:[]};return this._beforeAdding&&this._beforeAdding(a),this._eventsBucket.push(a),a},l.prototype.removeEvent=function(e){for(var t,r=this._eventsBucket.length-1;t=this._eventsBucket[r];r--)e(t)&&(this._beforeRemoving&&this._beforeRemoving(t),(t=this._eventsBucket.splice(r,1))&&t.length&&(t[0].callback=null))},l.prototype.beforeAdding=function(e){this._beforeAdding=e},l.prototype.beforeRemoving=function(e){this._beforeRemoving=e},l),t=function(i,n){var o=new e,l=this,s={fireOnAttributesModification:!1};return o.beforeAdding(function(t){var e=t.target;e!==c.document&&e!==c||(e=document.getElementsByTagName("html")[0]);var r=new MutationObserver(function(e){n.call(this,e,t)}),a=i(t.options);r.observe(e,a),t.observer=r,t.me=l}),o.beforeRemoving(function(e){e.observer.disconnect()}),this.bindEvent=function(e,t,r){t=u.mergeArrays(s,t);for(var a=u.toElementsArray(this),i=0;i<a.length;i++)o.addEvent(a[i],e,t,r)},this.unbindEvent=function(){var r=u.toElementsArray(this);o.removeEvent(function(e){for(var t=0;t<r.length;t++)if(this===w||e.target===r[t])return!0;return!1})},this.unbindEventWithSelectorOrCallback=function(r){var a=u.toElementsArray(this),i=r,e="function"==typeof r?function(e){for(var t=0;t<a.length;t++)if((this===w||e.target===a[t])&&e.callback===i)return!0;return!1}:function(e){for(var t=0;t<a.length;t++)if((this===w||e.target===a[t])&&e.selector===r)return!0;return!1};o.removeEvent(e)},this.unbindEventWithSelectorAndCallback=function(r,a){var i=u.toElementsArray(this);o.removeEvent(function(e){for(var t=0;t<i.length;t++)if((this===w||e.target===i[t])&&e.selector===r&&e.callback===a)return!0;return!1})},this},i=new function(){var s={fireOnAttributesModification:!1,onceOnly:!1,existing:!1};function n(e,t,r){return!(!u.matchesSelector(e,t.selector)||(e._id===w&&(e._id=a++),-1!=t.firedElems.indexOf(e._id)))&&(t.firedElems.push(e._id),!0)}var c=(i=new t(function(e){var t={attributes:!1,childList:!0,subtree:!0};return e.fireOnAttributesModification&&(t.attributes=!0),t},function(e,i){e.forEach(function(e){var t=e.addedNodes,r=e.target,a=[];null!==t&&0<t.length?u.checkChildNodesRecursively(t,i,n,a):"attributes"===e.type&&n(r,i)&&a.push({callback:i.callback,elem:r}),u.callCallbacks(a,i)})})).bindEvent;return i.bindEvent=function(e,t,r){t=void 0===r?(r=t,s):u.mergeArrays(s,t);var a=u.toElementsArray(this);if(t.existing){for(var i=[],n=0;n<a.length;n++)for(var o=a[n].querySelectorAll(e),l=0;l<o.length;l++)i.push({callback:r,elem:o[l]});if(t.onceOnly&&i.length)return r.call(i[0].elem,i[0].elem);setTimeout(u.callCallbacks,1,i)}c.call(this,e,t,r)},i},o=new function(){var a={};function i(e,t){return u.matchesSelector(e,t.selector)}var n=(o=new t(function(){return{childList:!0,subtree:!0}},function(e,r){e.forEach(function(e){var t=e.removedNodes,e=[];null!==t&&0<t.length&&u.checkChildNodesRecursively(t,r,i,e),u.callCallbacks(e,r)})})).bindEvent;return o.bindEvent=function(e,t,r){t=void 0===r?(r=t,a):u.mergeArrays(a,t),n.call(this,e,t,r)},o};d(HTMLElement.prototype),d(NodeList.prototype),d(HTMLCollection.prototype),d(HTMLDocument.prototype),d(Window.prototype);var n={};return s(i,n,"unbindAllArrive"),s(o,n,"unbindAllLeave"),n}function l(){this._eventsBucket=[],this._beforeAdding=null,this._beforeRemoving=null}function s(e,t,r){u.addMethod(t,r,e.unbindEvent),u.addMethod(t,r,e.unbindEventWithSelectorOrCallback),u.addMethod(t,r,e.unbindEventWithSelectorAndCallback)}function d(e){e.arrive=i.bindEvent,s(i,e,"unbindArrive"),e.leave=o.bindEvent,s(o,e,"unbindLeave")}}(window,void 0),ewww_webp_supported=!1;function check_webp_feature(e,t){var r;ewww_webp_supported?t(ewww_webp_supported):((r=new Image).onload=function(){ewww_webp_supported=0<r.width&&0<r.height,t(ewww_webp_supported)},r.onerror=function(){t(!1)},r.src="data:image/webp;base64,"+{alpha:"UklGRkoAAABXRUJQVlA4WAoAAAAQAAAAAAAAAAAAQUxQSAwAAAARBxAR/Q9ERP8DAABWUDggGAAAABQBAJ0BKgEAAQAAAP4AAA3AAP7mtQAAAA==",animation:"UklGRlIAAABXRUJQVlA4WAoAAAASAAAAAAAAAAAAQU5JTQYAAAD/////AABBTk1GJgAAAAAAAAAAAAAAAAAAAGQAAABWUDhMDQAAAC8AAAAQBxAREYiI/gcA"}[e])}function ewwwLoadImages(e){if(e){for(var t=document.querySelectorAll(".batch-image img, .image-wrapper a, .ngg-pro-masonry-item a, .ngg-galleria-offscreen-seo-wrapper a"),r=0,a=t.length;r<a;r++)ewwwAttr(t[r],"data-src",t[r].getAttribute("data-webp")),ewwwAttr(t[r],"data-thumbnail",t[r].getAttribute("data-webp-thumbnail"));for(var i=document.querySelectorAll("div.woocommerce-product-gallery__image"),r=0,a=i.length;r<a;r++)ewwwAttr(i[r],"data-thumb",i[r].getAttribute("data-webp-thumb"))}for(var n=document.querySelectorAll("video"),r=0,a=n.length;r<a;r++)ewwwAttr(n[r],"poster",e?n[r].getAttribute("data-poster-webp"):n[r].getAttribute("data-poster-image"));for(var o,l=document.querySelectorAll("img.ewww_webp_lazy_load"),r=0,a=l.length;r<a;r++)e&&(ewwwAttr(l[r],"data-lazy-srcset",l[r].getAttribute("data-lazy-srcset-webp")),ewwwAttr(l[r],"data-srcset",l[r].getAttribute("data-srcset-webp")),ewwwAttr(l[r],"data-lazy-src",l[r].getAttribute("data-lazy-src-webp")),ewwwAttr(l[r],"data-src",l[r].getAttribute("data-src-webp")),ewwwAttr(l[r],"data-orig-file",l[r].getAttribute("data-webp-orig-file")),ewwwAttr(l[r],"data-medium-file",l[r].getAttribute("data-webp-medium-file")),ewwwAttr(l[r],"data-large-file",l[r].getAttribute("data-webp-large-file")),null!=(o=l[r].getAttribute("srcset"))&&!1!==o&&o.includes("R0lGOD")&&ewwwAttr(l[r],"src",l[r].getAttribute("data-lazy-src-webp"))),l[r].className=l[r].className.replace(/\bewww_webp_lazy_load\b/,"");for(var s=document.querySelectorAll(".ewww_webp"),r=0,a=s.length;r<a;r++)e?(ewwwAttr(s[r],"srcset",s[r].getAttribute("data-srcset-webp")),ewwwAttr(s[r],"src",s[r].getAttribute("data-src-webp")),ewwwAttr(s[r],"data-orig-file",s[r].getAttribute("data-webp-orig-file")),ewwwAttr(s[r],"data-medium-file",s[r].getAttribute("data-webp-medium-file")),ewwwAttr(s[r],"data-large-file",s[r].getAttribute("data-webp-large-file")),ewwwAttr(s[r],"data-large_image",s[r].getAttribute("data-webp-large_image")),ewwwAttr(s[r],"data-src",s[r].getAttribute("data-webp-src"))):(ewwwAttr(s[r],"srcset",s[r].getAttribute("data-srcset-img")),ewwwAttr(s[r],"src",s[r].getAttribute("data-src-img"))),s[r].className=s[r].className.replace(/\bewww_webp\b/,"ewww_webp_loaded");window.jQuery&&jQuery.fn.isotope&&jQuery.fn.imagesLoaded&&(jQuery(".fusion-posts-container-infinite").imagesLoaded(function(){jQuery(".fusion-posts-container-infinite").hasClass("isotope")&&jQuery(".fusion-posts-container-infinite").isotope()}),jQuery(".fusion-portfolio:not(.fusion-recent-works) .fusion-portfolio-wrapper").imagesLoaded(function(){jQuery(".fusion-portfolio:not(.fusion-recent-works) .fusion-portfolio-wrapper").isotope()}))}function ewwwWebPInit(e){ewwwLoadImages(e),ewwwNggLoadGalleries(e),document.arrive(".ewww_webp",function(){ewwwLoadImages(e)}),document.arrive(".ewww_webp_lazy_load",function(){ewwwLoadImages(e)}),document.arrive("videos",function(){ewwwLoadImages(e)}),"loading"==document.readyState?document.addEventListener("DOMContentLoaded",ewwwJSONParserInit):("undefined"!=typeof galleries&&ewwwNggParseGalleries(e),ewwwWooParseVariations(e))}function ewwwAttr(e,t,r){null!=r&&!1!==r&&e.setAttribute(t,r)}function ewwwJSONParserInit(){"undefined"!=typeof galleries&&check_webp_feature("alpha",ewwwNggParseGalleries),check_webp_feature("alpha",ewwwWooParseVariations)}function ewwwWooParseVariations(e){if(e)for(var t=document.querySelectorAll("form.variations_form"),r=0,a=t.length;r<a;r++){var i=t[r].getAttribute("data-product_variations"),n=!1;try{for(var o in i=JSON.parse(i))void 0!==i[o]&&void 0!==i[o].image&&(void 0!==i[o].image.src_webp&&(i[o].image.src=i[o].image.src_webp,n=!0),void 0!==i[o].image.srcset_webp&&(i[o].image.srcset=i[o].image.srcset_webp,n=!0),void 0!==i[o].image.full_src_webp&&(i[o].image.full_src=i[o].image.full_src_webp,n=!0),void 0!==i[o].image.gallery_thumbnail_src_webp&&(i[o].image.gallery_thumbnail_src=i[o].image.gallery_thumbnail_src_webp,n=!0),void 0!==i[o].image.thumb_src_webp&&(i[o].image.thumb_src=i[o].image.thumb_src_webp,n=!0));n&&ewwwAttr(t[r],"data-product_variations",JSON.stringify(i))}catch(e){}}}function ewwwNggParseGalleries(e){if(e)for(var t in galleries){var r=galleries[t];galleries[t].images_list=ewwwNggParseImageList(r.images_list)}}function ewwwNggLoadGalleries(e){e&&document.addEventListener("ngg.galleria.themeadded",function(e,t){window.ngg_galleria._create_backup=window.ngg_galleria.create,window.ngg_galleria.create=function(e,t){var r=$(e).data("id");return galleries["gallery_"+r].images_list=ewwwNggParseImageList(galleries["gallery_"+r].images_list),window.ngg_galleria._create_backup(e,t)}})}function ewwwNggParseImageList(e){for(var t in e){var r=e[t];if(void 0!==r["image-webp"]&&(e[t].image=r["image-webp"],delete e[t]["image-webp"]),void 0!==r["thumb-webp"]&&(e[t].thumb=r["thumb-webp"],delete e[t]["thumb-webp"]),void 0!==r.full_image_webp&&(e[t].full_image=r.full_image_webp,delete e[t].full_image_webp),void 0!==r.srcsets)for(var a in r.srcsets)nggSrcset=r.srcsets[a],void 0!==r.srcsets[a+"-webp"]&&(e[t].srcsets[a]=r.srcsets[a+"-webp"],delete e[t].srcsets[a+"-webp"]);if(void 0!==r.full_srcsets)for(var i in r.full_srcsets)nggFSrcset=r.full_srcsets[i],void 0!==r.full_srcsets[i+"-webp"]&&(e[t].full_srcsets[i]=r.full_srcsets[i+"-webp"],delete e[t].full_srcsets[i+"-webp"])}return e}check_webp_feature("alpha",ewwwWebPInit);</script><meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+<link rel="alternate" hreflang="hu" href="https://funzine.hu/2026/10/21/goodapest/40-fergeteges-program-budapesten-es-kornyeken-az-oktober-23-i-hosszu-hetvegere/">
+<link rel="alternate" hreflang="x-default" href="https://funzine.hu/2026/10/21/goodapest/40-fergeteges-program-budapesten-es-kornyeken-az-oktober-23-i-hosszu-hetvegere/">
+<script data-wpfc-render="false">(function(){let events=["mousemove", "wheel", "scroll", "touchstart", "touchmove"];let fired=false;events.forEach(function(event){window.addEventListener(event, function(){if(fired===false){fired=true;setTimeout(function(){ (function(d,s){var f=d.getElementsByTagName(s)[0];j=d.createElement(s);j.setAttribute('id', 'cookieyes');j.setAttribute('type', 'text/javascript');j.setAttribute('src', 'https://cdn-cookieyes.com/client_data/3760bdfc100bef6f886a9099/script.js');f.parentNode.insertBefore(j,f);})(document,'script'); }, 200);}},{once: true});});})();</script>
+<title>40+ fergeteges program Budapesten és környékén az október 23-i hosszú hétvégére</title>
+<meta name="description" content="Íme a legjobb programok az október 23-i hosszú hétvégére Budapesten és környékén.">
+<link rel="canonical" href="https://funzine.hu/2026/10/21/goodapest/40-fergeteges-program-budapesten-es-kornyeken-az-oktober-23-i-hosszu-hetvegere/">
+<meta property="og:locale" content="hu_HU">
+<meta property="og:type" content="article">
+<meta property="og:title" content="40+ fergeteges program Budapesten és környékén az október 23-i hosszú hétvégére">
+<meta property="og:description" content="Íme a legjobb programok az október 23-i hosszú hétvégére Budapesten és környékén.">
+<meta property="og:url" content="https://funzine.hu/2026/10/21/goodapest/40-fergeteges-program-budapesten-es-kornyeken-az-oktober-23-i-hosszu-hetvegere/">
+<meta property="og:site_name" content="Funzine">
+<meta property="article:publisher" content="https://www.facebook.com/funzine/">
+<meta property="article:published_time" content="2026-10-21T14:21:19+00:00">
+<meta property="article:modified_time" content="2026-10-21T14:33:28+00:00">
+<meta property="og:image" content="https://funzine.hu/wp-content/uploads/2026/10/garden02.jpg">
+<meta property="og:image:width" content="1250">
+<meta property="og:image:height" content="833">
+<meta property="og:image:type" content="image/jpeg">
+<meta name="author" content="Jakab Viktor">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:creator" content="@funzine">
+<meta name="twitter:site" content="@funzine">
+<meta name="twitter:label1" content="Szerző:">
+<meta name="twitter:data1" content="Jakab Viktor">
+<meta name="twitter:label2" content="Becsült olvasási idő">
+<meta name="twitter:data2" content="15 perc">
+<script type="application/ld+json" class="yoast-schema-graph">{"@context":"https://schema.org","@graph":[{"@type":"NewsArticle","@id":"https://funzine.hu/2026/10/21/goodapest/40-fergeteges-program-budapesten-es-kornyeken-az-oktober-23-i-hosszu-hetvegere/#article","isPartOf":{"@id":"https://funzine.hu/2026/10/21/goodapest/40-fergeteges-program-budapesten-es-kornyeken-az-oktober-23-i-hosszu-hetvegere/"},"author":{"name":"Jakab Viktor","@id":"https://funzine.hu/#/schema/person/4aae188cdc09c2410a08394b7d85acec"},"headline":"40+ fergeteges program Budapesten és környékén az október 23-i hosszú hétvégére","datePublished":"2026-10-21T14:21:19+00:00","dateModified":"2026-10-21T14:33:28+00:00","mainEntityOfPage":{"@id":"https://funzine.hu/2026/10/21/goodapest/40-fergeteges-program-budapesten-es-kornyeken-az-oktober-23-i-hosszu-hetvegere/"},"wordCount":4023,"image":{"@id":"https://funzine.hu/2026/10/21/goodapest/40-fergeteges-program-budapesten-es-kornyeken-az-oktober-23-i-hosszu-hetvegere/#primaryimage"},"thumbnailUrl":"https://funzine.hu/wp-content/uploads/2026/10/garden02.jpg","keywords":["budapesti programok","hétvégi programok","október 23."],"articleSection":["Goodapest","Programok"],"inLanguage":"hu"},{"@type":"WebPage","@id":"https://funzine.hu/2026/10/21/goodapest/40-fergeteges-program-budapesten-es-kornyeken-az-oktober-23-i-hosszu-hetvegere/","url":"https://funzine.hu/2026/10/21/goodapest/40-fergeteges-program-budapesten-es-kornyeken-az-oktober-23-i-hosszu-hetvegere/","name":"40+ fergeteges program Budapesten és környékén az október 23-i hosszú hétvégére","isPartOf":{"@id":"https://funzine.hu/#website"},"primaryImageOfPage":{"@id":"https://funzine.hu/2026/10/21/goodapest/40-fergeteges-program-budapesten-es-kornyeken-az-oktober-23-i-hosszu-hetvegere/#primaryimage"},"image":{"@id":"https://funzine.hu/2026/10/21/goodapest/40-fergeteges-program-budapesten-es-kornyeken-az-oktober-23-i-hosszu-hetvegere/#primaryimage"},"thumbnailUrl":"https://funzine.hu/wp-content/uploads/2026/10/garden02.jpg","datePublished":"2026-10-21T14:21:19+00:00","dateModified":"2026-10-21T14:33:28+00:00","author":{"@id":"https://funzine.hu/#/schema/person/4aae188cdc09c2410a08394b7d85acec"},"description":"Íme a legjobb programok az október 23-i hosszú hétvégére Budapesten és környékén.","breadcrumb":{"@id":"https://funzine.hu/2026/10/21/goodapest/40-fergeteges-program-budapesten-es-kornyeken-az-oktober-23-i-hosszu-hetvegere/#breadcrumb"},"inLanguage":"hu","potentialAction":[{"@type":"ReadAction","target":["https://funzine.hu/2026/10/21/goodapest/40-fergeteges-program-budapesten-es-kornyeken-az-oktober-23-i-hosszu-hetvegere/"]}]},{"@type":"ImageObject","inLanguage":"hu","@id":"https://funzine.hu/2026/10/21/goodapest/40-fergeteges-program-budapesten-es-kornyeken-az-oktober-23-i-hosszu-hetvegere/#primaryimage","url":"https://funzine.hu/wp-content/uploads/2026/10/garden02.jpg","contentUrl":"https://funzine.hu/wp-content/uploads/2026/10/garden02.jpg","width":1250,"height":833},{"@type":"BreadcrumbList","@id":"https://funzine.hu/2026/10/21/goodapest/40-fergeteges-program-budapesten-es-kornyeken-az-oktober-23-i-hosszu-hetvegere/#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://funzine.hu/hu/"},{"@type":"ListItem","position":2,"name":"Hírek","item":"https://funzine.hu/hu/hirek/"},{"@type":"ListItem","position":3,"name":"40+ fergeteges program Budapesten és környékén az október 23-i hosszú hétvégére"}]},{"@type":"WebSite","@id":"https://funzine.hu/#website","url":"https://funzine.hu/","name":"Funzine","description":"","potentialAction":[{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":"https://funzine.hu/?s={search_term_string}"},"query-input":{"@type":"PropertyValueSpecification","valueRequired":true,"valueName":"search_term_string"}}],"inLanguage":"hu"},{"@type":"Person","@id":"https://funzine.hu/#/schema/person/4aae188cdc09c2410a08394b7d85acec","name":"Jakab Viktor","image":{"@type":"ImageObject","inLanguage":"hu","@id":"https://secure.gravatar.com/avatar/e7149aac28572a941ba4d2a942c1996df478d0ef6391eaec64128c2ffe435f2f?s=96&d=mm&r=g","url":"https://secure.gravatar.com/avatar/e7149aac28572a941ba4d2a942c1996df478d0ef6391eaec64128c2ffe435f2f?s=96&d=mm&r=g","contentUrl":"https://secure.gravatar.com/avatar/e7149aac28572a941ba4d2a942c1996df478d0ef6391eaec64128c2ffe435f2f?s=96&d=mm&r=g","caption":"Jakab Viktor"},"sameAs":["http://jakvik"],"url":"https://funzine.hu/author/jakvik/"}]}</script>
+<link rel="dns-prefetch" href="https://www.googletagmanager.com/">
+<link rel="dns-prefetch" href="https://pagead2.googlesyndication.com/">
+<link rel="alternate" type="application/rss+xml" title="Funzine » hírcsatorna" href="https://funzine.hu/feed/">
+<link rel="alternate" title="oEmbed (JSON)" type="application/json+oembed" href="https://funzine.hu/wp-json/oembed/1.0/embed?url=https%3A%2F%2Ffunzine.hu%2F2026%2F10%2F21%2Fgoodapest%2F40-fergeteges-program-budapesten-es-kornyeken-az-oktober-23-i-hosszu-hetvegere%2F">
+<link rel="alternate" title="oEmbed (XML)" type="text/xml+oembed" href="https://funzine.hu/wp-json/oembed/1.0/embed?url=https%3A%2F%2Ffunzine.hu%2F2026%2F10%2F21%2Fgoodapest%2F40-fergeteges-program-budapesten-es-kornyeken-az-oktober-23-i-hosszu-hetvegere%2F&amp;format=xml">
+<script data-wpfc-render="false" id="funzi-ready">window.advanced_ads_ready=function(e,a){a=a||"complete";var d=function(e){return"interactive"===a?"loading"!==e:"complete"===e};d(document.readyState)?e():document.addEventListener("readystatechange",(function(a){d(a.target.readyState)&&e()}),{once:"interactive"===a})},window.advanced_ads_ready_queue=window.advanced_ads_ready_queue||[];</script>
+
+<link rel="stylesheet" type="text/css" href="https://funzine.hu/wp-content/cache/wpfc-minified/1yngol27/rn4n.css" media="all">
+
+<link rel="stylesheet" type="text/css" href="https://funzine.hu/wp-content/cache/wpfc-minified/ma81ujf2/rn4n.css" media="all">
+
+<link rel="stylesheet" type="text/css" href="https://funzine.hu/wp-content/cache/wpfc-minified/dr7etbv9/rn4n.css" media="all">
+
+
+<link rel="stylesheet" id="funzine-style-css" href="https://funzine.hu/wp-content/themes/funzine/style.css?ver=1792081444" type="text/css" media="all">
+<link rel="stylesheet" id="funzine-style-mod-css" href="https://funzine.hu/wp-content/themes/funzine/main.css?ver=1607447074" type="text/css" media="all">
+<script data-wpfc-render="false">(function(){let events=["mousemove", "wheel", "scroll", "touchstart", "touchmove"];let fired=false;events.forEach(function(event){window.addEventListener(event, function(){if(fired===false){fired=true;setTimeout(function(){ (function(d,s){var f=d.getElementsByTagName(s)[0];j=d.createElement(s);j.setAttribute('type', 'text/javascript');j.setAttribute('src', 'https://www.googletagmanager.com/gtag/js?id=GT-M38D2X4');j.setAttribute('id', 'google_gtagjs-js');f.parentNode.insertBefore(j,f);})(document,'script'); }, 300);}},{once: true});});})();</script>
+<link rel="https://api.w.org/" href="https://funzine.hu/wp-json/"><link rel="alternate" title="JSON" type="application/json" href="https://funzine.hu/wp-json/wp/v2/posts/637711"><link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://funzine.hu/xmlrpc.php?rsd">
+<meta name="generator" content="WordPress 6.9.10">
+<link rel="shortlink" href="https://funzine.hu/?p=637711">
+<meta name="generator" content="WPML ver:4.6.4 stt:1,23,46;">
+<meta name="generator" content="Site Kit by Google 1.174.0">
+<meta name="google-adsense-platform-account" content="ca-host-pub-2644536267352236">
+<meta name="google-adsense-platform-domain" content="sitekit.withgoogle.com">
+<noscript><style>.lazyload[data-src]{display:none !important;}</style></noscript><link rel="amphtml" href="https://funzine.hu/2026/10/21/goodapest/40-fergeteges-program-budapesten-es-kornyeken-az-oktober-23-i-hosszu-hetvegere/?amp">
+<script async="async" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8990185616189861&amp;host=ca-host-pub-2644536267352236" crossorigin="anonymous"></script>
+<link rel="icon" href="https://funzine.hu/wp-content/uploads/2017/09/cropped-FUNZINE_Facebook_Profil_Logo_01-1-32x32.jpg" sizes="32x32">
+<link rel="icon" href="https://funzine.hu/wp-content/uploads/2017/09/cropped-FUNZINE_Facebook_Profil_Logo_01-1-192x192.jpg" sizes="192x192">
+<link rel="apple-touch-icon" href="https://funzine.hu/wp-content/uploads/2017/09/cropped-FUNZINE_Facebook_Profil_Logo_01-1-180x180.jpg">
+<meta name="msapplication-TileImage" content="https://funzine.hu/wp-content/uploads/2017/09/cropped-FUNZINE_Facebook_Profil_Logo_01-1-270x270.jpg">
+
+<meta name="msvalidate.01" content="63A49904C2A1F1E689AF58E52009752E">
+<script data-wpfc-render="false">var Wpfcll={s:[],osl:0,scroll:false,i:function(){Wpfcll.ss();window.addEventListener('load',function(){let observer=new MutationObserver(mutationRecords=>{Wpfcll.osl=Wpfcll.s.length;Wpfcll.ss();if(Wpfcll.s.length > Wpfcll.osl){Wpfcll.ls(false);}});observer.observe(document.getElementsByTagName("html")[0],{childList:true,attributes:true,subtree:true,attributeFilter:["src"],attributeOldValue:false,characterDataOldValue:false});Wpfcll.ls(true);});window.addEventListener('scroll',function(){Wpfcll.scroll=true;Wpfcll.ls(false);});window.addEventListener('resize',function(){Wpfcll.scroll=true;Wpfcll.ls(false);});window.addEventListener('click',function(){Wpfcll.scroll=true;Wpfcll.ls(false);});},c:function(e,pageload){var w=document.documentElement.clientHeight || body.clientHeight;var n=0;if(pageload){n=0;}else{n=(w > 800) ? 800:200;n=Wpfcll.scroll ? 800:n;}var er=e.getBoundingClientRect();var t=0;var p=e.parentNode ? e.parentNode:false;if(typeof p.getBoundingClientRect=="undefined"){var pr=false;}else{var pr=p.getBoundingClientRect();}if(er.x==0 && er.y==0){for(var i=0;i < 10;i++){if(p){if(pr.x==0 && pr.y==0){if(p.parentNode){p=p.parentNode;}if(typeof p.getBoundingClientRect=="undefined"){pr=false;}else{pr=p.getBoundingClientRect();}}else{t=pr.top;break;}}};}else{t=er.top;}if(w - t+n > 0){return true;}return false;},r:function(e,pageload){var s=this;var oc,ot;try{oc=e.getAttribute("data-wpfc-original-src");ot=e.getAttribute("data-wpfc-original-srcset");originalsizes=e.getAttribute("data-wpfc-original-sizes");if(s.c(e,pageload)){if(oc || ot){if(e.tagName=="DIV" || e.tagName=="A" || e.tagName=="SPAN"){e.style.backgroundImage="url("+oc+")";e.removeAttribute("data-wpfc-original-src");e.removeAttribute("data-wpfc-original-srcset");e.removeAttribute("onload");}else{if(oc){e.setAttribute('src',oc);}if(ot){e.setAttribute('srcset',ot);}if(originalsizes){e.setAttribute('sizes',originalsizes);}if(e.getAttribute("alt") && e.getAttribute("alt")=="blank"){e.removeAttribute("alt");}e.removeAttribute("data-wpfc-original-src");e.removeAttribute("data-wpfc-original-srcset");e.removeAttribute("data-wpfc-original-sizes");e.removeAttribute("onload");if(e.tagName=="IFRAME"){var y="https://www.youtube.com/embed/";if(navigator.userAgent.match(/\sEdge?\/\d/i)){e.setAttribute('src',e.getAttribute("src").replace(/.+\/templates\/youtube\.html\#/,y));}e.onload=function(){if(typeof window.jQuery !="undefined"){if(jQuery.fn.fitVids){jQuery(e).parent().fitVids({customSelector:"iframe[src]"});}}var s=e.getAttribute("src").match(/templates\/youtube\.html\#(.+)/);if(s){try{var i=e.contentDocument || e.contentWindow;if(i.location.href=="about:blank"){e.setAttribute('src',y+s[1]);}}catch(err){e.setAttribute('src',y+s[1]);}}}}}}else{if(e.tagName=="NOSCRIPT"){if(typeof window.jQuery !="undefined"){if(jQuery(e).attr("data-type")=="wpfc"){e.removeAttribute("data-type");jQuery(e).after(jQuery(e).text());}}}}}}catch(error){console.log(error);console.log("==>",e);}},ss:function(){var i=Array.prototype.slice.call(document.getElementsByTagName("img"));var f=Array.prototype.slice.call(document.getElementsByTagName("iframe"));var d=Array.prototype.slice.call(document.getElementsByTagName("div"));var a=Array.prototype.slice.call(document.getElementsByTagName("a"));var s=Array.prototype.slice.call(document.getElementsByTagName("span"));var n=Array.prototype.slice.call(document.getElementsByTagName("noscript"));this.s=i.concat(f).concat(d).concat(a).concat(s).concat(n);},ls:function(pageload){var s=this;[].forEach.call(s.s,function(e,index){s.r(e,pageload);});}};document.addEventListener('DOMContentLoaded',function(){wpfci();});function wpfci(){Wpfcll.i();}</script>
+</head>
+<body class="wp-singular post-template-default single single-post postid-637711 single-format-standard wp-theme-funzine group-blog singular ajax_post aa-prefix-funzi- day">
+<amp-consent id="googlefc" layout="nodisplay" type="googlefc"><script type="application/json">{"clientConfig":{"publisherIdentifier":"pub-8990185616189861"}}</script></amp-consent>
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KL9XSF9"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<div id="page" class="site">
+<header id="masthead" class="site-header" role="banner" style="height: 105px;">
+<div class="wrapper zone_a">
+<div class="banner-container notop" style="height: auto; position: absolute; margin-left: auto; margin-right: auto;">
+<div id="div-gpt-ad-1750158817041-0"></div></div></div><div class="tophead hidden-xs">
+<div class="pull-right">
+<div id="socials"> <a href="http://burda.hu/" target="_blank">BURDA</a>  <a href="https://www.tiktok.com/@funzine" target="_blank" class="social"><i class="fa-brands fa-tiktok"></i></a> <a href="https://www.facebook.com/funzine/" target="_blank" class="social"><i class="mdi mdi-facebook"></i></a><a href="https://www.instagram.com/funzinemagazin/" target="_blank" class="social"><i class="mdi mdi-instagram"></i></a></div><div id="daynight">
+<label class="switch day">
+<input type="checkbox">
+<div class="slider"></div><i class="mdi mdi-weather-sunny"></i>
+<i class="mdi mdi-weather-night"></i>
+</label></div><div id="lang_selector"><a href="https://funzine.hu/en/" class="lang-select lang-en"><span>en</span></a><span>hu</span><a href="https://funzine.hu/sl/" class="lang-select lang-sl"><span>sl</span></a></div></div></div><nav id="site-navigation" class="main-navigation affix" role="navigation">
+<a id="site-logo" href="https://funzine.hu/" title="Fuzine"><img src="https://funzine.hu/wp-content/themes/funzine/images/funzine-logo-new2.svg?80172489074" data-src="https://funzine.hu/wp-content/themes/funzine/images/funzine-logo-new2.svg?80172489074" decoding="async" class=" ls-is-cached lazyloaded" width="300" height="150"><noscript><img src="https://funzine.hu/wp-content/themes/funzine/images/funzine-logo-new2.svg?80172489074" data-eio="l"></noscript></a>
+<button class="mobile-menu-toggle show-xs"><i class="mdi mdi-menu"></i><i class="mdi mdi-close"></i></button>
+<div class="main-nav-container"><ul id="primary-menu" class="menu nav-menu" aria-expanded="false"><li id="menu-item-258430" class="menu-item menu-item-type-taxonomy menu-item-object-category current-post-ancestor current-menu-parent current-post-parent menu-item-258430"><a href="https://funzine.hu/category/goodapest/">Goodapest</a></li> <li id="menu-item-258426" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-has-children menu-item-258426" aria-haspopup="true"><a href="https://funzine.hu/category/kult/">Kult</a> <ul class="sub-menu"> <li id="menu-item-613908" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-613908"><a href="https://funzine.hu/category/kult/kult-extra/">Kult.extra</a></li> </ul> </li> <li id="menu-item-258429" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-has-children menu-item-258429" aria-haspopup="true"><a href="https://funzine.hu/category/gasztro/">Gasztro</a> <ul class="sub-menu"> <li id="menu-item-613864" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-613864"><a href="https://funzine.hu/category/gasztro/gasztro-extra/">Gasztro.extra</a></li> <li id="menu-item-313024" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-313024"><a href="https://funzine.hu/category/gasztro/receptek/">Receptek</a></li> </ul> </li> <li id="menu-item-437494" class="menu-item menu-item-type-taxonomy menu-item-object-category current-post-ancestor current-menu-parent current-post-parent menu-item-437494"><a href="https://funzine.hu/category/programok/">Programok</a></li> <li id="menu-item-275853" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-has-children menu-item-275853" aria-haspopup="true"><a href="https://funzine.hu/category/have-fun/">Kikapcs</a> <ul class="sub-menu"> <li id="menu-item-613865" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-613865"><a href="https://funzine.hu/category/have-fun/filmek/">Filmek</a></li> <li id="menu-item-613866" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-613866"><a href="https://funzine.hu/category/have-fun/konyvek/">Könyvek</a></li> </ul> </li> <li id="menu-item-620378" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-620378" aria-haspopup="true"><a href="https://funzine.hu/utazas/">Utazás</a> <ul class="sub-menu"> <li id="menu-item-613868" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-613868"><a href="https://funzine.hu/category/utazas/szallasok/">Szállások</a></li> </ul> </li> <li id="menu-item-557860" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-557860"><a href="https://funzine.hu/balaton/">Balaton</a></li> <li id="menu-item-587579" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-587579"><a href="https://funzine.hu/category/ujdonsagok/">Újdonságok</a></li> </ul></div><div class="secondary-nav-container">
+<ul class="secondary-menu">
+<li id="search_btn" class="menu-item"> <i class="mdi mdi-magnify"></i> </li>
+</ul>
+<div class="sm-hide"> <form id="site_search" role="search" method="get" class="search-form" action="https://funzine.hu/"> <span class="screen-reader-text">Keresés:</span> <input type="search" class="search-field" placeholder="Search …" value="" name="s" title="Keresés:"> <button type="submit" class="search-submit"><i class="mdi mdi-close"></i></button> </form></div></div></nav>
+<amp-sidebar id="mobile-menu" class="mobile-menu-nav" layout="nodisplay" side="right">
+<div class="secondary-nav-container"> <ul class="secondary-menu"> <li id="lang_selector"> <a href="https://funzine.hu/en/" class="lang-select lang-en"><span>en</span></a><span>hu</span><a href="https://funzine.hu/sl/" class="lang-select lang-sl"><span>sl</span></a> </li>  </ul></div><form id="site_search" role="search" method="get" class="search-form" action="https://funzine.hu/">
+<span class="screen-reader-text">Keresés:</span>
+<input type="search" class="search-field" placeholder="Search …" value="" name="s" title="Keresés:">
+<button type="submit" class="search-submit"><i class="mdi mdi-close"></i></button>
+</form>		<div class="main-nav-container"><ul id="primary-menu" class="menu"><li class="menu-item menu-item-type-taxonomy menu-item-object-category current-post-ancestor current-menu-parent current-post-parent menu-item-258430"><a href="https://funzine.hu/category/goodapest/">Goodapest</a></li> <li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-has-children menu-item-258426"><a href="https://funzine.hu/category/kult/">Kult</a> <ul class="sub-menu"> <li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-613908"><a href="https://funzine.hu/category/kult/kult-extra/">Kult.extra</a></li> </ul> </li> <li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-has-children menu-item-258429"><a href="https://funzine.hu/category/gasztro/">Gasztro</a> <ul class="sub-menu"> <li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-613864"><a href="https://funzine.hu/category/gasztro/gasztro-extra/">Gasztro.extra</a></li> <li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-313024"><a href="https://funzine.hu/category/gasztro/receptek/">Receptek</a></li> </ul> </li> <li class="menu-item menu-item-type-taxonomy menu-item-object-category current-post-ancestor current-menu-parent current-post-parent menu-item-437494"><a href="https://funzine.hu/category/programok/">Programok</a></li> <li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-has-children menu-item-275853"><a href="https://funzine.hu/category/have-fun/">Kikapcs</a> <ul class="sub-menu"> <li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-613865"><a href="https://funzine.hu/category/have-fun/filmek/">Filmek</a></li> <li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-613866"><a href="https://funzine.hu/category/have-fun/konyvek/">Könyvek</a></li> </ul> </li> <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-620378"><a href="https://funzine.hu/utazas/">Utazás</a> <ul class="sub-menu"> <li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-613868"><a href="https://funzine.hu/category/utazas/szallasok/">Szállások</a></li> </ul> </li> <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-557860"><a href="https://funzine.hu/balaton/">Balaton</a></li> <li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-587579"><a href="https://funzine.hu/category/ujdonsagok/">Újdonságok</a></li> </ul></div><div id="socials">  <a href="https://www.tiktok.com/@funzine" target="_blank" class="social"><i class="fa-brands fa-tiktok"></i></a> <a href="https://www.facebook.com/funzine/" target="_blank" class="social facebook"><i class="mdi mdi-facebook"></i></a><a href="https://www.instagram.com/funzinehungary/" target="_blank" class="social instagram"><i class="mdi mdi-instagram"></i></a><a href="https://www.youtube.com/channel/UCCE3nmoBSjPUuqCavfy-TNw" target="_blank" class="social youtube"><i class="mdi mdi-youtube"></i></a></div></amp-sidebar>		<div class="clear"></div></header>
+<div id="content" class="site-content">
+<div class="wrapper">
+<div id="primary" class="content-area">
+<main id="main" class="site-main" role="main">
+<article id="post-637711" class="contentphp post-637711 post type-post status-publish format-standard has-post-thumbnail hentry category-goodapest category-programok tag-budapesti-programok tag-hetvegi-programok tag-oktober-23 bannerinserted" data-adcode="zone4287852" data-mobile_adcode="zone4287983" data-adcode_b="zone4287853" data-cat="goodapest" data-mobile_adcode_b="zone4287984" data-postid="637711">
+<header class="entry-header">
+<h1 class="entry-title">40+ fergeteges program Budapesten és környékén az október 23-i hosszú hétvégére</h1>		
+<span class="entry-meta"><span class="byline"> </span> • <span class="posted-on"><time class="entry-date published" datetime="2026-10-21T16:21:19+02:00">2026. okt. 21.</time><time class="updated" datetime="2026-10-21T16:33:28+02:00">2026. okt. 21.</time></span></span>		
+</header>
+<div class="lead"> <strong> </strong></div><div class="entry-content">
+<div class="zone_a">
+<div class="banner-container notop post-single-roadblock post-single-roadblock-top" style="height: auto; visibility: visible; position: relative; margin-left: auto; margin-right: auto;">
+<div id="div-gpt-ad-1596464482650-0"></div></div><div class="amp-ad-container"> <amp-ad width="336" height="280" type="doubleclick" data-slot="/22071649104/Roadblock" data-multi-size="336x280,320x100,300x250,300x100,250x250" json="{&quot;targeting&quot;:{&quot;category&quot;:[&quot;goodapest&quot;],&quot;lang&quot;:[&quot;hu&quot;],&quot;device&quot;:[&quot;mobil&quot;]}}"> </amp-ad></div></div><p><strong>Íme a legjobb programok az október 23-i hosszú hétvégére Budapesten és környékén, ahol ezúttal is nagyszerű koncertek, filmek, vezetett séták és felejthetetlen élmények várnak benneteket. Ráadásul ezen a héten nyit meg több fénykiállítás is.&nbsp;</strong></p><div class="gs-banner-wrap"><a class="gs-banner" href="https://www.google.com/preferences/source?q=funzine.hu" target="_blank" rel="noopener"><svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"></path><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"></path><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"></path><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.31-8.16 2.31-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"></path><path fill="none" d="M0 0h48v48H0z"></path></svg><span>Ha tetszik a cikk, kattints és állíts be minket előnyben részesített forrásként a Google-ben!</span></a></div><h2>Többnapos hétvégi programok Budapesten és környékén</h2>
+<h3>Lumina Park // Palatinus (2026. október 20-tól)</h3>
+<p>Hatodjára is fénybe öltözik a Palatinus, hiszen október 20-án megnyitja kapuit a Lumina Park. Idén ősszel ráadásul teljesen megújulva veszi birtokba a jól megszokott helyszínt, és egyenesen Csodaországba repíti a látogatókat. Bizony, ezúttal Alíz története elevenedik meg, méghozzá több mint 200 installációnak köszönhetően! Érkezik a Fehér Nyúl, a Bolond Kalapos, de persze a Szívkirálynő sem maradhat ki a rendhagyó kalandból – érdemes lesz legalább két órát rászánni, és minél több figurát megörökíteni. A lengyel koncepción alapuló Lumina Parkról nem túlzás azt állítani, hogy Európa kedvenc fényparkja, ráadásul a régió legnagyobbja: Budapesten 1,5 kilométer hosszan sétálhattok fényárban úszó mesebirodalmában. Késő délutánonként, előreláthatólag márciusig gyúlnak fel a fények a Palatinus területén, hogy aztán 21, bizonyos napokon akár 22 óráig is részt vehessetek ezen a varázslatos utazáson a Lumina Parkban. Irány a tükör túloldala!</p>
+<p><strong><a href="http://luminapark.hu/" target="_blank" rel="noopener">További infók &gt;&gt;</a></strong></p>
+<div class="content_cards_card content_cards_domain_funzine-hu">
+<div class="content_cards_image"> <a class="content_cards_image_link" href="https://funzine.hu/2026/09/28/goodapest/egeszen-csodaorszagig-repiti-a-latogatokat-a-margitsziget-meses-fenybirodalma/" target="_blank"> <img decoding="async" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAB4AAAAb4AQMAAABUalydAAAAA1BMVEUAAACnej3aAAAAAXRSTlMAQObYZgAAAbdJREFUGBntwTEBAAAAwiD7p14MH2AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHAQj9IAAQaxpFMAAAAASUVORK5CYII=" alt="Egészen Csodaországig repíti a látogatókat a Margitsziget mesés fénybirodalma" data-src="https://funzine.hu/wp-content/uploads/2026/09/Foto-Lumina-Park-3-e1790413578328.jpg.webp" class="lazyload " data-eio-rwidth="2048" data-eio-rheight="1903" data-src-webp="https://funzine.hu/wp-content/uploads/2026/09/Foto-Lumina-Park-3-e1790413578328.jpg.webp"><noscript><img decoding="async" src="https://funzine.hu/wp-content/uploads/2026/09/Foto-Lumina-Park-3-e1790413578328.jpg" alt="Egészen Csodaországig repíti a látogatókat a Margitsziget mesés fénybirodalma" data-eio="l"></noscript> </a></div><div class="content_cards_title"> <a class="content_cards_title_link" href="https://funzine.hu/2026/09/28/goodapest/egeszen-csodaorszagig-repiti-a-latogatokat-a-margitsziget-meses-fenybirodalma/" target="_blank"> Egészen Csodaországig repíti a látogatókat a Margitsziget mesés fénybirodalma </a></div><div class="content_cards_description"> <a class="content_cards_description_link" href="https://funzine.hu/2026/09/28/goodapest/egeszen-csodaorszagig-repiti-a-latogatokat-a-margitsziget-meses-fenybirodalma/" target="_blank"> <p>Európa kedvenc, és legnagyobb fényparkja nyitja meg kapuit októberben Budapesten, amely még varázslatosabb témával készül 2026-ra.</p> </a></div><div class="content_cards_site_name"> <img decoding="async" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgAQMAAABJtOi3AAAAA1BMVEUAAACnej3aAAAAAXRSTlMAQObYZgAAAAtJREFUCB1jGOQAAACgAAGXmq1SAAAAAElFTkSuQmCC" alt="Funzine" class="content_cards_favicon lazyload" data-src="https://funzine.hu/wp-content/uploads/2017/09/cropped-FUNZINE_Facebook_Profil_Logo_01-1-32x32.jpg" data-eio-rwidth="32" data-eio-rheight="32"><noscript><img onload="Wpfcll.r(this,true);" src="https://funzine.hu/wp-content/plugins/wp-fastest-cache-premium/pro/images/blank.gif" decoding="async" data-wpfc-original-src="https://funzine.hu/wp-content/uploads/2017/09/cropped-FUNZINE_Facebook_Profil_Logo_01-1-32x32.jpg" alt="Funzine" class="content_cards_favicon" data-eio="l"/></noscript> Funzine</div></div><h3>A Duna hídjai – Gyukics Péter kiállítása // Eötvös10 (2026. október 21. – november 22.)</h3>
+<p>Budapest-rajongóknak kihagyhatatlan, ingyenes fotókiállítással kedveskedik az Eötvös10. Gyukics Péter 9 országot megjárt képeit előzetes bejelentkezés után, egészen november 22-ig tekinthetitek meg, amihez az e-mail címet a Facebook-eseménynél találjátok.</p>
+<p><strong><a href="https://www.facebook.com/events/1658003019366520/" target="_blank" rel="noopener">Tovább a Facebook-eseményre &gt;&gt;</a>&nbsp;</strong></p>
+<h3><strong>Nagy Budapesti Sörfesztivál </strong>(2026. október 21-25.)</h3>
+<p>A fesztivál a második körben október 21. és 25. között várja a közönséget a Kopaszi-gátnál, a sörrajongók pedig a jól ismert klasszikusok mellett különleges tételeket is kóstolhatnak. A kínálatban ott lesz többek között az Erdinger, a Spaten, a Paulaner és az Augustiner, de olyan nemzetközi különlegességekkel is találkozhattok, mint a Sárga-tenger partjáról érkező Tsingtao vagy a Fertő tó mellől származó osztrák bio sör, a családi főzdében készülő Golser. A sörök mellé természetesen tartalmas gasztronómiai kínálat és hamisítatlan fesztiválhangulat társul. A kora esti órákban bajor élő zene alapozza meg a hangulatot, később pedig koncertek és ismert klub DJ-k veszik át a terepet.</p>
+<p><strong><a href="https://www.facebook.com/events/1392569132493316/1392569135826649" target="_blank" rel="noopener">Tovább a Facebook-eseményre &gt;&gt;</a>&nbsp;</strong></p>
+<div class="content_cards_card content_cards_domain_funzine-hu">
+<div class="content_cards_image"> <a class="content_cards_image_link" href="https://funzine.hu/2026/10/09/gasztro/ingyenes-sorfesztival-koltozik-iden-oktoberben-a-kopaszi-gathoz/" target="_blank"> <img decoding="async" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAB4AAAAUAAQMAAACcQ910AAAAA1BMVEUAAACnej3aAAAAAXRSTlMAQObYZgAAAUJJREFUGBntwQENAAAAwiD7p34ON2AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAwI0AtTwAAb3/K1kAAAAASUVORK5CYII=" alt="Ingyenes sörfesztivál költözik idén októberben a Kopaszi-gáthoz" data-src="https://funzine.hu/wp-content/uploads/2026/10/DSC01091-1.jpg.webp" class="lazyload " data-eio-rwidth="2000" data-eio-rheight="1333" data-src-webp="https://funzine.hu/wp-content/uploads/2026/10/DSC01091-1.jpg.webp"><noscript><img decoding="async" src="https://funzine.hu/wp-content/uploads/2026/10/DSC01091-1.jpg" alt="Ingyenes sörfesztivál költözik idén októberben a Kopaszi-gáthoz" data-eio="l"></noscript> </a></div><div class="content_cards_title"> <a class="content_cards_title_link" href="https://funzine.hu/2026/10/09/gasztro/ingyenes-sorfesztival-koltozik-iden-oktoberben-a-kopaszi-gathoz/" target="_blank"> Ingyenes sörfesztivál költözik idén októberben a Kopaszi-gáthoz </a></div><div class="content_cards_description"> <a class="content_cards_description_link" href="https://funzine.hu/2026/10/09/gasztro/ingyenes-sorfesztival-koltozik-iden-oktoberben-a-kopaszi-gathoz/" target="_blank"> <p>A sörrajongók nagy örömére idén első alkalommal kerül megrendezésre a Nagy Budapesti Sörfesztivál</p> </a></div><div class="content_cards_site_name"> <img decoding="async" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgAQMAAABJtOi3AAAAA1BMVEUAAACnej3aAAAAAXRSTlMAQObYZgAAAAtJREFUCB1jGOQAAACgAAGXmq1SAAAAAElFTkSuQmCC" alt="Funzine" class="content_cards_favicon lazyload" data-src="https://funzine.hu/wp-content/uploads/2017/09/cropped-FUNZINE_Facebook_Profil_Logo_01-1-32x32.jpg" data-eio-rwidth="32" data-eio-rheight="32"><noscript><img onload="Wpfcll.r(this,true);" src="https://funzine.hu/wp-content/plugins/wp-fastest-cache-premium/pro/images/blank.gif" decoding="async" data-wpfc-original-src="https://funzine.hu/wp-content/uploads/2017/09/cropped-FUNZINE_Facebook_Profil_Logo_01-1-32x32.jpg" alt="Funzine" class="content_cards_favicon" data-eio="l"/></noscript> Funzine</div></div><h3>Régiségvásár Szentendrén (2026. október 23-24.)</h3>
+<p>Tálak, falitányérok, köcsögök, vázák, nyakláncok, karkötők, gyűrűk és rengeteg izgalmas antik és retró kincs vár rátok a RaktArt hangárában.</p>
+<p><strong><a href="https://www.facebook.com/events/867705653098920" target="_blank" rel="noopener">Tovább a Facebook-eseményre &gt;&gt;</a>&nbsp;</strong></p>
+<h3>Városligeti Tök Jó Fesztivál (2026. október 23-25., 31.)</h3>
+<p>Idén ősszel három hétvégén át egy varázslatos világ elevenedik meg a Városligeti Műjégpályán, ahol a tököké, az őszi élményeké, a zenéé és a felejthetetlen családi pillanatoké lesz a főszerep. Boszorkányok, szellemek, sejtelmes fények, hátborzongató meglepetések és különleges halloweeni programok várják a bátrakat.</p>
+<p><strong><a href="https://www.facebook.com/events/4572356656413994/4572356663080660/" target="_blank" rel="noopener">Tovább a Facebook-eseményre &gt;&gt;</a>&nbsp;</strong></p>
+<h3>Garden of Lights // ELTE Füvészkert (2026. október 23-tól)</h3>
+<p>Ősszel és télen az ELTE Füvészkert is rendre fénybe burkolódzik, nincs ez másként idén sem – október 23-án visszatér a Garden of Lights, ezúttal kizárólag a Füvészkert szervezésében! Már le is hullt a lepel a 2026-os tematikáról: A Szépség és a Szörnyeteg meséjének bűvöletében sziporkáznak a fények. Úgy élhetitek át Belle és a Herceg közel 300 éves meséjét, mint még soha, hiszen a jól ismert történet ikonikus szereplői, helyszínei és motívumai ezúttal látványos alkotások formájában kelnek életre. Egyedi lampiontechnikával készült, mozgó fényinstallációk, ragyogó fényalagutak és fénykapuk, megannyi szemet gyönyörködtető multimédia-attrakció vár benneteket, mindehhez pedig a Füvészkert varázslatos atmoszférája biztosítja a hátteret, így az élmény egészen biztosan felejthetetlen lesz. Jó, ha tudjátok, hogy ez a Garden of Lights zárófelvonása – már csak ezért is érdemes lesz jegyet váltani erre a varázslatos utazásra.</p>
+<p><strong><a href="http://gardenoflights.hu/" target="_blank" rel="noopener">További infók &gt;&gt;&nbsp;</a></strong></p>
+<figure id="attachment_637733" aria-describedby="caption-attachment-637733" style="width: 850px" class="wp-caption aligncenter"><img fetchpriority="high" decoding="async" class="wp-image-637733 size-funzine-large lazyload " src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABLAAAAMgAQMAAAAJLglBAAAAA1BMVEUAAACnej3aAAAAAXRSTlMAQObYZgAAAIxJREFUGBntwTEBAAAAwiD7p14Hb2AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACnANfvAAGNwCEMAAAAAElFTkSuQmCC" alt="Október 23 programok budapest 2026" width="850" height="567" data-src="https://funzine.hu/wp-content/uploads/2026/10/garden02-1200x800.jpg.webp" data-srcset="https://funzine.hu/wp-content/uploads/2026/10/garden02-1200x800.jpg.webp 1200w, https://funzine.hu/wp-content/uploads/2026/10/garden02-300x200.jpg.webp 300w, https://funzine.hu/wp-content/uploads/2026/10/garden02-1024x682.jpg.webp 1024w, https://funzine.hu/wp-content/uploads/2026/10/garden02-768x512.jpg.webp 768w, https://funzine.hu/wp-content/uploads/2026/10/garden02-360x240.jpg.webp 360w, https://funzine.hu/wp-content/uploads/2026/10/garden02.jpg.webp 1250w" data-sizes="auto" data-eio-rwidth="1200" data-eio-rheight="800" data-src-webp="https://funzine.hu/wp-content/uploads/2026/10/garden02-1200x800.jpg.webp" data-srcset-webp="https://funzine.hu/wp-content/uploads/2026/10/garden02-1200x800.jpg.webp 1200w, https://funzine.hu/wp-content/uploads/2026/10/garden02-300x200.jpg.webp 300w, https://funzine.hu/wp-content/uploads/2026/10/garden02-1024x682.jpg.webp 1024w, https://funzine.hu/wp-content/uploads/2026/10/garden02-768x512.jpg.webp 768w, https://funzine.hu/wp-content/uploads/2026/10/garden02-360x240.jpg.webp 360w, https://funzine.hu/wp-content/uploads/2026/10/garden02.jpg.webp 1250w"><noscript><img onload="Wpfcll.r(this,true);" src="https://funzine.hu/wp-content/plugins/wp-fastest-cache-premium/pro/images/blank.gif" fetchpriority="high" decoding="async" class="wp-image-637733 size-funzine-large" data-wpfc-original-src="https://funzine.hu/wp-content/uploads/2026/10/garden02-1200x800.jpg" alt="Október 23 programok budapest 2026" width="850" height="567" data-wpfc-original-srcset="https://funzine.hu/wp-content/uploads/2026/10/garden02-1200x800.jpg 1200w, https://funzine.hu/wp-content/uploads/2026/10/garden02-300x200.jpg 300w, https://funzine.hu/wp-content/uploads/2026/10/garden02-1024x682.jpg 1024w, https://funzine.hu/wp-content/uploads/2026/10/garden02-768x512.jpg 768w, https://funzine.hu/wp-content/uploads/2026/10/garden02-360x240.jpg 360w, https://funzine.hu/wp-content/uploads/2026/10/garden02.jpg 1250w" data-wpfc-original-sizes="(max-width: 850px) 100vw, 850px" data-eio="l"/></noscript><figcaption id="caption-attachment-637733" class="wp-caption-text">Fotó: Egy jó kép az utazásról</figcaption></figure>
+<h3>Cinemira Nemzetközi Gyerek- és Ifjúsági Filmfesztivál // több helyszínen (2026. október 24-31.)</h3>
+<p>Október végén a Sugár mozi, a Dugattyús, a Marczibányi Téri Művelődési Központ és a Francia Intézet terei is megtelnek kifejezetten gyerekeknek és kamaszoknak szóló filmes rendezvényekkel, hogy többek között vetítésekkel, beszélgetésekkel, filmes castinggal, workshopokkal és sztárvendégekkel tegyék felejthetetlenné az őszi szünetet. A weboldalon korcsoportra és érdeklődési körre bontva is szemezgethettek a programok közül, így az ifjú filmszakértők egészen biztosan megtalálják majd azt az előadást, amelyik leginkább megszólítja őket.</p>
+<p><a href="https://www.cinemira.hu/" target="_blank" rel="noopener"><strong>További információ &gt;&gt;</strong></a></p>
+<h3><strong>III. Budapest International Film Festival // Corvin mozi (2026. október 24. – november 1.)</strong></h3>
+<p>Október 24. és november 1. között ismét műsorára tűzi az év legizgalmasabb filmjeit a BIFF a Corvin moziban. Az esemény 45 alkotást vonultat fel, amelyek egytől egyig nagy sikert arattak Cannes, Velence, vagy éppen a Sundance filmes seregszemléjén. A programban helyet kapott például Nemes László történelmi drámája, a Moulin, valamint Radu Jude: The Diary of a Chambermaid című társadalmi szatírája. Az elsőként bejelentett filmek között kreatív dokumentumfilm és queer horrorvígjáték is szerepel. Nem csak a filmek miatt lesz érdemes jegyet váltani, a fesztiválon az alkotókkal is találkozhattok!</p>
+<p><strong><a href="https://www.biff.hu/" target="_blank" rel="noopener">További infók &gt;&gt;</a></strong></p>
+<h3><strong>MÁV-nosztalgiahétvége Budapest és Szentendre között </strong><strong>(2026. október 24-25.)</strong></h3>
+<p>Nem akármilyen nosztalgiahétvégére készül idén októberben a MÁV-csoport: nosztalgiaszerelvények, Faros Ikarusok, járműkiállítás, kocsiszín-látogatás, Utasellátó és családi programok várják az érdeklődőket a Budapest-Szentendre között közlekedő HÉV vonalán.</p>
+<div class="content_cards_card content_cards_domain_funzine-hu">
+<div class="content_cards_image"> <a class="content_cards_image_link" href="https://funzine.hu/2026/10/17/programok/nosztalgiajaratok-csempesznek-retro-hangulatot-a-hev-vonalara-oktoberben/" target="_blank"> <img decoding="async" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABOwAAANIAQMAAABOoeKwAAAAA1BMVEUAAACnej3aAAAAAXRSTlMAQObYZgAAAJhJREFUGBntwQENAAAAwiD7p34ON2AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABcCQnWAAFiTyPNAAAAAElFTkSuQmCC" alt="Nosztalgiajáratok csempésznek retró hangulatot a HÉV vonalára októberben" data-src="https://funzine.hu/wp-content/uploads/2026/10/mavcsoport.hu_.jpg.webp" class="lazyload " data-eio-rwidth="1260" data-eio-rheight="840" data-src-webp="https://funzine.hu/wp-content/uploads/2026/10/mavcsoport.hu_.jpg.webp"><noscript><img decoding="async" src="https://funzine.hu/wp-content/uploads/2026/10/mavcsoport.hu_.jpg" alt="Nosztalgiajáratok csempésznek retró hangulatot a HÉV vonalára októberben" data-eio="l"></noscript> </a></div><div class="content_cards_title"> <a class="content_cards_title_link" href="https://funzine.hu/2026/10/17/programok/nosztalgiajaratok-csempesznek-retro-hangulatot-a-hev-vonalara-oktoberben/" target="_blank"> Nosztalgiajáratok csempésznek retró hangulatot a HÉV vonalára októberben </a></div><div class="content_cards_description"> <a class="content_cards_description_link" href="https://funzine.hu/2026/10/17/programok/nosztalgiajaratok-csempesznek-retro-hangulatot-a-hev-vonalara-oktoberben/" target="_blank"> <p>Nosztalgiaszerelvények, Faros Ikarus, járműkiállítás, kocsiszín-látogatás, Utasellátó is várják az érdeklődőket idén októberben.</p> </a></div><div class="content_cards_site_name"> <img decoding="async" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgAQMAAABJtOi3AAAAA1BMVEUAAACnej3aAAAAAXRSTlMAQObYZgAAAAtJREFUCB1jGOQAAACgAAGXmq1SAAAAAElFTkSuQmCC" alt="Funzine" class="content_cards_favicon lazyload" data-src="https://funzine.hu/wp-content/uploads/2017/09/cropped-FUNZINE_Facebook_Profil_Logo_01-1-32x32.jpg" data-eio-rwidth="32" data-eio-rheight="32"><noscript><img onload="Wpfcll.r(this,true);" src="https://funzine.hu/wp-content/plugins/wp-fastest-cache-premium/pro/images/blank.gif" decoding="async" data-wpfc-original-src="https://funzine.hu/wp-content/uploads/2017/09/cropped-FUNZINE_Facebook_Profil_Logo_01-1-32x32.jpg" alt="Funzine" class="content_cards_favicon" data-eio="l"/></noscript> Funzine</div></div><h3>Story of Lights // Grassalkovich-kastély, Gödöllő (2026. október 24-től)</h3>
+<p>Ha fénykertekről van szó, természetesen Gödöllő sem maradhat ki a sorból: Sisi legkedvesebb magyarországi rezidenciáját, a Grassalkovich-kastélyt körülölelő kert október 24-én burkolódzik fényekbe, hála a Story of Lights látványosságának. Hazánk legnagyobb fénykiállítás-sorozata idén is Erzsébet királyné fénykertjét kelti életre Gödöllőn, reflektálva a helyszín bámulatos történetére. A kert egyszerre lesz az időtlen elegancia, a játékosság, a hagyományok és a modern megoldások színtere – az este fénypontjaként pedig még egy óriáskerékre is felülhettek, hogy 30 méter magasból is megcsodálhassátok mindezt.</p>
+<p><strong><a href="https://storyoflights.hu/park/godollo" target="_blank" rel="noopener">További infók &gt;&gt;</a></strong></p>
+<h3>Szemrevaló Filmfesztivál // Művész mozi (2026. október 25-ig)</h3>
+<p>Október 15. és 25. között rendezik meg a 15. Szemrevaló Filmfesztivált a budapesti Művész moziban. A Svájci Nagykövetség, az Osztrák Kulturális Fórum és a Goethe Intézet közös filmhete ezúttal is a német nyelvterület legfrissebb alkotásaiból ad ízelítőt eredeti nyelven, magyar felirattal. Az idén beválogatott 10 film a női sorsokat állítja középpontba: a fesztivált az egyszerre felemelő és mulatságos Űr a szívemben nyitja meg, de a Rose, az Apaföld és az Ön hisz az angyalokban? című alkotásokat is megnézhetitek. Budapest mellett Debrecenben, Szegeden és Pécsett is vetítik majd a fesztivál legjobb filmjeit.</p>
+<p><a href="https://www.facebook.com/Szemrevalo/" target="_blank" rel="noopener"><strong>További információ &gt;&gt;</strong></a></p>
+<h3>The Desperate Empire of Happiness – Duliskovich Bazil festőművész kiállítása // KULT7 Galéria (2026. október 29-ig)</h3>
+<p>Duliskovich Bazil a kortárs hazai festészet talán legmagányosabb alakja. Senki máséval össze nem téveszthető saját univerzumában működik. Mégis valamennyi képe más és más, egy-egy új, addig nem fölfejtett élmény vagy érzelmi góc kibontásának képi megragadása. Talán soha nem volt divatos, és soha nem fog tudni a divatból kimenni.</p>
+<p><strong><a href="https://www.facebook.com/events/985245507945284/" target="_blank" rel="noopener">Tovább a Facebook-eseményre &gt;&gt;</a>&nbsp;</strong></p>
+<h2>Ha családi programot kerestek a hétvégére:</h2>
+<div class="content_cards_card content_cards_domain_funzine-hu">
+<div class="content_cards_image"> <a class="content_cards_image_link" href="https://funzine.hu/2026/10/20/programok/12-elmenydus-program-az-oszi-szunetre-budapesten-es-kornyeken-amit-az-egesz-csalad-imadni-fog/" target="_blank"> <img decoding="async" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAB4AAAAVSAQMAAADdBXSIAAAAA1BMVEUAAACnej3aAAAAAXRSTlMAQObYZgAAAVVJREFUGBntwTEBAAAAwiD7p14IX2AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAC3AAJ9AAFlm8FGAAAAAElFTkSuQmCC" alt="12 élménydús program az őszi szünetre Budapesten és környékén, amit az egész család imádni fog" data-src="https://funzine.hu/wp-content/uploads/2026/10/Foto-Somai-Valter-2.jpg.webp" class="lazyload " data-eio-rwidth="2560" data-eio-rheight="1816" data-src-webp="https://funzine.hu/wp-content/uploads/2026/10/Foto-Somai-Valter-2.jpg.webp"><noscript><img decoding="async" src="https://funzine.hu/wp-content/uploads/2026/10/Foto-Somai-Valter-2.jpg" alt="12 élménydús program az őszi szünetre Budapesten és környékén, amit az egész család imádni fog" data-eio="l"></noscript> </a></div><div class="content_cards_title"> <a class="content_cards_title_link" href="https://funzine.hu/2026/10/20/programok/12-elmenydus-program-az-oszi-szunetre-budapesten-es-kornyeken-amit-az-egesz-csalad-imadni-fog/" target="_blank"> 12 élménydús program az őszi szünetre Budapesten és környékén, amit az egész család imádni fog </a></div><div class="content_cards_description"> <a class="content_cards_description_link" href="https://funzine.hu/2026/10/20/programok/12-elmenydus-program-az-oszi-szunetre-budapesten-es-kornyeken-amit-az-egesz-csalad-imadni-fog/" target="_blank"> <p>Hamarosan itt az őszi szünet, és a főváros és környéke kínálta családbarát programdömpinget elnézve bizony most sem fogtok unatkozni.</p> </a></div><div class="content_cards_site_name"> <img decoding="async" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgAQMAAABJtOi3AAAAA1BMVEUAAACnej3aAAAAAXRSTlMAQObYZgAAAAtJREFUCB1jGOQAAACgAAGXmq1SAAAAAElFTkSuQmCC" alt="Funzine" class="content_cards_favicon lazyload" data-src="https://funzine.hu/wp-content/uploads/2017/09/cropped-FUNZINE_Facebook_Profil_Logo_01-1-32x32.jpg" data-eio-rwidth="32" data-eio-rheight="32"><noscript><img onload="Wpfcll.r(this,true);" src="https://funzine.hu/wp-content/plugins/wp-fastest-cache-premium/pro/images/blank.gif" decoding="async" data-wpfc-original-src="https://funzine.hu/wp-content/uploads/2017/09/cropped-FUNZINE_Facebook_Profil_Logo_01-1-32x32.jpg" alt="Funzine" class="content_cards_favicon" data-eio="l"/></noscript> Funzine</div></div><h3>Színe és a visszája // Karinthy Szalon <strong>(2026. október 30-ig)</strong></h3>
+<p>Az IMÁGÓ Öko-Kulturális Labor második csoportos kiállítása a textil és a ruházkodás témáját boncolgatja: mikro-, mezo- és makroszinten vizsgálja a médium egyéni és társadalmi hatásait, miközben feltárja, milyen jelentésrétegek húzódnak meg a felszín mögött. A kiállítás hétfőtől péntekig 12 és 18 óra között vár titeket az újbudai Karinthy Szalonban.</p>
+<p><strong><a href="https://www.facebook.com/events/2540339139768953/" target="_blank" rel="noopener">Tovább a Facebook-eseményre &gt;&gt;</a></strong></p>
+<h3>World Press Photo 2026 // Biodóm (2026. november 8-ig)</h3>
+<p>Idén is a világ legfontosabb történetei elevenednek meg a Biodómban. A nemzetközi sajtófotó-verseny válogatásában háborúk, humanitárius válságok, migráció, klímaváltozás és társadalmi igazságosság is helyet kap. A több mint 57 ezer nevezett fotó közül kiválasztott alkotások nemcsak a konfliktusokat és veszteségeket dokumentálják, hanem az emberi kitartást és összetartást is megmutatják. A tárlat mellett két különleges magyar fotóanyag is látható, a „Fel is út, le is út – a 24.hu szemtanúi” a 2026-os választás, a „Sortűz 1956” pedig az 1956-os forradalom emlékezetes pillanatait idézi fel.</p>
+<p><strong><a href="https://zoobudapest.com/programok/world-press-photo-2026/" target="_blank" rel="noopener">További infók &gt;&gt;</a>&nbsp;</strong></p>
+<h3>44. Magyar Sajtófotó Kiállítás // Capa Központ (2026. november 8-ig)</h3>
+<p>A tavalyi év legfontosabb pillanatai elevenednek meg a 44. Magyar Sajtófotó Kiállításon a Robert Capa Kortárs Fotográfiai Központban. A tárlat a 44. Magyar Sajtófotó Pályázat díjazott és válogatott képeiből mutat be izgalmas válogatást: a MÚOSZ Nagydíja és az André Kertész-nagydíj mellett tizenhat kategória legjobbjai és számos különdíjas alkotás is látható. A nemzetközi zsűri által kiválasztott fotók a közélet, a társadalom, a kultúra és a mindennapok meghatározó történéseit idézik fel. A sokszínű kiállítás november 8-ig várja a látogatókat a Capa Központ emeleti kiállítóterében.</p>
+<p><strong><a href="https://capacenter.hu/kiallitasok/44-magyar-sajtofoto-kiallitas/" target="_blank" rel="noopener">További infók &gt;&gt;</a>&nbsp;</strong></p>
+<h2><strong>Csütörtöki programok Budapesten és környékén (2026. október 22.)&nbsp;</strong></h2>
+<h3>Liszt: Krisztus // Müpa</h3>
+<p>A Liszt Ünnep részeként október 22-én igazán különleges eseményre kerül sor a Müpa Bartók Béla Nemzeti Hangversenytermében. Liszt Ferenc monumentális alkotása, a Krisztus oratórium sokak szerint nem más, mint „az égi birodalom zenéje”: őszinte, átszellemült darab, melyet egyszer mindenkinek hallania kell. A Müpában – azt megelőzően pedig a bécsi Musikverein színpadán – magyar, osztrák, szlovák és svájci énekes szólisták közreműködésével&nbsp;kel életre, Kesselyák Gergely vezényletével. Minél előbb váltsátok meg a jegyeteket, egészen biztosan felejthetetlen élmény lesz!</p>
+<p><strong><a href="https://mupa.hu/program/komolyzene-opera-szinhaz/liszt-krisztus-2026-10-22_19-00-bbnh" target="_blank" rel="noopener">Bővebb információ és jegyvásárlás &gt;&gt;</a></strong></p>
+<h3>Kósza Zenekar // KAZI</h3>
+<p>A Kósza Zenekar teljes felállásban (hegedű, cselló, nagybőgő, ütősök, ukulele) mutatja be lelket birizgáló saját szerzeményeit és feldolgozásait. Ha szereted az indie-folk zenét, a dalköltészetet, az akusztikus megszólalást, itt helyed!</p>
+<p><strong><a href="https://www.facebook.com/events/28168311649504466/" target="_blank" rel="noopener">Tovább a Facebook-eseményre &gt;&gt;</a>&nbsp;</strong></p>
+<h3>Zen Dogz bemutatja: pop-up hip-hop este @ MANYI</h3>
+<p>Egy egyszeri, kiszámíthatatlan hip-hop este a Manyiban. Zen Dogz x További Magyar Hangok. Lemezek, súlyos basszusok, ismerős és váratlan zenék, egy este erejéig.</p>
+<p><strong><a href="https://www.facebook.com/events/1994325831241113" target="_blank" rel="noopener">Tovább a Facebook-eseményre &gt;&gt;</a>&nbsp;</strong></p>
+<h3>Trio Mandili // Akvárium Klub</h3>
+<p>Három fiatal grúz lány egy eldugott kaukázusi faluból indult, és rövid idő alatt világszerte ismertté vált. Egy napsütéses napon az országúton sétálva spontán énekelni kezdtek, miközben telefonjukkal felvették egyik kedvenc dalukat, az „Aparekát”. A videót feltöltötték az internetre, ahol mindössze két hét alatt több milliós nézettséget ért el – és ezzel gyökeresen megváltoztatta az életüket. A trió rövid idő alatt hatalmas rajongótábort szerzett világszerte.</p>
+<p><strong><a href="https://www.facebook.com/events/2238861863312071/" target="_blank" rel="noopener">Tovább a Facebook-eseményre &gt;&gt;</a>&nbsp;</strong></p>
+<h3>Bohemian Betyars Pogó Buli // Dürer Kert</h3>
+<p>Október 22-én visszatér a gigantikus-összeborulós-megőrülős Bohemian Betyars pogó buli, ahol a régi muzsikák is előkerülnek, a sírva vigadás is garantált, nyugodt álldogálásra pedig ezúttal sem érdemes készülni.</p>
+<p><strong><a href="https://www.facebook.com/events/1075386338329842" target="_blank" rel="noopener">Tovább a Facebook-eseményre &gt;&gt;</a>&nbsp;</strong></p>
+<h2><strong>Okótber 23-i programok 2026-ban Budapesten és környékén (péntek)</strong></h2>
+<h3>Kolonics György Emlékfutás // Népsziget</h3>
+<p>Immáron 17. alkalommal kerül megrendezésre a tragikus hirtelenséggel, 36 éves korában elhunyt kétszeres olimpiai és tizenötszörös világbajnok emléke előtt tisztelgő Kolonics György Emlékfutás. Október 23-án egyéni futószámokban (3,5 km-es, 11,5 km-es és 21,1 km-es távokon), félmaraton váltóban, valamint sárkányhajózásban is rajthoz állhatnak a résztvevők, a megszokott helyszínen, a KSI Kajak-Kenu Egyesület népszigeti telephelyén. Nevezni a bbu.hu oldalon tudtok!</p>
+<p><strong><a href="https://bbu.hu/kolonics-gyorgy-emlekfutas/" target="_blank" rel="noopener">További infók &gt;&gt;</a></strong></p>
+<div class="content_cards_card content_cards_domain_funzine-hu">
+<div class="content_cards_image"> <a class="content_cards_image_link" href="https://funzine.hu/2026/10/05/have-fun/kiveteles-sportesemeny-tiszteleg-a-legendas-magyar-kenus-emleke-elott-iden-oktoberben/" target="_blank"> <img decoding="async" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAB4AAAAT+AQMAAAAVrK6pAAAAA1BMVEUAAACnej3aAAAAAXRSTlMAQObYZgAAAUFJREFUGBntwQENAAAAwiD7p34PBwwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAIwGzWgABDTw1PQAAAABJRU5ErkJggg==" alt="Kivételes sportesemény tiszteleg a legendás magyar kenus emléke előtt idén októberben" data-src="https://funzine.hu/wp-content/uploads/2026/10/1023_KoloEmlekfutas_KM44.jpg.webp" class="lazyload " data-eio-rwidth="2560" data-eio-rheight="1704" data-src-webp="https://funzine.hu/wp-content/uploads/2026/10/1023_KoloEmlekfutas_KM44.jpg.webp"><noscript><img decoding="async" src="https://funzine.hu/wp-content/uploads/2026/10/1023_KoloEmlekfutas_KM44.jpg" alt="Kivételes sportesemény tiszteleg a legendás magyar kenus emléke előtt idén októberben" data-eio="l"></noscript> </a></div><div class="content_cards_title"> <a class="content_cards_title_link" href="https://funzine.hu/2026/10/05/have-fun/kiveteles-sportesemeny-tiszteleg-a-legendas-magyar-kenus-emleke-elott-iden-oktoberben/" target="_blank"> Kivételes sportesemény tiszteleg a legendás magyar kenus emléke előtt idén októberben </a></div><div class="content_cards_description"> <a class="content_cards_description_link" href="https://funzine.hu/2026/10/05/have-fun/kiveteles-sportesemeny-tiszteleg-a-legendas-magyar-kenus-emleke-elott-iden-oktoberben/" target="_blank"> <p>Októberben a Népsziget ad otthont a Kolonics György Emlékfutásnak, ahol a sportélmény mellett egy legendás magyar kenus előtt is tiszteleghetünk.</p> </a></div><div class="content_cards_site_name"> <img decoding="async" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgAQMAAABJtOi3AAAAA1BMVEUAAACnej3aAAAAAXRSTlMAQObYZgAAAAtJREFUCB1jGOQAAACgAAGXmq1SAAAAAElFTkSuQmCC" alt="Funzine" class="content_cards_favicon lazyload" data-src="https://funzine.hu/wp-content/uploads/2017/09/cropped-FUNZINE_Facebook_Profil_Logo_01-1-32x32.jpg" data-eio-rwidth="32" data-eio-rheight="32"><noscript><img onload="Wpfcll.r(this,true);" src="https://funzine.hu/wp-content/plugins/wp-fastest-cache-premium/pro/images/blank.gif" decoding="async" data-wpfc-original-src="https://funzine.hu/wp-content/uploads/2017/09/cropped-FUNZINE_Facebook_Profil_Logo_01-1-32x32.jpg" alt="Funzine" class="content_cards_favicon" data-eio="l"/></noscript> Funzine</div></div><h3>Megáll az idő // Bem Mozi</h3>
+<p>Gothár Péter kultikus alkotása 1956-ról és azt követő évekről, a fiatalok szemszögéből.</p>
+<p><strong><a href="https://www.facebook.com/events/1067960466025316" target="_blank" rel="noopener">Tovább a Facebook-eseményre &gt;&gt;</a>&nbsp;</strong></p>
+<h3>BARDO 20 – Jubileumi koncert // Gödör Klub</h3>
+<p>Bárdos Deák Ági egy különleges, jubileumi koncerttel jelentkezik a Bardo-lemez megjelenésének 20. évfordulóján.</p>
+<p><strong><a href="https://www.facebook.com/events/1093859429769565/" target="_blank" rel="noopener">Tovább a Facebook-eseményre &gt;&gt;</a>&nbsp;</strong></p>
+<h3>Tina Turner Emlékkocert // STENK Lelátó</h3>
+<p>Tina Turner legendás slágerei kelnek életre a Ria Live Zenekar emlékkoncertjén.</p>
+<p><strong><a href="https://www.facebook.com/events/2573636779814426/" target="_blank" rel="noopener">Tovább a Facebook-eseményre &gt;&gt;</a>&nbsp;</strong></p>
+<h3>Fink // A38</h3>
+<p>A nagyszerű brit blues-folk dalszerző-előadó visszatér, hogy meghitt, személyes dalaival ismét felébressze közönsége szívében a szunnyadó erőt, szenvedélyt, szeretetet.</p>
+<p><strong><a href="https://www.facebook.com/events/957095763459109/" target="_blank" rel="noopener">Tovább a Facebook-eseményre &gt;&gt;</a>&nbsp;</strong></p>
+<h2><strong>Szombati programok Budapesten és környékén (2026. október 24.)</strong></h2>
+<h3>Gardrób Közösségi Vásár // ELTE Gömb Aula</h3>
+<p>Október 24-én ezúttal sufnikincsek nélkül kerül megrendezésre a hagyományos Gardrób Közösségi Vásár az ELTE Gömb Aulában. Ha szeretnéd felfrissíteni ruhatárad, itt a remek alkalom, hogy új darabokkal és kiegészítőkkel töltsd fel készleteidet.</p>
+<p><a href="https://www.facebook.com/events/1045552058309069" target="_blank" rel="noopener"><strong>Tovább a Facebook-eseményre &gt;&gt;</strong></a></p>
+<h3>Bolhapiac Nagymaroson a Szabadmag-Miegymásban</h3>
+<p>Október 24-én ismét bolhapiaci hangulat kerekedik a nagymarosi Szabadmag-Miegymás udvarán és kisszobájában. A 10-től kezdődő és 16 óráig tartó bolhapiacon lesznek ruhák, háztartási kincsek, régiségek, játékok, és még ki tudja mennyi, sokat dédelgetett ritkaság.</p>
+<p><a href="https://www.facebook.com/events/2164581974417151/" target="_blank" rel="noopener"><strong>Tovább a Facebook-eseményre &gt;&gt;</strong></a></p>
+<h3>RitmusLabor – Családi élménydobolás // Magyar Zene Háza</h3>
+<p>Ez az interaktív program kifejezetten gyermekeknek, családoknak szól. A Föld népeinek legérdekesebb ütőhangszereit és ritmusait mutatja be egy izgalmas játékos történetben. Mivel az ütőhangszerek megszólaltatása nem igényel előképzettséget, pillanatok alatt önfeledt élményt okoz a legkisebbeknek is. Emellett jó hatással van a figyelemre, kézügyességre és a csapatjátékra. A gyerekek és kísérő szüleik kipróbálhatják a hangszereket, így válik ez a kaland kiváló családi eseménnyé.</p>
+<p><strong><a href="https://www.facebook.com/events/968115732710874/" target="_blank" rel="noopener">Tovább a Facebook-eseményre &gt;&gt;</a>&nbsp;</strong></p>
+<h3><b><span data-contrast="auto">Fényűzés és történelem: Kalandozás az Andrássy úton</span></b><span data-ccp-props="{}">&nbsp;</span></h3>
+<p><span data-contrast="auto">Az Andrássy út nem csak az épületeiről szól, hanem az emberekről is, akik formálták. Egy út, ahol minden lépés egy újabb történetet mesél el, mely nem csupán Budapest egyik legismertebb sugárútja – a „magyar Champs Élysées” -, hanem egy valódi időutazás, ahol minden sarkon találkozik a múlt és a jelen. A Pestbudai Séták eseményén a város legelegánsabb sugárútjának luxusából és drámáiból kaphattok ízelítőt októberben és novemberben két-két alkalommal.</span><span data-ccp-props="{&quot;335551550&quot;:6,&quot;335551620&quot;:6}">&nbsp;</span></p>
+<p><a href="https://pestbudaisetak.hu/varosnezo-setak/fenyuzes-es-tortenelem-kalandozas-az-andrassy-uton/" target="_blank" rel="noopener"><strong>További részletek &gt;&gt;</strong></a></p>
+<figure id="attachment_637735" aria-describedby="caption-attachment-637735" style="width: 1193px" class="wp-caption aligncenter"><img decoding="async" class="wp-image-637735 size-full lazyload " src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABKkAAAMWAQMAAAAAtkfTAAAAA1BMVEUAAACnej3aAAAAAXRSTlMAQObYZgAAAIpJREFUGBntwTEBAAAAwiD7p14KP2AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAcBXSCQAB75hkggAAAABJRU5ErkJggg==" alt="hétvégi programok az október 23-i hosszú hétvégén 2026-ban" width="1193" height="790" data-src="https://funzine.hu/wp-content/uploads/2026/10/andrassy01.jpg.webp" data-srcset="https://funzine.hu/wp-content/uploads/2026/10/andrassy01.jpg.webp 1193w, https://funzine.hu/wp-content/uploads/2026/10/andrassy01-300x200.jpg.webp 300w, https://funzine.hu/wp-content/uploads/2026/10/andrassy01-1024x678.jpg.webp 1024w, https://funzine.hu/wp-content/uploads/2026/10/andrassy01-768x509.jpg.webp 768w, https://funzine.hu/wp-content/uploads/2026/10/andrassy01-100x65.jpg.webp 100w" data-sizes="auto" data-eio-rwidth="1193" data-eio-rheight="790" data-src-webp="https://funzine.hu/wp-content/uploads/2026/10/andrassy01.jpg.webp" data-srcset-webp="https://funzine.hu/wp-content/uploads/2026/10/andrassy01.jpg.webp 1193w, https://funzine.hu/wp-content/uploads/2026/10/andrassy01-300x200.jpg.webp 300w, https://funzine.hu/wp-content/uploads/2026/10/andrassy01-1024x678.jpg.webp 1024w, https://funzine.hu/wp-content/uploads/2026/10/andrassy01-768x509.jpg.webp 768w, https://funzine.hu/wp-content/uploads/2026/10/andrassy01-100x65.jpg.webp 100w"><noscript><img onload="Wpfcll.r(this,true);" src="https://funzine.hu/wp-content/plugins/wp-fastest-cache-premium/pro/images/blank.gif" decoding="async" class="wp-image-637735 size-full" data-wpfc-original-src="https://funzine.hu/wp-content/uploads/2026/10/andrassy01.jpg" alt="hétvégi programok az október 23-i hosszú hétvégén 2026-ban" width="1193" height="790" data-wpfc-original-srcset="https://funzine.hu/wp-content/uploads/2026/10/andrassy01.jpg 1193w, https://funzine.hu/wp-content/uploads/2026/10/andrassy01-300x200.jpg 300w, https://funzine.hu/wp-content/uploads/2026/10/andrassy01-1024x678.jpg 1024w, https://funzine.hu/wp-content/uploads/2026/10/andrassy01-768x509.jpg 768w, https://funzine.hu/wp-content/uploads/2026/10/andrassy01-100x65.jpg 100w" data-wpfc-original-sizes="(max-width: 1193px) 100vw, 1193px" data-eio="l"/></noscript><figcaption id="caption-attachment-637735" class="wp-caption-text">A Drechsler-palota az Opera felől / Fotó: Egy jó kép az utazásról</figcaption></figure>
+<h3>Gyertyafényes búcsúvacsora a Rakparton</h3>
+<p>Az október végi hosszú hétvégén zárul a Rakpart-szezon. Az elmúlt években hagyománnyá vált, hogy ezt egy gyertyafényes búcsúvacsorával ünnepelik meg. Ezúttal rekord hosszú asztallal készülnek: a Viadukt Bártól, a Valyo!Viadukton át, a Tunán és Dunyin keresztül egészen a Mederig tart majd a terülj-terülj, ahol minden közösségi hely hozzáadja a magáét, úgyhogy étel-italban és meglepetés programokban sem lesz hiány.</p>
+<p><strong><a href="https://www.facebook.com/events/29535349346067754/" target="_blank" rel="noopener">Tovább a Facebook-eseményre &gt;&gt;</a>&nbsp;</strong></p>
+<h3>Garrick Davis World Blues a Fülesben</h3>
+<p>Garrick Davis egy amerikai gitáros, énekes, dalíró és producer, aki Budapesten él. A blues gyökereivel és az érzésekre, valamint a térre építve zenéje a személyes tapasztalatokat tükröző dalszerzést ötvözi a globális, vándorlás által formált érzékkel. A Garrick Davis World Blues vezetőjeként Davis érzelmileg közvetlen előadásokat nyújt, amelyek valós helyiségekhez, valódi színpadokhoz és igazi hallgatókhoz készültek.</p>
+<p><strong><a href="https://www.facebook.com/events/4532964646977284" target="_blank" rel="noopener">Tovább a Facebook-eseményre &gt;&gt;</a>&nbsp;</strong></p>
+<h3>DJ Krush // Akvárium</h3>
+<p>DJ Krush nem bír leállni és az idős mester zeneileg frissebb, mint valaha. Kevés olyan évtizedek óta a pályán levő DJ van, aki ennyire rajta lenne az újdonságok kutatásán, mint ő. Szettjeiben mégis ott az egyensúly, tudja és megmutatja honnan jött, de azt is, hogy merre tart ő és az absztrakt hip hop minden leágazásával egyetemben.</p>
+<p><strong><a href="https://www.facebook.com/events/27151151737838261/" target="_blank" rel="noopener">Tovább a Facebook-eseményre &gt;&gt;</a>&nbsp;</strong></p>
+<h2><strong>Vasárnapi programok Budapesten (2026. október 25.)</strong></h2>
+<h3>SUP Szafari a Ráckevei-Duna eldugott részén</h3>
+<p>Igaz, már ősz van, de a SUP-szezonnak még koránt sincs vége. Szombatra 18 fokot jósolnak, ti pedig egy kis SUP Szafarira indulhattok a Ráckevei-Dunán.</p>
+<p><strong><a href="https://www.facebook.com/events/27738178982525124/" target="_blank" rel="noopener">Tovább a Facebook-eseményre &gt;&gt;</a> &nbsp;</strong></p>
+<figure id="attachment_637736" aria-describedby="caption-attachment-637736" style="width: 850px" class="wp-caption aligncenter"><img decoding="async" class="wp-image-637736 size-funzine-large lazyload " src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABLAAAAKkAQMAAAAqeFQ7AAAAA1BMVEUAAACnej3aAAAAAXRSTlMAQObYZgAAAHpJREFUGBntwQENAAAAwiD7p34ON2AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMCFAI7LAAHxOX92AAAAAElFTkSuQmCC" alt="budapesti programok az október 23-i hosszú hétvégén" width="850" height="479" data-src="https://funzine.hu/wp-content/uploads/2026/10/supthelifestyle01-1200x676.jpg.webp" data-srcset="https://funzine.hu/wp-content/uploads/2026/10/supthelifestyle01-1200x676.jpg.webp 1200w, https://funzine.hu/wp-content/uploads/2026/10/supthelifestyle01-300x169.jpg.webp 300w, https://funzine.hu/wp-content/uploads/2026/10/supthelifestyle01-1024x577.jpg.webp 1024w, https://funzine.hu/wp-content/uploads/2026/10/supthelifestyle01-768x433.jpg.webp 768w, https://funzine.hu/wp-content/uploads/2026/10/supthelifestyle01-480x270.jpg.webp 480w, https://funzine.hu/wp-content/uploads/2026/10/supthelifestyle01.jpg.webp 1250w" data-sizes="auto" data-eio-rwidth="1200" data-eio-rheight="676" data-src-webp="https://funzine.hu/wp-content/uploads/2026/10/supthelifestyle01-1200x676.jpg.webp" data-srcset-webp="https://funzine.hu/wp-content/uploads/2026/10/supthelifestyle01-1200x676.jpg.webp 1200w, https://funzine.hu/wp-content/uploads/2026/10/supthelifestyle01-300x169.jpg.webp 300w, https://funzine.hu/wp-content/uploads/2026/10/supthelifestyle01-1024x577.jpg.webp 1024w, https://funzine.hu/wp-content/uploads/2026/10/supthelifestyle01-768x433.jpg.webp 768w, https://funzine.hu/wp-content/uploads/2026/10/supthelifestyle01-480x270.jpg.webp 480w, https://funzine.hu/wp-content/uploads/2026/10/supthelifestyle01.jpg.webp 1250w"><noscript><img onload="Wpfcll.r(this,true);" src="https://funzine.hu/wp-content/plugins/wp-fastest-cache-premium/pro/images/blank.gif" decoding="async" class="wp-image-637736 size-funzine-large" data-wpfc-original-src="https://funzine.hu/wp-content/uploads/2026/10/supthelifestyle01-1200x676.jpg" alt="budapesti programok az október 23-i hosszú hétvégén" width="850" height="479" data-wpfc-original-srcset="https://funzine.hu/wp-content/uploads/2026/10/supthelifestyle01-1200x676.jpg 1200w, https://funzine.hu/wp-content/uploads/2026/10/supthelifestyle01-300x169.jpg 300w, https://funzine.hu/wp-content/uploads/2026/10/supthelifestyle01-1024x577.jpg 1024w, https://funzine.hu/wp-content/uploads/2026/10/supthelifestyle01-768x433.jpg 768w, https://funzine.hu/wp-content/uploads/2026/10/supthelifestyle01-480x270.jpg 480w, https://funzine.hu/wp-content/uploads/2026/10/supthelifestyle01.jpg 1250w" data-wpfc-original-sizes="(max-width: 850px) 100vw, 850px" data-eio="l"/></noscript><figcaption id="caption-attachment-637736" class="wp-caption-text">Fotó: SUP the lifestyle Facebook</figcaption></figure>
+<h3>Halloweeni K-pop mulatság // Eötvös10</h3>
+<p>Jelmezverseny, fellépések és Random Dance vár rátok október 25-én, amikor is a Papillon ismét beköltözik az Eötvös10 Művelődési Házba.</p>
+<p><strong><a href="https://www.facebook.com/events/1624829729371311/" target="_blank" rel="noopener">Tovább a Facebook-eseményre &gt;&gt;</a>&nbsp;</strong></p>
+<h3>Habsburgok és holtak – vezetett séta</h3>
+<p>Október 25-én a Budavári Palotanegyedben és egyúttal a Habsburg nádori kriptában tehettek izgalmas, felfedező sétát a Budai Várséták szervezésében. József nádor és családjának életébe nyerhettek bepillantást, akinek többek között a Margitsziget fáit, a Ludovikát, a Műegyetemet és a Vakok Intézetét is köszönhetjük. A „legmagyarabb Habsburgként” is emlegetett főherceg életét azonban nem kerülték el a tragédiák – többek között erről is szó lesz a sétán.</p>
+<p><strong><a href="https://budaivarsetak.hu/setak/habsburgok-es-holtak-38" target="_blank" rel="noopener">További infók &gt;&gt;</a>&nbsp;</strong></p>
+<h3>Hollywood! Legendás filmzenék szimfonikus nagyzenekarral // Budapest Kongresszusi Központ</h3>
+<p>Legyen szó a Psycho feszítő vonósairól, A cápa ikonikus témájáról vagy az Interstellar katartikus orgonájáról, vannak olyan dallamok, amelyekhez nem is szükséges mozivászon, hiszen azonnal beégnek az emlékeinkbe. Október 25-én a Budapest Kongresszusi Központban ennek jegyében valóságos filmzenei időutazás vár a közönségre: a Danubia Zenekar szimfonikus nagyzenekara az álomgyár legnépszerűbb dallamait kelti életre! Kevesen tudják, de Hollywood klasszikus hangzását európai zeneszerzők teremtették meg, köztük számos magyar művésszel – például a háromszoros Oscar-díjas Rózsa Miklóssal. A koncerten a fekete-fehér klasszikusoktól a modern sci-fiig száguld majd a zenei hullámvasút, a Danubia Zenekar pedig nemcsak zenél, hanem mesél is. A karmester, Hámori Máté közvetlen stílusban, izgalmas kulisszatitkokkal és sztorikkal köti össze a tételeket – ezen a különleges időutazáson minden zenerajongónak részt kell vennie!</p>
+<p><strong><a href="https://utazenehez.hu/koncertek/hollywood-2026-10-25-170000" target="_blank" rel="noopener">Bővebb információ és jegyvásárlás &gt;&gt;</a></strong></p>
+<h3>A Szaturnusz gyűrűrendszere és a Hold hatalmas krátere // Svábhegyi Csillagvizsgáló</h3>
+<p>Ezen az estén először a Szaturnusz páratlan gyűrűrendszerét és narancsos Titán holdját majd a Hold nyugati peremén található hatalmas, bazaltos aljzatú Grimaldi-krátert és a körülötte lévő felszíni képződményeket fedezhetitek fel. Egy mobiltelefon-adapterünk segítségével, mindenki saját emlékfotóval térhet haza a Hold-túráról.</p>
+<p><strong><a href="https://www.facebook.com/events/1415830153271300/" target="_blank" rel="noopener">Tovább a Facebook-eseményre &gt;&gt;</a>&nbsp;</strong></p>
+<div class="content_cards_card content_cards_domain_funzine-hu">
+<div class="content_cards_image"> <a class="content_cards_image_link" href="https://funzine.hu/2026/09/25/goodapest/iden-osszel-a-csillagok-koze-repit-budapest-legnagyobb-csillagvizsgaloja/" target="_blank"> <img decoding="async" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABLAAAAMgAQMAAAAJLglBAAAAA1BMVEUAAACnej3aAAAAAXRSTlMAQObYZgAAAIxJREFUGBntwTEBAAAAwiD7p14Hb2AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACnANfvAAGNwCEMAAAAAElFTkSuQmCC" alt="Idén ősszel a csillagok közé repít Budapest legnagyobb csillagvizsgálója" data-src="https://funzine.hu/wp-content/uploads/2026/09/DSC0158nef-AIZajsz-1.jpg.webp" class="lazyload " data-eio-rwidth="1200" data-eio-rheight="800" data-src-webp="https://funzine.hu/wp-content/uploads/2026/09/DSC0158nef-AIZajsz-1.jpg.webp"><noscript><img decoding="async" src="https://funzine.hu/wp-content/uploads/2026/09/DSC0158nef-AIZajsz-1.jpg" alt="Idén ősszel a csillagok közé repít Budapest legnagyobb csillagvizsgálója" data-eio="l"></noscript> </a></div><div class="content_cards_title"> <a class="content_cards_title_link" href="https://funzine.hu/2026/09/25/goodapest/iden-osszel-a-csillagok-koze-repit-budapest-legnagyobb-csillagvizsgaloja/" target="_blank"> Idén ősszel a csillagok közé repít Budapest legnagyobb csillagvizsgálója </a></div><div class="content_cards_description"> <a class="content_cards_description_link" href="https://funzine.hu/2026/09/25/goodapest/iden-osszel-a-csillagok-koze-repit-budapest-legnagyobb-csillagvizsgaloja/" target="_blank"> <p>Mi történik, ha egy hétvégi program során nemcsak nézzük, hanem meg is érintjük, megvizsgáljuk és valóban megértjük az univerzumot?</p> </a></div><div class="content_cards_site_name"> <img decoding="async" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgAQMAAABJtOi3AAAAA1BMVEUAAACnej3aAAAAAXRSTlMAQObYZgAAAAtJREFUCB1jGOQAAACgAAGXmq1SAAAAAElFTkSuQmCC" alt="Funzine" class="content_cards_favicon lazyload" data-src="https://funzine.hu/wp-content/uploads/2017/09/cropped-FUNZINE_Facebook_Profil_Logo_01-1-32x32.jpg" data-eio-rwidth="32" data-eio-rheight="32"><noscript><img onload="Wpfcll.r(this,true);" src="https://funzine.hu/wp-content/plugins/wp-fastest-cache-premium/pro/images/blank.gif" decoding="async" data-wpfc-original-src="https://funzine.hu/wp-content/uploads/2017/09/cropped-FUNZINE_Facebook_Profil_Logo_01-1-32x32.jpg" alt="Funzine" class="content_cards_favicon" data-eio="l"/></noscript> Funzine</div></div><h3>Casablanca // Bem Mozi</h3>
+<p>A fekete-fehér filmklasszikus Humphrey Bogarttal, Ingrid Bergmannal a Bem Mozi műsorán.</p>
+<p><a href="https://www.facebook.com/events/2050764952230724" target="_blank" rel="noopener"><strong>Tovább a Facebook-eseményre &gt;&gt;</strong></a></p>
+<div class="post-nav"></div></div><div class="zone_b">
+<div class="banner-container notop post-single-roadblock" style="height: auto; visibility: visible; position: relative; margin-left: auto; margin-right: auto;">
+<div id="div-gpt-ad-1596464734216-0"></div></div><div class="amp-ad-container"> <amp-ad width="336" height="280" type="doubleclick" data-slot="/22071649104/Roadblock_B" data-multi-size="336x280,320x100,300x250,300x100,250x250" json="{&quot;targeting&quot;:{&quot;category&quot;:[&quot;goodapest&quot;],&quot;lang&quot;:[&quot;hu&quot;],&quot;device&quot;:[&quot;mobil&quot;]}}"> </amp-ad></div></div><footer class="entry-footer">
+<span class="cat-links"><a href="https://funzine.hu/category/goodapest/" rel="category tag">Goodapest</a>, <a href="https://funzine.hu/category/programok/" rel="category tag">Programok</a></span><span class="tags-links"><a href="https://funzine.hu/tag/budapesti-programok/" rel="tag">budapesti programok</a><a href="https://funzine.hu/tag/hetvegi-programok/" rel="tag">hétvégi programok</a><a href="https://funzine.hu/tag/oktober-23/" rel="tag">október 23.</a></span><div class="clearfix"></div><div class="fb">
+<div class="fb-like fb_iframe_widget" data-href="https://funzine.hu/2026/10/21/goodapest/40-fergeteges-program-budapesten-es-kornyeken-az-oktober-23-i-hosszu-hetvegere/" data-layout="button" data-action="recommend" data-size="large" data-show-faces="true" data-share="true" fb-xfbml-state="rendered" fb-iframe-plugin-query="action=recommend&amp;app_id=338562636521180&amp;container_width=1889&amp;href=https%3A%2F%2Ffunzine.hu%2F2026%2F10%2F21%2Fgoodapest%2F40-fergeteges-program-budapesten-es-kornyeken-az-oktober-23-i-hosszu-hetvegere%2F&amp;layout=button&amp;locale=hu_HU&amp;sdk=joey&amp;share=true&amp;show_faces=true&amp;size=large"><span style="vertical-align: bottom; width: 0px; height: 0px;"><div name="fe3554b02419a85d1" width="1000px" height="1000px" data-testid="fb:like Facebook Social Plugin" title="fb:like Facebook Social Plugin" frameborder="0" allowtransparency="true" allowfullscreen="true" scrolling="no" allow="encrypted-media" src="https://www.facebook.com/v2.8/plugins/like.php?action=recommend&amp;app_id=338562636521180&amp;channel=https%3A%2F%2Fstaticxx.facebook.com%2Fx%2Fconnect%2Fxd_arbiter%2F%3Fversion%3D46%23cb%3Dfd7237bdfe4f512af%26domain%3Dfunzine.hu%26is_canvas%3Dfalse%26origin%3Dhttps%253A%252F%252Ffunzine.hu%252Ff1d725a8e62b03b37%26relation%3Dparent.parent&amp;container_width=1889&amp;href=https%3A%2F%2Ffunzine.hu%2F2026%2F10%2F21%2Fgoodapest%2F40-fergeteges-program-budapesten-es-kornyeken-az-oktober-23-i-hosszu-hetvegere%2F&amp;layout=button&amp;locale=hu_HU&amp;sdk=joey&amp;share=true&amp;show_faces=true&amp;size=large" style="border-width: medium; border-style: none; border-color: currentcolor; border-image: none; visibility: visible; width: 0px; height: 0px;" class="" data-original-tag="iframe"><!DOCTYPE html><html lang="hu" id="facebook" class="no_svg no_js"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta name="referrer" content="origin-when-crossorigin" id="meta_referrer"><script nonce="">__DEV__=0;</script><title>Facebook</title><link type="text/css" rel="stylesheet" href="https://static.xx.fbcdn.net/rsrc.php/v5/yQ/l/0,cross/TBAmH8s46M1.css" data-bootloader-hash="D93E3Pi" crossorigin="anonymous">
+<link type="text/css" rel="stylesheet" href="https://static.xx.fbcdn.net/rsrc.php/v5/y9/l/0,cross/GsVO4I5Yi7Y.css" data-bootloader-hash="NVTmzYG" crossorigin="anonymous">
+<script nonce="">window.onloadRegister_DEPRECATED=function(){},window.onafterloadRegister_DEPRECATED=function(){},window.ServerJSQueue={add:function(){}};</script><script nonce="">ServerJSQueue.add(function(){requireLazy(["HasteSupportData"],function(m){m.handle({"clpData":{"1838142":{"r":1,"s":1}},"gkxData":{"999":{"result":false,"hash":null},"1174":{"result":false,"hash":null},"5023":{"result":false,"hash":null},"5163":{"result":false,"hash":null},"5415":{"result":false,"hash":null},"7742":{"result":false,"hash":null},"8068":{"result":false,"hash":null},"8869":{"result":false,"hash":null},"9063":{"result":false,"hash":null},"15745":{"result":false,"hash":null},"20935":{"result":false,"hash":null},"20936":{"result":false,"hash":null},"21043":{"result":false,"hash":null},"23984":{"result":false,"hash":null},"25572":{"result":false,"hash":null}},"justknobxData":{"340":{"r":true},"1590":{"r":true},"2694":{"r":true},"3323":{"r":true},"4216":{"r":true},"5589":{"r":true},"1276":{"r":true},"3414":{"r":true}}})});});ServerJSQueue.add({"require":[["markJSEnabled"]]});</script><script nonce="">(function(){var e=document.createElement("div"),t=document.createElement("svg");e.appendChild(t);var n=e.firstChild;if(n instanceof Element&&n.namespaceURI==="http://www.w3.org/2000/svg"){var r=document.documentElement;r.className=r.className.replace("no_svg","svg")}})();</script></head><body dir="ltr" class="plugin chrome webkit x1 Locale_hu_HU"><div class="_li"><span></span><script nonce="">(function(width, height, id, callback, origin, domain) { if(id){var e=document.getElementById(id);if(width!==-1)e.style.width=width+"px";else if(width=e.offsetWidth,window.getComputedStyle){var computed=getComputedStyle(e);computed&&(width=Math.ceil(parseFloat(computed.width))||e.offsetWidth)}height===-1&&(height=e.offsetHeight)}var message="type=resize&cb="+callback+"&width="+width+"&height="+height;; (function(){var e=window.parent;window.opener!=null&&typeof window.opener.postMessage=="function"&&(relation==="opener.parent"?e=window.opener.parent:e=window.opener);var t=!0;function n(e){var t=window.location.hostname.match(/\.(facebook\.sg|facebookcorewwwi\.(?:test)?onion|facebookwkhpilnemxj7asaniu7vnjjbiltxjqhye3mhbshg7kx5tfyd\.onion)$/),n=t?t[1]:"facebook.com",r=new Image;r.crossOrigin="anonymous",r.src="https://www."+n+"/platform/scribe_endpoint.php/?c=jssdk_error&m="+encodeURIComponent(JSON.stringify(e))}function r(){if(e===window)window.close(),window.open("","_self",""),window.close(),!window.closed&&closeURI&&window.location.replace(closeURI);else try{e.postMessage(message,origin)}catch(e){t?(t=!1,window.setTimeout(r,200)):(e.message,n({error:"POST_MESSAGE",extra:{message:e.message+", html/js/connect/XDDialogResponsePurePostMessage.js:53"}}))}}function o(){__fbNative.postMessage(message,origin)}window==top&&(/FBAN\/\w+;/i.test(navigator.userAgent)||/MetaIAB/i.test(navigator.userAgent)&&/\b(iPhone|iP[ao]d)/.test(navigator.userAgent))&&!/FBAN\/mLite;/.test(navigator.userAgent)?window.__fbNative&&__fbNative.postMessage?o():window.addEventListener("fbNativeReady",o):r()})();; })(0, 0, "", "fd7237bdfe4f512af", "https:\/\/funzine.hu", "funzine.hu");</script></div><script nonce="">function envFlush(e){function t(t){for(var n in e)t[n]=e[n]}window.requireLazy?window.requireLazy(["Env"],t):(window.Env=window.Env||{},t(window.Env))}envFlush({"ajaxpipe_token":"AXomAo1mBDefRktc3BI","no_cookies":1});</script><script nonce="">ServerJSQueue.add({"define":[["cr:1078",[],{"__rc":[null,null]},-1],["cr:1080",["unexpectedUseInComet"],{"__rc":["unexpectedUseInComet",null]},-1],["cr:1126",["TimeSliceImpl"],{"__rc":["TimeSliceImpl",null]},-1],["cr:3725",["clearTimeoutWWWOrMobile"],{"__rc":["clearTimeoutWWWOrMobile",null]},-1],["cr:4344",["setTimeoutWWWOrMobile"],{"__rc":["setTimeoutWWWOrMobile",null]},-1],["cr:6640",["PromiseImpl"],{"__rc":["PromiseImpl",null]},-1],["cr:7385",["clearIntervalWWW"],{"__rc":["clearIntervalWWW",null]},-1],["cr:7389",["setIntervalAcrossTransitionsWWW"],{"__rc":["setIntervalAcrossTransitionsWWW",null]},-1],["cr:7391",["setTimeoutAcrossTransitionsWWW"],{"__rc":["setTimeoutAcrossTransitionsWWW",null]},-1],["cr:8959",["DTSG"],{"__rc":["DTSG",null]},-1],["cr:8960",["DTSG_ASYNC"],{"__rc":["DTSG_ASYNC",null]},-1],["cr:696703",[],{"__rc":[null,null]},-1],["cr:310",["RunWWW"],{"__rc":["RunWWW",null]},-1],["cr:8958",["FBJSON"],{"__rc":["FBJSON",null]},-1],["cr:6016",["NavigationMetricsWWW"],{"__rc":["NavigationMetricsWWW",null]},-1],["cr:7383",["BanzaiWWW"],{"__rc":["BanzaiWWW",null]},-1],["CometPersistQueryParams",[],{"relative":{},"domain":{}},6231],["GetAsyncParamsExtraData",[],{"extra_data":{}},7511],["AdsManagerReadRegions",[],{"excluded_endpoints":["\/am_tabular","\/ad_limits_insights","\/ads_reporting","\/column_suggestions","\/customaudiences","\/insights","\/reporting","\/edit","\/adspixels"],"excluded_preloaders":["AdsPEInsightsEdgeDataLoaderPreloader","AdsPEInsightsEdgeSummaryDataLoaderPreloader","AdsPEInsightsColumnPresetDataLoaderPreloader","AdsReportBuilderBusinessViewReportPreloader","AdsReportBuilderAdAccountViewReportPreloader","AdsReportBuilderManageUnifiedReportsPreloader"]},7950],["BootloaderConfig",[],{"deferBootloads":false,"enableLoadingUnavailableResources":true,"enableRetryOnStuckResource":false,"immediatesBugFixKillswitch":true,"jsRetries":[200,500],"jsRetryAbortNum":2,"jsRetryAbortTime":5,"silentDups":true,"timeout":60000,"tieredLoadingFromTier":100,"hypStep4":false,"btCutoffIndex":22,"fastPathForAlreadyRequired":true,"csrOn":false,"nonce":"PYHxQD0M","shouldEnableProxyArgs":false,"translationRetries":[200,500],"translationRetryAbortNum":3,"translationRetryAbortTime":50},329],["CSSLoaderConfig",[],{"timeout":5000,"loadEventSupported":true},619],["CurrentUserInitialData",[],{"ACCOUNT_ID":"0","USER_ID":"0","NAME":"","SHORT_NAME":null,"IS_BUSINESS_PERSON_ACCOUNT":false,"HAS_SECONDARY_BUSINESS_PERSON":false,"IS_FACEBOOK_WORK_ACCOUNT":false,"IS_INSTAGRAM_BUSINESS_PERSON":false,"IS_WABA_BUSINESS_PERSON":false,"IS_MESSENGER_ONLY_USER":false,"IS_DEACTIVATED_ALLOWED_ON_MESSENGER":false,"IS_MESSENGER_CALL_GUEST_USER":false,"IS_WORK_MESSENGER_CALL_GUEST_USER":false,"IS_WORKROOMS_USER":false,"APP_ID":"1971595283112096","IS_BUSINESS_DOMAIN":false},270],["JSSDKRuntimeConfig",[],{"locale":"hu_HU","revision":"1051310411","rtl":false,"sdkab":null,"sdkns":"","sdkurl":"https:\/\/www.facebook.com\/plugins\/like.php","scribeurl":"https:\/\/www.facebook.com\/platform\/scribe_endpoint.php\/"},384],["LSD",[],{"token":"U6P1ZQwcdM2cF1-gefI_M5"},323],["ServerNonce",[],{"ServerNonce":"j0gqnpNGXHP1zTxYPGgZ-V"},141],["SiteData",[],{"server_revision":1051310411,"client_revision":1051310411,"push_phase":"C3","pkg_cohort":"BP:plugin_like_pkg","haste_session":"20748.BP:plugin_like_pkg.2.0...0","pr":1,"manifest_base_uri":"https:\/\/static.xx.fbcdn.net","manifest_origin":null,"manifest_version_prefix":null,"be_one_ahead":false,"is_rtl":false,"is_experimental_tier":false,"is_jit_warmed_up":true,"hsi":"7699509722270570859","semr_host_bucket":"","bl_hash_version":2,"comet_env":0,"wbloks_env":false,"ef_page":null,"compose_bootloads":false,"spin":0,"__spin_r":1051310411,"__spin_b":"trunk","__spin_t":1792681804,"vip":"57.144.74.1"},317],["SprinkleConfig",[],{"param_name":"jazoest","version":2,"should_randomize":false},2111],["UserAgentData",[],{"browserArchitecture":"64","browserFullVersion":"155.0.0.0","browserMinorVersion":0,"browserName":"Chrome","browserVersion":155,"deviceName":"Unknown","engineName":"Blink","engineVersion":"155.0.0.0","platformArchitecture":"64","platformName":"Linux","platformVersion":null,"platformFullVersion":null},527],["PromiseUsePolyfillSetImmediateGK",[],{"www_always_use_polyfill_setimmediate":false},2190],["JSErrorLoggingConfig",[],{"appId":1971595283112096,"extra":[],"reportInterval":50,"sampleWeight":null,"sampleWeightKey":"__jssesw","projectBlocklist":[]},2776],["DataStoreConfig",[],{"expandoKey":"__FB_STORE","useExpando":true},2915],["ImmediateImplementationExperiments",[],{"prefer_message_channel":true},3419],["UriNeedRawQuerySVConfig",[],{"uris":["dms.netmng.com","doubleclick.net","r.msn.com","watchit.sky.com","graphite.instagram.com","www.kfc.co.th","learn.pantheon.io","www.landmarkshops.in","www.ncl.com","s0.wp.com","www.tatacliq.com","bs.serving-sys.com","kohls.com","lazada.co.th","xg4ken.com","technopark.ru","officedepot.com.mx","bestbuy.com.mx","booking.com","nibio.no","myworkdayjobs.com","united-united.com","gcc.gnu.org","finder.porsche.com"]},3871],["InitialCookieConsent",[],{"initialConsent":[1,2],"noCookies":true,"shouldShowCookieBanner":false,"shouldWaitForDeferredDatrCookie":false,"optedInIntegrations":["adobe_marketo_rest_api","apple_pay","brightedge","calendly_embed","chili_piper_api","cloudfront_cdn","ghl_embed","giphy_api","giphy_media","google_ads_pixel_frame_legacy","google_ads_pixel_img_legacy","google_ads_pixel_legacy","google_ads_remarketing_tag","google_ads_services","google_analytics_4_tag","google_apis","google_cached_img","google_double_click_loading","google_double_click_redirecting","google_double_click_uri_connect","google_double_click_uri_frame","google_double_click_uri_img","google_floodlight_tag","google_fonts","google_fonts_font","google_img","google_maps","google_paid_ads_frame","google_paid_ads_img","google_tag","google_translate","google_universal_analytics_legacy","google_universal_analytics_legacy_img","google_universal_analytics_legacy_script","google_uri_frame","google_uri_script","hubspot_embed","jio","kudo_audio_widget_embed","linkedin_insight","linkedin_insight_img","mapbox_maps_api","medallia_digital_experience_analytics","nytimes_oembed","reachtheworld_s3","reddit_pixel","salesforce_mcp_beacon","salesforce_miaw","soundcloud_oembed","spotify_oembed","spreaker_oembed","streamshark_embed","ted_oembed","tenor_api","tenor_images","tenor_media","tiktok_analytics_pixel","tiktok_oembed","twitter_analytics_pixel","twitter_analytics_pixel_img","twitter_legacy_embed","vimeo_oembed","youtube_embed","youtube_oembed","advertiser_hosted_pixel","affirm_prequal_iframe","airbus_sat","amazon_media","apple_music_sdk","apps_for_office","arkose_captcha","aspnet_cdn","autodesk_fusion","bing_maps","bing_widget","boku_wallet","bootstrap","box","cardinal_centinel_api","chromecast_extensions","cloudflare_cdnjs","cloudflare_datatables","cloudflare_relay","conversions_api_gateway","demandbase_api","digitalglobe_maps_api","dlocal","dropbox","esri_sat","fastly_relay","gmg_pulse_embed_iframe","google_ads_conversions_tag","google_cast_receiver","google_drive","google_fonts_legacy","google_hosted_libraries","google_oauth_api","google_oauth_api_v2","google_recaptcha","hatch_vm_noise_ingress","here_map_ext","hive_streaming_video","ipification","iproov","isptoolbox","jquery","js_delivr","kbank","klarna_prequal_iframe","mastercard_click_to_pay","mathjax","meshy","metacdn","microsoft_excel","microsoft_office_addin","microsoft_onedrive","microsoft_speech","microsoft_teams","mmi_tiles","oculus","open_street_map","paypal_billing_agreement","paypal_fastlane_sdk","paypal_oauth_api","payu","payu_india","plaid","platformized_adyen_checkout","plotly","pydata","razorpay","recruitics","rstudio","salesforce_lighting","salesforce_miaw_fbsbx_only","salesforce_miaw_meta_dot_com_help_center","shopify_app_bridge","shopify_app_polaris","sierra_voice_api","stripe","stripe_js_sdk","team_center","tripshot","trustly_direct_debit_ach","turbo_gala","twilio_voice","unifier","unpkg","unsplash_api","unsplash_image_loading","vega","whatsapp_arkose_captcha","yoti_api","youtube_oembed_api"],"hasGranularThirdPartyCookieConsent":true,"exemptedIntegrations":["advertiser_hosted_pixel","affirm_prequal_iframe","airbus_sat","amazon_media","apple_music_sdk","apps_for_office","arkose_captcha","aspnet_cdn","autodesk_fusion","bing_maps","bing_widget","boku_wallet","bootstrap","box","cardinal_centinel_api","chromecast_extensions","cloudflare_cdnjs","cloudflare_datatables","cloudflare_relay","conversions_api_gateway","demandbase_api","digitalglobe_maps_api","dlocal","dropbox","esri_sat","fastly_relay","gmg_pulse_embed_iframe","google_ads_conversions_tag","google_cast_receiver","google_drive","google_fonts_legacy","google_hosted_libraries","google_oauth_api","google_oauth_api_v2","google_recaptcha","hatch_vm_noise_ingress","here_map_ext","hive_streaming_video","ipification","iproov","isptoolbox","jquery","js_delivr","kbank","klarna_prequal_iframe","mastercard_click_to_pay","mathjax","meshy","metacdn","microsoft_excel","microsoft_office_addin","microsoft_onedrive","microsoft_speech","microsoft_teams","mmi_tiles","oculus","open_street_map","paypal_billing_agreement","paypal_fastlane_sdk","paypal_oauth_api","payu","payu_india","plaid","platformized_adyen_checkout","plotly","pydata","razorpay","recruitics","rstudio","salesforce_lighting","salesforce_miaw_fbsbx_only","salesforce_miaw_meta_dot_com_help_center","shopify_app_bridge","shopify_app_polaris","sierra_voice_api","stripe","stripe_js_sdk","team_center","tripshot","trustly_direct_debit_ach","turbo_gala","twilio_voice","unifier","unpkg","unsplash_api","unsplash_image_loading","vega","whatsapp_arkose_captcha","yoti_api","youtube_oembed_api"],"consentRequiredForMetaPixel":false,"nonBlockingBannerPage":false},4328],["WebConnectionClassServerGuess",[],{"connectionClass":"EXCELLENT"},4705],["BootloaderEndpointConfig",[],{"retryEnabled":false,"debugNoBatching":false,"maxBatchSize":-1,"endpointURI":"https:\/\/www.facebook.com\/ajax\/bootloader-endpoint\/","adsManagerReadRegions":false},5094],["PlatformVersions",[],{"LATEST":"v26.0","LATEST_LAUNCHED":"v26.0","versions":{"UNVERSIONED":"unversioned","V1_0":"v1.0","V2_0":"v2.0","V2_1":"v2.1","V2_2":"v2.2","V2_3":"v2.3","V2_4":"v2.4","V2_5":"v2.5","V2_6":"v2.6","V2_7":"v2.7","V2_8":"v2.8","V2_9":"v2.9","V2_10":"v2.10","V2_11":"v2.11","V2_12":"v2.12","V3_0":"v3.0","V3_1":"v3.1","V3_2":"v3.2","V3_3":"v3.3","V4_0":"v4.0","V5_0":"v5.0","V6_0":"v6.0","V7_0":"v7.0","V8_0":"v8.0","V9_0":"v9.0","V10_0":"v10.0","V11_0":"v11.0","V12_0":"v12.0","V13_0":"v13.0","V14_0":"v14.0","V15_0":"v15.0","V16_0":"v16.0","V17_0":"v17.0","V18_0":"v18.0","V19_0":"v19.0","V20_0":"v20.0","V21_0":"v21.0","V22_0":"v22.0","V23_0":"v23.0","V24_0":"v24.0","V25_0":"v25.0","V26_0":"v26.0"}},1254],["CookieDomain",[],{"domain":"facebook.com"},6421],["CookieCoreConfig",[],{"alsfid":{"s":"Lax"},"c_user":{"t":31536000,"s":"None"},"cppo":{"t":86400,"s":"None"},"dpr":{"t":604800,"s":"None"},"fbl_st":{"t":31536000,"s":"Strict"},"hckd":{"s":"None"},"i_user":{"t":31536000,"s":"None"},"locale":{"t":604800,"s":"None"},"m_ls":{"t":34560000,"s":"None"},"m_pixel_ratio":{"t":604800,"s":"None"},"noscript":{"s":"None"},"presence":{"t":2592000,"s":"None"},"sfau":{"s":"None"},"usida":{"s":"None"},"vpd":{"t":5184000,"s":"Lax"},"wd":{"t":604800,"s":"Lax"},"wl_cbv":{"t":7776000,"s":"None"},"x-referer":{"s":"None"},"x-src":{"t":1,"s":"None"}},2104],["CookieCoreLoggingConfig",[],{"maximumIgnorableStallMs":16.67,"sampleRate":9.7e-5,"sampleRateClassic":1.0e-10,"sampleRateFastStale":1.0e-8},3401],["AnalyticsCoreData",[],{"device_id":"fd.ARvlBUbCD1oro0BVS4abKwQwYbrCEJMa0TXe1IZp6M_sx5Jn4HumugZn-g21KnO4R3ixv2FLUg90YI6PN_zd4PgM","app_id":"1971595283112096","app_version":"1051.310.411.0 (1051310411)","enable_bladerunner":false,"enable_ack":true,"push_phase":"C3","enable_observer":false,"enable_dataloss_timer":false,"enable_fallback_for_br":true,"queue_activation_experiment":false,"max_delay_br_queue":60000,"max_delay_br_queue_immediate":3,"max_delay_br_init_not_complete":5000,"consents":{},"br_stateful_migration_on":true,"use_falco_as_mutex_key":false,"defer_size_flush_until_br_init":true,"enable_falco_beacon":false,"is_intern":false,"identity":{"fbIdentity":{"actorId":"0","accountId":"0"},"claim":"","claims":[]}},5237],["ServerTimeData",[],{"serverTime":1792681804224,"timeOfRequestStart":1792681804200.1,"timeOfResponseStart":1792681804200.1},5943],["TrackingConfig",[],{"domain":"https:\/\/pixel.facebook.com"},325],["ZeroRewriteRules",[],{"rewrite_rules":{},"whitelist":{"\/hr\/r":1,"\/hr\/p":1,"\/zero\/unsupported_browser\/":1,"\/zero\/policy\/optin":1,"\/zero\/optin\/write\/":1,"\/zero\/optin\/legal\/":1,"\/zero\/optin\/free\/":1,"\/about\/privacy\/":1,"\/about\/privacy\/update\/":1,"\/privacy\/explanation\/":1,"\/zero\/toggle\/welcome\/":1,"\/zero\/toggle\/nux\/":1,"\/zero\/toggle\/settings\/":1,"\/fup\/interstitial\/":1,"\/work\/landing":1,"\/work\/login\/":1,"\/work\/email\/":1,"\/ai.php":1,"\/js_dialog_resources\/dialog_descriptions_android.json":0,"\/connect\/jsdialog\/MPlatformAppInvitesJSDialog\/":0,"\/connect\/jsdialog\/MPlatformOAuthShimJSDialog\/":0,"\/connect\/jsdialog\/MPlatformLikeJSDialog\/":0,"\/qp\/interstitial\/":1,"\/qp\/action\/redirect\/":1,"\/qp\/action\/close\/":1,"\/zero\/support\/ineligible\/":1,"\/zero_balance_redirect\/":1,"\/zero_balance_redirect":1,"\/zero_balance_redirect\/l\/":1,"\/l.php":1,"\/lsr.php":1,"\/ajax\/dtsg\/":1,"\/checkpoint\/block\/":1,"\/exitdsite":1,"\/zero\/balance\/pixel\/":1,"\/zero\/balance\/":1,"\/zero\/balance\/carrier_landing\/":1,"\/zero\/flex\/logging\/":1,"\/tr":1,"\/tr\/":1,"\/sem_campaigns\/sem_pixel_test\/":1,"\/bookmarks\/flyout\/body\/":1,"\/zero\/subno\/":1,"\/confirmemail.php":1,"\/policies\/":1,"\/mobile\/internetdotorg\/classifier\/":1,"\/zero\/dogfooding":1,"\/xti.php":1,"\/zero\/fblite\/config\/":1,"\/hr\/zsh\/wc\/":1,"\/ajax\/bootloader-endpoint\/":1,"\/mobile\/zero\/carrier_page\/":1,"\/mobile\/zero\/carrier_page\/education_page\/":1,"\/mobile\/zero\/carrier_page\/feature_switch\/":1,"\/mobile\/zero\/carrier_page\/settings_page\/":1,"\/aloha_check_build":1,"\/upsell\/zbd\/softnudge\/":1,"\/mobile\/zero\/af_transition\/":1,"\/mobile\/zero\/af_transition\/action\/":1,"\/mobile\/zero\/freemium\/":1,"\/mobile\/zero\/freemium\/redirect\/":1,"\/mobile\/zero\/freemium\/zero_fup\/":1,"\/privacy\/policy\/":1,"\/privacy\/center\/":1,"\/data\/manifest\/":1,"\/cmon":1,"\/cmon\/":1,"\/zero\/minidt\/":1,"\/diagnostics":1,"\/diagnostics\/":1,"\/payments\/stablecoin\/link\/complete\/":1,"\/4oh4.php":1,"\/autologin.php":1,"\/birthday_help.php":1,"\/checkpoint\/":1,"\/contact-importer\/":1,"\/cr.php":1,"\/legal\/terms\/":1,"\/login.php":1,"\/login\/":1,"\/mobile\/account\/":1,"\/n\/":1,"\/remote_test_device\/":1,"\/upsell\/buy\/":1,"\/upsell\/buyconfirm\/":1,"\/upsell\/buyresult\/":1,"\/upsell\/promos\/":1,"\/upsell\/continue\/":1,"\/upsell\/h\/promos\/":1,"\/upsell\/loan\/learnmore\/":1,"\/upsell\/purchase\/":1,"\/upsell\/promos\/upgrade\/":1,"\/upsell\/buy_redirect\/":1,"\/upsell\/loan\/buyconfirm\/":1,"\/upsell\/loan\/buy\/":1,"\/upsell\/sms\/":1,"\/wap\/a\/channel\/reconnect.php":1,"\/wap\/a\/nux\/wizard\/nav.php":1,"\/wap\/appreg.php":1,"\/wap\/birthday_help.php":1,"\/wap\/c.php":1,"\/wap\/confirmemail.php":1,"\/wap\/cr.php":1,"\/wap\/login.php":1,"\/wap\/r.php":1,"\/zero\/datapolicy":1,"\/a\/timezone.php":1,"\/a\/bz":1,"\/bz\/reliability":1,"\/r.php":1,"\/mr\/":1,"\/reg\/":1,"\/registration\/log\/":1,"\/terms\/":1,"\/f123\/":1,"\/expert\/":1,"\/experts\/":1,"\/terms\/index.php":1,"\/terms.php":1,"\/srr\/":1,"\/msite\/redirect\/":1,"\/fbs\/pixel\/":1,"\/contactpoint\/preconfirmation\/":1,"\/contactpoint\/cliff\/":1,"\/contactpoint\/confirm\/submit\/":1,"\/contactpoint\/confirmed\/":1,"\/contactpoint\/login\/":1,"\/preconfirmation\/contactpoint_change\/":1,"\/help\/contact\/":1,"\/survey\/":1,"\/upsell\/loyaltytopup\/accept\/":1,"\/settings\/":1,"\/lite\/":1,"\/zero_status_update\/":1,"\/operator_store\/":1,"\/upsell\/":1,"\/wifiauth\/login\/":1}},1478],["cr:12457",["TransportSelectingClientSingletonRolloutConditional"],{"__rc":["TransportSelectingClientSingletonRolloutConditional",null]},-1],["cr:7386",["clearTimeoutWWW"],{"__rc":["clearTimeoutWWW",null]},-1],["cr:7390",["setTimeoutWWW"],{"__rc":["setTimeoutWWW",null]},-1],["cr:1003267",["clearIntervalBlue"],{"__rc":["clearIntervalBlue",null]},-1],["cr:896462",["setIntervalAcrossTransitionsBlue"],{"__rc":["setIntervalAcrossTransitionsBlue",null]},-1],["cr:986633",["setTimeoutAcrossTransitionsBlue"],{"__rc":["setTimeoutAcrossTransitionsBlue",null]},-1],["cr:925100",["RunBlue"],{"__rc":["RunBlue",null]},-1],["cr:1642797",["BanzaiBase"],{"__rc":["BanzaiBase",null]},-1],["DTSGInitialData",[],{},258],["DTSGInitData",[],{"token":"","async_get_token":""},3515],["cr:710",[],{"__rc":[null,null]},-1],["cr:806696",["clearTimeoutBlue"],{"__rc":["clearTimeoutBlue",null]},-1],["cr:807042",["setTimeoutBlue"],{"__rc":["setTimeoutBlue",null]},-1],["cr:1172",["WebSession"],{"__rc":["WebSession",null]},-1],["cr:2037",["BanzaiAdapter"],{"__rc":["BanzaiAdapter",null]},-1],["cr:3724",["SetIdleTimeoutAcrossTransitions"],{"__rc":["SetIdleTimeoutAcrossTransitions",null]},-1],["cr:9985",["performanceAbsoluteNow"],{"__rc":["performanceAbsoluteNow",null]},-1],["cr:9986",["CurrentUser"],{"__rc":["CurrentUser",null]},-1],["cr:9987",["NavigationMetrics"],{"__rc":["NavigationMetrics",null]},-1],["cr:9988",["Visibility"],{"__rc":["Visibility",null]},-1],["cr:5866",["BanzaiAdapterWWW"],{"__rc":["BanzaiAdapterWWW",null]},-1],["cr:7384",["cancelIdleCallbackWWW"],{"__rc":["cancelIdleCallbackWWW",null]},-1],["cr:692209",["cancelIdleCallbackBlue"],{"__rc":["cancelIdleCallbackBlue",null]},-1],["BanzaiConfig",[],{"MAX_SIZE":10000,"MAX_WAIT":150000,"MIN_WAIT":null,"RESTORE_WAIT":150000,"blacklist":["time_spent"],"disabled":false,"gks":{},"known_routes":["artillery_javascript_actions","artillery_javascript_trace","artillery_logger_data","arca_actions","logger","falco","gk2_exposure","helpdash_quicklink_events","wamo_tester_usage","js_error_logging","loom_trace","marauder","perfx_custom_logger_endpoint","platform_business_login","qex","require_cond_exposure_logging","metaconfig_exposure"],"should_drop_unknown_routes":true,"should_log_unknown_routes":false},7],["ZeroCategoryHeader",[],{},1127],["UrlMapConfig",[],{"www":"www.facebook.com","m":"m.facebook.com","business":"business.facebook.com","api":"api.facebook.com","api_read":"api-read.facebook.com","graph":"graph.facebook.com","an":"an.facebook.com","oauth":"oauth.facebook.com","fbcdn":"static.xx.fbcdn.net","cdn":"staticxx.facebook.com","graph_facebook":"graph.facebook.com","graph_gaming":"graph.fb.gg","graph_instagram":"graph.instagram.com","www_instagram":"www.instagram.com","social_plugin":"socialplugin.facebook.net"},73]],"require":[["UnverifiedXD","setChannelUrl",[],["https:\/\/staticxx.facebook.com\/x\/connect\/xd_arbiter\/?version=46#cb=fd7237bdfe4f512af&domain=funzine.hu&is_canvas=false&origin=https\u00253A\u00252F\u00252Ffunzine.hu\u00252Ff1d725a8e62b03b37&relation=parent.parent"]],["PluginXDReady"],["PluginReturn","syncPlugins",[],[]],["WebPixelRatioDetector","startDetecting",[],[false]],["AsyncSignal"],["NavigationMetrics","setPage",[],[{"page":"XPlatformPluginLikeController","page_type":"normal","page_uri":"https:\/\/www.facebook.com\/plugins\/like.php?action=recommend&app_id=338562636521180&channel=https\u00253A\u00252F\u00252Fstaticxx.facebook.com\u00252Fx\u00252Fconnect\u00252Fxd_arbiter\u00252F\u00253Fversion\u00253D46\u002523cb\u00253Dfd7237bdfe4f512af\u002526domain\u00253Dfunzine.hu\u002526is_canvas\u00253Dfalse\u002526origin\u00253Dhttps\u0025253A\u0025252F\u0025252Ffunzine.hu\u0025252Ff1d725a8e62b03b37\u002526relation\u00253Dparent.parent&container_width=1889&href=https\u00253A\u00252F\u00252Ffunzine.hu\u00252F2026\u00252F10\u00252F21\u00252Fgoodapest\u00252F40-fergeteges-program-budapesten-es-kornyeken-az-oktober-23-i-hosszu-hetvegere\u00252F&layout=button&locale=hu_HU&sdk=joey&share=true&show_faces=true&size=large","serverLID":"7699509722270570859"}]],["FalcoLoggerTransports","attach",[],[]],["ODS"],["TransportSelectingClientSingletonConditional"],["RequireDeferredReference","unblock",[],[["ODS","TransportSelectingClientSingletonConditional"],"sd"]],["RequireDeferredReference","unblock",[],[["ODS","TransportSelectingClientSingletonConditional"],"css"]]]});
+
+</script></body></html></div></span></div></div><div id="socials"></div><div class="clearfix"></div></footer>
+</article>
+<section id="related">
+<header class="page-header small">
+<span>Neked válogattuk</span>
+</header>
+<div class="google-related-ads" style="margin-right: 20px;">
+<script async="" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed" data-ad-client="ca-pub-8990185616189861" data-ad-slot="3447969159" data-adsbygoogle-status="done" data-ad-status="filled"><div id="aswift_1" name="aswift_1" data-load-complete="true" data-original-tag="iframe"></div></ins>
+<script>(adsbygoogle=window.adsbygoogle||[]).push({});</script>
+<amp-ad width="100vw" height="320" type="adsense" data-ad-client="ca-pub-8990185616189861" data-ad-slot="9086024432" data-auto-format="mcrspv" data-full-width="">
+<div overflow=""></div></amp-ad></div><header class="page-header small" style="margin-top: 40px;">
+<span>Kapcsolódó cikkek</span>
+</header>
+<article id="post-637664" class="content-list post-637664 post type-post status-publish format-standard has-post-thumbnail hentry category-goodapest category-programok tag-7512 tag-ingyenes-program tag-oktober-23 tag-unnep post_places-budai-var post_places-deak-ter post_places-ferencvaros post_places-jozsef-attila-szinhaz post_places-mupa post_places-szentendrei-skanzen post_places-varoshaza-park" data-postid="637664">
+<div class="post-thumbnail pull-left col-xs-12 col-md-3">
+<div class="badges"> <a href="https://funzine.hu/category/goodapest/" class="badge">Goodapest</a></div><a href="https://funzine.hu/2026/10/22/goodapest/7-rendhagyo-program-az-oktober-23-i-hetvegen-ami-1956-ot-unnepli-budapesten-es-kornyeken/" title="7 rendhagyó program az október 23-i hétvégén, ami 1956-ot ünnepli Budapesten és környékén">
+<img width="300" height="200" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAADIAQMAAABoEU4WAAAAA1BMVEUAAACnej3aAAAAAXRSTlMAQObYZgAAAB5JREFUGBntwTEBAAAAwiD7p14IX2AAAAAAAAAAcAgeeAABD6RTzgAAAABJRU5ErkJggg==" class="attachment-img-300x200 size-img-300x200 wp-post-image lazyload" alt="október 23" decoding="async" data-src="https://funzine.hu/wp-content/uploads/2026/10/56-os-emlekmu-Foto-Seres-Laszlo-dronfoto-es-video-e1792572255814-300x200.jpg" data-srcset="https://funzine.hu/wp-content/uploads/2026/10/56-os-emlekmu-Foto-Seres-Laszlo-dronfoto-es-video-e1792572255814-300x200.jpg 300w, https://funzine.hu/wp-content/uploads/2026/10/56-os-emlekmu-Foto-Seres-Laszlo-dronfoto-es-video-e1792572255814-360x240.jpg 360w" data-sizes="auto" data-eio-rwidth="300" data-eio-rheight="200"><noscript><img onload="Wpfcll.r(this,true);" src="https://funzine.hu/wp-content/plugins/wp-fastest-cache-premium/pro/images/blank.gif" width="300" height="200" data-wpfc-original-src="https://funzine.hu/wp-content/uploads/2026/10/56-os-emlekmu-Foto-Seres-Laszlo-dronfoto-es-video-e1792572255814-300x200.jpg" class="attachment-img-300x200 size-img-300x200 wp-post-image" alt="október 23" decoding="async" data-wpfc-original-srcset="https://funzine.hu/wp-content/uploads/2026/10/56-os-emlekmu-Foto-Seres-Laszlo-dronfoto-es-video-e1792572255814-300x200.jpg 300w, https://funzine.hu/wp-content/uploads/2026/10/56-os-emlekmu-Foto-Seres-Laszlo-dronfoto-es-video-e1792572255814-360x240.jpg 360w" data-wpfc-original-sizes="(max-width: 300px) 100vw, 300px" data-eio="l"/></noscript>		    </a></div><header class="entry-header pull-right col-xs-12 col-md-9">
+<h2 class="entry-title"><a href="https://funzine.hu/2026/10/22/goodapest/7-rendhagyo-program-az-oktober-23-i-hetvegen-ami-1956-ot-unnepli-budapesten-es-kornyeken/" rel="bookmark">7 rendhagyó program az október 23-i hétvégén, ami 1956-ot ünnepli Budapesten és környékén</a></h2><span class="entry-meta"><span class="byline"> </span></span>		<hr class="small-divider">
+<div class="lead"> <p> Ezúttal is számtalan ünnepi programot rendeznek az október 23-i hétvégén a fővárosban és környékén. </p></div></header>
+</article>
+<article id="post-637304" class="content-list post-637304 post type-post status-publish format-standard has-post-thumbnail hentry category-goodapest category-programok tag-budapesti-programok tag-hetvegi-programok post_places-budapest" data-postid="637304">
+<div class="post-thumbnail pull-left col-xs-12 col-md-3">
+<div class="badges"> <a href="https://funzine.hu/category/goodapest/" class="badge">Goodapest</a></div><a href="https://funzine.hu/2026/10/14/goodapest/40-fergeteges-hetvegi-program-budapesten-es-kornyeken-2026-oktober-15-18/" title="40+ fergeteges hétvégi program Budapesten és környékén – 2026. október 15-18.">
+<img width="300" height="200" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAADIAQMAAABoEU4WAAAAA1BMVEUAAACnej3aAAAAAXRSTlMAQObYZgAAAB5JREFUGBntwTEBAAAAwiD7p14IX2AAAAAAAAAAcAgeeAABD6RTzgAAAABJRU5ErkJggg==" class="attachment-img-300x200 size-img-300x200 wp-post-image lazyload " alt="" decoding="async" data-src="https://funzine.hu/wp-content/uploads/2026/10/tuz01b-300x200.jpg.webp" data-srcset="https://funzine.hu/wp-content/uploads/2026/10/tuz01b-300x200.jpg.webp 300w, https://funzine.hu/wp-content/uploads/2026/10/tuz01b-360x240.jpg.webp 360w" data-sizes="auto" data-eio-rwidth="300" data-eio-rheight="200" data-src-webp="https://funzine.hu/wp-content/uploads/2026/10/tuz01b-300x200.jpg.webp" data-srcset-webp="https://funzine.hu/wp-content/uploads/2026/10/tuz01b-300x200.jpg.webp 300w, https://funzine.hu/wp-content/uploads/2026/10/tuz01b-360x240.jpg.webp 360w"><noscript><img onload="Wpfcll.r(this,true);" src="https://funzine.hu/wp-content/plugins/wp-fastest-cache-premium/pro/images/blank.gif" width="300" height="200" data-wpfc-original-src="https://funzine.hu/wp-content/uploads/2026/10/tuz01b-300x200.jpg" class="attachment-img-300x200 size-img-300x200 wp-post-image" alt="blank" decoding="async" data-wpfc-original-srcset="https://funzine.hu/wp-content/uploads/2026/10/tuz01b-300x200.jpg 300w, https://funzine.hu/wp-content/uploads/2026/10/tuz01b-360x240.jpg 360w" data-wpfc-original-sizes="(max-width: 300px) 100vw, 300px" data-eio="l"/></noscript>		    </a></div><header class="entry-header pull-right col-xs-12 col-md-9">
+<h2 class="entry-title"><a href="https://funzine.hu/2026/10/14/goodapest/40-fergeteges-hetvegi-program-budapesten-es-kornyeken-2026-oktober-15-18/" rel="bookmark">40+ fergeteges hétvégi program Budapesten és környékén – 2026. október 15-18.</a></h2><span class="entry-meta"><span class="byline"> </span></span>		<hr class="small-divider">
+<div class="lead"> <p> Íme a legjobb programok október harmadik hétvégéjére Budapesten és környékén. </p></div></header>
+</article>
+<article id="post-636039" class="content-list post-636039 post type-post status-publish format-standard has-post-thumbnail hentry category-goodapest category-programok tag-budapesti-programok tag-oktoberi-programok tag-oszi-programok-2 tag-programok-budapesten tag-programok-oszre post_places-budapest" data-postid="636039">
+<div class="post-thumbnail pull-left col-xs-12 col-md-3">
+<div class="badges"> <a href="https://funzine.hu/category/goodapest/" class="badge">Goodapest</a></div><a href="https://funzine.hu/2026/09/30/goodapest/70-fantasztikus-oszi-program-es-fesztival-budapesten-oktoberben/" title="70+ lenyűgöző őszi program és fesztivál Budapesten októberre">
+<img width="300" height="200" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAADIAQMAAABoEU4WAAAAA1BMVEUAAACnej3aAAAAAXRSTlMAQObYZgAAAB5JREFUGBntwTEBAAAAwiD7p14IX2AAAAAAAAAAcAgeeAABD6RTzgAAAABJRU5ErkJggg==" class="attachment-img-300x200 size-img-300x200 wp-post-image lazyload " alt="" decoding="async" data-src="https://funzine.hu/wp-content/uploads/2026/09/andrassy02-300x200.jpg.webp" data-srcset="https://funzine.hu/wp-content/uploads/2026/09/andrassy02-300x200.jpg.webp 300w, https://funzine.hu/wp-content/uploads/2026/09/andrassy02-360x240.jpg.webp 360w" data-sizes="auto" data-eio-rwidth="300" data-eio-rheight="200" data-src-webp="https://funzine.hu/wp-content/uploads/2026/09/andrassy02-300x200.jpg.webp" data-srcset-webp="https://funzine.hu/wp-content/uploads/2026/09/andrassy02-300x200.jpg.webp 300w, https://funzine.hu/wp-content/uploads/2026/09/andrassy02-360x240.jpg.webp 360w"><noscript><img onload="Wpfcll.r(this,true);" src="https://funzine.hu/wp-content/plugins/wp-fastest-cache-premium/pro/images/blank.gif" width="300" height="200" data-wpfc-original-src="https://funzine.hu/wp-content/uploads/2026/09/andrassy02-300x200.jpg" class="attachment-img-300x200 size-img-300x200 wp-post-image" alt="blank" decoding="async" data-wpfc-original-srcset="https://funzine.hu/wp-content/uploads/2026/09/andrassy02-300x200.jpg 300w, https://funzine.hu/wp-content/uploads/2026/09/andrassy02-360x240.jpg 360w" data-wpfc-original-sizes="(max-width: 300px) 100vw, 300px" data-eio="l"/></noscript>		    </a></div><header class="entry-header pull-right col-xs-12 col-md-9">
+<h2 class="entry-title"><a href="https://funzine.hu/2026/09/30/goodapest/70-fantasztikus-oszi-program-es-fesztival-budapesten-oktoberben/" rel="bookmark">70+ lenyűgöző őszi program és fesztivál Budapesten októberre</a></h2><span class="entry-meta"><span class="byline"> <span class="author vcard"><a href="https://funzine.hu/author/jakvik/" class="img-circle"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJYAAACWAQMAAAAGz+OhAAAAA1BMVEUAAACnej3aAAAAAXRSTlMAQObYZgAAABpJREFUGBntwTEBAAAAwiD7p14ND2AAAMC9AAu4AAHGdJuwAAAAAElFTkSuQmCC" class="img-responsive lazyload" data-src="https://funzine.hu/wp-content/uploads/2019/03/action-celebration-club-341858-150x150.jpg" decoding="async" data-eio-rwidth="150" data-eio-rheight="150"><noscript><img src="https://funzine.hu/wp-content/uploads/2019/03/action-celebration-club-341858-150x150.jpg" class="img-responsive" data-eio="l"></noscript></a><a class="url fn n" href="https://funzine.hu/author/jakvik/">Jakab Viktor</a></span></span></span>		<hr class="small-divider">
+<div class="lead"> <p> Programok özöne vár rátok 2026 októberében Budapesten. Csak győzzétek felkeresni mindet! </p></div></header>
+</article>
+<article id="post-636816" class="content-list post-636816 post type-post status-publish format-standard has-post-thumbnail hentry category-goodapest category-programok tag-budapesti-programok tag-hetvegi-programok" data-postid="636816">
+<div class="post-thumbnail pull-left col-xs-12 col-md-3">
+<div class="badges"> <a href="https://funzine.hu/category/goodapest/" class="badge">Goodapest</a></div><a href="https://funzine.hu/2026/10/07/goodapest/40-fergeteges-hetvegi-program-budapesten-es-kornyeken-2026-oktober-7-11/" title="40+ fergeteges hétvégi program Budapesten és környékén – 2026. október 7-11.">
+<img width="300" height="200" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAADIAQMAAABoEU4WAAAAA1BMVEUAAACnej3aAAAAAXRSTlMAQObYZgAAAB5JREFUGBntwTEBAAAAwiD7p14IX2AAAAAAAAAAcAgeeAABD6RTzgAAAABJRU5ErkJggg==" class="attachment-img-300x200 size-img-300x200 wp-post-image lazyload " alt="" decoding="async" data-src="https://funzine.hu/wp-content/uploads/2026/10/etyek07b-300x200.jpg.webp" data-srcset="https://funzine.hu/wp-content/uploads/2026/10/etyek07b-300x200.jpg.webp 300w, https://funzine.hu/wp-content/uploads/2026/10/etyek07b-1024x682.jpg.webp 1024w, https://funzine.hu/wp-content/uploads/2026/10/etyek07b-768x512.jpg.webp 768w, https://funzine.hu/wp-content/uploads/2026/10/etyek07b-1200x800.jpg.webp 1200w, https://funzine.hu/wp-content/uploads/2026/10/etyek07b-360x240.jpg.webp 360w, https://funzine.hu/wp-content/uploads/2026/10/etyek07b.jpg.webp 1250w" data-sizes="auto" data-eio-rwidth="300" data-eio-rheight="200" data-src-webp="https://funzine.hu/wp-content/uploads/2026/10/etyek07b-300x200.jpg.webp" data-srcset-webp="https://funzine.hu/wp-content/uploads/2026/10/etyek07b-300x200.jpg.webp 300w, https://funzine.hu/wp-content/uploads/2026/10/etyek07b-1024x682.jpg.webp 1024w, https://funzine.hu/wp-content/uploads/2026/10/etyek07b-768x512.jpg.webp 768w, https://funzine.hu/wp-content/uploads/2026/10/etyek07b-1200x800.jpg.webp 1200w, https://funzine.hu/wp-content/uploads/2026/10/etyek07b-360x240.jpg.webp 360w, https://funzine.hu/wp-content/uploads/2026/10/etyek07b.jpg.webp 1250w"><noscript><img onload="Wpfcll.r(this,true);" src="https://funzine.hu/wp-content/plugins/wp-fastest-cache-premium/pro/images/blank.gif" width="300" height="200" data-wpfc-original-src="https://funzine.hu/wp-content/uploads/2026/10/etyek07b-300x200.jpg" class="attachment-img-300x200 size-img-300x200 wp-post-image" alt="blank" decoding="async" data-wpfc-original-srcset="https://funzine.hu/wp-content/uploads/2026/10/etyek07b-300x200.jpg 300w, https://funzine.hu/wp-content/uploads/2026/10/etyek07b-1024x682.jpg 1024w, https://funzine.hu/wp-content/uploads/2026/10/etyek07b-768x512.jpg 768w, https://funzine.hu/wp-content/uploads/2026/10/etyek07b-1200x800.jpg 1200w, https://funzine.hu/wp-content/uploads/2026/10/etyek07b-360x240.jpg 360w, https://funzine.hu/wp-content/uploads/2026/10/etyek07b.jpg 1250w" data-wpfc-original-sizes="(max-width: 300px) 100vw, 300px" data-eio="l"/></noscript>		    </a></div><header class="entry-header pull-right col-xs-12 col-md-9">
+<h2 class="entry-title"><a href="https://funzine.hu/2026/10/07/goodapest/40-fergeteges-hetvegi-program-budapesten-es-kornyeken-2026-oktober-7-11/" rel="bookmark">40+ fergeteges hétvégi program Budapesten és környékén – 2026. október 7-11.</a></h2><span class="entry-meta"><span class="byline"> </span></span>		<hr class="small-divider">
+<div class="lead"> <p> Íme a legjobb programok október második hétvégéjére Budapesten és környékén. </p></div></header>
+</article>
+<article id="post-636327" class="content-list post-636327 post type-post status-publish format-standard has-post-thumbnail hentry category-goodapest category-programok tag-budapesti-programok tag-hetvegi-programok tag-oktoberi-programok post_places-budapest post_places-esztergom post_places-szentendre" data-postid="636327">
+<div class="post-thumbnail pull-left col-xs-12 col-md-3">
+<div class="badges"> <a href="https://funzine.hu/category/goodapest/" class="badge">Goodapest</a></div><a href="https://funzine.hu/2026/09/30/goodapest/40-fergeteges-hetvegi-program-budapesten-es-kornyeken-2026-szeptember-30-oktober-4/" title="40+ fergeteges hétvégi program Budapesten és környékén – 2026. szeptember 30. – október 4.">
+<img width="300" height="200" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAADIAQMAAABoEU4WAAAAA1BMVEUAAACnej3aAAAAAXRSTlMAQObYZgAAAB5JREFUGBntwTEBAAAAwiD7p14IX2AAAAAAAAAAcAgeeAABD6RTzgAAAABJRU5ErkJggg==" class="attachment-img-300x200 size-img-300x200 wp-post-image lazyload " alt="" decoding="async" data-src="https://funzine.hu/wp-content/uploads/2026/09/majorka01b-300x200.jpg.webp" data-srcset="https://funzine.hu/wp-content/uploads/2026/09/majorka01b-300x200.jpg.webp 300w, https://funzine.hu/wp-content/uploads/2026/09/majorka01b-1024x682.jpg.webp 1024w, https://funzine.hu/wp-content/uploads/2026/09/majorka01b-768x511.jpg.webp 768w, https://funzine.hu/wp-content/uploads/2026/09/majorka01b-1200x799.jpg.webp 1200w, https://funzine.hu/wp-content/uploads/2026/09/majorka01b-360x240.jpg.webp 360w, https://funzine.hu/wp-content/uploads/2026/09/majorka01b.jpg.webp 1250w" data-sizes="auto" data-eio-rwidth="300" data-eio-rheight="200" data-src-webp="https://funzine.hu/wp-content/uploads/2026/09/majorka01b-300x200.jpg.webp" data-srcset-webp="https://funzine.hu/wp-content/uploads/2026/09/majorka01b-300x200.jpg.webp 300w, https://funzine.hu/wp-content/uploads/2026/09/majorka01b-1024x682.jpg.webp 1024w, https://funzine.hu/wp-content/uploads/2026/09/majorka01b-768x511.jpg.webp 768w, https://funzine.hu/wp-content/uploads/2026/09/majorka01b-1200x799.jpg.webp 1200w, https://funzine.hu/wp-content/uploads/2026/09/majorka01b-360x240.jpg.webp 360w, https://funzine.hu/wp-content/uploads/2026/09/majorka01b.jpg.webp 1250w"><noscript><img onload="Wpfcll.r(this,true);" src="https://funzine.hu/wp-content/plugins/wp-fastest-cache-premium/pro/images/blank.gif" width="300" height="200" data-wpfc-original-src="https://funzine.hu/wp-content/uploads/2026/09/majorka01b-300x200.jpg" class="attachment-img-300x200 size-img-300x200 wp-post-image" alt="blank" decoding="async" data-wpfc-original-srcset="https://funzine.hu/wp-content/uploads/2026/09/majorka01b-300x200.jpg 300w, https://funzine.hu/wp-content/uploads/2026/09/majorka01b-1024x682.jpg 1024w, https://funzine.hu/wp-content/uploads/2026/09/majorka01b-768x511.jpg 768w, https://funzine.hu/wp-content/uploads/2026/09/majorka01b-1200x799.jpg 1200w, https://funzine.hu/wp-content/uploads/2026/09/majorka01b-360x240.jpg 360w, https://funzine.hu/wp-content/uploads/2026/09/majorka01b.jpg 1250w" data-wpfc-original-sizes="(max-width: 300px) 100vw, 300px" data-eio="l"/></noscript>		    </a></div><header class="entry-header pull-right col-xs-12 col-md-9">
+<h2 class="entry-title"><a href="https://funzine.hu/2026/09/30/goodapest/40-fergeteges-hetvegi-program-budapesten-es-kornyeken-2026-szeptember-30-oktober-4/" rel="bookmark">40+ fergeteges hétvégi program Budapesten és környékén – 2026. szeptember 30. – október 4.</a></h2><span class="entry-meta"><span class="byline"> <span class="author vcard"><a href="https://funzine.hu/author/jakvik/" class="img-circle"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJYAAACWAQMAAAAGz+OhAAAAA1BMVEUAAACnej3aAAAAAXRSTlMAQObYZgAAABpJREFUGBntwTEBAAAAwiD7p14ND2AAAMC9AAu4AAHGdJuwAAAAAElFTkSuQmCC" class="img-responsive lazyload" data-src="https://funzine.hu/wp-content/uploads/2019/03/action-celebration-club-341858-150x150.jpg" decoding="async" data-eio-rwidth="150" data-eio-rheight="150"><noscript><img src="https://funzine.hu/wp-content/uploads/2019/03/action-celebration-club-341858-150x150.jpg" class="img-responsive" data-eio="l"></noscript></a><a class="url fn n" href="https://funzine.hu/author/jakvik/">Jakab Viktor</a></span></span></span>		<hr class="small-divider">
+<div class="lead"> <p> Íme a legjobb programok október első hétvégéjére Budapesten és környékén. </p></div></header>
+</article>
+</section>
+<div class="floating-article">
+<article id="post-637356" class="content-list post-637356 post type-post status-publish format-standard has-post-thumbnail hentry category-goodapest category-have-fun category-programok tag-csaladi-program tag-gyerekbarat-programok tag-oszi-szunet tag-programok-az-oszi-szunetre post_places-budakeszi post_places-budapest post_places-godollo post_places-szentendre post_places-veresegyhaz" data-postid="637356">
+<img class="close-btn lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="" data-src="https://funzine.hu/wp-content/themes/funzine/images/003-left-chevron.svg" decoding="async"><noscript><img class="close-btn" src="https://funzine.hu/wp-content/themes/funzine/images/003-left-chevron.svg" alt="" data-eio="l"></noscript>
+<div class="post-thumbnail pull-left col-xs-12 col-md-3"> <a href="https://funzine.hu/2026/10/20/programok/12-elmenydus-program-az-oszi-szunetre-budapesten-es-kornyeken-amit-az-egesz-csalad-imadni-fog/" title="12 élménydús program az őszi szünetre Budapesten és környékén, amit az egész család imádni fog"> <img width="378" height="300" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAXoAAAEsAQMAAAD3ueo5AAAAA1BMVEUAAACnej3aAAAAAXRSTlMAQObYZgAAACRJREFUGBntwQEBAAAAgqD+r3ZIwAAAAAAAAAAAAAAAAAAAjgU5bAABuHX8xgAAAABJRU5ErkJggg==" class="attachment-img-378x300 size-img-378x300 wp-post-image lazyload " alt="" decoding="async" data-src="https://funzine.hu/wp-content/uploads/2026/10/Foto-Somai-Valter-2-378x300.jpg.webp" data-srcset="https://funzine.hu/wp-content/uploads/2026/10/Foto-Somai-Valter-2-378x300.jpg.webp 378w, https://funzine.hu/wp-content/uploads/2026/10/Foto-Somai-Valter-2-759x600.jpg.webp 759w" data-sizes="auto" data-eio-rwidth="378" data-eio-rheight="300" data-src-webp="https://funzine.hu/wp-content/uploads/2026/10/Foto-Somai-Valter-2-378x300.jpg.webp" data-srcset-webp="https://funzine.hu/wp-content/uploads/2026/10/Foto-Somai-Valter-2-378x300.jpg.webp 378w, https://funzine.hu/wp-content/uploads/2026/10/Foto-Somai-Valter-2-759x600.jpg.webp 759w"><noscript><img onload="Wpfcll.r(this,true);" src="https://funzine.hu/wp-content/plugins/wp-fastest-cache-premium/pro/images/blank.gif" width="378" height="300" data-wpfc-original-src="https://funzine.hu/wp-content/uploads/2026/10/Foto-Somai-Valter-2-378x300.jpg" class="attachment-img-378x300 size-img-378x300 wp-post-image" alt="blank" decoding="async" data-wpfc-original-srcset="https://funzine.hu/wp-content/uploads/2026/10/Foto-Somai-Valter-2-378x300.jpg 378w, https://funzine.hu/wp-content/uploads/2026/10/Foto-Somai-Valter-2-759x600.jpg 759w" data-wpfc-original-sizes="(max-width: 378px) 100vw, 378px" data-eio="l"/></noscript> </a></div><header class="entry-header pull-right col-xs-12 col-md-9">
+<h2 class="entry-title"><a href="https://funzine.hu/2026/10/20/programok/12-elmenydus-program-az-oszi-szunetre-budapesten-es-kornyeken-amit-az-egesz-csalad-imadni-fog/" rel="bookmark">12 élménydús program az őszi szünetre Budapesten és környékén, amit az egész család imádni fog</a></h2>			</header>
+</article></div></main></div><aside id="secondary" class="widget-area" role="complementary">
+<div id="sidebar_video">
+<div class="banner-container banner-desk notop nobottom zone-goodapest" style="height: 600px; width:300px; margin-left: auto; margin-right: auto;">
+<div id="div-gpt-ad-1596464231095-0"></div></div><div class="widget">
+<div class="widget-title clearfix"> <h3> <span>Ajánló</span> </h3></div><article id="post-637683" class="content-thumb col-xs-12 col-sm-6 col-md-4 color-hover post-637683 post type-post status-publish format-standard has-post-thumbnail hentry category-programok category-utazas tag-kirandulas tag-oszi-szunet">
+<div class="post-thumbnail no-select"> <a href="https://funzine.hu/2026/10/21/utazas/10-szenzacios-csaladi-uti-cel-es-kirandulastipp-amivel-feldobhatjatok-az-osz-szunetet/" title="10 szenzációs családi kirándulástipp, amivel feldobhatjátok az őszi szünetet"> <img width="360" height="240" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAWgAAADwAQMAAAAXaWwMAAAAA1BMVEUAAACnej3aAAAAAXRSTlMAQObYZgAAACFJREFUGBntwQENAAAAwiD7p34PBwwAAAAAAAAAAAAAjgQrIAAB6GS6kwAAAABJRU5ErkJggg==" class="attachment-img-360x240 size-img-360x240 wp-post-image lazyload " alt="" decoding="async" data-src="https://funzine.hu/wp-content/uploads/2026/10/lomb01-360x240.jpg.webp" data-srcset="https://funzine.hu/wp-content/uploads/2026/10/lomb01-360x240.jpg.webp 360w, https://funzine.hu/wp-content/uploads/2026/10/lomb01-300x200.jpg.webp 300w" data-sizes="auto" data-eio-rwidth="360" data-eio-rheight="240" data-src-webp="https://funzine.hu/wp-content/uploads/2026/10/lomb01-360x240.jpg.webp" data-srcset-webp="https://funzine.hu/wp-content/uploads/2026/10/lomb01-360x240.jpg.webp 360w, https://funzine.hu/wp-content/uploads/2026/10/lomb01-300x200.jpg.webp 300w"><noscript><img onload="Wpfcll.r(this,true);" src="https://funzine.hu/wp-content/plugins/wp-fastest-cache-premium/pro/images/blank.gif" width="360" height="240" data-wpfc-original-src="https://funzine.hu/wp-content/uploads/2026/10/lomb01-360x240.jpg" class="attachment-img-360x240 size-img-360x240 wp-post-image" alt="blank" decoding="async" data-wpfc-original-srcset="https://funzine.hu/wp-content/uploads/2026/10/lomb01-360x240.jpg 360w, https://funzine.hu/wp-content/uploads/2026/10/lomb01-300x200.jpg 300w" data-wpfc-original-sizes="(max-width: 360px) 100vw, 360px" data-eio="l"/></noscript> </a></div><header class="entry-header">
+<h2 class="entry-title"><a href="https://funzine.hu/2026/10/21/utazas/10-szenzacios-csaladi-uti-cel-es-kirandulastipp-amivel-feldobhatjatok-az-osz-szunetet/" rel="bookmark">10 szenzációs családi kirándulástipp, amivel feldobhatjátok az őszi szünetet</a></h2><span class="entry-meta"><span class="byline"> </span></span>		<div class="lead"> <p>A gyerekek nagy örömére október 23-án elstartol az őszi szünet. Hoztunk temérdek kirándulástippet!</p></div></header>
+</article>
+<article id="post-637670" class="content-thumb col-xs-12 col-sm-6 col-md-4 color-hover post-637670 post type-post status-publish format-standard has-post-thumbnail hentry category-utazas tag-belfold tag-kirandulas tag-kirandulastipp tag-zemplen">
+<div class="post-thumbnail no-select"> <a href="https://funzine.hu/2026/10/21/utazas/kaprazatos-oszi-panorama-es-tortenelmi-idoutazas-var-a-zempleni-hegyseg-sziveben/" title="Káprázatos őszi panoráma és történelmi időutazás vár a Zempléni-hegység szívében"> <img width="360" height="240" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAWgAAADwAQMAAAAXaWwMAAAAA1BMVEUAAACnej3aAAAAAXRSTlMAQObYZgAAACFJREFUGBntwQENAAAAwiD7p34PBwwAAAAAAAAAAAAAjgQrIAAB6GS6kwAAAABJRU5ErkJggg==" class="attachment-img-360x240 size-img-360x240 wp-post-image lazyload " alt="" decoding="async" data-src="https://funzine.hu/wp-content/uploads/2026/10/838880094_29683676574553693_1626221549959318980_n-1-360x240.jpg.webp" data-srcset="https://funzine.hu/wp-content/uploads/2026/10/838880094_29683676574553693_1626221549959318980_n-1-360x240.jpg.webp 360w, https://funzine.hu/wp-content/uploads/2026/10/838880094_29683676574553693_1626221549959318980_n-1-300x200.jpg.webp 300w" data-sizes="auto" data-eio-rwidth="360" data-eio-rheight="240" data-src-webp="https://funzine.hu/wp-content/uploads/2026/10/838880094_29683676574553693_1626221549959318980_n-1-360x240.jpg.webp" data-srcset-webp="https://funzine.hu/wp-content/uploads/2026/10/838880094_29683676574553693_1626221549959318980_n-1-360x240.jpg.webp 360w, https://funzine.hu/wp-content/uploads/2026/10/838880094_29683676574553693_1626221549959318980_n-1-300x200.jpg.webp 300w"><noscript><img onload="Wpfcll.r(this,true);" src="https://funzine.hu/wp-content/plugins/wp-fastest-cache-premium/pro/images/blank.gif" width="360" height="240" data-wpfc-original-src="https://funzine.hu/wp-content/uploads/2026/10/838880094_29683676574553693_1626221549959318980_n-1-360x240.jpg" class="attachment-img-360x240 size-img-360x240 wp-post-image" alt="blank" decoding="async" data-wpfc-original-srcset="https://funzine.hu/wp-content/uploads/2026/10/838880094_29683676574553693_1626221549959318980_n-1-360x240.jpg 360w, https://funzine.hu/wp-content/uploads/2026/10/838880094_29683676574553693_1626221549959318980_n-1-300x200.jpg 300w" data-wpfc-original-sizes="(max-width: 360px) 100vw, 360px" data-eio="l"/></noscript> </a></div><header class="entry-header">
+<h2 class="entry-title"><a href="https://funzine.hu/2026/10/21/utazas/kaprazatos-oszi-panorama-es-tortenelmi-idoutazas-var-a-zempleni-hegyseg-sziveben/" rel="bookmark">Káprázatos őszi panoráma és történelmi időutazás vár a Zempléni-hegység szívében</a></h2><span class="entry-meta"><span class="byline"> </span></span>		<div class="lead"> <p>Egy meredek vulkáni szirt tetején áll a Zempléni-hegység legszebb történelmi kincse, a Füzéri vár.</p></div></header>
+</article>
+<article id="post-637407" class="content-thumb col-xs-12 col-sm-6 col-md-4 color-hover post-637407 post type-post status-publish format-standard has-post-thumbnail hentry category-gasztro category-programok tag-boraszat tag-borkostolo tag-bornegyed tag-boros-programok tag-budafoki-bornegyed tag-budafoki-pincejarat tag-gasztroprogramok tag-oszi-programok-2 tag-sauska tag-torley post_places-budafok post_places-budapest">
+<div class="post-thumbnail no-select"> <a href="https://funzine.hu/2026/10/22/gasztro/pinceturakkal-es-kostolokkal-pezsdul-fel-iden-osszel-budafok-erkezik-a-novemberi-pincejarat/" title="Pincetúrákkal és kóstolókkal pezsdül fel idén ősszel Budafok: Érkezik a novemberi Pincejárat"> <img width="360" height="240" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAWgAAADwAQMAAAAXaWwMAAAAA1BMVEUAAACnej3aAAAAAXRSTlMAQObYZgAAACFJREFUGBntwQENAAAAwiD7p34PBwwAAAAAAAAAAAAAjgQrIAAB6GS6kwAAAABJRU5ErkJggg==" class="attachment-img-360x240 size-img-360x240 wp-post-image lazyload " alt="" decoding="async" data-src="https://funzine.hu/wp-content/uploads/2026/10/Szeleshat-Pinceszet-360x240.jpg.webp" data-srcset="https://funzine.hu/wp-content/uploads/2026/10/Szeleshat-Pinceszet-360x240.jpg.webp 360w, https://funzine.hu/wp-content/uploads/2026/10/Szeleshat-Pinceszet-300x200.jpg.webp 300w, https://funzine.hu/wp-content/uploads/2026/10/Szeleshat-Pinceszet-1024x683.jpg.webp 1024w, https://funzine.hu/wp-content/uploads/2026/10/Szeleshat-Pinceszet-768x512.jpg.webp 768w, https://funzine.hu/wp-content/uploads/2026/10/Szeleshat-Pinceszet-1536x1024.jpg.webp 1536w, https://funzine.hu/wp-content/uploads/2026/10/Szeleshat-Pinceszet-2048x1366.jpg.webp 2048w, https://funzine.hu/wp-content/uploads/2026/10/Szeleshat-Pinceszet-1200x800.jpg.webp 1200w" data-sizes="auto" data-eio-rwidth="360" data-eio-rheight="240" data-src-webp="https://funzine.hu/wp-content/uploads/2026/10/Szeleshat-Pinceszet-360x240.jpg.webp" data-srcset-webp="https://funzine.hu/wp-content/uploads/2026/10/Szeleshat-Pinceszet-360x240.jpg.webp 360w, https://funzine.hu/wp-content/uploads/2026/10/Szeleshat-Pinceszet-300x200.jpg.webp 300w, https://funzine.hu/wp-content/uploads/2026/10/Szeleshat-Pinceszet-1024x683.jpg.webp 1024w, https://funzine.hu/wp-content/uploads/2026/10/Szeleshat-Pinceszet-768x512.jpg.webp 768w, https://funzine.hu/wp-content/uploads/2026/10/Szeleshat-Pinceszet-1536x1024.jpg.webp 1536w, https://funzine.hu/wp-content/uploads/2026/10/Szeleshat-Pinceszet-2048x1366.jpg.webp 2048w, https://funzine.hu/wp-content/uploads/2026/10/Szeleshat-Pinceszet-1200x800.jpg.webp 1200w"><noscript><img onload="Wpfcll.r(this,true);" src="https://funzine.hu/wp-content/plugins/wp-fastest-cache-premium/pro/images/blank.gif" width="360" height="240" data-wpfc-original-src="https://funzine.hu/wp-content/uploads/2026/10/Szeleshat-Pinceszet-360x240.jpg" class="attachment-img-360x240 size-img-360x240 wp-post-image" alt="blank" decoding="async" data-wpfc-original-srcset="https://funzine.hu/wp-content/uploads/2026/10/Szeleshat-Pinceszet-360x240.jpg 360w, https://funzine.hu/wp-content/uploads/2026/10/Szeleshat-Pinceszet-300x200.jpg 300w, https://funzine.hu/wp-content/uploads/2026/10/Szeleshat-Pinceszet-1024x683.jpg 1024w, https://funzine.hu/wp-content/uploads/2026/10/Szeleshat-Pinceszet-768x512.jpg 768w, https://funzine.hu/wp-content/uploads/2026/10/Szeleshat-Pinceszet-1536x1024.jpg 1536w, https://funzine.hu/wp-content/uploads/2026/10/Szeleshat-Pinceszet-2048x1366.jpg 2048w, https://funzine.hu/wp-content/uploads/2026/10/Szeleshat-Pinceszet-1200x800.jpg 1200w" data-wpfc-original-sizes="(max-width: 360px) 100vw, 360px" data-eio="l"/></noscript> </a></div><header class="entry-header">
+<h2 class="entry-title"><a href="https://funzine.hu/2026/10/22/gasztro/pinceturakkal-es-kostolokkal-pezsdul-fel-iden-osszel-budafok-erkezik-a-novemberi-pincejarat/" rel="bookmark">Pincetúrákkal és kóstolókkal pezsdül fel idén ősszel Budafok: Érkezik a novemberi Pincejárat</a></h2><span class="entry-meta"><span class="byline"> </span></span>		<div class="lead"> <p>Remek programok, kóstolók és kulisszatitkok várják az érdeklődőket novemberben is.</p></div></header>
+</article></div><div class="banner-container widget banner-desk zone-goodapest" style="height: 600px; width:300px; margin-left: auto; margin-right: auto;">
+<div id="div-gpt-ad-1596464325773-0"></div></div></div></aside></div><br><br><footer id="colophon" class="site-footer" role="contentinfo">
+<div class="container">
+<div class="col-md-4 col-xs-12" style="text-align: left;"> <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" class="logo lazyload" title="Funzine - see you there" data-src="https://funzine.hu/wp-content/themes/funzine/images/funzine-logo-full-new.svg" decoding="async"><noscript><img src="https://funzine.hu/wp-content/themes/funzine/images/funzine-logo-full-new.svg" class="logo" title="Funzine - see you there" data-eio="l"></noscript></div><div class="col-md-8 col-xs-12 text-right pull-right">
+<div class="footer-info-container pull-right"><ul id="footer-infos" class="menu"><li id="menu-item-362496" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-362496"><a href="https://funzine.hu/rolunk/">Rólunk</a></li> <li id="menu-item-281593" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-281593"><a href="https://funzine.hu/impresszum/">Impresszum</a></li> <li id="menu-item-477011" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-477011"><a href="https://funzine.hu/szerzoi-jogok/">Szerzői jogok</a></li> <li id="menu-item-362497" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-362497"><a href="https://funzine.hu/archiv/">Archív</a></li> <li id="menu-item-370358" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-370358"><a href="https://funzine.hu/terjesztesi-pontok/">Terjesztési pontok</a></li> </ul></div></div></div></footer>
+<div class="credit">
+<div class="container">
+<span class="copany-info pull-left">© 2017-2018 FUNZINE Média Kft. | Minden jog fenntartva</span>
+<span class="designer pull-right">
+crafted with <i class="mdi mdi-heart"></i> by <a href="http://rudolfpasztor.com/" target="_blank" title="UI/UX designer, frontend developer">PR</a>
+</span>
+<div class="clearfix"></div></div></div></div><script data-wpfc-render="false">!function(){window.advanced_ads_ready_queue=window.advanced_ads_ready_queue||[],advanced_ads_ready_queue.push=window.advanced_ads_ready;for(var d=0,a=advanced_ads_ready_queue.length;d<a;d++)advanced_ads_ready(advanced_ads_ready_queue[d])}();</script>
+
+<noscript id="wpfc-google-fonts"><link crossorigin="anonymous" rel='stylesheet' id='twb-open-sans-css' href='https://fonts.googleapis.com/css?family=Open+Sans%3A300%2C400%2C500%2C600%2C700%2C800&#038;display=swap&#038;ver=6.9.10' type='text/css' media='all'/>
+<link crossorigin="anonymous" rel='stylesheet' id='bwg_googlefonts-css' href='https://fonts.googleapis.com/css?family=Ubuntu&#038;subset=greek,latin,greek-ext,vietnamese,cyrillic-ext,latin-ext,cyrillic' type='text/css' media='all'/>
+</noscript>
+<script id="twbbwg-global-js-extra">var twb={"nonce":"50aab45327","ajax_url":"https://funzine.hu/wp-admin/admin-ajax.php","plugin_url":"https://funzine.hu/wp-content/plugins/photo-gallery/booster","href":"https://funzine.hu/wp-admin/admin.php?page=twbbwg_photo-gallery"};
+var twb={"nonce":"50aab45327","ajax_url":"https://funzine.hu/wp-admin/admin-ajax.php","plugin_url":"https://funzine.hu/wp-content/plugins/photo-gallery/booster","href":"https://funzine.hu/wp-admin/admin.php?page=twbbwg_photo-gallery"};
+//# sourceURL=twbbwg-global-js-extra</script>
+<script id="plyr-js-js-extra">var easy_video_player={"plyr_iconUrl":"https://funzine.hu/wp-content/plugins/easy-video-player/lib/plyr.svg","plyr_blankVideo":"https://funzine.hu/wp-content/plugins/easy-video-player/lib/blank.mp4"};
+//# sourceURL=plyr-js-js-extra</script>
+<script id="bwg_frontend-js-extra">var bwg_objectsL10n={"bwg_field_required":"field is required.","bwg_mail_validation":"This is not a valid email address.","bwg_search_result":"There are no images matching your search.","bwg_select_tag":"Select Tag","bwg_order_by":"Order By","bwg_search":"Search","bwg_show_ecommerce":"Show Ecommerce","bwg_hide_ecommerce":"Hide Ecommerce","bwg_show_comments":"Show Comments","bwg_hide_comments":"Hide Comments","bwg_restore":"Restore","bwg_maximize":"Maximize","bwg_fullscreen":"Fullscreen","bwg_exit_fullscreen":"Exit Fullscreen","bwg_search_tag":"SEARCH...","bwg_tag_no_match":"No tags found","bwg_all_tags_selected":"All tags selected","bwg_tags_selected":"tags selected","play":"Play","pause":"Pause","is_pro":"","bwg_play":"Play","bwg_pause":"Pause","bwg_hide_info":"Hide info","bwg_show_info":"Show info","bwg_hide_rating":"Hide rating","bwg_show_rating":"Show rating","ok":"Ok","cancel":"Cancel","select_all":"Select all","lazy_load":"0","lazy_loader":"https://funzine.hu/wp-content/plugins/photo-gallery/images/ajax_loader.png","front_ajax":"0","bwg_tag_see_all":"see all tags","bwg_tag_see_less":"see less tags"};
+//# sourceURL=bwg_frontend-js-extra</script>
+<script>var sbiajaxurl="https://funzine.hu/wp-admin/admin-ajax.php";</script>
+<script id="eio-lazy-load-js-before">var eio_lazy_vars={"exactdn_domain":"","skip_autoscale":0,"bg_min_dpr":1.1,"threshold":0,"use_dpr":1};
+//# sourceURL=eio-lazy-load-js-before</script>
+<script id="be-load-more-r-js-extra">var beloadmore={"nonce":"d44a88fd69","url":"https://funzine.hu/wp-admin/admin-ajax.php","query":{"page":"","year":"2026","monthnum":"10","day":"21","name":"40-fergeteges-program-budapesten-es-kornyeken-az-oktober-23-i-hosszu-hetvegere","category_name":"goodapest"},"lang":"hu"};
+//# sourceURL=be-load-more-r-js-extra</script>
+<script id="be-load-more-js-extra">var beloadmore={"nonce":"d44a88fd69","url":"https://funzine.hu/wp-admin/admin-ajax.php","query":{"page":"","year":"2026","monthnum":"10","day":"21","name":"40-fergeteges-program-budapesten-es-kornyeken-az-oktober-23-i-hosszu-hetvegere","category_name":"goodapest"},"lang":"hu"};
+//# sourceURL=be-load-more-js-extra</script>
+<script><!--
+<![CDATA[//><!--
+var pp_gemius_identifier='nGuV74vMJdATbxgxPshXjYXD.ImF8P.YfUUqYlEf37z.I7';
+function gemius_pending(i){ window[i]=window[i]||function(){var x=window[i+'_pdata']=window[i+'_pdata']||[]; x[x.length]=arguments;};};
+gemius_pending('gemius_hit'); gemius_pending('gemius_event'); gemius_pending('pp_gemius_hit'); gemius_pending('pp_gemius_event');
+(function(d,t){try {var gt=d.createElement(t),s=d.getElementsByTagName(t)[0],l='http'+((location.protocol=='https:')?'s':''); gt.setAttribute('async','async');
+gt.setAttribute('defer','defer'); gt.src=l+'://hu.hit.gemius.pl/xgemius.js'; s.parentNode.insertBefore(gt,s);} catch (e){}})(document,'script');
+<!--</script>
+<script>window.googletag=window.googletag||{cmd: []};
+googletag.cmd.push(function(){
+googletag.defineSlot('/22071649104/Billboard', [[980, 120], [640, 360], [970, 66], [980, 90], [640, 480], [970, 120], [970, 250], [970, 90]], 'div-gpt-ad-1750158817041-0').setTargeting('lang', ['hu']).setTargeting('category', ['címlap']).setTargeting('device', [currentDevice]).addService(googletag.pubads());
+googletag.pubads().enableSingleRequest();
+googletag.pubads().collapseEmptyDivs();
+googletag.enableServices();
+});</script>
+<script id="cookie-law-info-gcm-var-js">var _ckyGcm={"status":true,"default_settings":[{"analytics":"denied","advertisement":"denied","functional":"denied","necessary":"granted","ad_user_data":"denied","ad_personalization":"denied","regions":"All"}],"wait_for_update":2000,"url_passthrough":false,"ads_data_redaction":false}</script>
+<script src="https://funzine.hu/wp-content/cache/wpfc-minified/8xb42y1i/rn4n.js"></script>
+<script>(()=>{"use strict";const e=[400,500,600,700,800,900],t=e=>`wprm-min-${e}`,n=e=>`wprm-max-${e}`,s=new Set,o="ResizeObserver"in window,r=o?new ResizeObserver((e=>{for(const t of e)c(t.target)})):null,i=.5/(window.devicePixelRatio||1);function c(s){const o=s.getBoundingClientRect().width||0;for(let r=0;r<e.length;r++){const c=e[r],a=o<=c+i;o>c+i?s.classList.add(t(c)):s.classList.remove(t(c)),a?s.classList.add(n(c)):s.classList.remove(n(c))}}function a(e){s.has(e)||(s.add(e),r&&r.observe(e),c(e))}!function(e=document){e.querySelectorAll(".wprm-recipe").forEach(a)}();if(new MutationObserver((e=>{for(const t of e)for(const e of t.addedNodes)e instanceof Element&&(e.matches?.(".wprm-recipe")&&a(e),e.querySelectorAll?.(".wprm-recipe").forEach(a))})).observe(document.documentElement,{childList:!0,subtree:!0}),!o){let e=0;addEventListener("resize",(()=>{e&&cancelAnimationFrame(e),e=requestAnimationFrame((()=>s.forEach(c)))}),{passive:!0})}})();</script>
+<script>window._nslDOMReady=(function (){
+const executedCallbacks=new Set();
+return function (callback){
+if(executedCallbacks.has(callback)) return;
+const wrappedCallback=function (){
+if(executedCallbacks.has(callback)) return;
+executedCallbacks.add(callback);
+callback();
+};
+if(document.readyState==="complete"||document.readyState==="interactive"){
+wrappedCallback();
+}else{
+document.addEventListener("DOMContentLoaded", wrappedCallback);
+}};})();</script>
+<script src="https://funzine.hu/wp-content/cache/wpfc-minified/g5no8fe1/rn4n.js"></script>
+<script src="https://funzine.hu/wp-content/cache/wpfc-minified/fth7gji7/rn4n.js" id="sumoselect-js"></script>
+<script src="https://funzine.hu/wp-content/cache/wpfc-minified/6xldxycz/rn4n.js"></script>
+<script src="https://funzine.hu/wp-content/cache/wpfc-minified/qvins33u/rn4n.js" id="wpml-legacy-dropdown-0-js"></script>
+<script id="google_gtagjs-js-after">window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+gtag("set","linker",{"domains":["funzine.hu"]});
+gtag("js", new Date());
+gtag("set", "developer_id.dZTNiMT", true);
+gtag("config", "GT-M38D2X4");
+//# sourceURL=google_gtagjs-js-after</script>
+<script>jQuery(function ($){
+$('a.social[href="https://instagram.com/funzinebudapest"]')
+.attr('href', 'https://www.instagram.com/funzinemagazin/');
+});</script>
+<script>jQuery(function (){
+console.log('[target-fix] script running');
+function fix(reason){
+console.log('[target-fix] run:', reason);
+var added=0;
+jQuery('a.content_cards_title_link').each(function (){
+var $a=jQuery(this);
+var t=$a.attr('target');
+if(!(typeof t==='string'&&t.trim())){
+$a.attr('target', '_blank');
+var rel=($a.attr('rel')||'').trim();
+var tokens=rel ? rel.split(/\s+/):[];
+if(tokens.indexOf('noopener')===-1) tokens.push('noopener');
+if(tokens.indexOf('noreferrer')===-1) tokens.push('noreferrer');
+$a.attr('rel', tokens.join(' ').trim());
+added++;
+console.log('[target-fix] added to:', this.href||$a.text().trim());
+}});
+console.log('[target-fix] done, added to ' + added + ' link(s)');
+}
+fix('dom-ready');
+jQuery(document).ajaxComplete(function (){
+fix('ajaxComplete');
+});
+if(window.MutationObserver){
+var scheduled=false;
+var obs=new MutationObserver(function (){
+if(scheduled) return;
+scheduled=true;
+setTimeout(function (){
+scheduled=false;
+fix('mutation');
+}, 0);
+});
+obs.observe(document.body, { childList: true, subtree: true });
+}});</script>
+<script></script>
+<script>(function(jQuery){
+jQuery(document).ready(function(){
+function updateImages(){
+jQuery('img.attachment-alm-thumbnail').each(function(){
+var img=$(this);
+var srcset=img.attr('srcset');
+if(srcset){
+var entries=srcset.split(',');
+var entry500w=entries.find(function(entry){
+return $.trim(entry).endsWith('500w');
+});
+if(entry500w){
+var url500w=$.trim(entry500w).split(' ')[0];
+img.attr('src', url500w);
+img.attr('width', '500');
+img.attr('height', '500');
+img.attr('sizes', '(max-width: 500px) 100vw, 500px');
+}}
+});
+}
+updateImages();
+var observer=new MutationObserver(function(mutations){
+mutations.forEach(function(mutation){
+if(mutation.addedNodes.length > 0){
+updateImages();
+}});
+});
+observer.observe(document.body, { childList: true, subtree: true });
+});
+})(jQuery);</script>
+<script></script>
+<script>(function(url){
+if(/(?:Chrome\/26\.0\.1410\.63 Safari\/537\.31|WordfenceTestMonBot)/.test(navigator.userAgent)){ return; }
+var addEvent=function(evt, handler){
+if(window.addEventListener){
+document.addEventListener(evt, handler, false);
+}else if(window.attachEvent){
+document.attachEvent('on' + evt, handler);
+}};
+var removeEvent=function(evt, handler){
+if(window.removeEventListener){
+document.removeEventListener(evt, handler, false);
+}else if(window.detachEvent){
+document.detachEvent('on' + evt, handler);
+}};
+var evts='contextmenu dblclick drag dragend dragenter dragleave dragover dragstart drop keydown keypress keyup mousedown mousemove mouseout mouseover mouseup mousewheel scroll'.split(' ');
+var logHuman=function(){
+if(window.wfLogHumanRan){ return; }
+window.wfLogHumanRan=true;
+var wfscr=document.createElement('script');
+wfscr.type='text/javascript';
+wfscr.async=true;
+wfscr.src=url + '&r=' + Math.random();
+(document.getElementsByTagName('head')[0]||document.getElementsByTagName('body')[0]).appendChild(wfscr);
+for (var i=0; i < evts.length; i++){
+removeEvent(evts[i], logHuman);
+}};
+for (var i=0; i < evts.length; i++){
+addEvent(evts[i], logHuman);
+}})('//funzine.hu/?wordfence_lh=1&hid=AD8407BA736B0EEBE77B01F284E21443');</script>
+<script>/*
+var ias=$.ias({
+container: "#main",
+item: ".post, .event, .place",
+pagination: ".navigation",
+next: ".nextpost",
+});
+ias.extension(new IASTriggerExtension({offset: 2}));
+ias.extension(new IASPagingExtension());
+ias.extension(new IASSpinnerExtension());
+ias.extension(new IASNoneLeftExtension());
+ias.extension(new IASHistoryExtension({ prev: '.prev a' }));
+ias.on('load', function(event){
+console.log('url would be:' + event.url);
+event.url=event.url + "?ajax=1";
+});
+*/</script>
+<script>function getDevice(){
+var browserWidth=window.innerWidth;
+if(browserWidth > 768){
+currentDevice='desktop';
+}else{
+currentDevice='mobil';
+}
+return currentDevice;
+}
+var currentDevice=getDevice();
+var onresize=function(){
+getDevice();
+}
+window.addEventListener("resize", onresize);</script>
+<script async="" src="https://securepubads.g.doubleclick.net/tag/js/gpt.js"></script>
+<script>window.googletag=window.googletag||{cmd: []};
+googletag.cmd.push(function(){
+googletag.defineSlot('/22071649104/Leaderboard', [[640, 480],[640, 360],[970, 250], [728, 90], [970, 120], [970, 90]], 'div-gpt-ad-1596198773174-0').setTargeting('lang', ['hu']).setTargeting('category', ['goodapest']).setTargeting('device', [currentDevice]).addService(googletag.pubads());
+googletag.pubads().enableSingleRequest();
+googletag.pubads().collapseEmptyDivs();
+googletag.enableServices();
+});</script>
+<script>window.googletag=window.googletag||{cmd: []};
+googletag.cmd.push(function(){
+googletag.defineSlot('/22071649104/Leaderboard_B', [[640, 480],[640, 360],[970, 250], [728, 90], [970, 120], [970, 90]], 'div-gpt-ad-1596201829681-0').setTargeting('lang', ['hu']).setTargeting('category', ['goodapest']).setTargeting('device', [currentDevice]).addService(googletag.pubads());
+googletag.pubads().enableSingleRequest();
+googletag.pubads().collapseEmptyDivs();
+googletag.enableServices();
+});</script>
+<script>window.googletag=window.googletag||{cmd: []};
+googletag.cmd.push(function(){
+googletag.defineSlot('/22071649104/Leaderboard_C', [[640, 480],[640, 360],[970, 250], [728, 90], [970, 120], [970, 90]], 'div-gpt-ad-1596201517359-0').setTargeting('lang', ['hu']).setTargeting('category', ['goodapest']).setTargeting('device', [currentDevice]).addService(googletag.pubads());
+googletag.pubads().enableSingleRequest();
+googletag.pubads().collapseEmptyDivs();
+googletag.enableServices();
+});</script>
+<script>window.googletag=window.googletag||{cmd: []};
+googletag.cmd.push(function(){
+googletag.defineSlot('/22071649104/Leaderboard_D', [[640, 480],[640, 360],[970, 250], [728, 90], [970, 120], [970, 90]], 'div-gpt-ad-1596201552246-0').setTargeting('lang', ['hu']).setTargeting('category', ['goodapest']).setTargeting('device', [currentDevice]).addService(googletag.pubads());
+googletag.pubads().enableSingleRequest();
+googletag.pubads().collapseEmptyDivs();
+googletag.enableServices();
+});</script>
+<script>window.googletag=window.googletag||{cmd: []};
+googletag.cmd.push(function(){
+googletag.defineSlot('/22071649104/Halfpage', [[320, 50], [320, 100], [300, 1050], [300, 75], [336, 280], [300, 600], [300, 50], [300, 100], [300, 250], [320, 480], [250, 250]], 'div-gpt-ad-1596464231095-0').setTargeting('lang', ['hu']).setTargeting('category', ['goodapest']).setTargeting('device', [currentDevice]).addService(googletag.pubads());
+googletag.pubads().enableSingleRequest();
+googletag.pubads().collapseEmptyDivs();
+googletag.enableServices();
+});</script>
+<script>window.googletag=window.googletag||{cmd: []};
+googletag.cmd.push(function(){
+googletag.defineSlot('/22071649104/Halfpage_B', [[320, 480], [320, 100], [300, 50], [336, 280], [300, 100], [300, 250], [300, 75], [300, 600], [320, 50], [250, 250]], 'div-gpt-ad-1596464325773-0').setTargeting('lang', ['hu']).setTargeting('category', ['goodapest']).setTargeting('device', [currentDevice]).addService(googletag.pubads());
+googletag.pubads().enableSingleRequest();
+googletag.pubads().collapseEmptyDivs();
+googletag.enableServices();
+});</script>
+<script>window.googletag=window.googletag||{cmd: []};
+googletag.cmd.push(function(){
+googletag.defineSlot('/22071649104/Roadblock', [[400, 300], [300, 100], [300, 250], [336, 280], [640, 360], [320, 100], [250, 250]], 'div-gpt-ad-1596464482650-0').setTargeting('lang', ['hu']).setTargeting('category', ['goodapest']).setTargeting('device', [currentDevice]).addService(googletag.pubads());
+googletag.pubads().enableSingleRequest();
+googletag.pubads().collapseEmptyDivs();
+googletag.enableServices();
+});</script>
+<script>window.googletag=window.googletag||{cmd: []};
+googletag.cmd.push(function(){
+googletag.defineSlot('/22071649104/Roadblock_B', [[400, 300], [300, 100], [300, 250], [336, 280], [640, 360], [320, 100], [250, 250]], 'div-gpt-ad-1596464734216-0').setTargeting('lang', ['hu']).setTargeting('category', ['goodapest']).setTargeting('device', [currentDevice]).addService(googletag.pubads());
+googletag.pubads().enableSingleRequest();
+googletag.pubads().collapseEmptyDivs();
+googletag.enableServices();
+});</script>
+<script>window.googletag=window.googletag||{cmd: []};
+googletag.cmd.push(function(){
+googletag.defineSlot('/22071649104/Billboard', [[970, 250], [970, 90], [970, 120], [970, 66], [980, 90], [980, 120]], 'div-gpt-ad-1596464894162-0').setTargeting('lang', ['hu']).setTargeting('category', ['goodapest']).setTargeting('device', [currentDevice]).addService(googletag.pubads());
+googletag.pubads().enableSingleRequest();
+googletag.pubads().collapseEmptyDivs();
+googletag.enableServices();
+});</script>
+<script>window.googletag=window.googletag||{cmd: []};
+googletag.cmd.push(function(){
+googletag.defineSlot('/22071649104/Leaderboard_E', [[728, 90], [640, 480], [970, 90], [640, 360], [970, 250], [970, 120]], 'div-gpt-ad-1765186876597-0').addService(googletag.pubads());
+googletag.pubads().enableSingleRequest();
+googletag.pubads().collapseEmptyDivs();
+googletag.pubads().setTargeting('category', ['goodapest']).setTargeting('lang', ['hu']).setTargeting('device', [currentDevice]);
+googletag.enableServices();
+});</script>
+<script>window.googletag=window.googletag||{cmd: []};
+googletag.cmd.push(function(){
+googletag.defineSlot('/22071649104/Leaderboard_F', [[970, 90], [640, 480], [970, 120], [640, 360], [728, 90], [970, 250]], 'div-gpt-ad-1765187086371-0').addService(googletag.pubads());
+googletag.pubads().enableSingleRequest();
+googletag.pubads().collapseEmptyDivs();
+googletag.pubads().setTargeting('category', ['goodapest']).setTargeting('lang', ['hu']).setTargeting('device', [currentDevice]);
+googletag.enableServices();
+});</script>
+<script src="https://cdn.debugbear.com/xYnIs7g2b2fU.js" async=""></script>
+<script>googletag.cmd.push(function(){ googletag.display('div-gpt-ad-1750158817041-0'); });</script>
+<script>googletag.cmd.push(function(){ googletag.display('div-gpt-ad-1596464482650-0'); });</script>
+<script>googletag.cmd.push(function(){ googletag.display('div-gpt-ad-1596464734216-0'); });</script>
+<script>googletag.cmd.push(function(){ googletag.display('div-gpt-ad-1596464231095-0'); });</script>
+<script>googletag.cmd.push(function(){ googletag.display('div-gpt-ad-1596464325773-0'); });</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://funzine.hu/wp-content/cache/wpfc-minified/lna3clu6/rn4n.js"></script>
+<script type="speculationrules">{"prefetch":[{"source":"document","where":{"and":[{"href_matches":"/*"},{"not":{"href_matches":["/wp-*.php","/wp-admin/*","/wp-content/uploads/*","/wp-content/*","/wp-content/plugins/*","/wp-content/themes/funzine/*","/*\\?(.+)"]}},{"not":{"selector_matches":"a[rel~=\"nofollow\"]"}},{"not":{"selector_matches":".no-prefetch, .no-prefetch a"}}]},"eagerness":"conservative"}]}</script>
+<script defer="" src="https://funzine.hu/wp-content/cache/wpfc-minified/76z9euj8/rn4n.js"></script>
+<script>document.addEventListener('DOMContentLoaded',function(){
+jQuery(function($){
+function fixEncoding(str){
+try { return decodeURIComponent(escape(str)); }
+catch(e){ return str; }}
+function fixCard($card){
+$card.find('*').addBack().contents().filter(function(){
+return this.nodeType===3;
+}).each(function(){
+this.nodeValue=fixEncoding(this.nodeValue);
+});
+$card.find('img[alt]').each(function(){
+this.alt=fixEncoding(this.alt);
+});
+}
+function applyFix(){
+$('.content_cards_card').each(function(){
+fixCard($(this));
+});
+}
+applyFix();
+$(document).ajaxComplete(function(event, xhr, settings){
+if(settings.url.indexOf('admin-ajax.php')!==-1
+&& settings.data.indexOf('action=content_cards_shortcode')!==-1
+){
+applyFix();
+}});
+});});</script>
+<script>document.addEventListener('DOMContentLoaded',function(){function wpfcgl(){var wgh=document.querySelector('noscript#wpfc-google-fonts').innerText, wgha=wgh.match(/<link[^\>]+>/gi);for(i=0;i<wgha.length;i++){var wrpr=document.createElement('div');wrpr.innerHTML=wgha[i];document.body.appendChild(wrpr.firstChild);}}wpfcgl();});</script>
+
+</div><!-- WP Fastest Cache file was created in 0.385 seconds, on 2026. Oct. 22. @ 4:58 pm --><link crossorigin="anonymous" rel="stylesheet" id="twb-open-sans-css" href="https://fonts.googleapis.com/css?family=Open+Sans%3A300%2C400%2C500%2C600%2C700%2C800&amp;display=swap&amp;ver=6.9.10" type="text/css" media="all"><link crossorigin="anonymous" rel="stylesheet" id="bwg_googlefonts-css" href="https://fonts.googleapis.com/css?family=Ubuntu&amp;subset=greek,latin,greek-ext,vietnamese,cyrillic-ext,latin-ext,cyrillic" type="text/css" media="all"><div id="fb-root" class=" fb_reset"><div style="position: absolute; top: -10000px; width: 0px; height: 0px;"><div></div></div></div></body></html>
