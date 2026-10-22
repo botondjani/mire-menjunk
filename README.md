@@ -39,7 +39,7 @@ A cél a válogatott, érdekes programok – a nagy jegyértékesítők teljes k
 - Táblák: `profiles` (név, kép, érdeklődési körök) és `saved_events`, RLS-sel: mindenki csak a sajátját látja. Fióktörlés: `delete-account` Edge Function.
 - Belépés nélkül minden működik (a mentések a localStorage-ban vannak), belépéskor a helyi és a fiókban lévő mentések összefésülődnek.
 - Belépés: a Google saját gombja (Google Identity Services → `signInWithIdToken`), így a Google-ablak a mi címünket mutatja; ha nem tölt be, átirányításos tartalék gomb.
-- **Értesítések** (Web Push): emlékeztető kb. 2 órával a mentett program előtt (időpont nélkül aznap 10-kor, kiállításnál az utolsó napon), és napi összesítő a követett helyek új programjairól. A `supabase/functions/notify` Edge Functiont óránként a `pg_cron` hívja (`notify-hourly`); a VAPID privát kulcs és az időzítő kulcsa a Supabase Vaultban van. Táblák: `follows`, `push_subscriptions`, `notifications_sent`. iPhone-on csak a kezdőképernyőre telepített appban működik.
+- **Értesítések** (Web Push), a profilban személyre szabhatóan: emlékeztető a mentett program előtt (1/2/3 órával vagy aznap reggel; kiállításnál az utolsó napon), csütörtöki „Hétvégi tippek” az érdeklődési körök alapján, és napi összesítő a követett helyek új programjairól (délelőtt vagy délután). A `supabase/functions/notify` Edge Functiont óránként a `pg_cron` hívja (`notify-hourly`); a VAPID privát kulcs és az időzítő kulcsa a Supabase Vaultban van. Táblák: `follows`, `push_subscriptions`, `notifications_sent`. iPhone-on csak a kezdőképernyőre telepített appban működik.
 - Beállítás: Google Cloud OAuth-kliens → Supabase Authentication → Providers → Google; URL Configuration: Site URL és Redirect URL a Pages-cím (`…/mire-menjunk/**`).
 
 ## Parancsok

@@ -62,6 +62,9 @@ async function photo(url) {
   }
 }
 
+// A logó (public/icons/icon.svg) belseje, 512-es koordinátákban.
+const LOGO = '<rect width="512" height="512" rx="116" fill="#FFD100"/><path d="M256 448C218 398 112 322 112 220a144 144 0 0 1 288 0c0 102-106 178-144 228z" fill="#141414"/><path d="M206 192a50 50 0 1 1 74 44c-16 9-24 19-24 40" fill="none" stroke="#FFD100" stroke-width="36" stroke-linecap="round" stroke-linejoin="round"/><circle cx="256" cy="330" r="22" fill="#FFD100"/>';
+
 export async function renderOg(e) {
   const hue = HUES[e.category] ?? 55;
   const img = e.image ? await photo(e.image) : null;
@@ -93,8 +96,7 @@ export async function renderOg(e) {
   <text x="80" y="90" font-family="Figtree" font-weight="800" font-size="28" fill="#141414" letter-spacing="1">${x(pill)}</text>
   <g transform="translate(${W - 56} 52)">
     <rect x="-292" y="0" width="292" height="56" rx="28" fill="#000" fill-opacity="0.45"/>
-    <rect x="-284" y="8" width="40" height="40" rx="10" fill="#ffd100"/>
-    <text x="-264" y="36" text-anchor="middle" font-family="Bricolage Grotesque" font-weight="800" font-size="18" fill="#141414">BP</text>
+    <g transform="translate(-284 8) scale(0.078125)">${LOGO}</g>
     <text x="-232" y="38" font-family="Bricolage Grotesque" font-weight="800" font-size="27" fill="#fff">Hova menjünk?</text>
   </g>
   ${lines.map((l, i) => `<text x="64" y="${titleTop + i * lineH}" font-family="Bricolage Grotesque" font-weight="800" font-size="${size}" fill="#fff" letter-spacing="-1.5">${x(l)}</text>`).join('\n  ')}

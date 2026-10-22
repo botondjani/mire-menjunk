@@ -95,7 +95,7 @@ export async function signOut() {
 
 export async function loadProfile(userId) {
   const c = await client();
-  const { data, error } = await c.from('profiles').select('display_name, avatar_url, interests, notify_reminders, notify_follows').eq('id', userId).maybeSingle();
+  const { data, error } = await c.from('profiles').select('display_name, avatar_url, interests, notify_reminders, notify_follows, notify_weekly, remind_before, digest_hour').eq('id', userId).maybeSingle();
   if (error) throw error;
   return data;
 }

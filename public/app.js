@@ -2,7 +2,7 @@
 // Nézetek: felfedezés (vízszintes szekciók), lista (szűrt, napokra bontva), keresés, mentett, profil.
 // Minden nézetnek van betöltő, üres és hibaállapota; a visszafordítható lépések (mentés) visszavonhatók.
 
-import * as auth from './auth.js?v=12';
+import * as auth from './auth.js?v=14';
 
 const ROOT = new URL('./', import.meta.url);
 const $ = (s, el = document) => el.querySelector(s);
@@ -314,7 +314,10 @@ async function disablePush() {
 }
 
 async function toggleSetting(key) {
-  const value = state.profile?.[key] === false;
+  setPref(key, !({ ...NOTIFY_DEFAULTS, ...state.profile })[key]);
+}
+
+function setPref(key, value) {
   state.profile = { ...state.profile, [key]: value };
   render();
   auth.saveSettings(state.user.id, { [key]: value }).catch(() => toast('Nem sikerült menteni – próbáld újra.'));
@@ -688,24 +691,56 @@ function profileView() {
     </section>`;
 }
 
+const NOTIFY_DEFAULTS = { notify_reminders: true, notify_follows: true, notify_weekly: true, remind_before: 120, digest_hour: 10 };
+
+/** Mintaprogram az értesítés-előnézethez: lehetőleg a saját mentettjeiből, különben a ma esti kínálatból. */
+function sampleEvent() {
+  const timed = (e) => e.time && e.venue;
+  return state.events.find((e) => state.saved.has(e.id) && timed(e) && (e.end || e.start) >= today)
+    || state.events.find((e) => timed(e) && e.start === today)
+    || state.events.find(timed) || state.events[0];
+}
+
 function notifyPanel() {
-  const p = state.profile || {};
-  const sw = (key, label, sub) => `<label class="switch"><span>${label}<small>${sub}</small></span>
-      <input type="checkbox" data-setting="${key}" ${p[key] !== false ? 'checked' : ''}><i aria-hidden="true"></i></label>`;
-  let status;
-  if (state.push === 'on') status = `<p class="muted">✓ Bekapcsolva ezen az eszközön. <button class="link" data-push-test>Próbaértesítés</button> · <button class="link" data-push-off>Kikapcsolás</button></p>`;
-  else if (state.push === 'denied') status = '<p class="muted">Az értesítések le vannak tiltva ennél az oldalnál – a böngésző (vagy a telefon) beállításaiban engedélyezheted.</p>';
-  else if (state.push === 'unsupported') status = /iP(hone|ad)/.test(navigator.userAgent)
-    ? '<p class="muted">iPhone-on az értesítésekhez add hozzá az appot a kezdőképernyőhöz (Megosztás → Főképernyőhöz adás), és onnan nyisd meg.</p>'
-    : '<p class="muted">Ez a böngésző nem támogatja az értesítéseket.</p>';
-  else status = `<button class="btn primary wide" data-push-on ${state.pushBusy ? 'disabled' : ''}>🔔 ${state.pushBusy ? 'Bekapcsolás…' : 'Értesítések bekapcsolása'}</button>`;
-  return `<section class="panel">
-      <h2>Értesítések</h2>
-      ${status}
-      <div class="switches">
-        ${sw('notify_reminders', 'Emlékeztető', 'Kb. 2 órával a mentett programjaid előtt')}
-        ${sw('notify_follows', 'Új program a követett helyeken', 'Naponta egyszer, délelőtt')}
+  const p = { ...NOTIFY_DEFAULTS, ...state.profile };
+  const choices = (key, opts) => `<div class="choices" role="radiogroup">${opts.map(([v, l]) => `<button role="radio" aria-checked="${p[key] === v}" data-choice="${key}:${v}">${l}</button>`).join('')}</div>`;
+  const pref = (key, icon, label, sub, extra = '') => `<div class="pref${p[key] ? '' : ' off'}">
+      <label class="switch"><span class="pref-icon" aria-hidden="true">${icon}</span><span>${label}<small>${sub}</small></span>
+        <input type="checkbox" data-setting="${key}" ${p[key] ? 'checked' : ''}><i aria-hidden="true"></i></label>
+      ${p[key] && extra ? extra : ''}
+    </div>`;
+  const prefs = `<div class="prefs">
+      ${pref('notify_reminders', '⏰', 'Emlékeztető', 'Mielőtt kezdődik, amit elmentettél', choices('remind_before', [[60, '1 órával'], [120, '2 órával'], [180, '3 órával'], [0, 'Aznap reggel']]))}
+      ${pref('notify_weekly', '🎉', 'Hétvégi tippek', 'Csütörtökönként 3 program, ami neked szól')}
+      ${pref('notify_follows', '📍', 'Új program a kedvenc helyeiden', 'Naponta legfeljebb egyszer')}
+      ${p.notify_weekly || p.notify_follows ? `<div class="pref-time"><span>Mikor jöjjenek a tippek?</span>${choices('digest_hour', [[10, '☀️ Délelőtt'], [17, '🌆 Délután']])}</div>` : ''}
+    </div>`;
+  if (state.push === 'on') {
+    return `<section class="panel">
+      <div class="panel-head"><h2>Értesítések</h2><span class="on-badge">Bekapcsolva</span></div>
+      ${prefs}
+      <p class="muted small"><button class="link" data-push-test>Próbaértesítés</button> · <button class="link" data-push-off>Kikapcsolás ezen az eszközön</button></p>
+    </section>`;
+  }
+  const e = sampleEvent();
+  const tips = recommendations().slice(0, 3).map((x) => x.title).join(' · ') || 'Koncert, kiállítás és egy jó buli a hétvégére';
+  const icon = '<img src="icons/icon-192.png" alt="">';
+  let cta;
+  if (state.push === 'denied') cta = '<p class="notice-line">Az értesítések le vannak tiltva ennél az oldalnál – a böngésző (vagy a telefon) beállításaiban engedélyezheted.</p>';
+  else if (state.push === 'unsupported') cta = /iP(hone|ad)/.test(navigator.userAgent)
+    ? '<p class="notice-line">iPhone-on: Megosztás → <b>Főképernyőhöz adás</b>, majd onnan nyisd meg az appot, és itt bekapcsolhatod.</p>'
+    : '<p class="notice-line">Ez a böngésző nem támogatja az értesítéseket.</p>';
+  else cta = `<button class="btn primary wide bell" data-push-on ${state.pushBusy ? 'disabled' : ''}>${state.pushBusy ? 'Egy pillanat…' : '🔔 Kérem az értesítéseket'}</button>`;
+  return `<section class="panel notify-hero">
+      <div class="np-stack" aria-hidden="true">
+        <div class="np back">${icon}<div><small>Hova menjünk? · csüt.</small><b>🎉 Hétvégi tippek neked</b><span>${esc(tips)}</span></div></div>
+        <div class="np">${icon}<div><small>Hova menjünk? · most</small><b>⏰ ${esc(e?.title || 'A mentett programod')}</b><span>${p.remind_before ? `${p.remind_before / 60} óra múlva kezdődik` : 'Ma'}${e?.time ? ` · ${e.time}` : ''}${e?.venue ? ` · ${esc(e.venue)}` : ''}</span></div></div>
       </div>
+      <h2>Ne maradj le semmiről</h2>
+      <p class="muted">Szólunk, mielőtt kezdődik, amit elmentettél, és csütörtökön hozzuk a hétvégi tippeket. Te döntöd el, mit és mikor – spam nélkül.</p>
+      ${cta}
+      <h3 class="prefs-title">Szabd személyre</h3>
+      ${prefs}
     </section>`;
 }
 
@@ -902,29 +937,44 @@ function toggleSave(id, { undo = false } = {}) {
     (on ? auth.addSaved(state.user.id, e ? [e] : []) : auth.removeSaved(state.user.id, [id]))
       .catch(() => toast('A fiókodba most nem sikerült szinkronizálni – ezen a telefonon megvan.'));
   }
-  if (undo) toast(on ? 'Visszatéve a mentettek közé' : 'Mentés visszavonva');
+  if (on) celebrate(id);
+  if (undo) toast(on ? 'Visszatéve' : 'Visszavonva', null, { ms: 1200 });
   else if (on && state.user && state.push === 'off' && !store.get('pushNudged', false)) {
     store.set('pushNudged', true);
-    toast('Elmentve. Kérsz emlékeztetőt a program előtt?', { label: 'Igen', fn: enablePush });
-  }
-  else if (on && !state.user && !store.get('loginNudged', false)) {
+    toast('Mentve. Szóljunk, mielőtt kezdődik?', { label: 'Igen', fn: enablePush }, { icon: icons.heart, ms: 4000 });
+  } else if (on && !state.user && !store.get('loginNudged', false)) {
     // Egyszer, finoman: a belépés opcionális, a mentés enélkül is működik.
     store.set('loginNudged', true);
-    toast('Elmentve ezen a telefonon. Belépve minden eszközödön meglesz.', { label: 'Belépés', fn: () => { state.view = 'profile'; state.tab = 'profile'; render(); window.scrollTo({ top: 0 }); } });
-  } else toast(on ? 'Elmentve – a Mentett fülön találod' : 'Eltávolítva a mentettek közül', { label: 'Visszavonás', fn: () => toggleSave(id, { undo: true }) });
+    toast('Mentve ezen a telefonon', { label: 'Minden eszközön', fn: goProfile }, { icon: icons.heart, ms: 3500 });
+  } else if (on) toast('Mentve', null, { icon: icons.heart, ms: 1200 });
+  else toast('Eltávolítva', { label: 'Visszavonás', fn: () => toggleSave(id, { undo: true }) }, { ms: 2600 });
   if (state.view === 'saved' && !sheet.open) render();
+}
+
+/** Mentés-visszajelzés: a szív kipattan, a Mentett fül számlálója megugrik, Androidon egy apró rezgés. */
+function celebrate(id) {
+  document.querySelectorAll(`[data-save="${CSS.escape(id)}"]`).forEach((b) => {
+    b.classList.remove('pop');
+    void b.offsetWidth;
+    b.classList.add('pop');
+  });
+  const badge = $('.tabbar .count');
+  badge.classList.remove('bump');
+  void badge.offsetWidth;
+  badge.classList.add('bump');
+  navigator.vibrate?.(12);
 }
 
 let toastTimer;
 let toastAction = null;
-function toast(msg, action) {
+function toast(msg, action, { icon = '', ms } = {}) {
   const t = $('#toast');
-  t.innerHTML = `<span>${esc(msg)}</span>${action ? `<button type="button">${esc(action.label)}</button>` : ''}`;
+  t.innerHTML = `${icon ? `<i class="toast-icon" aria-hidden="true">${icon}</i>` : ''}<span>${esc(msg)}</span>${action ? `<button type="button">${esc(action.label)}</button>` : ''}`;
   toastAction = action?.fn || null;
   t.classList.toggle('has-action', !!action);
   t.classList.add('show');
   clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => { t.classList.remove('show'); toastAction = null; }, action ? 5000 : 2400);
+  toastTimer = setTimeout(() => { t.classList.remove('show'); toastAction = null; }, ms ?? (action ? 3200 : 1800));
 }
 $('#toast').addEventListener('click', (ev) => {
   if (!ev.target.closest('button') || !toastAction) return;
@@ -935,11 +985,12 @@ $('#toast').addEventListener('click', (ev) => {
 
 // ---------- események ----------
 document.addEventListener('click', (ev) => {
-  const el = ev.target.closest('[data-follow],[data-push-on],[data-push-off],[data-push-test],[data-signin],[data-signout],[data-delete],[data-delete-cancel],[data-delete-confirm],[data-interest],[data-pick],[data-tab],[data-nav],[data-back],[data-more],[data-day],[data-group],[data-q],[data-clear],[data-open],[data-save],[data-share],[data-copy],[data-close],[data-retry],[data-dismiss],[data-prune]');
+  const el = ev.target.closest('[data-choice],[data-follow],[data-push-on],[data-push-off],[data-push-test],[data-signin],[data-signout],[data-delete],[data-delete-cancel],[data-delete-confirm],[data-interest],[data-pick],[data-tab],[data-nav],[data-back],[data-more],[data-day],[data-group],[data-q],[data-clear],[data-open],[data-save],[data-share],[data-copy],[data-close],[data-retry],[data-dismiss],[data-prune]');
   if (!el) return;
   const d = el.dataset;
   const find = (id) => state.byId.get(id);
   if (d.follow) return toggleFollow(d.follow);
+  if (d.choice && state.user) { const [k, v] = d.choice.split(':'); return setPref(k, Number(v)); }
   if ('pushOn' in d) return enablePush();
   if ('pushOff' in d) return disablePush();
   if ('pushTest' in d) return auth.testPush().then(() => toast('Elküldtük – pár másodpercen belül megjön.')).catch(() => toast('Most nem sikerült elküldeni.'));
