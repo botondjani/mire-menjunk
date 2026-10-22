@@ -1,6 +1,6 @@
 // Offline támogatás: az app héja cache-ből, az adat hálózatról (offline: utolsó ismert).
-const VERSION = 'v12';
-const SHELL = ['./', 'index.html', 'app.js?v=12', 'auth.js?v=12', 'styles.css?v=12', 'adatvedelem.html', 'manifest.webmanifest', 'icons/icon.svg', 'icons/icon-192.png'];
+const VERSION = 'v13';
+const SHELL = ['./', 'index.html', 'app.js?v=12', 'auth.js?v=12', 'styles.css?v=13', 'adatvedelem.html', 'manifest.webmanifest', 'icons/icon.svg', 'icons/icon-192.png'];
 
 self.addEventListener('install', (e) => {
   e.waitUntil(caches.open(`shell-${VERSION}`).then((c) => c.addAll(SHELL)).then(() => self.skipWaiting()));

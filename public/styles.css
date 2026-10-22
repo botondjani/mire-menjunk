@@ -478,6 +478,7 @@ dialog::backdrop { background: rgb(0 0 0 / .6); backdrop-filter: blur(3px); }
 }
 .facts .pill[aria-pressed="true"] { background: var(--surface-2); color: var(--muted); }
 .gsi { min-height: 44px; display: flex; justify-content: center; }
+.gsi iframe { color-scheme: light; } /* sötét módban különben fehér háttere lenne a Google-gombnak */
 .gsi.busy { opacity: .5; pointer-events: none; }
 .panel .btn.wide { margin-top: 14px; }
 .switches { display: grid; margin-top: 10px; }
