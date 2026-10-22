@@ -27,8 +27,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Figtree:wght@400;500;600;700&display=swap">
   <!-- ?v=… : új kiadásnál emeld, hogy a régi gyorsítótár ne keverje a fájlokat -->
-  <link rel="stylesheet" href="styles.css?v=4">
-  <script type="module" src="app.js?v=4"></script>
+  <link rel="stylesheet" href="styles.css?v=5">
+  <script type="module" src="app.js?v=5"></script>
 </head>
 <body>
   <header class="top">
@@ -39,7 +39,24 @@
     <button class="install" id="installBtn" hidden>Telepítés</button>
   </header>
 
-  <main id="view" aria-live="polite"></main>
+  <div class="banner" id="banner" role="status" hidden></div>
+
+  <main id="view" aria-live="polite" aria-busy="true">
+    <div class="skeleton" aria-hidden="true">
+      <div class="sk sk-line" style="width:38%"></div><div class="sk sk-title"></div>
+      <div class="sk sk-line" style="width:30%;margin-top:28px"></div>
+      <div class="sk-row"><div class="sk sk-card"></div><div class="sk sk-card"></div></div>
+      <div class="sk sk-line" style="width:42%;margin-top:28px"></div>
+      <div class="sk-row"><div class="sk sk-card"></div><div class="sk sk-card"></div></div>
+    </div>
+  </main>
+  <template id="skeleton"><div class="skeleton" aria-hidden="true">
+      <div class="sk sk-line" style="width:38%"></div><div class="sk sk-title"></div>
+      <div class="sk sk-line" style="width:30%;margin-top:28px"></div>
+      <div class="sk-row"><div class="sk sk-card"></div><div class="sk sk-card"></div></div>
+      <div class="sk sk-line" style="width:42%;margin-top:28px"></div>
+      <div class="sk-row"><div class="sk sk-card"></div><div class="sk sk-card"></div></div>
+    </div></template>
 
   <nav class="tabbar" aria-label="Fő navigáció">
     <a href="./" data-tab="home">

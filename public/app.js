@@ -1,10 +1,12 @@
 // Mire menjünk? – kliens. Nincs build lépés: sima ES modul.
 // Nézetek: felfedezés (vízszintes szekciók), lista (szűrt, napokra bontva), keresés, mentett.
+// Minden nézetnek van betöltő, üres és hibaállapota; a visszafordítható lépések (mentés) visszavonhatók.
 
 const ROOT = new URL('./', import.meta.url);
 const $ = (s, el = document) => el.querySelector(s);
 const view = $('#view');
 const sheet = $('#sheet');
+const banner = $('#banner');
 
 // A forrásokból jövő 11 kategóriát 6 könnyen átlátható csoportba vonjuk össze.
 const GROUPS = [
@@ -18,27 +20,32 @@ const GROUPS = [
 const groupOf = (e) => GROUPS.find((g) => g.cats.includes(e.category)) || GROUPS[GROUPS.length - 1];
 // Kategóriákon átívelő szűrő: a scraper jelöli (klubok, bulik, egyetemi és diákprogramok).
 const YOUTH = { key: 'fiatal', label: 'Fiataloknak', emoji: '🎓', hue: 265 };
+const FILTERS = [YOUTH, ...GROUPS];
 const matchesFilter = (e, key) => !key || (key === YOUTH.key ? e.youth : groupOf(e).key === key);
 const DAYS = [['ma', 'Ma'], ['holnap', 'Holnap'], ['hetvege', 'Hétvégén'], ['het', 'Ezen a héten'], ['mind', 'Bármikor']];
 const WEEKDAYS = ['vasárnap', 'hétfő', 'kedd', 'szerda', 'csütörtök', 'péntek', 'szombat'];
 const WD_SHORT = ['V', 'H', 'K', 'SZE', 'CS', 'P', 'SZO'];
 const MONTHS = ['jan.', 'febr.', 'márc.', 'ápr.', 'máj.', 'jún.', 'júl.', 'aug.', 'szept.', 'okt.', 'nov.', 'dec.'];
 const SUGGESTIONS = ['Dürer', 'Akvárium', 'A38', 'Toldi', 'techno', 'jazz', 'slam', 'stand-up', 'ingyenes'];
+const STALE_HOURS = 36;
 
 // ---------- dátumok (Budapest időzóna, YYYY-MM-DD stringekkel) ----------
-const today = new Intl.DateTimeFormat('sv-SE', { timeZone: 'Europe/Budapest' }).format(new Date());
+const bpNow = () => new Intl.DateTimeFormat('sv-SE', {
+  timeZone: 'Europe/Budapest', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit',
+}).format(new Date());
+const today = bpNow().slice(0, 10);
 const toDate = (iso) => new Date(`${iso}T12:00:00Z`);
 const addDays = (iso, n) => { const d = toDate(iso); d.setUTCDate(d.getUTCDate() + n); return d.toISOString().slice(0, 10); };
 const weekday = (iso) => toDate(iso).getUTCDay();
 const daysBetween = (a, b) => Math.round((toDate(b) - toDate(a)) / 864e5);
 const short = (iso) => `${MONTHS[+iso.slice(5, 7) - 1]} ${+iso.slice(8)}.`;
+const cap = (s) => s[0].toUpperCase() + s.slice(1);
 const tomorrow = addDays(today, 1);
 
 function dayName(iso) {
   if (iso === today) return 'Ma';
   if (iso === tomorrow) return 'Holnap';
-  const w = WEEKDAYS[weekday(iso)];
-  return `${w[0].toUpperCase()}${w.slice(1)}, ${short(iso)}`;
+  return `${cap(WEEKDAYS[weekday(iso)])}, ${short(iso)}`;
 }
 
 function dateLabel(e) {
@@ -52,6 +59,18 @@ function chip(e) {
   if (e.start === today) return 'Ma';
   if (e.start === tomorrow) return 'Holnap';
   return `${WD_SHORT[weekday(e.start)]} ${+e.start.slice(8)}`;
+}
+
+/** Mai, időponttal rendelkező programnál: "40 perc múlva", "2 óra múlva" vagy "Most megy". */
+function startsIn(e) {
+  if (e.start !== today || !e.time || e.end) return null;
+  const [h, m] = bpNow().slice(11, 16).split(':').map(Number);
+  const [eh, em] = e.time.split(':').map(Number);
+  const diff = eh * 60 + em - (h * 60 + m);
+  if (diff > 0 && diff < 60) return `${diff} perc múlva`;
+  if (diff >= 60 && diff <= 240) return `${Math.round(diff / 60)} óra múlva`;
+  if (diff <= 0 && diff > -150) return 'Most megy';
+  return null;
 }
 
 function range(key) {
@@ -72,41 +91,73 @@ const byTime = (a, b) => a.start.localeCompare(b.start) || (a.time || '99').loca
 // ---------- állapot ----------
 const store = {
   get(k, d) { try { return JSON.parse(localStorage.getItem(k)) ?? d; } catch { return d; } },
-  set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch { /* privát mód */ } },
+  set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch { /* privát mód: a mentés csak erre a látogatásra él */ } },
 };
 const VIEWS = { lista: 'list', kereses: 'search', mentett: 'saved' };
 const params = new URLSearchParams(location.search);
 const state = {
   view: VIEWS[params.get('v')] || 'home',
   day: DAYS.some(([k]) => k === params.get('nap')) ? params.get('nap') : 'mind',
-  group: [YOUTH, ...GROUPS].some((g) => g.key === params.get('kat')) ? params.get('kat') : '',
+  group: FILTERS.some((g) => g.key === params.get('kat')) ? params.get('kat') : '',
   q: params.get('q') || '',
   saved: new Set(store.get('saved', [])),
   events: [],
   byId: new Map(),
   limit: 40,
+  from: null,      // ahonnan a listába jöttünk – ide visz vissza a vissza gomb
+  expired: null,   // lejárt megosztott link azonosítója
 };
 const PAGE = 40;
 
 // ---------- adat ----------
 async function load() {
+  view.setAttribute('aria-busy', 'true');
   try {
     const res = await fetch(new URL('data/events.json', ROOT), { cache: 'no-cache' });
+    if (!res.ok) throw new Error(res.status);
     const data = await res.json();
     state.events = data.events.filter((e) => (e.end || e.start) >= today).sort(byTime);
     state.byId = new Map(data.events.map((e) => [e.id, e]));
     state.updated = data.updated;
   } catch {
-    view.innerHTML = '<p class="empty">Nem sikerült betölteni a programokat. Ellenőrizd a netet, és próbáld újra.</p>';
+    view.removeAttribute('aria-busy');
+    const offline = !navigator.onLine;
+    view.innerHTML = stateBox({
+      icon: offline ? '📡' : '🛠️',
+      title: offline ? 'Nincs internetkapcsolat' : 'Most nem sikerült betölteni a programokat',
+      text: offline
+        ? 'Kapcsold be a mobilnetet vagy a wifit, és próbáld újra. Ha korábban már megnyitottad az appot, a mentett programjaid is visszajönnek.'
+        : 'Valószínűleg átmeneti hiba a szerveren. Pár másodperc múlva próbáld újra.',
+      actions: '<button class="btn primary" data-retry>Újrapróbálom</button>',
+    });
     return;
   }
+  view.removeAttribute('aria-busy');
   render();
   route();
+  updateBanner();
 }
+
+/** Felső sáv: offline vagy elavult adat esetén megmondja, mit lát a felhasználó, és mit tehet. */
+function updateBanner() {
+  const upd = state.updated ? new Date(state.updated) : null;
+  const when = upd ? upd.toLocaleString('hu-HU', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' }) : '';
+  let html = '';
+  if (!navigator.onLine) html = `<b>Offline vagy.</b> A legutóbb letöltött programokat látod${when ? ` (${when})` : ''}.`;
+  else if (upd && Date.now() - upd > STALE_HOURS * 3600e3) html = `<b>A lista ${when} óta nem frissült.</b> Indulás előtt nézd meg a részleteket a forrásoldalon.`;
+  banner.innerHTML = html;
+  banner.hidden = !html;
+}
+window.addEventListener('offline', updateBanner);
+window.addEventListener('online', () => { updateBanner(); load(); });
 
 // ---------- építőelemek ----------
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
-const norm = (s) => s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
+const norm = (s) => s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+
+function stateBox({ icon, title, text, actions = '' }) {
+  return `<div class="state"><span class="state-icon" aria-hidden="true">${icon}</span><h2>${title}</h2><p>${text}</p>${actions ? `<div class="state-actions">${actions}</div>` : ''}</div>`;
+}
 
 /** Kép, alatta mindig egy színes "poszter" – ha a kép nem tölt be, az marad látható. */
 function media(e, cls = 'media') {
@@ -119,15 +170,17 @@ function media(e, cls = 'media') {
 
 function card(e) {
   const saved = state.saved.has(e.id);
-  const meta = [isLong(e) ? null : e.time, e.venue].filter(Boolean).join(' · ') || groupOf(e).label;
+  const soon = startsIn(e);
+  const parts = [isLong(e) ? null : e.time, e.venue].filter(Boolean).map(esc);
+  const meta = (soon ? [`<span class="soon">${soon}</span>`, ...parts] : parts).join(' · ') || groupOf(e).label;
   return `<article class="card">
     <a class="card-link" href="${eventUrl(e)}" data-open="${e.id}" aria-label="${esc(e.title)}"></a>
     ${media(e)}
     <span class="chip">${esc(chip(e))}</span>
-    <button class="fab save" data-save="${e.id}" aria-pressed="${saved}" aria-label="${saved ? 'Mentve' : 'Mentés'}">${icons.heart}</button>
+    <button class="fab save" data-save="${e.id}" aria-pressed="${saved}" aria-label="${saved ? 'Mentve – koppints az eltávolításhoz' : 'Mentés'}">${icons.heart}</button>
     <h3>${esc(e.title)}</h3>
     <div class="card-foot">
-      <p>${esc(meta)}</p>
+      <p>${meta}</p>
       <button class="icon-btn" data-share="${e.id}" aria-label="Megosztás">${icons.share}</button>
     </div>
   </article>`;
@@ -138,7 +191,7 @@ function rail(title, events, link, sub = '') {
   return `<section class="rail">
     <header class="rail-head">
       <h2>${title}${sub ? ` <small>${sub}</small>` : ''}</h2>
-      ${link ? `<a href="${link}" data-nav="${link}">Összes</a>` : ''}
+      ${link ? `<a href="${link}" data-nav="${link}">Összes <span aria-hidden="true">${events.length}</span></a>` : ''}
     </header>
     <div class="rail-track">${events.slice(0, 12).map(card).join('')}</div>
   </section>`;
@@ -146,17 +199,33 @@ function rail(title, events, link, sub = '') {
 
 const listHref = (p) => `?${new URLSearchParams({ v: 'lista', ...p })}`;
 
+/** Lejárt megosztott link: nem hiba, hanem esély – megmutatjuk, mi hasonló jön most. */
+function expiredNotice() {
+  if (!state.expired) return '';
+  const words = state.expired.replace(/-\d{2}-\d{2}x*$/, '').split('-').filter((w) => w.length >= 4);
+  const similar = state.events.filter((e) => words.some((w) => norm(`${e.title} ${e.venue || ''}`).includes(w)));
+  const picks = (similar.length ? similar : state.events.filter((e) => e.start <= addDays(today, 3))).slice(0, 12);
+  return `<section class="notice" role="status">
+    <div class="notice-head">
+      <div><b>Ez a program már lejárt</b><p>A link, amit kaptál, egy elmúlt programra mutat. ${similar.length ? 'Ezek hasonlítanak rá, és még előtted vannak:' : 'Nézd meg, mi lesz a következő napokban:'}</p></div>
+      <button class="icon-btn" data-dismiss aria-label="Bezárás">${icons.close}</button>
+    </div>
+    <div class="rail-track">${picks.map(card).join('')}</div>
+  </section>`;
+}
+
 // ---------- nézetek ----------
 function homeView() {
   const dated = state.events.filter((e) => !isLong(e));
   const on = (key) => dated.filter((e) => overlaps(e, range(key)));
   const soon = dated.filter((e) => e.start <= addDays(today, 21));
   const evening = on('ma').filter((e) => !e.time || e.time >= '17:00');
-  let html = `<header class="hello">
-    <p>${esc(WEEKDAYS[weekday(today)][0].toUpperCase() + WEEKDAYS[weekday(today)].slice(1))}, ${esc(short(today))}</p>
+  let html = `${expiredNotice()}<header class="hello">
+    <p>${esc(cap(WEEKDAYS[weekday(today)]))}, ${esc(short(today))}</p>
     <h1>Mi legyen ma?</h1>
   </header>`;
-  html += rail('Ma este', evening.length >= 4 ? evening : on('ma'), listHref({ nap: 'ma' }));
+  const todayRail = rail('Ma este', evening.length >= 4 ? evening : on('ma'), listHref({ nap: 'ma' }));
+  html += todayRail || '<p class="hint">Mára már nincs több programunk – nézd meg a holnapiakat.</p>';
   html += rail(`${YOUTH.emoji} Fiataloknak`, soon.filter((e) => e.youth), listHref({ kat: YOUTH.key }), 'klubok, bulik, diákprogramok');
   html += rail('Holnap', on('holnap'), listHref({ nap: 'holnap' }));
   html += rail('Hétvégén', on('hetvege'), listHref({ nap: 'hetvege' }));
@@ -165,6 +234,9 @@ function homeView() {
   }
   const ongoing = state.events.filter((e) => isLong(e) && e.start <= addDays(today, 7)).sort((a, b) => a.end.localeCompare(b.end));
   html += rail('Most is látogatható', ongoing, listHref({ nap: 'ma', kat: 'kiallitas' }), 'kiállítások, sorozatok');
+  if (!state.events.length) {
+    html += stateBox({ icon: '🗓️', title: 'Most épp nincs program a listában', text: 'A lista naponta háromszor frissül. Nézz vissza később.' });
+  }
   return html + footer();
 }
 
@@ -174,7 +246,13 @@ function filteredList() {
 }
 
 function listBody(items) {
-  if (!items.length) return '<p class="empty">Erre nincs találat. Próbálj másik napot vagy kategóriát.</p>';
+  if (!items.length) {
+    const actions = [
+      state.day !== 'mind' ? '<button class="btn primary" data-day="mind">Mutasd bármikor</button>' : '',
+      state.group ? '<button class="btn" data-group="">Minden kategória</button>' : '',
+    ].join('');
+    return stateBox({ icon: '🔍', title: 'Erre most nincs program', text: 'Ebben az időszakban és kategóriában nem találtunk semmit. Bővítsd a szűrést:', actions });
+  }
   const [from] = range(state.day);
   const dayOf = (e) => (e.start < from ? from : e.start);
   const dated = items.filter((e) => !isLong(e));
@@ -186,7 +264,7 @@ function listBody(items) {
   }
   let html = '';
   for (const [day, evs] of groups) html += `<section><h2 class="day">${dayName(day)}</h2><div class="grid">${evs.map(card).join('')}</div></section>`;
-  if (dated.length > state.limit) html += `<button class="btn more" data-more>Még ${Math.min(PAGE, dated.length - state.limit)} program</button>`;
+  if (dated.length > state.limit) html += `<button class="btn more" data-more>Még ${Math.min(PAGE, dated.length - state.limit)} program <small>(${state.limit} / ${dated.length})</small></button>`;
   if (ongoing.length && dated.length <= state.limit) {
     html += `<section><h2 class="day">Most is látogatható</h2><div class="grid">${ongoing.sort((a, b) => a.end.localeCompare(b.end)).slice(0, 24).map(card).join('')}</div></section>`;
   }
@@ -195,49 +273,61 @@ function listBody(items) {
 
 function listView() {
   const items = filteredList();
-  const g = [YOUTH, ...GROUPS].find((x) => x.key === state.group);
+  const g = FILTERS.find((x) => x.key === state.group);
   const title = [g?.label, DAYS.find(([k]) => k === state.day)?.[1]].filter((x) => x && x !== 'Bármikor').join(' · ') || 'Minden program';
   return `<header class="page-head">
-      <button class="icon-btn back" data-nav="./" aria-label="Vissza">${icons.back}</button>
+      <button class="icon-btn back" data-back aria-label="Vissza">${icons.back}</button>
       <div><h1>${esc(title)}</h1><p>${items.length} program</p></div>
     </header>
     <nav class="seg" aria-label="Időszak">${DAYS.map(([k, l]) => `<button data-day="${k}" aria-pressed="${state.day === k}">${l}</button>`).join('')}</nav>
     <nav class="cats" aria-label="Kategória">
       <button data-group="" aria-pressed="${!state.group}">Mind</button>
-      ${[YOUTH, ...GROUPS].map((x) => `<button data-group="${x.key}" aria-pressed="${state.group === x.key}">${x.emoji} ${x.label}</button>`).join('')}
+      ${FILTERS.map((x) => `<button data-group="${x.key}" aria-pressed="${state.group === x.key}">${x.emoji} ${x.label}</button>`).join('')}
     </nav>
     ${listBody(items)}${footer()}`;
 }
 
 function searchResults() {
   const q = norm(state.q.trim());
-  if (!q) return '';
+  if (!q) return searchIdle();
   const hits = state.events.filter((e) => norm(`${e.title} ${e.venue || ''} ${e.category} ${e.description || ''}`).includes(q));
-  return hits.length
-    ? `<p class="count">${hits.length} találat</p><div class="grid">${hits.slice(0, state.limit).map(card).join('')}</div>${hits.length > state.limit ? '<button class="btn more" data-more>Továbbiak</button>' : ''}`
-    : `<p class="empty">Nincs találat erre: „${esc(state.q)}”.</p>`;
+  if (!hits.length) {
+    return stateBox({
+      icon: '🤔',
+      title: `Nincs találat erre: „${esc(state.q)}”`,
+      text: 'Nézd meg a helyesírást, írj rövidebb szót, vagy próbáld ezeket:',
+      actions: `<div class="suggest center">${SUGGESTIONS.slice(0, 6).map((s) => `<button data-q="${esc(s)}">${esc(s)}</button>`).join('')}</div>`,
+    });
+  }
+  return `<p class="count">${hits.length} találat</p><div class="grid">${hits.slice(0, state.limit).map(card).join('')}</div>${hits.length > state.limit ? '<button class="btn more" data-more>Továbbiak</button>' : ''}`;
+}
+
+function searchIdle() {
+  const counts = Object.fromEntries(FILTERS.map((g) => [g.key, state.events.filter((e) => matchesFilter(e, g.key)).length]));
+  return `<div class="suggest">${SUGGESTIONS.map((s) => `<button data-q="${esc(s)}">${esc(s)}</button>`).join('')}</div>
+    <h2 class="day">Kategóriák</h2>
+    <div class="tiles">${FILTERS.map((g) => `<a class="tile" href="${listHref({ kat: g.key })}" data-nav="${listHref({ kat: g.key })}" style="--hue:${g.hue}">
+      <span class="tile-emoji">${g.emoji}</span><b>${g.label}</b><small>${counts[g.key]} program</small></a>`).join('')}</div>`;
 }
 
 function searchView() {
-  const counts = Object.fromEntries([YOUTH, ...GROUPS].map((g) => [g.key, state.events.filter((e) => matchesFilter(e, g.key)).length]));
   return `<header class="page-head"><div><h1>Keresés</h1></div></header>
     <label class="search">
       ${icons.search}
       <input id="q" type="search" value="${esc(state.q)}" placeholder="Előadó, helyszín, műfaj…" autocomplete="off" enterkeyhint="search" aria-label="Keresés">
+      <button class="clear" type="button" data-clear aria-label="Keresés törlése">${icons.close}</button>
     </label>
-    <div id="results">${state.q ? searchResults() : `
-      <div class="suggest">${SUGGESTIONS.map((s) => `<button data-q="${esc(s)}">${esc(s)}</button>`).join('')}</div>
-      <h2 class="day">Kategóriák</h2>
-      <div class="tiles">${[YOUTH, ...GROUPS].map((g) => `<a class="tile" href="${listHref({ kat: g.key })}" data-nav="${listHref({ kat: g.key })}" style="--hue:${g.hue}">
-        <span class="tile-emoji">${g.emoji}</span><b>${g.label}</b><small>${counts[g.key]} program</small></a>`).join('')}</div>`}
-    </div>`;
+    <div id="results" aria-live="polite">${searchResults()}</div>`;
 }
 
 function savedView() {
   const items = state.events.filter((e) => state.saved.has(e.id));
-  return `<header class="page-head"><div><h1>Mentett</h1><p>${items.length} program</p></div></header>
+  const gone = [...state.saved].filter((id) => !state.events.some((e) => e.id === id)).length;
+  const note = gone ? `<p class="hint">${gone} mentett programod már lejárt. <button class="link" data-prune>Lejártak törlése</button></p>` : '';
+  return `<header class="page-head"><div><h1>Mentett</h1><p>${items.length} közelgő program</p></div></header>
+    ${note}
     ${items.length ? `<div class="grid">${items.map(card).join('')}</div>`
-    : '<p class="empty">Még nincs mentett programod.<br>Nyomd meg a ♡ gombot egy kártyán, és itt megtalálod.</p>'}`;
+    : stateBox({ icon: '♡', title: 'Még nincs mentett programod', text: 'Nyomd meg a szív gombot egy kártyán, és itt megtalálod – akkor is, ha legközelebb nincs net.', actions: '<button class="btn primary" data-tab="home">Programok felfedezése</button>' })}`;
 }
 
 function footer() {
@@ -249,10 +339,15 @@ function footer() {
 function render() {
   view.innerHTML = { home: homeView, list: listView, search: searchView, saved: savedView }[state.view]();
   document.querySelectorAll('.tabbar [data-tab]').forEach((b) => b.setAttribute('aria-current', b.dataset.tab === state.view || (b.dataset.tab === 'home' && state.view === 'list') ? 'page' : 'false'));
-  const badge = $('.tabbar .count');
-  badge.textContent = state.saved.size || '';
-  badge.hidden = !state.saved.size;
+  updateBadge();
   syncQuery();
+}
+
+function updateBadge() {
+  const n = state.events.filter((e) => state.saved.has(e.id)).length;
+  const badge = $('.tabbar .count');
+  badge.textContent = n || '';
+  badge.hidden = !n;
 }
 
 function syncQuery() {
@@ -272,6 +367,7 @@ function syncQuery() {
 
 function go(href) {
   const p = new URLSearchParams(href.split('?')[1] || '');
+  state.from = { view: state.view, q: state.q, scroll: window.scrollY };
   state.view = VIEWS[p.get('v')] || 'home';
   state.day = p.get('nap') || 'mind';
   state.group = p.get('kat') || '';
@@ -280,23 +376,35 @@ function go(href) {
   window.scrollTo({ top: 0 });
 }
 
+/** Vissza oda, ahonnan jöttünk (a keresés csempéjéről a keresésbe, a kezdőlapról a kezdőlap ugyanazon pontjára). */
+function back() {
+  const from = state.from || { view: 'home', scroll: 0 };
+  state.from = null;
+  state.view = from.view === 'list' ? 'home' : from.view;
+  state.q = from.q || '';
+  render();
+  window.scrollTo({ top: from.scroll || 0 });
+}
+
 // ---------- részletek ----------
 const eventUrl = (e) => new URL(`e/${e.id}/`, ROOT).href;
 
 function openEvent(e, push = true) {
+  if (!e) return;
   if (push) history.pushState({ id: e.id }, '', eventUrl(e));
   const saved = state.saved.has(e.id);
   const g = groupOf(e);
-  const maps = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${e.venue || e.title}, Budapest`)}`;
+  const soon = startsIn(e);
+  const directions = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(`${e.venue || e.title}, Budapest`)}&travelmode=transit`;
   sheet.innerHTML = `<article class="detail">
     <div class="grabber" aria-hidden="true"></div>
     <button class="fab close" data-close aria-label="Bezárás">${icons.close}</button>
     ${media(e, 'hero')}
     <div class="detail-body">
-      <span class="kicker">${g.emoji} ${esc(e.category)}</span>
+      <span class="kicker">${g.emoji} ${esc(e.category)}${e.youth ? ' · 🎓 Fiataloknak' : ''}</span>
       <h2 id="sheetTitle">${esc(e.title)}</h2>
       <ul class="facts">
-        <li>${icons.clock}<span>${esc(dateLabel(e))}</span></li>
+        <li>${icons.clock}<span>${esc(dateLabel(e))}${soon ? ` <em class="soon">· ${soon}</em>` : ''}</span></li>
         ${e.venue ? `<li>${icons.pin}<span>${esc(e.venue)}</span></li>` : ''}
       </ul>
       <div class="actions">
@@ -305,8 +413,8 @@ function openEvent(e, push = true) {
       </div>
       ${e.description ? `<p class="desc">${esc(e.description)}</p>` : ''}
       <div class="links">
-        ${e.links.map((l) => `<a class="row" href="${esc(l.url)}" target="_blank" rel="noopener">${icons.ticket}<span>Részletek, jegyek<small>${esc(l.name)}</small></span>${icons.out}</a>`).join('')}
-        <a class="row" href="${maps}" target="_blank" rel="noopener">${icons.pin}<span>Útvonaltervezés<small>Google Térkép</small></span>${icons.out}</a>
+        ${e.links.map((l) => `<a class="row" href="${esc(l.url)}" target="_blank" rel="noopener">${icons.ticket}<span>Részletek, jegyek<small>${esc(l.name)} oldalán</small></span>${icons.out}</a>`).join('')}
+        <a class="row" href="${directions}" target="_blank" rel="noopener">${icons.pin}<span>Útvonal tömegközlekedéssel<small>Google Térkép</small></span>${icons.out}</a>
       </div>
       <div class="share-row" aria-label="Küldés">
         <a href="https://wa.me/?text=${encodeURIComponent(shareText(e))}" target="_blank" rel="noopener">WhatsApp</a>
@@ -314,6 +422,7 @@ function openEvent(e, push = true) {
         <a href="viber://forward?text=${encodeURIComponent(shareText(e))}">Viber</a>
         <button data-copy="${e.id}">Link másolása</button>
       </div>
+      <p class="fineprint">Az időpont és az ár változhat – indulás előtt nézd meg a forrásoldalon.</p>
     </div>
   </article>`;
   if (!sheet.open) sheet.showModal();
@@ -333,12 +442,15 @@ function closeEvent(push = true) {
 function route() {
   const m = location.pathname.match(/\/e\/([^/]+)\/?$/);
   if (!m) return closeEvent(false);
-  const e = state.byId.get(decodeURIComponent(m[1]));
-  if (e) openEvent(e, false);
-  else {
-    toast('Ez a program már lejárt – nézd meg a többit!');
-    history.replaceState(null, '', ROOT);
-  }
+  const id = decodeURIComponent(m[1]);
+  const e = state.byId.get(id);
+  if (e && (e.end || e.start) >= today) return openEvent(e, false);
+  // Lejárt vagy eltűnt program: a kezdőlapon elmagyarázzuk, és hasonlókat ajánlunk.
+  state.expired = id;
+  state.view = 'home';
+  closeEvent(false);
+  history.replaceState(null, '', ROOT);
+  render();
 }
 
 // ---------- megosztás, mentés ----------
@@ -355,39 +467,64 @@ async function share(e) {
 async function copy(e) {
   try {
     await navigator.clipboard.writeText(eventUrl(e));
-    toast('Link kimásolva – küldd el a haveroknak!');
+    toast('Link kimásolva – illeszd be egy üzenetbe');
   } catch {
-    prompt('Másold ki a linket:', eventUrl(e));
+    showLink(eventUrl(e));
   }
 }
 
-function toggleSave(id) {
+/** Ha a vágólap nem elérhető: kijelölt link, amit kézzel lehet másolni (prompt() helyett, ami sok helyen tiltott). */
+function showLink(url) {
+  let box = $('#linkbox');
+  if (!box) {
+    box = document.createElement('dialog');
+    box.id = 'linkbox';
+    box.className = 'linkbox';
+    document.body.append(box);
+    box.addEventListener('click', (ev) => { if (ev.target === box || ev.target.closest('[data-done]')) box.close(); });
+  }
+  box.innerHTML = `<h2>Másold ki a linket</h2><p>A böngésződ nem engedte az automatikus másolást. Tartsd nyomva a linket, és válaszd a Másolás lehetőséget.</p>
+    <input readonly value="${esc(url)}" aria-label="Program linkje"><button class="btn primary" data-done>Kész</button>`;
+  box.showModal();
+  box.querySelector('input').select();
+}
+
+function toggleSave(id, { undo = false } = {}) {
   state.saved.has(id) ? state.saved.delete(id) : state.saved.add(id);
   store.set('saved', [...state.saved]);
   const on = state.saved.has(id);
   document.querySelectorAll(`[data-save="${CSS.escape(id)}"]`).forEach((b) => {
     b.setAttribute('aria-pressed', on);
     if (b.classList.contains('btn')) b.innerHTML = `${icons.heart} ${on ? 'Mentve' : 'Mentés'}`;
+    else b.setAttribute('aria-label', on ? 'Mentve – koppints az eltávolításhoz' : 'Mentés');
   });
-  const badge = $('.tabbar .count');
-  badge.textContent = state.saved.size || '';
-  badge.hidden = !state.saved.size;
-  toast(on ? 'Elmentve' : 'Eltávolítva a mentettek közül');
+  updateBadge();
+  if (undo) toast(on ? 'Visszatéve a mentettek közé' : 'Mentés visszavonva');
+  else toast(on ? 'Elmentve – a Mentett fülön találod' : 'Eltávolítva a mentettek közül', { label: 'Visszavonás', fn: () => toggleSave(id, { undo: true }) });
   if (state.view === 'saved' && !sheet.open) render();
 }
 
 let toastTimer;
-function toast(msg) {
+let toastAction = null;
+function toast(msg, action) {
   const t = $('#toast');
-  t.textContent = msg;
+  t.innerHTML = `<span>${esc(msg)}</span>${action ? `<button type="button">${esc(action.label)}</button>` : ''}`;
+  toastAction = action?.fn || null;
+  t.classList.toggle('has-action', !!action);
   t.classList.add('show');
   clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => t.classList.remove('show'), 2400);
+  toastTimer = setTimeout(() => { t.classList.remove('show'); toastAction = null; }, action ? 5000 : 2400);
 }
+$('#toast').addEventListener('click', (ev) => {
+  if (!ev.target.closest('button') || !toastAction) return;
+  const fn = toastAction;
+  toastAction = null;
+  fn();
+});
 
 // ---------- események ----------
 document.addEventListener('click', (ev) => {
-  const el = ev.target.closest('[data-tab],[data-nav],[data-more],[data-day],[data-group],[data-q],[data-open],[data-save],[data-share],[data-copy],[data-close]');
+  const el = ev.target.closest('[data-tab],[data-nav],[data-back],[data-more],[data-day],[data-group],[data-q],[data-clear],[data-open],[data-save],[data-share],[data-copy],[data-close],[data-retry],[data-dismiss],[data-prune]');
   if (!el) return;
   const d = el.dataset;
   const find = (id) => state.byId.get(id);
@@ -395,19 +532,31 @@ document.addEventListener('click', (ev) => {
     ev.preventDefault();
     closeEvent(false);
     state.view = d.tab;
+    state.from = null;
     state.limit = PAGE;
     render();
     window.scrollTo({ top: 0 });
   } else if (d.nav) { ev.preventDefault(); go(d.nav); }
+  else if ('back' in d) back();
   else if ('more' in d) { state.limit += PAGE; state.view === 'search' ? ($('#results').innerHTML = searchResults()) : render(); }
   else if (d.day !== undefined) { state.day = d.day; state.limit = PAGE; render(); }
   else if (d.group !== undefined) { state.group = d.group; state.limit = PAGE; render(); }
-  else if (d.q) { state.q = d.q; render(); }
+  else if (d.q) { state.q = d.q; state.limit = PAGE; render(); }
+  else if ('clear' in d) { state.q = ''; render(); $('#q').focus(); }
   else if (d.open) { ev.preventDefault(); openEvent(find(d.open)); }
   else if (d.save) toggleSave(d.save);
   else if (d.share) share(find(d.share));
   else if (d.copy) copy(find(d.copy));
   else if ('close' in d) closeEvent();
+  else if ('retry' in d) { view.innerHTML = $('#skeleton').innerHTML; load(); }
+  else if ('dismiss' in d) { state.expired = null; render(); }
+  else if ('prune' in d) {
+    const before = [...state.saved];
+    state.saved = new Set(before.filter((id) => state.events.some((e) => e.id === id)));
+    store.set('saved', [...state.saved]);
+    render();
+    toast('Lejárt programok törölve', { label: 'Visszavonás', fn: () => { state.saved = new Set(before); store.set('saved', before); render(); } });
+  }
 });
 
 let qTimer;
@@ -417,8 +566,7 @@ document.addEventListener('input', (ev) => {
   qTimer = setTimeout(() => {
     state.q = ev.target.value;
     state.limit = PAGE;
-    $('#results').innerHTML = state.q.trim() ? searchResults() : '';
-    if (!state.q.trim()) render();
+    $('#results').innerHTML = searchResults();
     syncQuery();
   }, 200);
 });
@@ -437,9 +585,10 @@ window.addEventListener('beforeinstallprompt', (ev) => {
 $('#installBtn').addEventListener('click', async () => {
   if (!installEvent) return;
   installEvent.prompt();
-  await installEvent.userChoice;
+  const { outcome } = await installEvent.userChoice;
   installEvent = null;
   $('#installBtn').hidden = true;
+  if (outcome === 'accepted') toast('Telepítve – a kezdőképernyőn találod');
 });
 if ('serviceWorker' in navigator) navigator.serviceWorker.register(new URL('sw.js', ROOT)).catch(() => {});
 
