@@ -56,7 +56,7 @@ function dateLabel(e) {
 
 /** Rövid címke a kártya sarkába: "MA", "HOLNAP", "SZO 24", vagy "DEC 4-IG". */
 function chip(e) {
-  if (isLong(e) && e.start <= today) return `${short(e.end).replace('.', '')}-ig`;
+  if (isLong(e) && e.start <= today) return e.end === today ? 'Utolsó nap' : `${short(e.end).replace(/\./g, '')}-ig`;
   if (e.start === today) return 'Ma';
   if (e.start === tomorrow) return 'Holnap';
   return `${WD_SHORT[weekday(e.start)]} ${+e.start.slice(8)}`;
@@ -191,7 +191,7 @@ function card(e) {
 function row(e, { withDate = false } = {}) {
   const saved = state.saved.has(e.id);
   const soon = startsIn(e);
-  const when = isLong(e) ? `${short(e.end).replace('.', '')}-ig` : withDate ? [chip(e), e.time].filter(Boolean).join(', ') : e.time;
+  const when = isLong(e) ? `${short(e.end).replace(/\./g, '')}-ig` : withDate ? [chip(e), e.time].filter(Boolean).join(', ') : e.time;
   const parts = [when, e.venue].filter(Boolean).map(esc);
   const meta = (soon ? [`<span class="soon">${soon}</span>`, ...parts] : parts).join(' · ') || groupOf(e).label;
   return `<article class="row-card">
@@ -205,14 +205,27 @@ function row(e, { withDate = false } = {}) {
   </article>`;
 }
 
-function rail(title, events, link, sub = '') {
+/** Kis, álló poszterkártya a másodlagos szekciókhoz – egy sorban 2-3 látszik. */
+function mini(e) {
+  const saved = state.saved.has(e.id);
+  return `<article class="mini">
+    <a class="card-link" href="${eventUrl(e)}" data-open="${e.id}" aria-label="${esc(e.title)}"></a>
+    ${media(e)}
+    <span class="chip">${esc(chip(e))}</span>
+    <button class="fab save" data-save="${e.id}" aria-pressed="${saved}" aria-label="${saved ? 'Mentve – koppints az eltávolításhoz' : 'Mentés'}">${icons.heart}</button>
+    <h3>${esc(e.title)}</h3>
+    <p>${esc([isLong(e) ? null : e.time, e.venue].filter(Boolean).join(' · ') || groupOf(e).label)}</p>
+  </article>`;
+}
+
+function rail(title, events, link, { size = 'big', total = events.length } = {}) {
   if (!events.length) return '';
-  return `<section class="rail">
+  return `<section class="rail rail-${size}">
     <header class="rail-head">
-      <h2>${title}${sub ? ` <small>${sub}</small>` : ''}</h2>
-      ${link ? `<a href="${link}" data-nav="${link}">Összes <span aria-hidden="true">${events.length}</span></a>` : ''}
+      <h2>${title}</h2>
+      ${link ? `<a href="${link}" data-nav="${link}">Összes <span aria-hidden="true">${total}</span></a>` : ''}
     </header>
-    <div class="rail-track">${events.slice(0, 12).map(card).join('')}</div>
+    <div class="rail-track">${events.map(size === 'big' ? card : mini).join('')}</div>
   </section>`;
 }
 
@@ -235,27 +248,51 @@ function expiredNotice() {
 
 // ---------- nézetek ----------
 function homeView() {
+  if (!state.events.length) {
+    return stateBox({ icon: '🗓️', title: 'Most épp nincs program a listában', text: 'A lista naponta háromszor frissül. Nézz vissza később.' }) + footer();
+  }
   const dated = state.events.filter((e) => !isLong(e));
   const on = (key) => dated.filter((e) => overlaps(e, range(key)));
   const soon = dated.filter((e) => e.start <= addDays(today, 21));
   const evening = on('ma').filter((e) => !e.time || e.time >= '17:00');
+  const tonight = evening.length >= 3 ? evening : on('ma');
+
+  // Egy program csak egyszer szerepeljen a kezdőlapon; a kis kártyáknál a képesek előre.
+  const shown = new Set();
+  const pick = (list, n, preferImages = true) => {
+    const fresh = list.filter((e) => !shown.has(e.id));
+    const ordered = preferImages ? [...fresh.filter((e) => e.image), ...fresh.filter((e) => !e.image)] : fresh;
+    const out = ordered.slice(0, n);
+    out.forEach((e) => shown.add(e.id));
+    return out;
+  };
+
+  const quick = [
+    ['ma', 'Ma este', tonight.length],
+    ['holnap', 'Holnap', on('holnap').length],
+    ['hetvege', 'Hétvégén', on('hetvege').length],
+    ['het', 'Ezen a héten', on('het').length],
+  ].filter(([, , n]) => n);
+
   let html = `${expiredNotice()}<header class="hello">
     <p>${esc(cap(WEEKDAYS[weekday(today)]))}, ${esc(short(today))}</p>
     <h1>Mi legyen ma?</h1>
-  </header>`;
-  const todayRail = rail('Ma este', evening.length >= 4 ? evening : on('ma'), listHref({ nap: 'ma' }));
-  html += todayRail || '<p class="hint">Mára már nincs több programunk – nézd meg a holnapiakat.</p>';
-  html += rail(`${YOUTH.emoji} Fiataloknak`, soon.filter((e) => e.youth), listHref({ kat: YOUTH.key }), 'klubok, bulik, diákprogramok');
-  html += rail('Holnap', on('holnap'), listHref({ nap: 'holnap' }));
-  html += rail('Hétvégén', on('hetvege'), listHref({ nap: 'hetvege' }));
-  for (const g of GROUPS) {
-    html += rail(`${g.emoji} ${g.label}`, soon.filter((e) => groupOf(e) === g), listHref({ kat: g.key }));
-  }
+  </header>
+  <nav class="quick" aria-label="Időszak">${quick.map(([k, label, n]) => `<a href="${listHref({ nap: k })}" data-nav="${listHref({ nap: k })}"><b>${label}</b><span>${n} program</span></a>`).join('')}</nav>`;
+
+  html += rail('Ma este', pick(tonight, 10, false), listHref({ nap: 'ma' }), { total: tonight.length })
+    || '<p class="hint">Mára már nincs több programunk – nézd meg a holnapiakat.</p>';
+
+  html += `<nav class="shortcuts" aria-label="Kategóriák">${FILTERS.map((g) => `<a href="${listHref({ kat: g.key })}" data-nav="${listHref({ kat: g.key })}" style="--hue:${g.hue}"><span>${g.emoji}</span>${esc(g.label)}</a>`).join('')}</nav>`;
+
+  const youth = soon.filter((e) => e.youth);
+  html += rail(`${YOUTH.emoji} Fiataloknak`, pick(youth, 12), listHref({ kat: YOUTH.key }), { size: 'mini', total: youth.length });
+  const weekend = on('hetvege');
+  html += rail('Hétvégén', pick(weekend, 12), listHref({ nap: 'hetvege' }), { size: 'mini', total: weekend.length });
   const ongoing = state.events.filter((e) => isLong(e) && e.start <= addDays(today, 7)).sort((a, b) => a.end.localeCompare(b.end));
-  html += rail('Most is látogatható', ongoing, listHref({ nap: 'ma', kat: 'kiallitas' }), 'kiállítások, sorozatok');
-  if (!state.events.length) {
-    html += stateBox({ icon: '🗓️', title: 'Most épp nincs program a listában', text: 'A lista naponta háromszor frissül. Nézz vissza később.' });
-  }
+  html += rail('Most is látogatható', pick(ongoing, 12), listHref({ nap: 'ma', kat: 'kiallitas' }), { size: 'mini', total: ongoing.length });
+  const later = soon.filter((e) => e.start > range('het')[1]);
+  html += rail('Jövő héten és utána', pick(later, 12), listHref({ nap: 'mind' }), { size: 'mini', total: later.length });
   return html + footer();
 }
 
