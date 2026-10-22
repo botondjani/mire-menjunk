@@ -1,5 +1,5 @@
 // Offline támogatás: az app héja cache-ből, az adat hálózatról (offline: utolsó ismert).
-const VERSION = 'v1';
+const VERSION = 'v2';
 const SHELL = ['./', 'index.html', 'app.js', 'styles.css', 'manifest.webmanifest', 'icons/icon.svg', 'icons/icon-192.png'];
 
 self.addEventListener('install', (e) => {

@@ -108,17 +108,31 @@ function renderFilters() {
   $('#q').value = state.q;
 }
 
+// Kategóriánkénti színárnyalat a kép nélküli kártyák hátteréhez.
+const CAT_HUE = {
+  Koncert: 350, Buli: 285, Kiállítás: 200, Színház: 15, Film: 230, Fesztivál: 40,
+  Gasztró: 25, Családi: 160, Szabadidő: 120, Vásár: 55, Kultúra: 260,
+};
+
+function stub(e) {
+  const iso = e.end && e.start < today ? today : e.start;
+  return `<div class="stub" aria-hidden="true"><b>${+iso.slice(8)}</b><span>${MONTHS[+iso.slice(5, 7) - 1].replace('.', '')}</span></div>`;
+}
+
 function card(e) {
   const saved = state.saved.has(e.id);
-  return `<article class="card" data-id="${e.id}">
+  const when = e.end ? `${short(e.start)} – ${short(e.end)}` : [WEEKDAYS[weekday(e.start)], e.time].filter(Boolean).join(' · ');
+  return `<article class="card" data-id="${e.id}" style="--hue:${CAT_HUE[e.category] ?? 45}">
     <a class="card-link" href="${eventUrl(e)}" data-open="${e.id}" aria-label="${esc(e.title)}"></a>
-    <div class="thumb">${e.image
-      ? `<img src="${esc(e.image)}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.remove()">`
-      : ''}<span class="thumb-emoji" aria-hidden="true">${CAT_EMOJI[e.category] || '✨'}</span></div>
+    <div class="thumb">
+      <span class="thumb-emoji" aria-hidden="true">${CAT_EMOJI[e.category] || '✨'}</span>
+      ${e.image ? `<img src="${esc(e.image)}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.remove()">` : ''}
+      ${stub(e)}
+    </div>
     <div class="card-body">
       <span class="badge">${esc(e.category)}${e.free ? ' · ingyenes' : ''}</span>
       <h3>${esc(e.title)}</h3>
-      <p class="meta">${esc(dateLabel(e))}${e.venue ? ` · ${esc(e.venue)}` : ''}</p>
+      <p class="meta">${esc(when)}${e.venue ? `<span class="venue">${esc(e.venue)}</span>` : ''}</p>
     </div>
     <div class="card-actions">
       <button class="icon-btn save" data-save="${e.id}" aria-pressed="${saved}" aria-label="${saved ? 'Mentve' : 'Mentés'}">${heart}</button>
@@ -152,7 +166,9 @@ function render() {
     if (!groups.has(dayOf(e))) groups.set(dayOf(e), []);
     groups.get(dayOf(e)).push(e);
   }
-  let html = '';
+  const label = DAYS.find(([k]) => k === state.day)?.[1].replace('♥ ', '') || 'Mind';
+  const scope = [state.cat, state.q && `„${state.q}”`].filter(Boolean).join(', ');
+  let html = `<header class="headline"><h1>${state.day === 'mind' ? 'Minden' : esc(label)}${scope ? ` <em>${esc(scope)}</em>` : ''}</h1><p>${items.length} program Budapesten</p></header>`;
   for (const [day, evs] of groups) {
     html += `<section><h2 class="day">${dayName(day)}</h2><div class="grid">${evs.map(card).join('')}</div></section>`;
   }
@@ -213,7 +229,6 @@ function openEvent(e, push = true) {
       </div>
       <div class="links">
         <a class="btn" href="${maps}" target="_blank" rel="noopener">🗺️ Útvonal</a>
-        <button class="btn" data-ics="${e.id}">🗓️ Naptárba</button>
         ${e.links.map((l) => `<a class="btn" href="${esc(l.url)}" target="_blank" rel="noopener">Részletek, jegyek: ${esc(l.name)} ↗</a>`).join('')}
       </div>
     </div>
@@ -275,25 +290,6 @@ function toggleSave(id) {
   if (state.day === 'mentett') render();
 }
 
-function downloadIcs(e) {
-  const d = (iso) => iso.replace(/-/g, '');
-  const end = addDays(e.end || e.start, 1);
-  const start = e.time && !e.end ? `TZID=Europe/Budapest:${d(e.start)}T${e.time.replace(':', '')}00` : `VALUE=DATE:${d(e.start)}`;
-  const finish = e.time && !e.end ? `TZID=Europe/Budapest:${d(e.start)}T${String(Math.min(23, +e.time.slice(0, 2) + 2)).padStart(2, '0')}${e.time.slice(3)}00` : `VALUE=DATE:${d(end)}`;
-  const icsEsc = (s) => String(s || '').replace(/[\\,;]/g, (c) => `\\${c}`).replace(/\n/g, '\\n');
-  const ics = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Mire menjunk//HU', 'BEGIN:VEVENT',
-    `UID:${e.id}@mire-menjunk`, `DTSTAMP:${new Date().toISOString().replace(/[-:]|\.\d+/g, '')}`,
-    `DTSTART;${start}`, `DTEND;${finish}`, `SUMMARY:${icsEsc(e.title)}`,
-    `LOCATION:${icsEsc(e.venue ? `${e.venue}, Budapest` : 'Budapest')}`,
-    `DESCRIPTION:${icsEsc(`${e.description || ''}\n${eventUrl(e)}`)}`, `URL:${eventUrl(e)}`,
-    'END:VEVENT', 'END:VCALENDAR'].join('\r\n');
-  const a = Object.assign(document.createElement('a'), {
-    href: URL.createObjectURL(new Blob([ics], { type: 'text/calendar' })), download: `${e.id}.ics`,
-  });
-  a.click();
-  setTimeout(() => URL.revokeObjectURL(a.href), 1000);
-}
-
 let toastTimer;
 function toast(msg) {
   const t = $('#toast');
@@ -305,9 +301,9 @@ function toast(msg) {
 
 // ---------- események ----------
 document.addEventListener('click', (ev) => {
-  const el = ev.target.closest('[data-more],[data-day],[data-cat],[data-open],[data-save],[data-share],[data-copy],[data-ics],[data-close],[data-home]');
+  const el = ev.target.closest('[data-more],[data-day],[data-cat],[data-open],[data-save],[data-share],[data-copy],[data-close],[data-home]');
   if (!el) return;
-  const { more, day, cat, open, save, share: sh, copy: cp, ics } = el.dataset;
+  const { more, day, cat, open, save, share: sh, copy: cp } = el.dataset;
   const ev_ = (id) => state.byId.get(id);
   if (more) { state[more] += PAGE; render(); }
   else if (day !== undefined) { state.day = day; resetPaging(); renderFilters(); render(); window.scrollTo({ top: 0 }); }
@@ -316,7 +312,6 @@ document.addEventListener('click', (ev) => {
   else if (save) toggleSave(save);
   else if (sh) share(ev_(sh));
   else if (cp) copy(ev_(cp));
-  else if (ics) downloadIcs(ev_(ics));
   else if ('close' in el.dataset) closeEvent();
   else if ('home' in el.dataset) { ev.preventDefault(); closeEvent(); }
 });

@@ -22,26 +22,29 @@
   <link rel="apple-touch-icon" href="icons/icon-192.png">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Figtree:wght@400;500;600;700&display=swap">
   <link rel="stylesheet" href="styles.css">
   <script type="module" src="app.js"></script>
 </head>
 <body>
   <header class="top">
-    <div class="top-row">
-      <a class="brand" href="./" data-home>
-        <span class="logo" aria-hidden="true">BP</span>
-        <span>Mire menjünk?</span>
-      </a>
-      <button class="icon-btn" id="installBtn" hidden aria-label="Telepítés">
-        <svg viewBox="0 0 24 24"><path d="M12 3v12m0 0-4-4m4 4 4-4M5 21h14"/></svg>
-      </button>
+    <div class="top-inner">
+      <div class="top-row">
+        <a class="brand" href="./" data-home>
+          <span class="logo" aria-hidden="true">BP</span>
+          <span class="brand-name">Mire menjünk?</span>
+        </a>
+        <label class="search">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+          <input id="q" type="search" placeholder="Koncert, Dürer, kiállítás…" autocomplete="off" enterkeyhint="search" aria-label="Keresés">
+        </label>
+        <button class="install" id="installBtn" hidden>App telepítése</button>
+      </div>
+      <nav class="tabs" id="days" aria-label="Időszak"></nav>
+      <nav class="chips" id="cats" aria-label="Kategória"></nav>
     </div>
-    <label class="search">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
-      <input id="q" type="search" placeholder="Keresés: koncert, Dürer, kiállítás…" autocomplete="off" enterkeyhint="search">
-    </label>
-    <nav class="tabs" id="days" aria-label="Időszak"></nav>
-    <nav class="chips" id="cats" aria-label="Kategória"></nav>
   </header>
 
   <main id="list" aria-live="polite"></main>
