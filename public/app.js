@@ -326,7 +326,7 @@ $('#installBtn').addEventListener('click', async () => {
   installEvent = null;
   $('#installBtn').hidden = true;
 });
-if ('serviceWorker' in navigator) navigator.serviceWorker.register(new URL('sw.js', ROOT));
+if ('serviceWorker' in navigator) navigator.serviceWorker.register(new URL('sw.js', ROOT)).catch(() => {});
 
 const heart = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg>';
 const shareIcon = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12M7 8l5-5 5 5M5 14v5a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-5"/></svg>';
