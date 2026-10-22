@@ -6,6 +6,11 @@ const SUPABASE_URL = 'https://utybdwjrfnclyasbyuos.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_CUbO4ARY9X3Xspe34VOJaw_UT2Us-4r';
 const LIB = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.2/+esm';
 const SESSION_KEY = 'sb-utybdwjrfnclyasbyuos-auth-token';
+// Google-kliens (nyilvános azonosító). A Google saját gombjával a belépő ablak a mi címünket mutatja, nem a Supabase-ét.
+const GOOGLE_CLIENT_ID = '593098206890-35ugevo2n62mmhhhfuuubls988b2q7qo.apps.googleusercontent.com';
+const GSI = 'https://accounts.google.com/gsi/client';
+// Web Push nyilvános (VAPID) kulcs; a privát párja a Supabase Vaultban van.
+const VAPID_PUBLIC = 'BOqyeWZck35UunRQfwehmEv9s2Ayshnmr4_ZMUseZGPSPl5wHQOu8uSc15JErnSTga2A3lhAcjxuQvAqUW7LcGg';
 
 let clientPromise;
 export function client() {
@@ -40,6 +45,49 @@ export async function signIn(redirectTo) {
   if (error) throw error;
 }
 
+let gsiPromise;
+function loadGsi() {
+  gsiPromise ??= new Promise((resolve, reject) => {
+    const s = document.createElement('script');
+    s.src = GSI;
+    s.async = true;
+    s.onload = () => resolve(window.google.accounts.id);
+    s.onerror = () => { gsiPromise = null; reject(new Error('gsi')); };
+    document.head.append(s);
+  });
+  return gsiPromise;
+}
+
+const sha256 = async (text) => [...new Uint8Array(await crypto.subtle.digest('SHA-256', new TextEncoder().encode(text)))]
+  .map((b) => b.toString(16).padStart(2, '0')).join('');
+
+/**
+ * A Google „Folytatás Google-fiókkal” gombja a megadott elembe. Siker esetén Supabase-munkamenet lesz belőle
+ * (onAuthChange értesít); hibánál onError. Ha a Google-szkript nem tölt be, false – ilyenkor marad az átirányításos gomb.
+ */
+export async function mountGoogleButton(el, { onError, onStart } = {}) {
+  let id;
+  try { [id] = await Promise.all([loadGsi(), client()]); } catch { return false; }
+  if (!el.isConnected) return true;
+  const nonce = crypto.randomUUID();
+  id.initialize({
+    client_id: GOOGLE_CLIENT_ID,
+    nonce: await sha256(nonce),
+    ux_mode: 'popup',
+    use_fedcm_for_button: true,
+    callback: async ({ credential }) => {
+      onStart?.();
+      try {
+        const c = await client();
+        const { error } = await c.auth.signInWithIdToken({ provider: 'google', token: credential, nonce });
+        if (error) throw error;
+      } catch (err) { onError?.(err); }
+    },
+  });
+  id.renderButton(el, { theme: 'filled_black', shape: 'pill', size: 'large', text: 'continue_with', locale: 'hu', width: Math.min(el.clientWidth || 320, 400) });
+  return true;
+}
+
 export async function signOut() {
   const c = await client();
   await c.auth.signOut();
@@ -47,7 +95,7 @@ export async function signOut() {
 
 export async function loadProfile(userId) {
   const c = await client();
-  const { data, error } = await c.from('profiles').select('display_name, avatar_url, interests').eq('id', userId).maybeSingle();
+  const { data, error } = await c.from('profiles').select('display_name, avatar_url, interests, notify_reminders, notify_follows').eq('id', userId).maybeSingle();
   if (error) throw error;
   return data;
 }
@@ -55,6 +103,74 @@ export async function loadProfile(userId) {
 export async function saveInterests(userId, interests) {
   const c = await client();
   const { error } = await c.from('profiles').update({ interests }).eq('id', userId);
+  if (error) throw error;
+}
+
+export async function saveSettings(userId, settings) {
+  const c = await client();
+  const { error } = await c.from('profiles').update(settings).eq('id', userId);
+  if (error) throw error;
+}
+
+// ---------- követett helyek ----------
+export async function loadFollows() {
+  const c = await client();
+  const { data, error } = await c.from('follows').select('venue');
+  if (error) throw error;
+  return data.map((r) => r.venue);
+}
+
+export async function follow(userId, venue) {
+  const c = await client();
+  const { error } = await c.from('follows').upsert({ user_id: userId, venue }, { onConflict: 'user_id,venue', ignoreDuplicates: true });
+  if (error) throw error;
+}
+
+export async function unfollow(userId, venue) {
+  const c = await client();
+  const { error } = await c.from('follows').delete().eq('user_id', userId).eq('venue', venue);
+  if (error) throw error;
+}
+
+// ---------- értesítések (Web Push) ----------
+export const pushSupported = () => 'serviceWorker' in navigator && 'PushManager' in window && 'Notification' in window;
+
+const keyBytes = (b64) => Uint8Array.from(atob((b64 + '='.repeat((4 - (b64.length % 4)) % 4)).replace(/-/g, '+').replace(/_/g, '/')), (ch) => ch.charCodeAt(0));
+
+/** Van-e már értesítési feliratkozás ezen az eszközön. */
+export async function pushEnabled() {
+  if (!pushSupported() || Notification.permission !== 'granted') return false;
+  const reg = await navigator.serviceWorker.getRegistration();
+  return !!(await reg?.pushManager.getSubscription());
+}
+
+/** Engedélykérés + feliratkozás + mentés a fiókba. 'denied' | 'unsupported' | 'ok' */
+export async function enablePush(userId) {
+  if (!pushSupported()) return 'unsupported';
+  if (await Notification.requestPermission() !== 'granted') return 'denied';
+  const reg = await navigator.serviceWorker.ready;
+  const sub = await reg.pushManager.getSubscription()
+    || await reg.pushManager.subscribe({ userVisibleOnly: true, applicationServerKey: keyBytes(VAPID_PUBLIC) });
+  const { endpoint, keys } = sub.toJSON();
+  const c = await client();
+  const { error } = await c.from('push_subscriptions').upsert({ endpoint, user_id: userId, p256dh: keys.p256dh, auth: keys.auth }, { onConflict: 'endpoint' });
+  if (error) throw error;
+  return 'ok';
+}
+
+export async function disablePush() {
+  const reg = await navigator.serviceWorker.getRegistration();
+  const sub = await reg?.pushManager.getSubscription();
+  if (!sub) return;
+  const c = await client();
+  await c.from('push_subscriptions').delete().eq('endpoint', sub.endpoint);
+  await sub.unsubscribe();
+}
+
+/** Próbaértesítés a saját eszközeimre – hogy rögtön lássa, működik. */
+export async function testPush() {
+  const c = await client();
+  const { error } = await c.functions.invoke('notify', { body: { test: true } });
   if (error) throw error;
 }
 

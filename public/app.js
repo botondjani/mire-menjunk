@@ -2,7 +2,7 @@
 // Nézetek: felfedezés (vízszintes szekciók), lista (szűrt, napokra bontva), keresés, mentett, profil.
 // Minden nézetnek van betöltő, üres és hibaállapota; a visszafordítható lépések (mentés) visszavonhatók.
 
-import * as auth from './auth.js?v=11';
+import * as auth from './auth.js?v=12';
 
 const ROOT = new URL('./', import.meta.url);
 const $ = (s, el = document) => el.querySelector(s);
@@ -120,6 +120,9 @@ const state = {
   profile: null,
   authBusy: false,
   confirmDelete: false,
+  follows: new Set(),                      // követett helyszínek (belépve)
+  push: 'off',                             // értesítések ezen az eszközön: on | off | denied | unsupported
+  pushBusy: false,
   events: [],
   byId: new Map(),
   limit: 40,
@@ -188,8 +191,10 @@ async function initAuth() {
 async function afterSignIn() {
   const user = state.user;
   try {
-    const [profile, remote] = await Promise.all([auth.loadProfile(user.id), auth.loadSaved()]);
+    const [profile, remote, follows] = await Promise.all([auth.loadProfile(user.id), auth.loadSaved(), auth.loadFollows()]);
     state.profile = profile;
+    state.follows = new Set(follows);
+    state.push = !auth.pushSupported() ? 'unsupported' : Notification.permission === 'denied' ? 'denied' : (await auth.pushEnabled()) ? 'on' : 'off';
     const localOnly = [...state.saved].filter((id) => !remote.includes(id));
     await auth.addSaved(user.id, localOnly.map((id) => state.byId.get(id)).filter(Boolean));
     state.saved = new Set([...state.saved, ...remote]);
@@ -225,9 +230,12 @@ async function signIn() {
 }
 
 async function signOut() {
+  await auth.disablePush().catch(() => {});
   await auth.signOut().catch(() => {});
   state.user = null;
   state.profile = null;
+  state.follows = new Set();
+  state.push = 'off';
   render();
   toast('Kijelentkeztél. A mentéseid ezen a telefonon megmaradnak.');
 }
@@ -255,6 +263,72 @@ async function toggleInterest(key) {
   store.set('interests', state.interests);
   render();
   if (state.user) auth.saveInterests(state.user.id, state.interests).catch(() => toast('Nem sikerült elmenteni a fiókodba – ezen a telefonon megvan.'));
+}
+
+function goProfile() {
+  closeEvent(false);
+  state.view = 'profile';
+  state.tab = 'profile';
+  render();
+  window.scrollTo({ top: 0 });
+}
+
+async function toggleFollow(venue) {
+  if (!state.user) return toast('A helyek követéséhez lépj be – szólunk, ha új programjuk lesz.', { label: 'Belépés', fn: goProfile });
+  const on = !state.follows.has(venue);
+  on ? state.follows.add(venue) : state.follows.delete(venue);
+  document.querySelectorAll(`[data-follow="${CSS.escape(venue)}"]`).forEach((b) => { b.setAttribute('aria-pressed', on); b.textContent = on ? '✓ Követed' : '+ Követés'; });
+  if (state.view === 'profile' && !sheet.open) render();
+  try {
+    await (on ? auth.follow(state.user.id, venue) : auth.unfollow(state.user.id, venue));
+  } catch {
+    on ? state.follows.delete(venue) : state.follows.add(venue);
+    return toast('Most nem sikerült – próbáld újra.');
+  }
+  if (!on) return toast(`Már nem követed: ${venue}`);
+  if (state.push === 'on') toast(`Követed: ${venue}. Szólunk, ha új programja lesz.`);
+  else toast(`Követed: ${venue}. Kapcsold be az értesítéseket, hogy szóljunk.`, { label: 'Bekapcsolom', fn: enablePush });
+}
+
+async function enablePush() {
+  if (!state.user) return goProfile();
+  state.pushBusy = true;
+  if (state.view === 'profile') render();
+  try {
+    const r = await auth.enablePush(state.user.id);
+    state.push = r === 'ok' ? 'on' : r;
+    if (r === 'ok') auth.testPush().catch(() => {});
+    else if (r === 'denied') toast('Az értesítések le vannak tiltva – a böngésző beállításaiban engedélyezheted.');
+  } catch {
+    toast('Az értesítések bekapcsolása most nem sikerült. Próbáld újra.');
+  }
+  state.pushBusy = false;
+  if (state.view === 'profile' && !sheet.open) render();
+}
+
+async function disablePush() {
+  await auth.disablePush().catch(() => {});
+  state.push = 'off';
+  render();
+  toast('Értesítések kikapcsolva ezen az eszközön.');
+}
+
+async function toggleSetting(key) {
+  const value = state.profile?.[key] === false;
+  state.profile = { ...state.profile, [key]: value };
+  render();
+  auth.saveSettings(state.user.id, { [key]: value }).catch(() => toast('Nem sikerült menteni – próbáld újra.'));
+}
+
+/** A Google saját gombja a profil oldalon; ha nem tölt be, az átirányításos tartalék gomb látszik. */
+function mountSignIn() {
+  const el = $('#gsi');
+  if (!el || el.childElementCount) return;
+  if (!initAuth.subscribed && !initAuth.started) { initAuth.started = true; initAuth(); }
+  auth.mountGoogleButton(el, {
+    onStart: () => { el.classList.add('busy'); },
+    onError: () => { el.classList.remove('busy'); toast('A bejelentkezés most nem sikerült. Próbáld újra pár perc múlva.'); },
+  }).then((ok) => { if (!ok) $('#gsiFallback')?.removeAttribute('hidden'); });
 }
 
 /** "Neked ajánljuk": a választott érdeklődési körök és a mentett programok helyszínei, kategóriái alapján. */
@@ -586,9 +660,10 @@ function profileView() {
         <ul class="perks">
           <li><span>♥</span>A mentett programjaid szinkronban a telefonodon és a gépeden</li>
           <li><span>✨</span>Ajánlások a kedvenc műfajaid és helyeid alapján</li>
-          <li><span>🔔</span>Hamarosan: emlékeztető program előtt, és kedvenc helyek követése</li>
+          <li><span>🔔</span>Emlékeztető a program előtt, és szólunk, ha a kedvenc helyeiden új program van</li>
         </ul>
-        <button class="btn google" data-signin ${state.authBusy ? 'disabled' : ''}>${icons.google}${state.authBusy ? 'Átirányítás a Google-höz…' : 'Belépés Google-fiókkal'}</button>
+        <div id="gsi" class="gsi" aria-label="Belépés Google-fiókkal"></div>
+        <button id="gsiFallback" class="btn google" data-signin hidden ${state.authBusy ? 'disabled' : ''}>${icons.google}${state.authBusy ? 'Átirányítás a Google-höz…' : 'Belépés Google-fiókkal'}</button>
         <p class="fineprint">Csak a neved, az e-mail-címed és a profilképed látjuk. Bármikor törölheted a fiókodat. <a href="adatvedelem.html">Adatvédelem</a></p>
       </section>
       ${interests}`;
@@ -600,6 +675,8 @@ function profileView() {
       <div><b>${esc(name)}</b><small>${esc(u.email || '')}</small></div>
     </section>
     <p class="muted sync-note">♥ ${savedCount} közelgő mentett program, szinkronban minden eszközödön.</p>
+    ${notifyPanel()}
+    ${followsPanel()}
     ${interests}
     <section class="panel account">
       <button class="btn" data-signout>Kijelentkezés</button>
@@ -611,6 +688,37 @@ function profileView() {
     </section>`;
 }
 
+function notifyPanel() {
+  const p = state.profile || {};
+  const sw = (key, label, sub) => `<label class="switch"><span>${label}<small>${sub}</small></span>
+      <input type="checkbox" data-setting="${key}" ${p[key] !== false ? 'checked' : ''}><i aria-hidden="true"></i></label>`;
+  let status;
+  if (state.push === 'on') status = `<p class="muted">✓ Bekapcsolva ezen az eszközön. <button class="link" data-push-test>Próbaértesítés</button> · <button class="link" data-push-off>Kikapcsolás</button></p>`;
+  else if (state.push === 'denied') status = '<p class="muted">Az értesítések le vannak tiltva ennél az oldalnál – a böngésző (vagy a telefon) beállításaiban engedélyezheted.</p>';
+  else if (state.push === 'unsupported') status = /iP(hone|ad)/.test(navigator.userAgent)
+    ? '<p class="muted">iPhone-on az értesítésekhez add hozzá az appot a kezdőképernyőhöz (Megosztás → Főképernyőhöz adás), és onnan nyisd meg.</p>'
+    : '<p class="muted">Ez a böngésző nem támogatja az értesítéseket.</p>';
+  else status = `<button class="btn primary wide" data-push-on ${state.pushBusy ? 'disabled' : ''}>🔔 ${state.pushBusy ? 'Bekapcsolás…' : 'Értesítések bekapcsolása'}</button>`;
+  return `<section class="panel">
+      <h2>Értesítések</h2>
+      ${status}
+      <div class="switches">
+        ${sw('notify_reminders', 'Emlékeztető', 'Kb. 2 órával a mentett programjaid előtt')}
+        ${sw('notify_follows', 'Új program a követett helyeken', 'Naponta egyszer, délelőtt')}
+      </div>
+    </section>`;
+}
+
+function followsPanel() {
+  const venues = [...state.follows].sort((a, b) => a.localeCompare(b, 'hu'));
+  return `<section class="panel">
+      <h2>Követett helyek</h2>
+      ${venues.length
+    ? `<div class="interest-chips">${venues.map((v) => `<button class="followed" data-follow="${esc(v)}" aria-label="${esc(v)} – követés leállítása">${esc(v)} <span aria-hidden="true">×</span></button>`).join('')}</div>`
+    : '<p class="muted">Egy program részleteinél a helyszín mellett nyomd meg a „+ Követés” gombot, és szólunk, ha új programja lesz.</p>'}
+    </section>`;
+}
+
 function footer() {
   const upd = state.updated ? new Date(state.updated).toLocaleString('hu-HU', { dateStyle: 'medium', timeStyle: 'short' }) : '';
   const sources = [...new Set(state.events.flatMap((e) => e.links.map((l) => l.name)))].join(', ');
@@ -619,6 +727,7 @@ function footer() {
 
 function render() {
   view.innerHTML = { home: homeView, list: listView, search: searchView, saved: savedView, profile: profileView }[state.view]();
+  if (state.view === 'profile' && !state.user) mountSignIn();
   document.querySelectorAll('.tabbar [data-tab]').forEach((b) => b.setAttribute('aria-current', b.dataset.tab === state.tab ? 'page' : 'false'));
   updateBadge();
   syncQuery();
@@ -687,7 +796,7 @@ function openEvent(e, push = true, { shared = false } = {}) {
       <h2 id="sheetTitle">${esc(e.title)}</h2>
       <ul class="facts">
         <li>${icons.clock}<span>${esc(dateLabel(e))}${soon ? ` <em class="soon">· ${soon}</em>` : ''}</span></li>
-        ${e.venue ? `<li>${icons.pin}<span>${esc(e.venue)}</span></li>` : ''}
+        ${e.venue ? `<li>${icons.pin}<span>${esc(e.venue)}</span><button class="pill" data-follow="${esc(e.venue)}" aria-pressed="${state.follows.has(e.venue)}">${state.follows.has(e.venue) ? '✓ Követed' : '+ Követés'}</button></li>` : ''}
       </ul>
       <div class="actions">
         <button class="btn primary" data-share="${e.id}">${icons.share} Megosztás</button>
@@ -794,6 +903,10 @@ function toggleSave(id, { undo = false } = {}) {
       .catch(() => toast('A fiókodba most nem sikerült szinkronizálni – ezen a telefonon megvan.'));
   }
   if (undo) toast(on ? 'Visszatéve a mentettek közé' : 'Mentés visszavonva');
+  else if (on && state.user && state.push === 'off' && !store.get('pushNudged', false)) {
+    store.set('pushNudged', true);
+    toast('Elmentve. Kérsz emlékeztetőt a program előtt?', { label: 'Igen', fn: enablePush });
+  }
   else if (on && !state.user && !store.get('loginNudged', false)) {
     // Egyszer, finoman: a belépés opcionális, a mentés enélkül is működik.
     store.set('loginNudged', true);
@@ -822,10 +935,14 @@ $('#toast').addEventListener('click', (ev) => {
 
 // ---------- események ----------
 document.addEventListener('click', (ev) => {
-  const el = ev.target.closest('[data-signin],[data-signout],[data-delete],[data-delete-cancel],[data-delete-confirm],[data-interest],[data-pick],[data-tab],[data-nav],[data-back],[data-more],[data-day],[data-group],[data-q],[data-clear],[data-open],[data-save],[data-share],[data-copy],[data-close],[data-retry],[data-dismiss],[data-prune]');
+  const el = ev.target.closest('[data-follow],[data-push-on],[data-push-off],[data-push-test],[data-signin],[data-signout],[data-delete],[data-delete-cancel],[data-delete-confirm],[data-interest],[data-pick],[data-tab],[data-nav],[data-back],[data-more],[data-day],[data-group],[data-q],[data-clear],[data-open],[data-save],[data-share],[data-copy],[data-close],[data-retry],[data-dismiss],[data-prune]');
   if (!el) return;
   const d = el.dataset;
   const find = (id) => state.byId.get(id);
+  if (d.follow) return toggleFollow(d.follow);
+  if ('pushOn' in d) return enablePush();
+  if ('pushOff' in d) return disablePush();
+  if ('pushTest' in d) return auth.testPush().then(() => toast('Elküldtük – pár másodpercen belül megjön.')).catch(() => toast('Most nem sikerült elküldeni.'));
   if ('signin' in d) return signIn();
   if ('signout' in d) return signOut();
   if ('delete' in d) { state.confirmDelete = true; return render(); }
@@ -926,3 +1043,8 @@ const icons = {
 };
 
 load();
+
+document.addEventListener('change', (ev) => {
+  const key = ev.target.dataset?.setting;
+  if (key && state.user) toggleSetting(key);
+});

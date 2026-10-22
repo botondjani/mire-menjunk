@@ -1,6 +1,6 @@
 // Offline támogatás: az app héja cache-ből, az adat hálózatról (offline: utolsó ismert).
-const VERSION = 'v11';
-const SHELL = ['./', 'index.html', 'app.js?v=11', 'auth.js?v=11', 'styles.css?v=11', 'adatvedelem.html', 'manifest.webmanifest', 'icons/icon.svg', 'icons/icon-192.png'];
+const VERSION = 'v12';
+const SHELL = ['./', 'index.html', 'app.js?v=12', 'auth.js?v=12', 'styles.css?v=12', 'adatvedelem.html', 'manifest.webmanifest', 'icons/icon.svg', 'icons/icon-192.png'];
 
 self.addEventListener('install', (e) => {
   e.waitUntil(caches.open(`shell-${VERSION}`).then((c) => c.addAll(SHELL)).then(() => self.skipWaiting()));
@@ -47,4 +47,26 @@ self.addEventListener('fetch', (e) => {
       return fresh;
     }));
   }
+});
+
+// Értesítések (emlékeztetők, követett helyek új programjai) – a szerver JSON-t küld: { title, body, url, tag }.
+self.addEventListener('push', (e) => {
+  let n = {};
+  try { n = e.data.json(); } catch { n = { title: 'Hova menjünk?', body: e.data?.text() || '' }; }
+  e.waitUntil(self.registration.showNotification(n.title || 'Hova menjünk?', {
+    body: n.body,
+    tag: n.tag,
+    icon: new URL('icons/icon-192.png', self.registration.scope).href,
+    badge: new URL('icons/icon-192.png', self.registration.scope).href,
+    data: { url: n.url || self.registration.scope },
+  }));
+});
+
+self.addEventListener('notificationclick', (e) => {
+  e.notification.close();
+  const url = e.notification.data?.url || self.registration.scope;
+  e.waitUntil(self.clients.matchAll({ type: 'window', includeUncontrolled: true }).then((list) => {
+    const open = list.find((c) => c.url.startsWith(self.registration.scope));
+    return open ? open.navigate(url).then((c) => c?.focus()) : self.clients.openWindow(url);
+  }));
 });
