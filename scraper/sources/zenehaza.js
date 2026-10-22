@@ -11,6 +11,7 @@ export default {
   name: 'Magyar Zene Háza',
   fixtures: [],
   urls: [URL],
+  debug: ['occasions-init', 'zh-calendar', 'occasions', 'esemeny/'],
 
   parse(html) {
     const $ = cheerio.load(html);

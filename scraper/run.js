@@ -77,6 +77,17 @@ async function collect(source) {
   const started = Date.now();
   const pages = await pagesOf(source);
   const events = pages.flatMap(({ url, html }) => source.parse(html, { today, url }));
+  if (!events.length && pages.length && source.debug) {
+    // Diagnostics for sources that parse fine on saved pages but return nothing live.
+    for (const { url, html } of pages.slice(0, 2)) {
+      const hints = source.debug.map((h) => `${h}=${html.split(h).length - 1}`).join(' ');
+      console.log(`  ? ${source.id} ${url}: ${html.length} bájt, ${hints}`);
+      for (const h of source.debug) {
+        const i = html.indexOf(h);
+        if (i >= 0) console.log(`    [${h}] …${html.slice(Math.max(0, i - 120), i + 280).replace(/\s+/g, ' ')}…`);
+      }
+    }
+  }
   console.log(`  ${source.name}: ${events.length} találat, ${pages.length} oldal, ${Math.round((Date.now() - started) / 1000)} mp`);
   return events.map((e) => ({ ...e, source: source.id, sourceName: source.name }));
 }

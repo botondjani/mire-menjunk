@@ -9,6 +9,7 @@ export default {
   name: 'Dumaszínház',
   fixtures: [{ file: 'duma.html', url: URL }],
   urls: [URL],
+  debug: ['eloadasok/', '__NUXT_DATA__', '_payload.json', 'október', 'MIXÁT'],
 
   parse(html) {
     const $ = cheerio.load(html);
