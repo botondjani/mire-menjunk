@@ -14,11 +14,14 @@ import timeout from './sources/timeout.js';
 import a38 from './sources/a38.js';
 import trafo from './sources/trafo.js';
 import zenehaza from './sources/zenehaza.js';
+import durer from './sources/durer.js';
+import bjc from './sources/bjc.js';
+import dumaszinhaz from './sources/dumaszinhaz.js';
 import { addDays, detectVenue, slugify, tidyTitle, todayBudapest } from './lib/util.js';
 import { renderOg } from './og.js';
 
 // Curated sources first: on duplicates their description and image win.
-const SOURCES = [welovebudapest, funzine, timeout, akvarium, a38, trafo, zenehaza, tixa];
+const SOURCES = [welovebudapest, funzine, timeout, akvarium, a38, trafo, durer, bjc, dumaszinhaz, zenehaza, tixa];
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const PUBLIC = join(ROOT, 'public');
 const SITE_URL = (process.env.SITE_URL || '').replace(/\/?$/, '/');

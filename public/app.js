@@ -396,14 +396,23 @@ function searchResults() {
       actions: '<button class="btn" data-clear>Keresés törlése</button>',
     });
   }
-  return `<p class="count">${hits.length} találat</p><div class="rows">${hits.slice(0, state.limit).map((e) => row(e, { withDate: true })).join('')}</div>${hits.length > state.limit ? '<button class="btn more" data-more>Továbbiak</button>' : ''}`;
+  return `<p class="count">${hits.length} találat</p><div class="rows">${hits.slice(0, state.limit).map((e) => row(e, { withDate: true })).join('')}</div>${moreButton(hits.length)}`;
 }
 
+function moreButton(total) {
+  return total > state.limit ? `<button class="btn more" data-more>Még ${Math.min(PAGE, total - state.limit)} program <small>(${state.limit} / ${total})</small></button>` : '';
+}
+
+/** Keresés alapnézet: kategóriák, alattuk a közelgő programok időrendben, lapozható listában. */
 function searchIdle() {
   const counts = Object.fromEntries(FILTERS.map((g) => [g.key, state.events.filter((e) => matchesFilter(e, g.key)).length]));
+  const upcoming = state.events.filter((e) => !isLong(e));
   return `<h2 class="day">Kategóriák</h2>
     <div class="tiles">${FILTERS.map((g) => `<a class="tile" href="${listHref({ kat: g.key })}" data-nav="${listHref({ kat: g.key })}" style="--hue:${g.hue}">
-      <span class="tile-emoji">${g.emoji}</span><b>${g.label}</b><small>${counts[g.key]} program</small></a>`).join('')}</div>`;
+      <span class="tile-emoji">${g.emoji}</span><b>${g.label}</b><small>${counts[g.key]} program</small></a>`).join('')}</div>
+    <h2 class="day">Közelgő programok <small>${upcoming.length}</small></h2>
+    <div class="rows">${upcoming.slice(0, state.limit).map((e) => row(e, { withDate: true })).join('')}</div>
+    ${moreButton(upcoming.length)}`;
 }
 
 function searchView() {

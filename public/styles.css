@@ -90,15 +90,8 @@ main {
 .shortcuts a:hover { color: var(--ink); }
 
 /* másodlagos szekciók saját panelben, hogy jól elváljanak egymástól */
-.rail-mini {
-  margin-top: 16px; padding: 16px 0 16px; border-radius: 22px;
-  background: var(--surface); border: 1px solid var(--line);
-}
-.rail-mini .rail-head { padding: 0 14px 0 16px; }
-.rail-mini .rail-head a { background: var(--surface-2); }
-.rail-mini .rail-track { margin: 0; padding: 0 16px 2px; scroll-padding-left: 16px; }
+.rail-mini { margin-top: 26px; padding-top: 22px; border-top: 1px solid var(--line); }
 .rail-big + .shortcuts { margin-top: 22px; }
-.shortcuts + .rail-mini { margin-top: 22px; }
 
 /* kis, álló poszterkártya */
 .rail-mini .rail-track { grid-auto-columns: 148px; gap: 10px; }

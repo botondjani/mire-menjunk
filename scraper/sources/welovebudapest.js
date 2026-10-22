@@ -2,7 +2,7 @@ import * as cheerio from 'cheerio';
 import { clean, detectCategory, detectVenue, parseHuDateRange, todayBudapest } from '../lib/util.js';
 
 const BASE = 'https://welovebudapest.com/programok/';
-const DAYS_AHEAD = 45; // the list caps out at ~50 cards, so we also ask day by day
+const DAYS_AHEAD = 60; // the list caps out at ~50 cards, so we also ask day by day
 
 const addDays = (iso, n) => {
   const d = new Date(`${iso}T12:00:00Z`);

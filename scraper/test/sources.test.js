@@ -134,3 +134,26 @@ test('tidyTitle: csupa nagybetűs címek', async () => {
   assert.equal(tidyTitle('DJ Krush az Akvárium Klubban'), 'DJ Krush az Akvárium Klubban');
   assert.equal(tidyTitle('FLESHLESS (CZ) // SPECTRAL DESPAIR'), 'Fleshless (CZ) // Spectral Despair');
 });
+
+test('Dürer Kert (__NEXT_DATA__)', async () => {
+  const { default: durer } = await import('../sources/durer.js');
+  const events = durer.parse(fixture('durer'));
+  assert.ok(events.length >= 30, `csak ${events.length}`);
+  const e = events.find((x) => x.title === 'NORBOW');
+  assert.deepEqual([e.start, e.time, e.url], ['2026-10-03', '19:00', 'https://www.durerkert.com/event/norbow_2026']);
+});
+
+test('Budapest Jazz Club (microdata)', async () => {
+  const { default: bjc } = await import('../sources/bjc.js');
+  const events = bjc.parse(fixture('bjc'));
+  assert.ok(events.length >= 10, `csak ${events.length}`);
+  assert.ok(events.every((x) => /^\d{2}:\d{2}$/.test(x.time) && x.url.includes('/programok/eloado/')));
+});
+
+test('Dumaszínház: csak budapesti előadások', async () => {
+  const { default: duma } = await import('../sources/dumaszinhaz.js');
+  const events = duma.parse(fixture('duma'));
+  assert.ok(events.length >= 5, `csak ${events.length}`);
+  assert.ok(!events.some((x) => /Szeged|Ózd|Szolnok/.test(x.venue)));
+  assert.equal(events.find((x) => x.title.startsWith('Bezzeg mi')).venue, 'MIXÁT Dumaklub');
+});

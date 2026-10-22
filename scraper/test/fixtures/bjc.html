@@ -1,0 +1,1121 @@
+<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml" class=" js "><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><style rel="stylesheet" type="text/css">@charset "utf-8";
+
+.fb_hidden { position: absolute; top: -10000px; z-index: 10001; }
+
+.fb_reposition { overflow: hidden; position: relative; }
+
+.fb_invisible { display: none; }
+
+.fb_reset { background: none; border: 0px; border-spacing: 0px; color: rgb(0, 0, 0); cursor: auto; direction: ltr; font-family: "lucida grande", tahoma, verdana, arial, sans-serif; font-size: 11px; font-style: normal; font-variant: normal; font-weight: 400; letter-spacing: normal; line-height: 1; margin: 0px; overflow: visible; padding: 0px; text-align: left; text-decoration: none; text-indent: 0px; text-shadow: none; text-transform: none; visibility: visible; white-space: normal; word-spacing: normal; }
+
+.fb_reset > div { overflow: hidden; }
+
+@keyframes fb_transform { 
+  0% { opacity: 0; transform: scale(0.95); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+.fb_animate { animation: 0.3s ease 0s 1 normal forwards running fb_transform; }
+
+.fb_dialog { background: rgba(82, 82, 82, 0.7); position: absolute; top: -10000px; z-index: 10001; }
+
+.fb_dialog_advanced { border-radius: 8px; padding: 10px; }
+
+.fb_dialog_content { background: rgb(255, 255, 255); color: rgb(55, 55, 55); }
+
+.fb_dialog_close_icon { background: url("https://connect.facebook.net/rsrc.php/v4/yq/r/IE9JII6Z1Ys.png") 0px 0px no-repeat scroll transparent; cursor: pointer; display: block; height: 15px; position: absolute; right: 18px; top: 17px; width: 15px; }
+
+.fb_dialog_mobile .fb_dialog_close_icon { left: 5px; right: auto; top: 5px; }
+
+.fb_dialog_padding { background-color: transparent; position: absolute; width: 1px; z-index: -1; }
+
+.fb_dialog_close_icon:hover { background: url("https://connect.facebook.net/rsrc.php/v4/yq/r/IE9JII6Z1Ys.png") 0px -15px no-repeat scroll transparent; }
+
+.fb_dialog_close_icon:active { background: url("https://connect.facebook.net/rsrc.php/v4/yq/r/IE9JII6Z1Ys.png") 0px -30px no-repeat scroll transparent; }
+
+.fb_dialog_iframe { line-height: 0; }
+
+.fb_dialog_content .dialog_title { background: rgb(109, 132, 180); border: 1px solid rgb(54, 88, 153); color: rgb(255, 255, 255); font-size: 14px; font-weight: 700; margin: 0px; }
+
+.fb_dialog_content .dialog_title > span { background: url("https://connect.facebook.net/rsrc.php/v4/yd/r/Cou7n-nqK52.gif") 5px 50% no-repeat; float: left; padding: 5px 0px 7px 26px; }
+
+body.fb_hidden { height: 100%; left: 0px; margin: 0px; overflow: visible; position: absolute; top: -10000px; transform: none; width: 100%; }
+
+.fb_dialog.fb_dialog_mobile.loading { background: url("https://connect.facebook.net/rsrc.php/v4/ya/r/3rhSv5V8j3o.gif") 50% 50% no-repeat rgb(255, 255, 255); min-height: 100%; min-width: 100%; overflow: hidden; position: absolute; top: 0px; z-index: 10001; }
+
+.fb_dialog.fb_dialog_mobile.loading.centered { background: none; height: auto; min-height: initial; min-width: initial; width: auto; }
+
+.fb_dialog.fb_dialog_mobile.loading.centered #fb_dialog_loader_spinner { width: 100%; }
+
+.fb_dialog.fb_dialog_mobile.loading.centered .fb_dialog_content { background: none; }
+
+.loading.centered #fb_dialog_loader_close { clear: both; color: rgb(255, 255, 255); display: block; font-size: 18px; padding-top: 20px; }
+
+#fb-root #fb_dialog_ipad_overlay { background: rgba(0, 0, 0, 0.4); inset: 0px; min-height: 100%; position: absolute; width: 100%; z-index: 10000; }
+
+#fb-root #fb_dialog_ipad_overlay.hidden { display: none; }
+
+.fb_dialog.fb_dialog_mobile.loading iframe { visibility: hidden; }
+
+.fb_dialog_mobile .fb_dialog_iframe { position: sticky; top: 0px; }
+
+.fb_dialog_content .dialog_header { border-bottom: 1px solid rgb(4, 59, 135); border-top-color: rgb(4, 59, 135); border-right-color: rgb(4, 59, 135); border-left-color: rgb(4, 59, 135); box-shadow: rgb(255, 255, 255) 0px 1px 1px -1px inset; color: rgb(255, 255, 255); font: 700 14px Helvetica, sans-serif; text-overflow: ellipsis; text-shadow: rgba(0, 30, 84, 0.298) 0px -1px 0px; vertical-align: middle; white-space: nowrap; }
+
+.fb_dialog_content .dialog_header table { height: 43px; width: 100%; }
+
+.fb_dialog_content .dialog_header td.header_left { font-size: 12px; padding-left: 5px; vertical-align: middle; width: 60px; }
+
+.fb_dialog_content .dialog_header td.header_right { font-size: 12px; padding-right: 5px; vertical-align: middle; width: 60px; }
+
+.fb_dialog_content .touchable_button { background-clip: padding-box; border: 1px solid rgb(41, 72, 125); border-radius: 3px; display: inline-block; line-height: 18px; margin-top: 3px; max-width: 85px; padding: 4px 12px; position: relative; }
+
+.fb_dialog_content .dialog_header .touchable_button input { background: none; border-width: medium; border-style: none; border-color: currentcolor; border-image: none; color: rgb(255, 255, 255); font: 700 12px Helvetica, sans-serif; margin: 2px -12px; padding: 2px 6px 3px; text-shadow: rgba(0, 30, 84, 0.298) 0px -1px 0px; }
+
+.fb_dialog_content .dialog_header .header_center { color: rgb(255, 255, 255); font-size: 16px; font-weight: 700; line-height: 18px; text-align: center; vertical-align: middle; }
+
+.fb_dialog_content .dialog_content { background: url("https://connect.facebook.net/rsrc.php/v4/y9/r/jKEcVPZFk-2.gif") 50% 50% no-repeat; border-width: 0px 1px; border-style: none solid; border-color: currentcolor rgb(74, 74, 74); border-image: none; height: 150px; }
+
+.fb_dialog_content .dialog_footer { background: rgb(245, 246, 247); border-width: 1px; border-style: solid; border-color: rgb(204, 204, 204) rgb(74, 74, 74) rgb(74, 74, 74); border-image: none; height: 40px; }
+
+#fb_dialog_loader_close { float: left; }
+
+.fb_dialog.fb_dialog_mobile .fb_dialog_close_icon { visibility: hidden; }
+
+#fb_dialog_loader_spinner { animation: 1.2s linear 0s infinite normal none running rotateSpinner; background-color: transparent; background-image: url("https://connect.facebook.net/rsrc.php/v4/y2/r/onuUJj0tCqE.png"); background-position: 50% 50%; background-repeat: no-repeat; height: 24px; width: 24px; }
+
+@keyframes rotateSpinner { 
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.fb_iframe_widget { display: inline-block; position: relative; }
+
+.fb_iframe_widget span { display: inline-block; position: relative; text-align: justify; }
+
+.fb_iframe_widget iframe { position: absolute; }
+
+.fb_iframe_widget_fluid_desktop, .fb_iframe_widget_fluid_desktop span, .fb_iframe_widget_fluid_desktop iframe { max-width: 100%; }
+
+.fb_iframe_widget_fluid_desktop iframe { min-width: 220px; position: relative; }
+
+.fb_iframe_widget_lift { z-index: 1; }
+
+.fb_iframe_widget_fluid { display: inline; }
+
+.fb_iframe_widget_fluid span { width: 100%; }</style><style rel="stylesheet" type="text/css">@charset "utf-8";
+
+.cky-overlay { background: rgb(0, 0, 0); opacity: 0.4; position: fixed; top: 0px; left: 0px; width: 100%; height: 100%; z-index: 99999999; }
+
+.cky-hide { display: none; }
+
+.cky-btn-revisit-wrapper { display: flex; align-items: center; justify-content: center; background: rgb(0, 86, 167); width: 45px; height: 45px; border-radius: 50%; position: fixed; z-index: 999999; cursor: pointer; }
+
+.cky-revisit-bottom-left { bottom: 15px; left: 15px; }
+
+.cky-revisit-bottom-right { bottom: 15px; right: 15px; }
+
+.cky-btn-revisit-wrapper .cky-btn-revisit { display: flex; align-items: center; justify-content: center; background: none; border-width: medium; border-style: none; border-color: currentcolor; border-image: none; cursor: pointer; position: relative; margin: 0px; padding: 0px; }
+
+.cky-btn-revisit-wrapper .cky-btn-revisit img { max-width: fit-content; margin: 0px; height: 30px; width: 30px; }
+
+.cky-revisit-bottom-left:hover::before { content: attr(data-tooltip); position: absolute; background: rgb(78, 75, 102); color: rgb(255, 255, 255); left: calc(100% + 7px); font-size: 12px; line-height: 16px; width: max-content; padding: 4px 8px; border-radius: 4px; }
+
+.cky-revisit-bottom-left:hover::after { position: absolute; content: ""; border-width: 5px 5px 5px 0px; border-style: solid; border-color: rgba(255, 255, 255, 0) rgb(78, 75, 102) rgba(255, 255, 255, 0) rgba(255, 255, 255, 0); border-image: none; left: calc(100% + 2px); }
+
+.cky-revisit-bottom-right:hover::before { content: attr(data-tooltip); position: absolute; background: rgb(78, 75, 102); color: rgb(255, 255, 255); right: calc(100% + 7px); font-size: 12px; line-height: 16px; width: max-content; padding: 4px 8px; border-radius: 4px; }
+
+.cky-revisit-bottom-right:hover::after { position: absolute; content: ""; border-width: 5px 0px 5px 5px; border-style: solid; border-color: rgba(255, 255, 255, 0) rgba(255, 255, 255, 0) rgba(255, 255, 255, 0) rgb(78, 75, 102); border-image: none; right: calc(100% + 2px); }
+
+.cky-revisit-hide { display: none; }
+
+.cky-consent-container { position: fixed; width: 100%; box-sizing: border-box; z-index: 9999999; }
+
+.cky-consent-container .cky-consent-bar { background: rgb(255, 255, 255); border: 1px solid; padding: 16.5px 24px; box-shadow: rgba(172, 171, 171, 0.3) 0px -1px 10px 0px; }
+
+.cky-banner-bottom { bottom: 0px; left: 0px; }
+
+.cky-banner-top { top: 0px; left: 0px; }
+
+.cky-custom-brand-logo-wrapper .cky-custom-brand-logo { width: 100px; height: auto; margin: 0px 0px 12px; }
+
+.cky-notice .cky-title { color: rgb(33, 33, 33); font-weight: 700; font-size: 18px; line-height: 24px; margin: 0px 0px 12px; overflow-wrap: break-word; }
+
+.cky-notice-group { display: flex; justify-content: space-between; align-items: center; font-size: 14px; line-height: 24px; font-weight: 400; }
+
+.cky-notice-des *, .cky-preference-content-wrapper *, .cky-dma-content-wrapper *, .cky-accordion-header-des *, .cky-gpc-wrapper .cky-gpc-desc * { font-size: 14px; }
+
+.cky-notice-des { color: rgb(33, 33, 33); font-size: 14px; line-height: 24px; font-weight: 400; }
+
+.cky-notice-des img { min-height: 25px; min-width: 25px; }
+
+.cky-consent-bar .cky-notice-des p, .cky-gpc-wrapper .cky-gpc-desc p, .cky-preference-body-wrapper .cky-preference-content-wrapper p, .cky-accordion-header-wrapper .cky-accordion-header-des p, .cky-cookie-des-table li div:last-child p { color: inherit; margin-top: 0px; word-break: break-word; }
+
+.cky-notice-des p:last-child, .cky-preference-content-wrapper p:last-child, .cky-cookie-des-table li div:last-child p:last-child, .cky-gpc-wrapper .cky-gpc-desc p:last-child { margin-bottom: 0px; }
+
+.cky-notice-des a.cky-policy, .cky-notice-des button.cky-policy, .cky-notice-des a.cky-link-default, .cky-dma-content-wrapper a.cky-policy, .cky-dma-content-wrapper button.cky-policy { font-size: 14px; color: rgb(24, 99, 220); white-space: nowrap; cursor: pointer; background: rgba(255, 255, 255, 0); }
+
+.cky-notice-des a.cky-policy, .cky-notice-des button.cky-policy, .cky-dma-content-wrapper a.cky-policy, .cky-dma-content-wrapper button.cky-policy { text-decoration: underline; border: 1px solid; }
+
+.cky-notice-des a.cky-link-default { text-decoration: underline; }
+
+.cky-notice-des button.cky-policy, .cky-dma-content-wrapper button.cky-policy { padding: 0px; }
+
+.cky-notice-des a.cky-policy:focus-visible, .cky-notice-des button.cky-policy:focus-visible, .cky-dma-content-wrapper a.cky-policy:focus-visible, .cky-dma-content-wrapper button.cky-policy:focus-visible, .cky-preference-content-wrapper .cky-show-desc-btn:focus-visible, .cky-accordion-header .cky-accordion-btn:focus-visible, .cky-preference-header .cky-btn-close:focus-visible, .cky-switch input[type="checkbox"]:focus-visible, .cky-footer-wrapper a:focus-visible, [data-cky-tag="powered-by"] a:focus-visible, [data-cky-tag="detail-powered-by"] a:focus-visible, .cky-btn:focus-visible { outline: rgb(24, 99, 220) solid 2px; outline-offset: 2px; }
+
+.cky-btn:focus:not(:focus-visible), .cky-accordion-header .cky-accordion-btn:focus:not(:focus-visible), .cky-preference-content-wrapper .cky-show-desc-btn:focus:not(:focus-visible), .cky-btn-revisit-wrapper .cky-btn-revisit:focus:not(:focus-visible), .cky-preference-header .cky-btn-close:focus:not(:focus-visible), .cky-consent-bar .cky-banner-btn-close:focus:not(:focus-visible) { outline: 0px; }
+
+button.cky-show-desc-btn:not(:hover):not(:active) { color: rgb(24, 99, 220); background: rgba(255, 255, 255, 0); }
+
+button.cky-accordion-btn:not(:hover):not(:active), button.cky-banner-btn-close:not(:hover):not(:active), button.cky-btn-close:not(:hover):not(:active), button.cky-btn-revisit:not(:hover):not(:active) { background: rgba(255, 255, 255, 0); }
+
+.cky-consent-bar button:hover, .cky-modal.cky-modal-open button:hover, .cky-consent-bar button:focus, .cky-modal.cky-modal-open button:focus { text-decoration: none; }
+
+.cky-notice-btn-wrapper { display: flex; justify-content: center; align-items: center; margin-left: 15px; }
+
+.cky-notice-btn-wrapper .cky-btn { text-shadow: none; box-shadow: none; }
+
+.cky-btn { font-size: 14px; font-family: inherit; line-height: 24px; padding: 8px 27px; font-weight: 500; margin: 0px 8px 0px 0px; border-radius: 2px; white-space: nowrap; cursor: pointer; text-align: center; text-transform: none; min-height: 0px; overflow-wrap: break-word; }
+
+.cky-btn:hover { filter: brightness(0.9); }
+
+.cky-btn-customize { color: rgb(24, 99, 220); background: rgba(255, 255, 255, 0); border: 2px solid rgb(24, 99, 220); }
+
+.cky-btn-reject { color: rgb(24, 99, 220); background: rgba(255, 255, 255, 0); border: 2px solid rgb(24, 99, 220); }
+
+.cky-btn-accept { background: rgb(24, 99, 220); color: rgb(255, 255, 255); border: 2px solid rgb(24, 99, 220); }
+
+.cky-btn:last-child { margin-right: 0px; }
+
+@media (max-width: 768px) {
+  .cky-notice-group { display: block; }
+  .cky-notice-btn-wrapper { margin-left: 0px; }
+  .cky-notice-btn-wrapper .cky-btn { flex: 1 1 auto; max-width: 100%; margin-top: 10px; white-space: unset; }
+}
+
+@media (max-width: 576px) {
+  .cky-notice-btn-wrapper { flex-direction: column; }
+  .cky-custom-brand-logo-wrapper, .cky-notice .cky-title, .cky-notice-des, .cky-notice-btn-wrapper { padding: 0px 28px; }
+  .cky-consent-container .cky-consent-bar { padding: 16.5px 0px; }
+  .cky-notice-des { max-height: 40vh; overflow-y: scroll; }
+  .cky-notice-btn-wrapper .cky-btn { width: 100%; padding: 8px; margin-right: 0px; }
+  .cky-notice-btn-wrapper .cky-btn-accept { order: 1; }
+  .cky-notice-btn-wrapper .cky-btn-reject { order: 3; }
+  .cky-notice-btn-wrapper .cky-btn-customize { order: 2; }
+}
+
+@media (max-width: 425px) {
+  .cky-custom-brand-logo-wrapper, .cky-notice .cky-title, .cky-notice-des, .cky-notice-btn-wrapper { padding: 0px 24px; }
+  .cky-notice-btn-wrapper { flex-direction: column; }
+  .cky-btn { width: 100%; margin: 10px 0px 0px; }
+  .cky-notice-btn-wrapper .cky-btn-customize { order: 2; }
+  .cky-notice-btn-wrapper .cky-btn-reject { order: 3; }
+  .cky-notice-btn-wrapper .cky-btn-accept { order: 1; margin-top: 16px; }
+}
+
+@media (max-width: 352px) {
+  .cky-notice .cky-title { font-size: 16px; }
+  .cky-notice-des * { font-size: 12px; }
+  .cky-notice-des, .cky-btn { font-size: 12px; }
+}
+
+.cky-modal.cky-modal-open { display: flex; visibility: visible; transform: translate(-50%, -50%); top: 50%; left: 50%; transition: 1s; max-height: 100%; }
+
+.cky-modal { box-shadow: rgba(0, 0, 0, 0.3) 0px 32px 68px; margin: 0px auto; position: fixed; max-width: 100%; background: rgb(255, 255, 255); top: 50%; box-sizing: border-box; border-radius: 6px; z-index: 999999999; color: rgb(33, 33, 33); transform: translate(-50%, 100%); visibility: hidden; transition: all; }
+
+.cky-preference-center { max-height: 79vh; width: 845px; overflow: hidden; flex: 1 1 0%; display: flex; flex-direction: column; border-radius: 6px; }
+
+.cky-preference-header { display: flex; align-items: center; justify-content: space-between; padding: 22px 24px; border-bottom: 1px solid; }
+
+.cky-preference-header .cky-preference-title { font-size: 18px; font-weight: 700; line-height: 24px; word-break: break-word; }
+
+.cky-preference-header .cky-btn-close { margin: 0px; cursor: pointer; vertical-align: middle; padding: 0px; background: none; border-width: medium; border-style: none; border-color: currentcolor; border-image: none; width: 24px; height: 24px; min-height: 0px; line-height: 0; text-shadow: none; box-shadow: none; }
+
+.cky-preference-header .cky-btn-close img { margin: 0px; height: 10px; width: 10px; }
+
+.cky-preference-body-wrapper { padding: 0px 24px; flex: 1 1 0%; overflow: auto; box-sizing: border-box; }
+
+@media (max-height: 576px) {
+  .cky-preference-center { height: 100vh; overflow: auto; }
+  .cky-preference-center .cky-preference-body-wrapper { overflow: unset; }
+}
+
+@media (max-height: 480px) {
+  .cky-consent-container { max-height: 100vh; overflow-y: scroll; }
+  .cky-notice-des { max-height: unset; overflow-y: unset; }
+}
+
+.cky-preference-content-wrapper, .cky-gpc-wrapper .cky-gpc-desc { font-size: 14px; line-height: 24px; font-weight: 400; padding: 12px 0px; }
+
+.cky-preference-content-wrapper img { min-height: 25px; min-width: 25px; }
+
+.cky-preference-content-wrapper .cky-show-desc-btn { font-size: 14px; font-family: inherit; color: rgb(24, 99, 220); text-decoration: underline; line-height: 24px; padding: 0px; margin: 0px; white-space: nowrap; cursor: pointer; background: rgba(255, 255, 255, 0); border-color: rgba(255, 255, 255, 0); text-transform: none; min-height: 0px; text-shadow: none; box-shadow: none; }
+
+.cky-accordion-wrapper { margin-bottom: 10px; }
+
+.cky-accordion { border-bottom: 1px solid; }
+
+.cky-accordion:last-child { border-bottom-width: medium; border-bottom-style: none; border-bottom-color: currentcolor; }
+
+.cky-accordion .cky-accordion-item { display: flex; margin-top: 10px; }
+
+.cky-accordion .cky-accordion-body { display: none; }
+
+.cky-accordion.cky-accordion-active .cky-accordion-body { display: block; padding: 0px 22px; margin-bottom: 16px; }
+
+.cky-accordion-header-wrapper { cursor: pointer; width: 100%; }
+
+.cky-accordion-item .cky-accordion-header { display: flex; justify-content: space-between; align-items: center; }
+
+.cky-accordion-header .cky-accordion-btn { font-size: 16px; font-family: inherit; color: rgb(33, 33, 33); line-height: 24px; background: none; border-width: medium; border-style: none; border-color: currentcolor; border-image: none; font-weight: 700; padding: 0px; margin: 0px; cursor: pointer; text-transform: none; min-height: 0px; text-shadow: none; box-shadow: none; }
+
+.cky-accordion-header .cky-always-active { color: green; font-weight: 600; line-height: 24px; font-size: 14px; }
+
+.cky-accordion-header-des { font-size: 14px; line-height: 24px; margin: 10px 0px 16px; }
+
+.cky-accordion-chevron { margin-right: 22px; position: relative; cursor: pointer; }
+
+.cky-accordion-chevron-hide { display: none; }
+
+.cky-accordion .cky-accordion-chevron i::before { content: ""; position: absolute; border-right-width: 1.4px; border-right-style: solid; border-bottom-width: 1.4px; border-bottom-style: solid; border-color: inherit; height: 6px; width: 6px; transform: rotate(-45deg); transition: 0.2s ease-in-out; top: 8px; }
+
+.cky-accordion.cky-accordion-active .cky-accordion-chevron i::before { transform: rotate(45deg); }
+
+.cky-audit-table { background: rgb(244, 244, 244); border-radius: 6px; }
+
+.cky-audit-table .cky-empty-cookies-text { color: inherit; font-size: 12px; line-height: 24px; margin: 0px; padding: 10px; word-break: break-word; }
+
+.cky-audit-table .cky-cookie-des-table { font-size: 12px; line-height: 24px; font-weight: 400; padding: 15px 10px; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: inherit; margin: 0px; }
+
+.cky-audit-table .cky-cookie-des-table:last-child { border-bottom-width: medium; border-bottom-style: none; border-bottom-color: currentcolor; }
+
+.cky-audit-table .cky-cookie-des-table li { list-style-type: none; display: flex; padding: 3px 0px; }
+
+.cky-audit-table .cky-cookie-des-table li:first-child { padding-top: 0px; }
+
+.cky-cookie-des-table li div:first-child { width: 100px; font-weight: 600; word-break: break-word; overflow-wrap: break-word; }
+
+.cky-cookie-des-table li div:last-child { flex: 1 1 0%; word-break: break-word; overflow-wrap: break-word; margin-left: 8px; }
+
+.cky-footer-shadow { display: block; width: 100%; height: 40px; background: linear-gradient(rgba(255, 255, 255, 0) 0%, rgb(255, 255, 255) 100%); position: absolute; bottom: calc(100% - 1px); }
+
+.cky-footer-wrapper { position: relative; }
+
+.cky-prefrence-btn-wrapper { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; padding: 22px 24px; border-top: 1px solid; gap: 8px; }
+
+.cky-prefrence-btn-wrapper .cky-btn { flex: 1 1 auto; max-width: 100%; text-shadow: none; box-shadow: none; margin: 0px; white-space: unset; overflow-wrap: break-word; }
+
+.cky-btn-preferences { color: rgb(24, 99, 220); background: rgba(255, 255, 255, 0); border: 2px solid rgb(24, 99, 220); }
+
+.cky-preference-header, .cky-preference-body-wrapper, .cky-accordion-wrapper, .cky-accordion, .cky-accordion-wrapper, .cky-footer-wrapper, .cky-prefrence-btn-wrapper { border-color: inherit; }
+
+.cky-preference-body-wrapper .cky-dma-content-wrapper { font-size: 14px; line-height: 24px; font-weight: 400; padding: 4px 0px 12px; }
+
+.cky-preference-body-wrapper .cky-dma-content-wrapper p { color: inherit; word-break: break-word; }
+
+.cky-preference-body-wrapper .cky-dma-content-wrapper p:first-child { margin-top: 0px; }
+
+.cky-preference-body-wrapper .cky-dma-content-wrapper p:last-child { margin-bottom: 0px; }
+
+.cky-preference-body-wrapper .cky-horizontal-separator { border-bottom-width: 1px; border-bottom-style: solid; border-color: inherit; }
+
+@media (max-width: 845px) {
+  .cky-modal { max-width: calc(100% - 16px); }
+}
+
+@media (max-width: 576px) {
+  .cky-modal { max-width: 100%; }
+  .cky-preference-center { max-height: 100vh; }
+  .cky-prefrence-btn-wrapper { flex-direction: column; }
+  .cky-accordion.cky-accordion-active .cky-accordion-body { padding-right: 0px; }
+  .cky-prefrence-btn-wrapper .cky-btn { width: 100%; margin: 10px 0px 0px; }
+  .cky-prefrence-btn-wrapper .cky-btn-reject { order: 3; }
+  .cky-prefrence-btn-wrapper .cky-btn-accept { order: 1; margin-top: 0px; }
+  .cky-prefrence-btn-wrapper .cky-btn-preferences { order: 2; }
+}
+
+@media (max-width: 425px) {
+  .cky-accordion-chevron { margin-right: 15px; }
+  .cky-notice-btn-wrapper { margin-top: 0px; }
+  .cky-accordion.cky-accordion-active .cky-accordion-body { padding: 0px 15px; }
+}
+
+@media (max-width: 352px) {
+  .cky-preference-header .cky-preference-title { font-size: 16px; }
+  .cky-preference-header { padding: 16px 24px; }
+  .cky-preference-content-wrapper *, .cky-accordion-header-des *, .cky-dma-content-wrapper * { font-size: 12px; }
+  .cky-preference-content-wrapper, .cky-preference-body-wrapper .cky-dma-content-wrapper, .cky-preference-content-wrapper .cky-show-more, .cky-accordion-header .cky-always-active, .cky-accordion-header-des, .cky-preference-content-wrapper .cky-show-desc-btn, .cky-notice-des a.cky-policy, .cky-dma-content-wrapper a.cky-policy { font-size: 12px; }
+  .cky-accordion-header .cky-accordion-btn { font-size: 14px; }
+}
+
+.cky-switch { display: flex; }
+
+.cky-switch input[type="checkbox"] { position: relative; width: 44px; height: 24px; margin: 0px; background: rgb(208, 213, 210); appearance: none; border-radius: 50px; cursor: pointer; outline: 0px; border-width: medium; border-style: none; border-color: currentcolor; border-image: none; top: 0px; }
+
+.cky-switch input[type="checkbox"]:checked { background: rgb(24, 99, 220); }
+
+.cky-switch input[type="checkbox"]::before { position: absolute; content: ""; height: 20px; width: 20px; left: 2px; bottom: 2px; border-radius: 50%; background-color: rgb(255, 255, 255); transition: 0.4s; margin: 0px; }
+
+.cky-switch input[type="checkbox"]::after { display: none; }
+
+.cky-switch input[type="checkbox"]:checked::before { transform: translateX(20px); }
+
+@media (max-width: 425px) {
+  .cky-switch input[type="checkbox"] { width: 38px; height: 21px; }
+  .cky-switch input[type="checkbox"]::before { height: 17px; width: 17px; }
+  .cky-switch input[type="checkbox"]:checked::before { transform: translateX(17px); }
+}
+
+.cky-consent-bar .cky-banner-btn-close { z-index: 1; position: absolute; right: 9px; top: 5px; background: none; border-width: medium; border-style: none; border-color: currentcolor; border-image: none; cursor: pointer; padding: 0px; margin: 0px; min-height: 0px; line-height: 0; height: 24px; width: 24px; text-shadow: none; box-shadow: none; }
+
+.cky-consent-bar .cky-banner-btn-close img { height: 9px; width: 9px; margin: 0px; }
+
+.cky-notice-btn-wrapper .cky-btn-do-not-sell { font-size: 14px; line-height: 24px; padding: 6px 0px; margin: 0px; font-weight: 500; border-radius: 2px; border: rgba(255, 255, 255, 0); white-space: nowrap; cursor: pointer; text-align: left; color: rgb(24, 99, 220); background: rgba(255, 255, 255, 0); box-shadow: none; text-shadow: none; text-decoration: underline; }
+
+.cky-consent-bar .cky-banner-btn-close:focus-visible, .cky-notice-btn-wrapper .cky-btn-do-not-sell:focus-visible, .cky-opt-out-btn-wrapper .cky-btn:focus-visible, .cky-opt-out-checkbox-wrapper input[type="checkbox"].cky-opt-out-checkbox:focus-visible { outline: rgb(24, 99, 220) solid 2px; outline-offset: 2px; }
+
+@media (max-width: 768px) {
+  .cky-notice-btn-wrapper { margin-left: 0px; margin-top: 10px; justify-content: left; }
+  .cky-notice-btn-wrapper .cky-btn-do-not-sell { padding: 0px; }
+}
+
+@media (max-width: 352px) {
+  .cky-notice-btn-wrapper .cky-btn-do-not-sell, .cky-notice-des a.cky-policy, .cky-notice-des a.cky-link-default { font-size: 12px; }
+}
+
+.cky-opt-out-wrapper { padding: 12px 0px; }
+
+.cky-opt-out-wrapper .cky-opt-out-checkbox-wrapper { display: flex; align-items: center; }
+
+.cky-opt-out-checkbox-wrapper .cky-opt-out-checkbox-label { font-size: 16px; font-weight: 700; line-height: 24px; margin: 0px 0px 0px 12px; cursor: pointer; word-break: break-word; }
+
+.cky-opt-out-checkbox-wrapper input[type="checkbox"].cky-opt-out-checkbox { background-color: rgb(255, 255, 255); border: 1px solid rgb(0, 0, 0); width: 20px; height: 18.5px; margin: 0px; appearance: none; position: relative; display: flex; align-items: center; justify-content: center; border-radius: 2px; cursor: pointer; }
+
+.cky-opt-out-checkbox-wrapper input[type="checkbox"].cky-opt-out-checkbox:checked { background-color: rgb(24, 99, 220); border-width: medium; border-style: none; border-color: currentcolor; border-image: none; }
+
+.cky-opt-out-checkbox-wrapper input[type="checkbox"].cky-opt-out-checkbox:checked::after { left: 6px; bottom: 4px; width: 7px; height: 13px; border-style: solid; border-color: rgb(255, 255, 255); border-image: none; border-width: 0px 3px 3px 0px; border-radius: 2px; transform: rotate(45deg); content: ""; position: absolute; box-sizing: border-box; }
+
+.cky-opt-out-checkbox-wrapper.cky-disabled .cky-opt-out-checkbox-label, .cky-opt-out-checkbox-wrapper.cky-disabled input[type="checkbox"].cky-opt-out-checkbox { cursor: no-drop; }
+
+.cky-gpc-wrapper { margin: 0px 0px 0px 32px; }
+
+.cky-footer-wrapper .cky-optout-action-area { padding: 0px 24px 22px; box-sizing: border-box; }
+
+.cky-footer-wrapper .cky-opt-out-btn-wrapper { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; padding-top: 22px; }
+
+.cky-opt-out-btn-wrapper .cky-btn { flex: 1 1 auto; max-width: 100%; text-shadow: none; box-shadow: none; }
+
+.cky-opt-out-btn-wrapper .cky-btn-cancel { border: 1px solid rgb(222, 223, 224); background: rgba(255, 255, 255, 0); color: rgb(133, 133, 133); }
+
+.cky-opt-out-btn-wrapper .cky-btn-confirm { background: rgb(24, 99, 220); color: rgb(255, 255, 255); border: 1px solid rgb(24, 99, 220); }
+
+.cky-optout-success { border-radius: 8px; padding: 8px 12px; margin: 0px auto; box-sizing: border-box; outline: none; }
+
+.cky-optout-success .cky-optout-success-inner { display: flex; flex-direction: column; gap: 4px; }
+
+.cky-optout-success .cky-optout-success-row { display: flex; align-items: flex-start; }
+
+.cky-optout-success .cky-optout-success-icon { width: 20px; flex-shrink: 0; }
+
+.cky-optout-success .cky-optout-success-text { margin-inline-start: 8px; margin-top: 1px; font-weight: 400; font-size: 13px; line-height: 20px; }
+
+.cky-optout-success .cky-optout-success-text p { margin: 0px; }
+
+.cky-optout-success .cky-optout-success-subtext { margin: 0px; font-weight: 400; font-size: 12px; line-height: 20px; }
+
+@media (max-width: 352px) {
+  .cky-opt-out-checkbox-wrapper .cky-opt-out-checkbox-label { font-size: 14px; }
+  .cky-gpc-wrapper .cky-gpc-desc, .cky-gpc-wrapper .cky-gpc-desc * { font-size: 12px; }
+  .cky-opt-out-checkbox-wrapper input[type="checkbox"].cky-opt-out-checkbox { width: 16px; height: 16px; }
+  .cky-opt-out-checkbox-wrapper input[type="checkbox"].cky-opt-out-checkbox:checked::after { left: 5px; bottom: 4px; width: 3px; height: 9px; }
+  .cky-gpc-wrapper { margin: 0px 0px 0px 28px; }
+}
+
+.video-placeholder-youtube { background-size: 100% 100%; background-position: center center; background-repeat: no-repeat; background-color: rgba(178, 176, 176, 0.35); position: relative; display: flex; align-items: center; justify-content: center; max-width: 100%; }
+
+.video-placeholder-text-youtube { text-align: center; align-items: center; padding: 10px 16px; background-color: rgba(0, 0, 0, 0.8); color: rgb(255, 255, 255); border: 1px solid; border-radius: 2px; cursor: pointer; }
+
+.video-placeholder-normal { background-image: url("https://cdn-cookieyes.com/assets/images/cky-placeholder.svg"); background-size: 80px auto; background-position: center center; background-repeat: no-repeat; background-color: rgba(178, 176, 176, 0.35); position: relative; display: flex; align-items: flex-end; justify-content: center; max-width: 100%; }
+
+.video-placeholder-text-normal { align-items: center; padding: 10px 16px; text-align: center; border: 1px solid; border-radius: 2px; cursor: pointer; }
+
+.cky-rtl { direction: rtl; text-align: right; }
+
+.cky-rtl .cky-banner-btn-close { left: 9px; right: auto; }
+
+.cky-rtl .cky-notice-btn-wrapper .cky-btn:last-child { margin-right: 8px; }
+
+.cky-rtl .cky-notice-btn-wrapper .cky-btn:first-child { margin-right: 0px; }
+
+.cky-rtl .cky-notice-btn-wrapper { margin-left: 0px; margin-right: 15px; }
+
+.cky-rtl .cky-prefrence-btn-wrapper .cky-btn { margin-right: 8px; }
+
+.cky-rtl .cky-prefrence-btn-wrapper .cky-btn:first-child { margin-right: 0px; }
+
+.cky-rtl .cky-accordion .cky-accordion-chevron i::before { border-width: 1.4px medium medium 1.4px; border-style: solid none none solid; border-color: currentcolor; border-image: none; left: 12px; }
+
+.cky-rtl .cky-accordion.cky-accordion-active .cky-accordion-chevron i::before { transform: rotate(-135deg); }
+
+@media (max-width: 768px) {
+  .cky-rtl .cky-notice-btn-wrapper { margin-right: 0px; }
+}
+
+@media (max-width: 576px) {
+  .cky-rtl .cky-notice-btn-wrapper .cky-btn:last-child { margin-right: 0px; }
+  .cky-rtl .cky-prefrence-btn-wrapper .cky-btn { margin-right: 0px; }
+  .cky-rtl .cky-accordion.cky-accordion-active .cky-accordion-body { padding: 0px 22px 0px 0px; }
+}
+
+@media (max-width: 425px) {
+  .cky-rtl .cky-accordion.cky-accordion-active .cky-accordion-body { padding: 0px 15px 0px 0px; }
+}
+
+.cky-rtl .cky-opt-out-btn-wrapper .cky-btn { margin-right: 12px; }
+
+.cky-rtl .cky-opt-out-btn-wrapper .cky-btn:first-child { margin-right: 0px; }
+
+.cky-rtl .cky-opt-out-checkbox-wrapper .cky-opt-out-checkbox-label { margin: 0px 12px 0px 0px; }
+
+.cky-preference-header .cky-preference-title { margin: 0px; padding: 0px; }
+
+.cky-accordion-heading { margin: 0px; padding: 0px; font: inherit; color: inherit; display: block; }
+
+@media (max-width: 480px) {
+  .cky-btn-revisit-wrapper { width: 36px; height: 36px; }
+  .cky-btn-revisit-wrapper .cky-btn-revisit img { height: 22px; width: 22px; }
+  .cky-revisit-bottom-left { bottom: 8px; left: 8px; }
+  .cky-revisit-bottom-right { bottom: 8px; right: 8px; }
+}
+
+.cky-attribution-icon { display: inline-block; width: 24px; height: 24px; margin-inline-end: 8px; vertical-align: bottom; line-height: 0; }
+
+.cky-attribution-icon svg { width: 24px; height: 24px; display: block; }</style>
+	
+	
+
+	<title>Összes program - Budapest Jazz Club</title>
+	<meta name="revisit-after" content="3 days">
+<!--
+	<link rel="Shortcut Icon" href="https://www.bjc.hu/images/favicon.ico" type="image/x-icon" />
+-->
+	<link rel="apple-touch-icon" type="image/png" sizes="57x57" href="https://www.bjc.hu/images/favicon/apple-icon-57x57.png">
+	<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="https://www.bjc.hu/images/favicon/apple-icon-60x60.png">
+	<link rel="apple-touch-icon" type="image/png" sizes="72x72" href="https://www.bjc.hu/images/favicon/apple-icon-72x72.png">
+	<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="https://www.bjc.hu/images/favicon/apple-icon-76x76.png">
+	<link rel="apple-touch-icon" type="image/png" sizes="114x114" href="https://www.bjc.hu/images/favicon/apple-icon-114x114.png">
+	<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="https://www.bjc.hu/images/favicon/apple-icon-120x120.png">
+	<link rel="apple-touch-icon" type="image/png" sizes="144x144" href="https://www.bjc.hu/images/favicon/apple-icon-144x144.png">
+	<link rel="apple-touch-icon" type="image/png" sizes="152x152" href="https://www.bjc.hu/images/favicon/apple-icon-152x152.png">
+	<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="https://www.bjc.hu/images/favicon/apple-icon-180x180.png">
+	<link rel="icon" type="image/png" sizes="192x192" href="https://www.bjc.hu/images/favicon/android-icon-192x192.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="https://www.bjc.hu/images/favicon/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="96x96" href="https://www.bjc.hu/images/favicon/favicon-96x96.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="https://www.bjc.hu/images/favicon/favicon-16x16.png">
+
+	<meta name="title" content="Összes program - Budapest Jazz Club">
+	<meta name="keywords" content="Bjc, Budapest Jazz Klub, koncert, Jazz, élő zene, JAM, kocsma, kávézó, étterem">
+	<meta name="description" content="">
+
+	<script src="https://connect.facebook.net/hu_HU/bundle/sdk.js/" async="" crossorigin="anonymous"></script><script id="facebook-jssdk" src="https://connect.facebook.net/hu_HU/sdk.js#xfbml=1&amp;version=v2.0"></script><script async="" src="https://www.googletagmanager.com/gtm.js?id=GTM-WPJ3P3NG"></script><script async="" src="https://pixel.barion.com/bp.js"></script><script async="" src="https://www.google-analytics.com/analytics.js"></script><script type="text/javascript">root = 'https://www.bjc.hu';</script>
+	<!--[if lt IE 9]>
+	<script src="https://www.bjc.hu/js/respond.src.js"></script>
+	<script src="https://www.bjc.hu/js/respond.proxy.js"></script>
+	<![endif]-->
+
+	<script type="text/javascript">root = 'https://www.bjc.hu';</script>
+	<script type="text/javascript" src="https://www.bjc.hu/js/anchors.js?v=464f76"></script>
+	<script type="text/javascript" src="https://www.bjc.hu/js/script.js?v=464f76"></script>
+	<!--<script type="text/javascript" src="https://www.bjc.hu/js/frame.js?v=464f76"></script>-->
+	
+	<link rel="stylesheet" href="https://www.bjc.hu/css/layout.css?v=464f76" type="text/css">
+	<!--
+	<link rel="stylesheet" href="https://www.bjc.hu/css/layout_1000.css?v=464f76" media="screen and ( max-width: 1000px )" type="text/css" />
+	<link rel="stylesheet" href="https://www.bjc.hu/css/layout_700.css?v=464f76" media="screen and ( max-width: 700px )" type="text/css" />
+	<link rel="stylesheet" href="https://www.bjc.hu/css/layout_550.css?v=464f76" media="screen and ( max-width: 550px )" type="text/css" />
+	-->
+	<link href="https://fonts.googleapis.com/css?family=Titillium+Web:400,700&amp;display=swap&amp;subset=latin-ext" rel="stylesheet">
+	<link rel="stylesheet" href="https://www.bjc.hu/fonts/webfonts.css?v=464f76" type="text/css">
+	<link rel="stylesheet" href="https://www.bjc.hu/css/program.css?v=464f76" type="text/css">
+
+	<script type="text/javascript" src="https://www.bjc.hu/js/lytebox.js?v=464f76"></script>
+	<link rel="stylesheet" href="https://www.bjc.hu/css/lytebox.css?v=464f76" type="text/css">
+
+	<!--<link rel="canonical" href="https://www.bjc.hu/programok/osszes-program/" />-->
+	<link rel="alternate" hreflang="en" href="https://www.bjc.hu/programs/all-programs/">
+
+<meta property="&quot;og:image&quot;" content="&quot;https://www.bjc.hu/sources/root/tartalom_kepek/opengraph_20141021_avishai.jpg&quot;/">
+	<meta name="viewport" content="width=device-width, user-scalable=1, minimum-scale=0.75, maximum-scale=1.0">
+<script type="text/javascript">
+lang = 'hun';
+tetelArray = [];
+paymentId = '';
+</script>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-268106-13', 'auto');
+  ga('send', 'pageview');
+</script>
+
+        <script>
+            // Create BP element on the window
+            window["bp"] = window["bp"] || function () {
+                (window["bp"].q = window["bp"].q || []).push(arguments);
+            };
+            window["bp"].l = 1 * new Date();
+
+            // Insert a script tag on the top of the head to load bp.js
+            scriptElement = document.createElement("script");
+            firstScript = document.getElementsByTagName("script")[0];
+            scriptElement.async = true;
+            scriptElement.src = 'https://pixel.barion.com/bp.js';
+            firstScript.parentNode.insertBefore(scriptElement, firstScript);
+
+            // Send init event
+            bp('init', 'addBarionPixelId', 'BP-ehYxI7Co1U-56');
+        </script>
+
+        <noscript>
+            <img height="1" width="1" style="display:none" alt="Barion Pixel" src="https://pixel.barion.com/a.gif?ba_pixel_id='BP-ehYxI7Co1U-56'&ev=contentView&noscript=1">
+        </noscript>
+
+<!-- Google Tag Manager -->
+        <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer','GTM-WPJ3P3NG');</script>
+<!-- End Google Tag Manager -->
+        
+<!-- Start cookieyes banner --> <script id="cookieyes" type="text/javascript" src="https://cdn-cookieyes.com/client_data/c1b63d5e0daf40224d492de4/script.js"></script><script src="https://cdn-cookieyes.com/client_data/c1b63d5e0daf40224d492de4/banner.js" async="" id="cookieyes-banner"></script> <!-- End cookieyes banner -->
+        
+</head>
+<body><div class="cky-hide cky-overlay"></div><div class="cky-consent-container cky-banner-bottom" role="region" aria-label="Fontosnak tartjuk az adatok védelmét" tabindex="-1"><div class="cky-consent-bar" data-cky-tag="notice" style="border-color: #2a2a2a; background-color: #121212;"><div class="cky-notice"><p class="cky-title" data-cky-tag="title" aria-level="2" role="heading" style="color: #d0d0d0;">Fontosnak tartjuk az adatok védelmét</p><div class="cky-notice-group"><div class="cky-notice-des" data-cky-tag="description" style="color: #d0d0d0;"><p>A böngészési élmény fokozása, a személyre szabott hirdetések vagy tartalmak megjelenítése, valamint a forgalom elemzése érdekében sütiket (cookie) használunk. A "Mindet elfogadom" gombra kattintva hozzájárulhat a sütik használatához.</p></div><div class="cky-notice-btn-wrapper" data-cky-tag="notice-buttons" role="group"><button class="cky-btn cky-btn-customize" aria-label="Testreszabás" aria-haspopup="dialog" aria-controls="ckyPreferenceCenter" data-cky-tag="settings-button" style="color: #d0d0d0; border-color: #d0d0d0; background-color: transparent;">Testreszabás</button> <button class="cky-btn cky-btn-reject" aria-label="Elutasít" data-cky-tag="reject-button" style="color: #d0d0d0; border-color: #d0d0d0; background-color: transparent;">Elutasít</button> <button class="cky-btn cky-btn-accept" aria-label="Az összes elfogadása" data-cky-tag="accept-button" style="color: #d0d0d0; border-color: #1863dc; background-color: #1863dc;">Az összes elfogadása</button> </div></div></div></div></div><div class="cky-modal" tabindex="-1"><div class="cky-preference-center" data-cky-tag="detail" role="dialog" aria-modal="true" id="ckyPreferenceCenter" aria-labelledby="ckyPreferenceTitle" style="color: #d0d0d0; border-color: #2A2A2A; background-color: #121212;"><div class="cky-preference-header"><span class="cky-preference-title" aria-level="2" data-cky-tag="detail-title" role="heading" id="ckyPreferenceTitle" style="color: #d0d0d0;">Engedélyek beállítása</span> <button aria-label="Bezárás" class="cky-btn-close" data-cky-tag="detail-close"><img alt="" src="https://cdn-cookieyes.com/assets/images/close.svg" width="10" height="10"></button></div><div class="cky-preference-body-wrapper"><div class="cky-preference-content-wrapper" data-cky-tag="detail-description" style="color: #d0d0d0;"><p>A hatékony navigáció és bizonyos funkciók működésének érdekében sütiket használunk. Az alábbiakban az egyes kategóriák alatt részletes információkat talál minden sütiről.</p><p>A "Szükséges" kategóriába sorolt sütiket a böngésző tárolja, mivel ezek elengedhetetlenül szükségesek a webhely alapvető funkcióihoz. ...&nbsp;<button class="cky-show-desc-btn" data-cky-tag="show-desc-button" aria-expanded="false" aria-label="Mutass többet">Mutass többet</button></p></div><div class="cky-horizontal-separator"></div><div class="cky-accordion-wrapper" data-cky-tag="detail-categories"><div class="cky-accordion" id="ckyDetailCategorynecessary"><div class="cky-accordion-item"><div class="cky-accordion-chevron"><i class="cky-chevron-right"></i></div><div class="cky-accordion-header-wrapper"><div class="cky-accordion-header"><button class="cky-accordion-btn" aria-expanded="false" aria-controls="ckyDetailCategorynecessaryBody" aria-label="Szükséges" data-cky-tag="detail-category-title" style="color: #d0d0d0;">Szükséges</button><span class="cky-always-active" data-cky-tag="always-active">Mindig aktív</span></div><div class="cky-accordion-header-des" data-cky-tag="detail-category-description" style="color: #d0d0d0;"><p>A szükséges sütik döntő fontosságúak a weboldal alapvető funkciói szempontjából, és a weboldal ezek nélkül nem fog megfelelően működni.Ezek a sütik nem tárolnak személyazonosításra alkalmas adatokat.</p></div></div></div><div class="cky-accordion-body" id="ckyDetailCategorynecessaryBody"><div class="cky-audit-table" data-cky-tag="audit-table" style="color: #d0d0d0; border-color: #474444; background-color: #2a2a2a;"><p class="cky-empty-cookies-text">Nincs megjeleníthető cookie.</p></div></div></div><div class="cky-accordion" id="ckyDetailCategoryfunctional"><div class="cky-accordion-item"><div class="cky-accordion-chevron"><i class="cky-chevron-right"></i></div><div class="cky-accordion-header-wrapper"><div class="cky-accordion-header"><button class="cky-accordion-btn" aria-expanded="false" aria-controls="ckyDetailCategoryfunctionalBody" aria-label="Funkcionális" data-cky-tag="detail-category-title" style="color: #d0d0d0;">Funkcionális</button><div class="cky-switch" data-cky-tag="detail-category-toggle"><input type="checkbox" role="switch" id="ckySwitchfunctional" aria-label="Engedélyezze Funkcionális" autocomplete="off" style="background-color: rgb(208, 213, 210);"></div></div><div class="cky-accordion-header-des" data-cky-tag="detail-category-description" style="color: #d0d0d0;"><p>A funkcionális sütik segítenek bizonyos funkciók végrehajtásában, például a weboldal tartalmának megosztásában a közösségi média platformokon, visszajelzések gyűjtésében és más, harmadik féltől származó funkciókban.</p></div></div></div><div class="cky-accordion-body" id="ckyDetailCategoryfunctionalBody"><div class="cky-audit-table" data-cky-tag="audit-table" style="color: #d0d0d0; border-color: #474444; background-color: #2a2a2a;"><ul class="cky-cookie-des-table"><li><div>Cookie</div><div>yt-remote-device-id</div></li><li><div>Időtartam</div><div>Soha</div></li><li><div>Leírás</div><div>A YouTube a cookie segítségével tárolja a felhasználó videóbeállításait a beágyazott YouTube videókhoz.</div></li></ul><ul class="cky-cookie-des-table"><li><div>Cookie</div><div>ytidb::LAST_RESULT_ENTRY_KEY</div></li><li><div>Időtartam</div><div>Soha</div></li><li><div>Leírás</div><div>The cookie ytidb::LAST_RESULT_ENTRY_KEY is used by YouTube to store the last search result entry that was clicked by the user. This information is used to improve the user experience by providing more relevant search results in the future.</div></li></ul><ul class="cky-cookie-des-table"><li><div>Cookie</div><div>yt-player-headers-readable</div></li><li><div>Időtartam</div><div>Soha</div></li><li><div>Leírás</div><div>The yt-player-headers-readable cookie is used by YouTube to store user preferences related to video playback and interface, enhancing the user's viewing experience.</div></li></ul><ul class="cky-cookie-des-table"><li><div>Cookie</div><div>yt-remote-connected-devices</div></li><li><div>Időtartam</div><div>Soha</div></li><li><div>Leírás</div><div>A YouTube a cookie segítségével tárolja a felhasználó videóbeállításait a beágyazott YouTube videókhoz.</div></li></ul><ul class="cky-cookie-des-table"><li><div>Cookie</div><div>yt-remote-session-app</div></li><li><div>Időtartam</div><div>munkamenet</div></li><li><div>Leírás</div><div>The yt-remote-session-app cookie is used by YouTube to store user preferences and information about the interface of the embedded YouTube video player.</div></li></ul><ul class="cky-cookie-des-table"><li><div>Cookie</div><div>yt-remote-cast-installed</div></li><li><div>Időtartam</div><div>munkamenet</div></li><li><div>Leírás</div><div>The yt-remote-cast-installed cookie is used to store the user's video player preferences using embedded YouTube video.</div></li></ul><ul class="cky-cookie-des-table"><li><div>Cookie</div><div>yt-remote-session-name</div></li><li><div>Időtartam</div><div>munkamenet</div></li><li><div>Leírás</div><div>The yt-remote-session-name cookie is used by YouTube to store the user's video player preferences using embedded YouTube video.</div></li></ul><ul class="cky-cookie-des-table"><li><div>Cookie</div><div>yt-remote-cast-available</div></li><li><div>Időtartam</div><div>munkamenet</div></li><li><div>Leírás</div><div>The yt-remote-cast-available cookie is used to store the user's preferences regarding whether casting is available on their YouTube video player.</div></li></ul><ul class="cky-cookie-des-table"><li><div>Cookie</div><div>yt-remote-fast-check-period</div></li><li><div>Időtartam</div><div>munkamenet</div></li><li><div>Leírás</div><div>The yt-remote-fast-check-period cookie is used by YouTube to store the user's video player preferences for embedded YouTube videos.</div></li></ul></div></div></div><div class="cky-accordion" id="ckyDetailCategoryanalytics"><div class="cky-accordion-item"><div class="cky-accordion-chevron"><i class="cky-chevron-right"></i></div><div class="cky-accordion-header-wrapper"><div class="cky-accordion-header"><button class="cky-accordion-btn" aria-expanded="false" aria-controls="ckyDetailCategoryanalyticsBody" aria-label="Analitika" data-cky-tag="detail-category-title" style="color: #d0d0d0;">Analitika</button><div class="cky-switch" data-cky-tag="detail-category-toggle"><input type="checkbox" role="switch" id="ckySwitchanalytics" aria-label="Engedélyezze Analitika" autocomplete="off" style="background-color: rgb(208, 213, 210);"></div></div><div class="cky-accordion-header-des" data-cky-tag="detail-category-description" style="color: #d0d0d0;"><p>Analitikai sütiket használnak annak megértésére, hogy a látogatók hogyan lépnek kapcsolatba a weboldallal. Ezek a cookie-k segítséget nyújtanak a látogatók számáról, a visszafordulási arányról, a forgalmi forrásról stb.</p></div></div></div><div class="cky-accordion-body" id="ckyDetailCategoryanalyticsBody"><div class="cky-audit-table" data-cky-tag="audit-table" style="color: #d0d0d0; border-color: #474444; background-color: #2a2a2a;"><ul class="cky-cookie-des-table"><li><div>Cookie</div><div>_ga</div></li><li><div>Időtartam</div><div>1 év 1 hónap 4 nap</div></li><li><div>Leírás</div><div>A Google Analytics a cookie segítségével számítja ki a látogatói, munkameneti és kampányadatokat, valamint követi az oldal használatát az oldal analitikai jelentéséhez. A cookie névtelenül tárolja az adatokat, és egy véletlenszerűen generált szám társításával azonosítja az egyes felhasználókat.</div></li></ul><ul class="cky-cookie-des-table"><li><div>Cookie</div><div>_gid</div></li><li><div>Időtartam</div><div>1 nap</div></li><li><div>Leírás</div><div>A Google Analytics a cookie segítségével tárolja az adatokat arról, hogy a látogatók hogyan használják a weboldalt, és közben egy analitikai jelentést is készít a weboldal teljesítményéről. A gyűjtött adatok tartalmazhatják névtelenül a látogatók számát, a forrásukat és a felkeresett oldalakat.</div></li></ul></div></div></div><div class="cky-accordion" id="ckyDetailCategoryperformance"><div class="cky-accordion-item"><div class="cky-accordion-chevron"><i class="cky-chevron-right"></i></div><div class="cky-accordion-header-wrapper"><div class="cky-accordion-header"><button class="cky-accordion-btn" aria-expanded="false" aria-controls="ckyDetailCategoryperformanceBody" aria-label="Teljesítmény" data-cky-tag="detail-category-title" style="color: #d0d0d0;">Teljesítmény</button><div class="cky-switch" data-cky-tag="detail-category-toggle"><input type="checkbox" role="switch" id="ckySwitchperformance" aria-label="Engedélyezze Teljesítmény" autocomplete="off" style="background-color: rgb(208, 213, 210);"></div></div><div class="cky-accordion-header-des" data-cky-tag="detail-category-description" style="color: #d0d0d0;"><p>A teljesítmény-sütiket a weboldal kulcsfontosságú teljesítménymutatóinak megértésére és elemzésére használják, amelyek hozzájárulnak a látogatók jobb felhasználói élményének biztosításához.</p></div></div></div><div class="cky-accordion-body" id="ckyDetailCategoryperformanceBody"><div class="cky-audit-table" data-cky-tag="audit-table" style="color: #d0d0d0; border-color: #474444; background-color: #2a2a2a;"><ul class="cky-cookie-des-table"><li><div>Cookie</div><div>_gat</div></li><li><div>Időtartam</div><div>1 perc</div></li><li><div>Leírás</div><div>A Google Universal Analytics használja ezt a cookie-t. Visszafogja a lekérdezési arányt, és ezzel korlátozza az adatok gyűjtését a nagy forgalmú oldalakon.</div></li></ul></div></div></div><div class="cky-accordion" id="ckyDetailCategoryadvertisement"><div class="cky-accordion-item"><div class="cky-accordion-chevron"><i class="cky-chevron-right"></i></div><div class="cky-accordion-header-wrapper"><div class="cky-accordion-header"><button class="cky-accordion-btn" aria-expanded="false" aria-controls="ckyDetailCategoryadvertisementBody" aria-label="Hirdetés" data-cky-tag="detail-category-title" style="color: #d0d0d0;">Hirdetés</button><div class="cky-switch" data-cky-tag="detail-category-toggle"><input type="checkbox" role="switch" id="ckySwitchadvertisement" aria-label="Engedélyezze Hirdetés" autocomplete="off" style="background-color: rgb(208, 213, 210);"></div></div><div class="cky-accordion-header-des" data-cky-tag="detail-category-description" style="color: #d0d0d0;"><p>A hirdetési sütiket arra használják, hogy a látogatókat személyre szabott hirdetésekkel juttassák el a korábban meglátogatott oldalak alapján, és elemezzék a hirdetési kampány hatékonyságát.</p></div></div></div><div class="cky-accordion-body" id="ckyDetailCategoryadvertisementBody"><div class="cky-audit-table" data-cky-tag="audit-table" style="color: #d0d0d0; border-color: #474444; background-color: #2a2a2a;"><ul class="cky-cookie-des-table"><li><div>Cookie</div><div>YSC</div></li><li><div>Időtartam</div><div>munkamenet</div></li><li><div>Leírás</div><div>A YouTube a cookie segítségével követi nyomon a YouTube oldalakon beágyazott videók megtekintéseit.</div></li></ul><ul class="cky-cookie-des-table"><li><div>Cookie</div><div>VISITOR_INFO1_LIVE</div></li><li><div>Időtartam</div><div>6 hónap</div></li><li><div>Leírás</div><div>A YouTube a cookie segítségével méri a sávszélességet, és eldönti, hogy a felhasználó az új vagy a régi lejátszói felületet kapja.</div></li></ul><ul class="cky-cookie-des-table"><li><div>Cookie</div><div>VISITOR_PRIVACY_METADATA</div></li><li><div>Időtartam</div><div>6 hónap</div></li><li><div>Leírás</div><div>YouTube sets this cookie to store the user's cookie consent state for the current domain.	</div></li></ul><ul class="cky-cookie-des-table"><li><div>Cookie</div><div>test_cookie</div></li><li><div>Időtartam</div><div>15 perc</div></li><li><div>Leírás</div><div>A doubleclick.net a cookie segítségével határozza meg, hogy a felhasználó böngészője támogatja-e a cookie-kat.</div></li></ul><ul class="cky-cookie-des-table"><li><div>Cookie</div><div>yt.innertube::requests</div></li><li><div>Időtartam</div><div>Soha</div></li><li><div>Leírás</div><div>A YouTube használja ezt a cookie-t. Regisztrál egy egyedi azonosítót, amivel adatokat tárol arról, hogy milyen videókat nézett meg a felhasználó a YouTube-on.</div></li></ul><ul class="cky-cookie-des-table"><li><div>Cookie</div><div>yt.innertube::nextId</div></li><li><div>Időtartam</div><div>Soha</div></li><li><div>Leírás</div><div>A YouTube használja ezt a cookie-t. Regisztrál egy egyedi azonosítót, amivel adatokat tárol arról, hogy milyen videókat nézett meg a felhasználó a YouTube-on.</div></li></ul></div></div></div><div class="cky-accordion" id="ckyDetailCategoryother"><div class="cky-accordion-item"><div class="cky-accordion-chevron"><i class="cky-chevron-right"></i></div><div class="cky-accordion-header-wrapper"><div class="cky-accordion-header"><button class="cky-accordion-btn" aria-expanded="false" aria-controls="ckyDetailCategoryotherBody" aria-label="Nincs kategorizálva" data-cky-tag="detail-category-title" style="color: #d0d0d0;">Nincs kategorizálva</button><div class="cky-switch" data-cky-tag="detail-category-toggle"><input type="checkbox" role="switch" id="ckySwitchother" aria-label="Engedélyezze Nincs kategorizálva" autocomplete="off" style="background-color: rgb(208, 213, 210);"></div></div><div class="cky-accordion-header-des" data-cky-tag="detail-category-description" style="color: #d0d0d0;"><p>Egyéb kategorizálatlan sütik azok, amelyeket elemeznek, és amelyeket még nem soroltak be kategóriába.</p></div></div></div><div class="cky-accordion-body" id="ckyDetailCategoryotherBody"><div class="cky-audit-table" data-cky-tag="audit-table" style="color: #d0d0d0; border-color: #474444; background-color: #2a2a2a;"><ul class="cky-cookie-des-table"><li><div>Cookie</div><div>ba_vid</div></li><li><div>Időtartam</div><div>1 év 1 hónap 4 nap</div></li><li><div>Leírás</div><div>No description available.</div></li></ul><ul class="cky-cookie-des-table"><li><div>Cookie</div><div>ba_sid</div></li><li><div>Időtartam</div><div>1 óra</div></li><li><div>Leírás</div><div>No description available.</div></li></ul><ul class="cky-cookie-des-table"><li><div>Cookie</div><div>ba_sid.2829763311</div></li><li><div>Időtartam</div><div>1 óra</div></li><li><div>Leírás</div><div>Description is currently not available.</div></li></ul><ul class="cky-cookie-des-table"><li><div>Cookie</div><div>ba_vid.2829763311</div></li><li><div>Időtartam</div><div>1 év 1 hónap 4 nap</div></li><li><div>Leírás</div><div>Description is currently not available.</div></li></ul><ul class="cky-cookie-des-table"><li><div>Cookie</div><div>connectid</div></li><li><div>Időtartam</div><div>Múlt</div></li><li><div>Leírás</div><div>Description is currently not available.</div></li></ul><ul class="cky-cookie-des-table"><li><div>Cookie</div><div>code</div></li><li><div>Időtartam</div><div>Múlt</div></li><li><div>Leírás</div><div>No description available.</div></li></ul><ul class="cky-cookie-des-table"><li><div>Cookie</div><div>ba_test</div></li><li><div>Időtartam</div><div>munkamenet</div></li><li><div>Leírás</div><div>Description is currently not available.</div></li></ul></div></div></div></div></div><div class="cky-footer-wrapper"><span class="cky-footer-shadow" style="background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, #121212 100%);"></span><div class="cky-prefrence-btn-wrapper" data-cky-tag="detail-buttons" role="group"><button aria-label="Elutasít" class="cky-btn cky-btn-reject" data-cky-tag="detail-reject-button" style="color: #d0d0d0; border-color: #d0d0d0; background-color: transparent;">Elutasít</button> <button aria-label="Mentse el a beállításokat" class="cky-btn cky-btn-preferences" data-cky-tag="detail-save-button" style="color: #d0d0d0; border-color: #d0d0d0; background-color: transparent;">Mentse el a beállításokat</button> <button aria-label="Az összes elfogadása" class="cky-btn cky-btn-accept" data-cky-tag="detail-accept-button" style="color: #d0d0d0; border-color: #1863dc; background-color: #1863dc;">Az összes elfogadása</button></div><div data-cky-tag="detail-powered-by" style="padding: 8px 24px; font-size: 12px; font-weight: 400; line-height: 20px; text-align: right; border-radius: 0 0 6px 6px; direction: ltr; display: flex; justify-content: flex-end; align-items: center; color: #293C5B; background-color: #EDEDED;">Powered by <a aria-label="Visit CookieYes website" href="https://www.cookieyes.com/product/cookie-consent/?ref=cypbcyb&amp;utm_source=cookie-banner&amp;utm_medium=powered-by-cookieyes" rel="noopener" style="margin-left:5px;line-height:0" target="_blank"><img alt="" src="https://cdn-cookieyes.com/assets/images/poweredbtcky.svg" style="width:78px;height:13px;margin:0" width="78" height="13"></a></div></div></div></div>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WPJ3P3NG"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+<div id="fb-root" class=" fb_reset"><div style="position: absolute; top: -10000px; width: 0px; height: 0px;"><div></div></div></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/hu_HU/sdk.js#xfbml=1&version=v2.0";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+<!--
+<script src="https://apis.google.com/js/platform.js" async defer>
+  {lang: 'hu'}
+</script>
+-->
+<link rel="stylesheet" type="text/css" href="https://www.bjc.hu/css/component.css?v=464f76">
+<script src="https://www.bjc.hu/js/modernizr.custom.js"></script>
+
+<div id="lang_responsive">
+<a href="https://www.bjc.hu/programs/all-programs/"><img src="https://www.bjc.hu/images/english.png" alt="English version" title="English version"></a>
+</div>
+<span itemscope="" itemtype="http://schema.org/Event">
+
+<div id="head">
+	<div id="head-inner">
+<!--
+		<div id="leftline"></div>
+		<div id="rightline"></div>
+-->
+		<div id="head-logo">
+
+			<a href="https://www.bjc.hu/"><img src="https://www.bjc.hu/images/transparent.gif" width="600" height="120" alt="Budapest Jazz Club" title="Budapest Jazz Club">
+</a>
+		</div>
+		<div id="head-contact">
+			<div style="text-align: right"> <a href="https://www.bjc.hu/programs/all-programs/"><img src="https://www.bjc.hu/images/english.png" alt="English version" title="English version"></a></div>
+			<!--<br />
+			<div id="sb-search" class="sb-search">
+				<div style="position: absolute; z-index: 1000; width: 100%; height: 10px; top: -5px; left: 0px; background-color: #000000;"></div>
+				<div style="position: absolute; z-index: 1000; width: 100%; height: 10px; bottom: -10px; left: 0px; background-color: #000000;"></div>
+				<script type="text/javascript">corr=3;</script>
+				<form method="get" action="https://www.bjc.hu/kereses/">
+					<input class="sb-search-input" placeholder="Keresés" type="text" value="" name="search" id="search" onKeyUp="if(this.value == ''){corr=5;}document.getElementById('sb-icon-search').style.top = corr + 'px';document.getElementById('sb-search-submit').style.top = corr + 'px';">
+					<input id="sb-search-submit" class="sb-search-submit" type="submit" value="">
+					<span id="sb-icon-search" class="sb-icon-search"></span>
+				</form>
+			</div>-->
+			<div class="clear"></div>
+			<div itemprop="location" itemscope="" itemtype="http://schema.org/Place" id="info">
+<h4>INFO | ASZTALFOGLALÁS</h4>
+<p itemprop="address" itemscope="" itemtype="http://schema.org/PostalAddress">+36 1 798 7289<br><span itemprop="postalCode">1136</span> <span itemprop="addressLocality">Budapest</span>, <span itemprop="streetAddress">Hollán Ernő u. 7.</span> | <a href="mailto:info@bjc.hu" target="_blank">info@bjc.hu</a></p>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="clear"></div>
+<div id="container">
+	<div id="menu">
+		<div class="menuitem" rel="menuitem"><a href="https://www.bjc.hu/">FŐOLDAL</a></div>
+		<div class="menuitem" rel="menuitem"><a href="https://www.bjc.hu/bjc/">BJC</a></div>
+		<div class="menuitem" rel="menuitem"><a href="https://www.bjc.hu/programok/">PROGRAMOK</a></div>
+		<div class="menuitem" rel="menuitem"><a href="https://www.bjc.hu/bistro-kavezo/">BISTRO &amp; BÁR</a></div>
+		<div class="menuitem" rel="menuitem"><a href="https://www.bjc.hu/rendezvenyhelyszin/">RENDEZVÉNY</a></div>
+		<div class="menuitem" rel="menuitem"><a href="https://www.bjc.hu/kapcsolat-jegy/">INFÓ &amp; JEGYEK</a></div>
+		<div class="menuitem" rel="menuitem"><a href="https://www.bjc.hu/blog/">BLOG</a></div>
+<form method="post" id="linkform">
+
+
+</form>
+		<div id="fblink"><a href="https://www.facebook.com/BudapestJazzClub" target="_blank"></a></div>
+		<div class="clear"></div>
+	</div>
+	<div class="clear"></div>
+	<div id="wrapper">
+		<div id="content-head">
+
+			<div class="clear"></div>
+		</div>
+		<div id="content">
+			<div id="content-inner">
+<div id="content-inner-inner"><div style="border-bottom: 1px solid white;padding: 5px;"><h1>Összes program</h1></div><br>		<meta id="_url7403" itemprop="url" content="https://www.bjc.hu/programok/eloado/nagy-noemi-quartet/?date=120261022000200000">
+		<div itemscope="" itemtype="http://schema.org/Event" itemref="info _url7403" class="programlead">
+			<a href="https://www.bjc.hu/programok/eloado/nagy-noemi-quartet/?date=120261022000200000">
+				<img itemprop="image" src="https://www.bjc.hu/kep/eloado/nagy-noemi-quartet.jpg?size=img" class="programkep" alt="Nagy Noémi Quartet" title="Nagy Noémi Quartet">
+			</a>
+			<div class="programdata">
+				<a href="https://www.bjc.hu/programok/eloado/nagy-noemi-quartet/?date=120261022000200000">
+					<div itemprop="startDate" content="2026-10-22T20.00" class="datum">2026.10.22. 20:00 (csütörtök)</div>
+					<h2 itemprop="name">Nagy Noémi Quartet</h2>
+					<span itemprop="offers" itemscope="" itemtype="http://schema.org/Offer"><div class="jegyar">Jegyárak: <span itemprop="price">3900</span> / <span itemprop="price">3500</span> HUF (<span itemprop="name">teljes árú</span> / <span itemprop="name">diák és nyugdíjas</span>)</div></span>
+					<div class="clear"></div>
+					<span itemscope="" itemtype="http://schema.org/Event" itemprop="description">
+					<p style="text-align: justify;">
+	A zenekar főként jazz standardeket szólaltat meg a fiatal muzsikusokra jellemző teljes átéléssel, ám a formáció tagjaira különösen jellemző kifinomult stílusérzékkel.&nbsp;</p>
+ <br></span>
+				</a>
+				
+			</div>
+			<div class="clear"></div>
+		</div>
+		<meta id="_url7417" itemprop="url" content="https://www.bjc.hu/programok/eloado/bjc-cafe-jam/?date=120261022000220000">
+		<div itemscope="" itemtype="http://schema.org/Event" itemref="info _url7417" class="programlead">
+			<a href="https://www.bjc.hu/programok/eloado/bjc-cafe-jam/?date=120261022000220000">
+				<img itemprop="image" src="https://www.bjc.hu/kep/eloado/bjc-cafe-jam.jpg?size=img" class="programkep" alt="BJC CAFE JAM" title="BJC CAFE JAM">
+			</a>
+			<div class="programdata">
+				<a href="https://www.bjc.hu/programok/eloado/bjc-cafe-jam/?date=120261022000220000">
+					<div itemprop="startDate" content="2026-10-22T22.00" class="datum">2026.10.22. 22:00 (csütörtök)</div>
+					<h2 itemprop="name">Ingyenes Jam Session Estek: BJC CAFE JAM</h2>
+					<span itemprop="offers" itemscope="" itemtype="http://schema.org/Offer"><div class="jegyar"><span itemprop="price">Ingyenes</span></div></span>
+					<div class="clear"></div>
+					<span itemscope="" itemtype="http://schema.org/Event" itemprop="description">
+					<p style="text-align: justify;">
+	<span style="text-align: justify;">A hétvégente nagy sikerrel futó jam session-ök mellett csütörtökön is várja a koncertek után a késő estig tartó örömzenélés és a hamisítatlan jazz klub hangulat szerelmeseit a Budapest Jazz Club.</span></p>
+ <br></span>
+				</a>
+				
+			</div>
+			<div class="clear"></div>
+		</div>
+		<meta id="_url7404" itemprop="url" content="https://www.bjc.hu/programok/eloado/elek-istvan-quartet-feat-berko-domonkos/?date=120261023000200000">
+		<div itemscope="" itemtype="http://schema.org/Event" itemref="info _url7404" class="programlead">
+			<a href="https://www.bjc.hu/programok/eloado/elek-istvan-quartet-feat-berko-domonkos/?date=120261023000200000">
+				<img itemprop="image" src="https://www.bjc.hu/kep/eloado/elek-istvan-quartet-feat-berko-domonkos.jpg?size=img" class="programkep" alt="Elek István Quartet feat. Berkó Domonkos" title="Elek István Quartet feat. Berkó Domonkos">
+			</a>
+			<div class="programdata">
+				<a href="https://www.bjc.hu/programok/eloado/elek-istvan-quartet-feat-berko-domonkos/?date=120261023000200000">
+					<div itemprop="startDate" content="2026-10-23T20.00" class="datum">2026.10.23. 20:00 (péntek)</div>
+					<h2 itemprop="name">Harmónia Jazzműhely: Elek István Quartet feat. Berkó Domonkos</h2>
+					<span itemprop="offers" itemscope="" itemtype="http://schema.org/Offer"><div class="jegyar">Jegyárak: <span itemprop="price">3900</span> / <span itemprop="price">3500</span> HUF (<span itemprop="name">teljes árú</span> / <span itemprop="name">diák és nyugdíjas</span>)</div></span>
+					<div class="clear"></div>
+					<span itemscope="" itemtype="http://schema.org/Event" itemprop="description">
+					<p style="text-align: justify;">
+	<span style="text-align: justify;">A szaxofonos Elek István négy évtizedes pályája során számos zenekar szólistája volt, de saját neve alatt csak 2015 elején debütált kvartettje, amely aztán nagy sikerrel szerepelt és szerepel azóta is.&nbsp;</span></p>
+ <br></span>
+				</a>
+				
+			</div>
+			<div class="clear"></div>
+		</div>
+		<meta id="_url7425" itemprop="url" content="https://www.bjc.hu/programok/eloado/free-bjc-jam-session/?date=120261023000223000">
+		<div itemscope="" itemtype="http://schema.org/Event" itemref="info _url7425" class="programlead">
+			<a href="https://www.bjc.hu/programok/eloado/free-bjc-jam-session/?date=120261023000223000">
+				<img itemprop="image" src="https://www.bjc.hu/kep/eloado/free-bjc-jam-session.jpg?size=img" class="programkep" alt="FREE BJC JAM SESSION" title="FREE BJC JAM SESSION">
+			</a>
+			<div class="programdata">
+				<a href="https://www.bjc.hu/programok/eloado/free-bjc-jam-session/?date=120261023000223000">
+					<div itemprop="startDate" content="2026-10-23T22.30" class="datum">2026.10.23. 22:30 (péntek)</div>
+					<h2 itemprop="name">Ingyenes Jam Session Estek: FREE BJC JAM SESSION</h2>
+					<span itemprop="offers" itemscope="" itemtype="http://schema.org/Offer"><div class="jegyar"><span itemprop="price">Ingyenes</span></div></span>
+					<div class="clear"></div>
+					<span itemscope="" itemtype="http://schema.org/Event" itemprop="description">
+					<p style="text-align: justify;">
+	<span style="text-align: justify;">A Free BJC Jam Session esteken hétvégéről&nbsp; hétvégére&nbsp; a&nbsp; legismertebb&nbsp; és legnépszerűbb hazai zenészek alkotnak spontán&nbsp; formációkat.</span></p>
+ <br></span>
+				</a>
+				
+			</div>
+			<div class="clear"></div>
+		</div>
+		<meta id="_url7349" itemprop="url" content="https://www.bjc.hu/programok/eloado/fogi-szinhaz-susu-a-sarkany/?date=120261024000160000">
+		<div itemscope="" itemtype="http://schema.org/Event" itemref="info _url7349" class="programlead">
+			<a href="https://www.bjc.hu/programok/eloado/fogi-szinhaz-susu-a-sarkany/?date=120261024000160000">
+				<img itemprop="image" src="https://www.bjc.hu/kep/eloado/fogi-szinhaz-susu-a-sarkany.jpg?size=img" class="programkep" alt="Fogi Színház: Süsü, a sárkány" title="Fogi Színház: Süsü, a sárkány">
+			</a>
+			<div class="programdata">
+				<a href="https://www.bjc.hu/programok/eloado/fogi-szinhaz-susu-a-sarkany/?date=120261024000160000">
+					<div itemprop="startDate" content="2026-10-24T16.00" class="datum">2026.10.24. 16:00 (szombat)</div>
+					<h2 itemprop="name">Gyerekprogramok: Fogi Színház: Süsü, a sárkány</h2>
+					<span itemprop="offers" itemscope="" itemtype="http://schema.org/Offer"><div class="jegyar">Jegyárak: <span itemprop="price">3950</span> HUF</div></span>
+					<div class="clear"></div>
+					<span itemscope="" itemtype="http://schema.org/Event" itemprop="description">
+					<p style="text-align: justify;">
+	A televízióból jól ismert egyfejû sárkány, a jóságos Süsü kel életre a szín padon, hogy barátjával, a királyfival járja végig kalandos útját.</p>
+ </span></a><div class="leiras"><a href="https://www.bjc.hu/programok/eloado/fogi-szinhaz-susu-a-sarkany/?date=120261024000160000"></a><p><a href="https://www.bjc.hu/programok/eloado/fogi-szinhaz-susu-a-sarkany/?date=120261024000160000">
+	<strong><span style="color: rgb(255, 255, 255);"><span style="background-color: rgb(0, 0, 255);">Jegyeket a</span></span></strong></a><strong><a href="https://fogiszinhaza.jegy.hu/"><span style="color: rgb(255, 255, 255);"><span style="background-color: rgb(0, 0, 255);"> https://fogiszinhaza.jegy.hu/</span></span></a><span style="color: rgb(255, 255, 255);"><span style="background-color: rgb(0, 0, 255);"> oldalon vásárolhatnak.</span></span></strong></p>
+</div><div class="clear"></div><br>
+				
+				
+			</div>
+			<div class="clear"></div>
+		</div>
+		<meta id="_url7405" itemprop="url" content="https://www.bjc.hu/programok/eloado/horvath-tojas-gabor-trio-feat-cheeky-korus-moonlight-whisper-lemezbemutato/?date=120261024000200000">
+		<div itemscope="" itemtype="http://schema.org/Event" itemref="info _url7405" class="programlead">
+			<a href="https://www.bjc.hu/programok/eloado/horvath-tojas-gabor-trio-feat-cheeky-korus-moonlight-whisper-lemezbemutato/?date=120261024000200000">
+				<img itemprop="image" src="https://www.bjc.hu/kep/eloado/horvath-tojas-gabor-trio-feat-cheeky-korus-moonlight-whisper-lemezbemutato.jpg?size=img" class="programkep" alt="Horváth Tojás Gábor Trio feat. Cheeky Kórus - Moonlight Whisper lemezbemutató" title="Horváth Tojás Gábor Trio feat. Cheeky Kórus - Moonlight Whisper lemezbemutató">
+			</a>
+			<div class="programdata">
+				<a href="https://www.bjc.hu/programok/eloado/horvath-tojas-gabor-trio-feat-cheeky-korus-moonlight-whisper-lemezbemutato/?date=120261024000200000">
+					<div itemprop="startDate" content="2026-10-24T20.00" class="datum">2026.10.24. 20:00 (szombat)</div>
+					<h2 itemprop="name">Horváth Tojás Gábor Trio feat. Cheeky Kórus - Moonlight Whisper lemezbemutató</h2>
+					<span itemprop="offers" itemscope="" itemtype="http://schema.org/Offer"><div class="jegyar">Jegyárak: <span itemprop="price">4900</span> / <span itemprop="price">4500</span> HUF (<span itemprop="name">teljes árú</span> / <span itemprop="name">diák és nyugdíjas</span>)</div></span>
+					<div class="clear"></div>
+					<div class="kedvezmeny">(Ezen az estén a koncerttermet asztalok nélkül, széksorosan rendezzük be. Vouchereket és ingyenes belépésre jogosító zeneiskolai diákigazolványokat erre a programra nem áll módunkban elfogadni.)</div><div class="clear"></div><span itemscope="" itemtype="http://schema.org/Event" itemprop="description">
+					<p style="text-align: justify;">
+	<span style="text-align: justify;">Ez az izgalmas projekt a Trió egyedi jazz-zenei világát ötvözi a világzene gazdag színeivel: hallhatunk bolgár, görög, afrikai és természetesen magyar népzenei feldolgozásokat is. A műsorban saját kompozíciók is felcsendülnek, amelyeket a Cheeky Kórus közreműködésével szólaltatnak meg.</span></p>
+ <br></span>
+				</a>
+				
+			</div>
+			<div class="clear"></div>
+		</div>
+		<meta id="_url7426" itemprop="url" content="https://www.bjc.hu/programok/eloado/free-bjc-jam-session/?date=120261024000223000">
+		<div itemscope="" itemtype="http://schema.org/Event" itemref="info _url7426" class="programlead">
+			<a href="https://www.bjc.hu/programok/eloado/free-bjc-jam-session/?date=120261024000223000">
+				<img itemprop="image" src="https://www.bjc.hu/kep/eloado/free-bjc-jam-session.jpg?size=img" class="programkep" alt="FREE BJC JAM SESSION" title="FREE BJC JAM SESSION">
+			</a>
+			<div class="programdata">
+				<a href="https://www.bjc.hu/programok/eloado/free-bjc-jam-session/?date=120261024000223000">
+					<div itemprop="startDate" content="2026-10-24T22.30" class="datum">2026.10.24. 22:30 (szombat)</div>
+					<h2 itemprop="name">Ingyenes Jam Session Estek: FREE BJC JAM SESSION</h2>
+					<span itemprop="offers" itemscope="" itemtype="http://schema.org/Offer"><div class="jegyar"><span itemprop="price">Ingyenes</span></div></span>
+					<div class="clear"></div>
+					<span itemscope="" itemtype="http://schema.org/Event" itemprop="description">
+					<p style="text-align: justify;">
+	<span style="text-align: justify;">A Free BJC Jam Session esteken hétvégéről&nbsp; hétvégére&nbsp; a&nbsp; legismertebb&nbsp; és legnépszerűbb hazai zenészek alkotnak spontán&nbsp; formációkat.</span></p>
+ <br></span>
+				</a>
+				
+			</div>
+			<div class="clear"></div>
+		</div>
+		<meta id="_url7326" itemprop="url" content="https://www.bjc.hu/programok/eloado/mike-gotthard-plays-jazz-feat-borlai-gergo-fonay-tibor/?date=120261026000200000">
+		<div itemscope="" itemtype="http://schema.org/Event" itemref="info _url7326" class="programlead">
+			<a href="https://www.bjc.hu/programok/eloado/mike-gotthard-plays-jazz-feat-borlai-gergo-fonay-tibor/?date=120261026000200000">
+				<img itemprop="image" src="https://www.bjc.hu/kep/eloado/mike-gotthard-plays-jazz-feat-borlai-gergo-fonay-tibor.jpg?size=img" class="programkep" alt="Mike Gotthard Plays Jazz feat. Borlai Gergő &amp; Fonay Tibor" title="Mike Gotthard Plays Jazz feat. Borlai Gergő &amp; Fonay Tibor">
+			</a>
+			<div class="programdata">
+				<a href="https://www.bjc.hu/programok/eloado/mike-gotthard-plays-jazz-feat-borlai-gergo-fonay-tibor/?date=120261026000200000">
+					<div itemprop="startDate" content="2026-10-26T20.00" class="datum">2026.10.26. 20:00 (hétfő)</div>
+					<h2 itemprop="name">Mike Gotthard Plays Jazz feat. Borlai Gergő &amp; Fonay Tibor</h2>
+					<span itemprop="offers" itemscope="" itemtype="http://schema.org/Offer"><div class="jegyar">Jegyárak: <span itemprop="price">7900</span> HUF</div></span>
+					<div class="clear"></div>
+					<span itemscope="" itemtype="http://schema.org/Event" itemprop="description">
+					<p style="text-align: justify;">
+	<span style="text-align: justify;">A virtuóz gitáros, Mike Gotthard ezúttal jazzesebb oldalát mutatja meg – a tőle megszokott szenvedéllyel, mélységgel megszólaltatva hangszerét.&nbsp;</span></p>
+ <br></span>
+				</a>
+				
+			</div>
+			<div class="clear"></div>
+		</div>
+		<meta id="_url7429" itemprop="url" content="https://www.bjc.hu/programok/eloado/balazs-elemer-group/?date=120261027000200000">
+		<div itemscope="" itemtype="http://schema.org/Event" itemref="info _url7429" class="programlead">
+			<a href="https://www.bjc.hu/programok/eloado/balazs-elemer-group/?date=120261027000200000">
+				<img itemprop="image" src="https://www.bjc.hu/kep/eloado/balazs-elemer-group.jpg?size=img" class="programkep" alt="Balázs Elemér Group" title="Balázs Elemér Group">
+			</a>
+			<div class="programdata">
+				<a href="https://www.bjc.hu/programok/eloado/balazs-elemer-group/?date=120261027000200000">
+					<div itemprop="startDate" content="2026-10-27T20.00" class="datum">2026.10.27. 20:00 (kedd)</div>
+					<h2 itemprop="name">Balázs Elemér Group</h2>
+					<span itemprop="offers" itemscope="" itemtype="http://schema.org/Offer"><div class="jegyar">Jegyárak: <span itemprop="price">4500</span> / <span itemprop="price">4000</span> HUF (<span itemprop="name">teljes árú</span> / <span itemprop="name">diák és nyugdíjas</span>)</div></span>
+					<div class="clear"></div>
+					<div class="kedvezmeny">(Ezen az estén a koncerttermet asztalok nélkül, széksorosan rendezzük be. Vouchereket és ingyenes belépésre jogosító zeneiskolai diákigazolványokat erre a programra nem áll módunkban elfogadni.)</div><div class="clear"></div><span itemscope="" itemtype="http://schema.org/Event" itemprop="description">
+					<div style="text-align: justify;">
+	<div>
+		A formáció kiemelkedően egyéni hangzásvilágot alakított ki, ennek legfőbb jellemzői a dallamközpontúság és a különleges ritmika, melyeket a férfi és női hang érdekes kontrasztja tesz még színesebbé.</div>
+</div>
+ <br></span>
+				</a>
+				
+			</div>
+			<div class="clear"></div>
+		</div>
+		<meta id="_url7410" itemprop="url" content="https://www.bjc.hu/programok/eloado/lfze-open-jam/?date=120261027000220000">
+		<div itemscope="" itemtype="http://schema.org/Event" itemref="info _url7410" class="programlead">
+			<a href="https://www.bjc.hu/programok/eloado/lfze-open-jam/?date=120261027000220000">
+				<img itemprop="image" src="https://www.bjc.hu/kep/eloado/lfze-open-jam.jpg?size=img" class="programkep" alt="LFZE Open Jam" title="LFZE Open Jam">
+			</a>
+			<div class="programdata">
+				<a href="https://www.bjc.hu/programok/eloado/lfze-open-jam/?date=120261027000220000">
+					<div itemprop="startDate" content="2026-10-27T22.00" class="datum">2026.10.27. 22:00 (kedd)</div>
+					<h2 itemprop="name">Ingyenes Jam Session Estek: LFZE Open Jam</h2>
+					<span itemprop="offers" itemscope="" itemtype="http://schema.org/Offer"><div class="jegyar"><span itemprop="price">Ingyenes</span></div></span>
+					<div class="clear"></div>
+					<span itemscope="" itemtype="http://schema.org/Event" itemprop="description">
+					<p style="text-align: justify;">	Minden kedden este a Liszt Ferenc Zeneművészeti Egyetem fiataljai várják a spontán örömzenélés izgalmait kereső közönséget és a játékba bekapcsolódni vágyó zenészeket a Budapest Jazz Clubba.&nbsp;</p> <br></span>
+				</a>
+				
+			</div>
+			<div class="clear"></div>
+		</div>
+		<meta id="_url7438" itemprop="url" content="https://www.bjc.hu/programok/eloado/kanizsa-gina-vocalese-project/?date=120261028000200000">
+		<div itemscope="" itemtype="http://schema.org/Event" itemref="info _url7438" class="programlead">
+			<a href="https://www.bjc.hu/programok/eloado/kanizsa-gina-vocalese-project/?date=120261028000200000">
+				<img itemprop="image" src="https://www.bjc.hu/kep/eloado/kanizsa-gina-vocalese-project.jpg?size=img" class="programkep" alt="Kanizsa Gina Vocalese Project" title="Kanizsa Gina Vocalese Project">
+			</a>
+			<div class="programdata">
+				<a href="https://www.bjc.hu/programok/eloado/kanizsa-gina-vocalese-project/?date=120261028000200000">
+					<div itemprop="startDate" content="2026-10-28T20.00" class="datum">2026.10.28. 20:00 (szerda)</div>
+					<h2 itemprop="name">Kanizsa Gina Vocalese Project</h2>
+					<span itemprop="offers" itemscope="" itemtype="http://schema.org/Offer"><div class="jegyar">Jegyárak: <span itemprop="price">3900</span> / <span itemprop="price">3500</span> HUF (<span itemprop="name">teljes árú</span> / <span itemprop="name">diák és nyugdíjas</span>)</div></span>
+					<div class="clear"></div>
+					<span itemscope="" itemtype="http://schema.org/Event" itemprop="description">
+					<p style="text-align: justify;">
+	<span style="text-align: justify;">Kanizsa Ginát generációja legkiválóbb művészei közt tartják számon, nem véletlenül választotta a jazz.hu szakmai zsűrije 2023-ban és 2024-ben is a legjobb női jazzénekesnek.</span></p>
+ <br></span>
+				</a>
+				
+			</div>
+			<div class="clear"></div>
+		</div>
+		<meta id="_url7414" itemprop="url" content="https://www.bjc.hu/programok/eloado/wednesday-open-jam/?date=120261028000220000">
+		<div itemscope="" itemtype="http://schema.org/Event" itemref="info _url7414" class="programlead">
+			<a href="https://www.bjc.hu/programok/eloado/wednesday-open-jam/?date=120261028000220000">
+				<img itemprop="image" src="https://www.bjc.hu/kep/eloado/wednesday-open-jam.jpg?size=img" class="programkep" alt="Wednesday Open Jam" title="Wednesday Open Jam">
+			</a>
+			<div class="programdata">
+				<a href="https://www.bjc.hu/programok/eloado/wednesday-open-jam/?date=120261028000220000">
+					<div itemprop="startDate" content="2026-10-28T22.00" class="datum">2026.10.28. 22:00 (szerda)</div>
+					<h2 itemprop="name">Ingyenes Jam Session Estek: Wednesday Open Jam</h2>
+					<span itemprop="offers" itemscope="" itemtype="http://schema.org/Offer"><div class="jegyar"><span itemprop="price">Ingyenes</span></div></span>
+					<div class="clear"></div>
+					<span itemscope="" itemtype="http://schema.org/Event" itemprop="description">
+					<p style="text-align: justify;">
+	A jazzrajongó közönség kívánságának eleget téve nem csak a hét elején és végén, hanem a hét közepén is csatlakozhat a késő esti jam zenekarokhoz, aki szeretné megtapasztalni a szabad, közös örömzenélés élményét. A recept változatlan: a szerdai alap-formációkat is a legjobb zenészek alkotják.</p>
+ <br></span>
+				</a>
+				
+			</div>
+			<div class="clear"></div>
+		</div>
+		<meta id="_url7434" itemprop="url" content="https://www.bjc.hu/programok/eloado/vajda-attila-quartet-the-first-step-lemezbemutato-koncert/?date=120261029000200000">
+		<div itemscope="" itemtype="http://schema.org/Event" itemref="info _url7434" class="programlead">
+			<a href="https://www.bjc.hu/programok/eloado/vajda-attila-quartet-the-first-step-lemezbemutato-koncert/?date=120261029000200000">
+				<img itemprop="image" src="https://www.bjc.hu/kep/eloado/vajda-attila-quartet-the-first-step-lemezbemutato-koncert.jpg?size=img" class="programkep" alt="Vajda Attila Quartet: The First Step - lemezbemutató koncert" title="Vajda Attila Quartet: The First Step - lemezbemutató koncert">
+			</a>
+			<div class="programdata">
+				<a href="https://www.bjc.hu/programok/eloado/vajda-attila-quartet-the-first-step-lemezbemutato-koncert/?date=120261029000200000">
+					<div itemprop="startDate" content="2026-10-29T20.00" class="datum">2026.10.29. 20:00 (csütörtök)</div>
+					<h2 itemprop="name">Vajda Attila Quartet: The First Step - lemezbemutató koncert</h2>
+					<span itemprop="offers" itemscope="" itemtype="http://schema.org/Offer"><div class="jegyar">Jegyárak: <span itemprop="price">3900</span> / <span itemprop="price">3500</span> HUF (<span itemprop="name">teljes árú</span> / <span itemprop="name">diák és nyugdíjas</span>)</div></span>
+					<div class="clear"></div>
+					<span itemscope="" itemtype="http://schema.org/Event" itemprop="description">
+					<p style="text-align: justify;">
+	<span style="text-align: justify;">Vajda Attila tizenhét éves jazz-zongorista és zeneszerző. Zenéjében a kortárs jazz, a klasszikus zenei hatások és a szabad improvizáció természetesen fonódnak össze, miközben kiemelt szerepet kap az élő előadás spontaneitása és a zenészek közötti kreatív interakció.</span></p>
+ <br></span>
+				</a>
+				
+			</div>
+			<div class="clear"></div>
+		</div>
+		<meta id="_url7418" itemprop="url" content="https://www.bjc.hu/programok/eloado/bjc-cafe-jam/?date=120261029000220000">
+		<div itemscope="" itemtype="http://schema.org/Event" itemref="info _url7418" class="programlead">
+			<a href="https://www.bjc.hu/programok/eloado/bjc-cafe-jam/?date=120261029000220000">
+				<img itemprop="image" src="https://www.bjc.hu/kep/eloado/bjc-cafe-jam.jpg?size=img" class="programkep" alt="BJC CAFE JAM" title="BJC CAFE JAM">
+			</a>
+			<div class="programdata">
+				<a href="https://www.bjc.hu/programok/eloado/bjc-cafe-jam/?date=120261029000220000">
+					<div itemprop="startDate" content="2026-10-29T22.00" class="datum">2026.10.29. 22:00 (csütörtök)</div>
+					<h2 itemprop="name">Ingyenes Jam Session Estek: BJC CAFE JAM</h2>
+					<span itemprop="offers" itemscope="" itemtype="http://schema.org/Offer"><div class="jegyar"><span itemprop="price">Ingyenes</span></div></span>
+					<div class="clear"></div>
+					<span itemscope="" itemtype="http://schema.org/Event" itemprop="description">
+					<p style="text-align: justify;">
+	<span style="text-align: justify;">A hétvégente nagy sikerrel futó jam session-ök mellett csütörtökön is várja a koncertek után a késő estig tartó örömzenélés és a hamisítatlan jazz klub hangulat szerelmeseit a Budapest Jazz Club.</span></p>
+ <br></span>
+				</a>
+				
+			</div>
+			<div class="clear"></div>
+		</div>
+		<meta id="_url7437" itemprop="url" content="https://www.bjc.hu/programok/eloado/alerant-szepare-sessions-6-jazz-gastro-szalay-gabor-rieger-attila-duo/?date=120261030000190000">
+		<div itemscope="" itemtype="http://schema.org/Event" itemref="info _url7437" class="programlead">
+			<a href="https://www.bjc.hu/programok/eloado/alerant-szepare-sessions-6-jazz-gastro-szalay-gabor-rieger-attila-duo/?date=120261030000190000">
+				<img itemprop="image" src="https://www.bjc.hu/kep/eloado/alerant-szepare-sessions-6-jazz-gastro-szalay-gabor-rieger-attila-duo.jpg?size=img" class="programkep" alt="Alerant Szeparé Sessions 6. Jazz &amp; Gastro - Szalay Gábor &amp; Rieger Attila Duo" title="Alerant Szeparé Sessions 6. Jazz &amp; Gastro - Szalay Gábor &amp; Rieger Attila Duo">
+			</a>
+			<div class="programdata">
+				<a href="https://www.bjc.hu/programok/eloado/alerant-szepare-sessions-6-jazz-gastro-szalay-gabor-rieger-attila-duo/?date=120261030000190000">
+					<div itemprop="startDate" content="2026-10-30T19.00" class="datum">2026.10.30. 19:00 (péntek)</div>
+					<h2 itemprop="name">Alerant Szeparé Sessions 6. Jazz &amp; Gastro - Szalay Gábor &amp; Rieger Attila Duo</h2>
+					<span itemprop="offers" itemscope="" itemtype="http://schema.org/Offer"><div class="jegyar">Jegyárak: <span itemprop="price">7900</span> HUF</div></span>
+					<div class="clear"></div>
+					<div class="kedvezmeny">(Ezen az estén a koncerttermet asztalok nélkül, széksorosan rendezzük be. Vouchereket és ingyenes belépésre jogosító zeneiskolai diákigazolványokat erre a programra nem áll módunkban elfogadni.)</div><div class="clear"></div><span itemscope="" itemtype="http://schema.org/Event" itemprop="description">
+					<p style="text-align: justify;">
+	Az Alerant Szeparé Sessions bensőséges koncertjén Szalay Gábor és Rieger Attila gitárduója várja a közönséget. Két egyéni zenei világ, izgalmas összjáték és szabadon kibontakozó improvizáció, nem utolsósorban&nbsp; pedig egyedi menüsor teszi különlegessé az estét az Alerant Szeparéban.</p>
+ <br></span>
+				</a>
+				
+			</div>
+			<div class="clear"></div>
+		</div>
+<div class="pagination"> <a href="https://www.bjc.hu/programok/osszes-program/p1" class="menu  active">1</a> <a href="https://www.bjc.hu/programok/osszes-program/p2" class="menu ">2</a> <a href="https://www.bjc.hu/programok/osszes-program/p3" class="menu ">3</a> <a href="https://www.bjc.hu/programok/osszes-program/p4" class="menu ">4</a> <a href="https://www.bjc.hu/programok/osszes-program/p5" class="menu ">5</a></div>
+	<div class="clear"></div></div>
+				<div class="clear"></div>
+			</div>
+		</div>
+		<div id="col">
+<div class="col_inner" 1="" ?="" ''="" :="" 'style="border-top: none;" '="">
+	<a href="https://www.bjc.hu/galeria/">
+		Galéria <br><img src="https://www.bjc.hu/images/photomachine.png">
+	</a>
+</div>
+<div class="col_inner">
+	<a href="https://www.bjc.hu/programfuzet/">
+		Programfüzet letöltés 
+	</a>
+</div>
+<div class="clear"></div><div class="col_inner">		<div style="overflow:hidden;width: 220px;">
+			<div style="margin: 3px; margin-top: 0px;">
+			<p> <a href="https://www.youtube.com/channel/UCLTpCJ5GSvaLNuuzlu_T1sg" target="_blank" style="padding: 10px;">     <img alt="" src="https://www.bjc.hu/sources/root/tartalom_kepek/iconok/BPJazz_youtube.png" style="height:42px;"> </a></p>
+			</div>
+		</div>
+</div><div class="col_inner">		<div style="overflow:hidden;width: 220px;">
+			<div style="margin: 3px; margin-top: 0px;">
+			<p><a href="https://www.facebook.com/BudapestJazzClub/" target="_blank"><img alt="" src="https://www.bjc.hu/sources/root/tartalom_kepek/iconok/BPJazz_f.png" style="height:42px;"></a> 
+<a href="https://www.instagram.com/budapestjazzclub/" target="_blank"><img alt="" src="https://www.bjc.hu/sources/root/tartalom_kepek/iconok/BPJazz_insta.png" style="height:42px;"></a></p>
+			</div>
+		</div>
+</div>
+			<div class="clear"></div>
+		</div>
+		<div class="clear"></div>
+	</div>
+	<div class="clear"></div>
+</div>
+<div class="clear"></div>
+</span>
+<div id="foot">
+	<div id="foot-inner">
+        <div id="szponzor">
+            <div id="szponzor-inner">
+                <div id="tamogato">Főtámogatónk</div>
+                <div id="tamogatokep"><a href="http://www.alerant.hu/" target="_blank" title="Alerant"><img src="https://www.bjc.hu/kep/tamogato/alerant.png" alt="Alerant" title="Alerant"></a></div>
+            <div class="clear"></div>
+        </div>
+		</div>
+	   
+		<div id="submenu">		<div class="menuitem" rel="menuitem"><a href="https://www.bjc.hu/partnereink/">PARTNEREINK</a></div>
+		<div class="menuitem" rel="menuitem"><a href="https://www.bjc.hu/sajtoszoba/">SAJTÓSZOBA</a></div>
+		<div class="menuitem" rel="menuitem"><a href="https://www.bjc.hu/zenekaroknak/">ZENEKAROKNAK</a></div>
+		<div class="menuitem" rel="menuitem"><a href="https://www.bjc.hu/impresszum/">IMPRESSZUM</a></div>
+</div>
+		<div id="prestige"><img src="https://www.bjc.hu/kep/presztizs/downbeat2017.png?size=img" alt="Downbeat" title="Downbeat"><img src="https://www.bjc.hu/kep/presztizs/trip_advisor.png?size=img" alt="Trip advisor" title="Trip advisor"><img src="https://www.bjc.hu/kep/presztizs/oldest.png?size=img" alt="Oldest" title="Oldest"></div>
+		
+	
+		<div class="clear"></div>
+	</div>
+	<div class="clear"></div>
+</div>
+<script src="https://www.bjc.hu/js/classie.js"></script>
+<script src="https://www.bjc.hu/js/uisearch.js"></script>
+
+<!--<div id="copy">2014 &copy; JazzArt Közcélú Alapítvány</div>-->
+<div style="width: 100%">
+    <div style="margin-left: auto; margin-right: auto;text-align: right;"></div>
+
+</div> 
+
+
+
+
+<div id="szechenyi-terv-plusz-banner">
+
+  <a href="https://www.bjc.hu/projektek/" target="_blank">
+	<img src="https://www.bjc.hu/sources/kepek/szechenyi_terv_plusz.jpg" alt="Széchenyi Terv Plusz">
+  </a>
+
+</div>
+<script>
+
+  const banner = document.getElementById("szechenyi-terv-plusz-banner");
+  let lastScrollY = window.scrollY;
+  window.addEventListener("scroll", () => {
+	if (window.scrollY > 300) {
+	  banner.style.opacity = "0";
+	  banner.style.transform = "translateY(20px)";
+	  banner.style.pointerEvents = "none";
+	} else {
+	  banner.style.opacity = "1";
+	  banner.style.transform = "translateY(0)";
+	  banner.style.pointerEvents = "auto";
+	}
+	lastScrollY = window.scrollY;
+
+  });
+
+</script>
+
+
+
+<div id="captchaBackground">
+	<div id="captchaFrame">
+		<div id="captchaClose">X</div>
+		<div id="captchaFrameInner">
+			<img id="captchaImage" src="https://www.bjc.hu/images/uj_kod.png">
+			<img id="captchaButton" src="https://www.bjc.hu/images/uj_kod.png"><br>
+			<input class="subscribe-field" type="text" id="captchaInput" name="captchaInput" placeholder="Captcha?">
+			<input type="button" class="subscribe-button" value="Elküldöm" style="height: 22px;margin-top: 0;">
+		</div>
+	</div>
+</div>
+<!--
+<div id="kosar">
+	<div id="kosarOpener" onClick="toggleCart ();" data-content="bezár"></div>
+	<div id="kosarMiddle">
+		<div id="kosarInner">
+			<div id="kosarHead"></div>
+			<div id="kosarContent"></div>
+			<div id="kosarFoot"></div>
+		</div>
+	</div>
+</div>
+--><script src="https://www.bjc.hu/js/classie.js"></script>
+<script src="https://www.bjc.hu/js/uisearch.js"></script>
+
+<script>
+		new UISearch( document.getElementById( 'sb-search' ) );
+    
+    function init(){
+      document.body.removeAttribute('style');
+
+      $("body").removeAttr('style')
+      initLytebox();
+
+  }
+</script>
+<div id="sub" name="sub" width="0" height="0" style="width: 0px; height: 0px; border: none;" data-original-tag="iframe"></div>
+
+
+<a id="lbLauncher" class="lytebox" style="display: none;"></a><div id="lbOverlay" class="grey" style="display: none;"></div><div id="lbMain" style="display: none;"><div id="lbOuterContainer" class="grey" style="border-radius: 8px;"><div id="lbTopContainer" class="grey" style="border-radius: 8px;"><div id="lbTopData" class="grey"><span id="lbTitleTop"></span><span id="lbNumTop"></span></div><div id="lbTopNav"><a id="lbCloseTop" title="Close (Esc)" class="grey"></a><a id="lbPrintTop" title="Print" class="grey"></a><a id="lbNextTop" title="Next (→)" class="grey"></a><a id="lbPauseTop" title="Pause (spacebar)" class="grey" style="display: none;"></a><a id="lbPlayTop" title="Play (spacebar)" class="grey" style="display: none;"></a><a id="lbPrevTop" title="Previous (←)" class="grey"></a></div></div><div id="lbIframeContainer" style="display: none;"><div id="lbIframe" name="lbIframe" frameborder="0" class="grey" style="display: none;" data-original-tag="iframe"></div></div><div id="lbImageContainer"><img id="lbImage" class="grey"><div id="lbHoverNav"><a id="lbPrevHov" title="Previous (←)" class="grey"></a><a id="lbNextHov" title="Next (→)" class="grey"></a></div></div><div id="lbLoading" class="grey"></div><div id="lbBottomContainer" class="grey" style="border-radius: 8px;"><div id="lbBottomData" class="grey"><span id="lbTitleBottom"></span><span id="lbNumBottom"></span><span id="lbDescBottom"></span></div><div id="lbBottomNav"><a id="lbClose" title="Close (Esc)" class="grey"></a><a id="lbPrint" title="Print" class="grey" style="display: none;"></a><a id="lbNext" title="Next (→)" class="grey"></a><a id="lbPause" title="Pause (spacebar)" class="grey" style="display: none;"></a><a id="lbPlay" title="Play (spacebar)" class="grey" style="display: none;"></a><a id="lbPrev" title="Previous (←)" class="grey"></a></div></div></div></div></body></html>

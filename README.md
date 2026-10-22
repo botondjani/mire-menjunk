@@ -14,12 +14,15 @@ Budapest programjai egy helyen: koncertek, bulik, kiállítások, színház. Nap
 ## Források
 | Forrás | Mit ad |
 |---|---|
-| We Love Budapest (`/programok`, kategóriák, és a következő 45 nap napról napra) | válogatott programok, kiállítások, fesztiválok |
+| We Love Budapest (`/programok`, kategóriák, és a következő 60 nap napról napra) | válogatott programok, kiállítások, fesztiválok |
 | Akvárium Klub | koncertek, bulik |
 | Funzine (a friss heti/havi programajánló cikkek) | szerkesztett válogatás: fesztiválok, kiállítások, koncertek, séták |
 | Time Out Budapest (havi válogatás) | a hónap kiemelt programjai |
 | A38 Hajó (iCal feed) | koncertek, bulik |
 | Trafó | kortárs tánc, színház, koncert |
+| Dürer Kert (a saját oldal `__NEXT_DATA__` JSON-ja) | koncertek, bulik, vásárok, kvízek |
+| Budapest Jazz Club | jazzkoncertek, jam sessionök |
+| Dumaszínház (budapesti előadások) | stand-up |
 | Magyar Zene Háza (a naptár szerveroldali adatai) | koncertek, családi programok |
 | Tixa (főoldal + budapesti helyszínoldalak JSON-LD-je) | klubkoncertek: Dürer, Turbina, Budapest Park, Instant/Fogas, Gödör, Muzikum, Toldi, Robot, KAZI, Három Holló |
 
