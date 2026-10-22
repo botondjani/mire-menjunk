@@ -14,7 +14,7 @@ export default {
   parse(html) {
     const $ = cheerio.load(html);
     const events = [];
-    $('a[href*="dumaszinhaz.hu/eloadasok/"].absolute').each((_, el) => {
+    $('a.absolute[href*="/eloadasok/"]').each((_, el) => {
       const card = $(el).parent();
       const ps = card.find('p').map((_, p) => clean($(p).text())).get();
       const [dateText, place, title, performers] = ps;
@@ -23,7 +23,7 @@ export default {
       if (!dates || !title || !place || (/ - /.test(place) && !/^Budapest\b/.test(place))) return;
       events.push({
         title,
-        url: $(el).attr('href'),
+        url: new globalThis.URL($(el).attr('href'), 'https://dumaszinhaz.hu').href,
         image: card.find('img').attr('src') || null,
         ...dates,
         category: 'Színház',

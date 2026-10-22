@@ -21,13 +21,17 @@ export default {
       const key = Object.keys(attrs).find((k) => /occasions-init$/i.test(k));
       if (key) { raw = attrs[key]; return false; }
     });
-    let occasions;
-    try { occasions = JSON.parse(raw); } catch { return []; }
-    if (!Array.isArray(occasions)) return [];
+    let days;
+    try { days = JSON.parse(raw); } catch { return []; }
+    if (!Array.isArray(days)) return [];
+    // Grouped by day: [{ date, occasions: [{ id, name, date, time, … }] }]; older builds sent a flat list.
+    const occasions = days.flatMap((d) => (Array.isArray(d?.occasions) ? d.occasions : [d]));
+    if (process.env.DEBUG_ZH) console.log('  zh sample:', JSON.stringify(occasions[0]).slice(0, 900));
 
     return occasions.flatMap((o) => {
       const date = String(o.date || '').slice(0, 10);
-      const url = o.url?.startsWith('http') ? o.url : o.url ? `https://zenehaza.hu${o.url}` : null;
+      const rel = o.url || o.link || (o.slug ? `/esemeny/${o.slug}` : null);
+      const url = rel ? new globalThis.URL(rel, 'https://zenehaza.hu').href : null;
       if (!o.name || !url || !/^\d{4}-\d{2}-\d{2}$/.test(date)) return [];
       const genres = (o.genres || []).map((g) => g?.name).filter(Boolean).join(' ');
       const image = [o.image?.url, o.image, o.cover?.url, o.cover].find((v) => typeof v === 'string' && v.startsWith('http'));
