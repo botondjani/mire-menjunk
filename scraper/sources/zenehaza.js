@@ -26,14 +26,13 @@ export default {
     if (!Array.isArray(days)) return [];
     // Grouped by day: [{ date, occasions: [{ id, name, date, time, … }] }]; older builds sent a flat list.
     const occasions = days.flatMap((d) => (Array.isArray(d?.occasions) ? d.occasions : [d]));
-    if (process.env.DEBUG_ZH) console.log('  zh sample:', JSON.stringify(occasions[0]).slice(0, 900));
 
     return occasions.flatMap((o) => {
       const date = String(o.date || '').slice(0, 10);
       const rel = o.url || o.link || (o.slug ? `/esemeny/${o.slug}` : null);
       const url = rel ? new globalThis.URL(rel, 'https://zenehaza.hu').href : null;
       if (!o.name || !url || !/^\d{4}-\d{2}-\d{2}$/.test(date)) return [];
-      const genres = (o.genres || []).map((g) => g?.name).filter(Boolean).join(' ');
+      const genres = [...(o.genres || []), ...(o.categories || [])].map((g) => g?.name).filter(Boolean).join(' ');
       const image = [o.image?.url, o.image, o.cover?.url, o.cover].find((v) => typeof v === 'string' && v.startsWith('http'));
       return [{
         title: clean(o.name),
@@ -44,7 +43,8 @@ export default {
         time: String(o.time || '').match(/\d{1,2}:\d{2}/)?.[0]?.padStart(5, '0') || null,
         category: detectCategory(`${o.name} ${genres}`, 'Koncert'),
         venue: 'Magyar Zene Háza',
-        description: o.isSoldOut ? 'Minden jegy elkelt' : null,
+        description: [o.location?.name, o.isSoldOut ? 'Minden jegy elkelt' : null].filter(Boolean).join(' · ') || null,
+        free: !!o.isFree,
       }];
     });
   },
