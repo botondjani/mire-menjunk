@@ -110,3 +110,39 @@
 - 25 év alattiak SZJA-mentessége: https://bank360.hu/blog/ennyivel-emeli-a-diakmunkasok-netto-beret-a-25-ev-alattiak-szja-mentessege
 - Padel: https://www.padelfip.com/2026/07/cupra-fip-tour-makes-successful-debut-in-hungary/ , https://playtomic.com/clubs/budapest-padel
 - P2P bérlés (Life4Rent): https://dailynewshungary.com/a-smart-way-to-earn-from-items-you-already-own-now-available-in-hungary/
+
+---
+
+## 8. Fordított bérlőpiac: a bérbeadó keres ellenőrzött bérlőt („Bérlői útlevél”)
+- **Mi ez:** a bérlő egyszer kitölt egy ellenőrzött profilt: személyazonosság, jövedelemigazolás, korábbi bérbeadói referencia, a saját KHR-adatlapja, valamint előzetes vállalás közjegyzői okiratra. A bérbeadók szűrnek, és meghívják a nekik tetsző bérlőt.
+- **Miért most:**
+  - A budapesti kiadó kínálat 4 év alatt 52,3%-kal nőtt (penzcentrum, 2026. június).
+  - **Sok bérbeadó kénytelen bérleti díjat csökkenteni**, a 250 ezer Ft feletti sávban nehezebb kiadni.
+  - Az Otthon Start a jobb fizetőképességű bérlők egy részét vásárlóvá teszi.
+  - A nettó hozam csak kb. 3%, így egy hónap üresjárat az éves hozam nagyjából harmadát viszi el.
+  - Közjegyzők szerint a felmondások 60–70%-a nemfizetés vagy károkozás miatt történik. **A bérbeadó fő félelme a rossz bérlő, nem az, hogy nem talál bérlőt.**
+- **Verseny:**
+  - **Rentingo:** már van ellenőrzött bérlői profil és bérbeadói preferencia.
+  - **Fővárosi Lakásügynökség:** a bérlőválasztást és a garanciát a piaci bérleti díj 15%-áért vállalja.
+  - Ingatlanirodák.
+  - Külföldi minták (Housy, findemieter.de, HomeHak, Zillow Renter Profile): nincs ismert nagy önálló siker.
+- **Paradoxon:** a fordított modell akkor kell a bérbeadónak, amikor a piac a bérlőnek kedvez. Ilyenkor viszont a bérlőnek kevésbé fáj a keresés, és kevésbé motivált a profilépítésre. **Megoldás:** olyan bérlőkkel kezdeni, akiknek nehéz bérelni, de megbízhatók: külföldi hallgatók és expatok (kb. 49 500 külföldi hallgató van az országban), háziállattal élők, kisgyerekes családok. Mellettük a 250 ezer Ft feletti sáv bérbeadói.
+- **Üzleti modell:**
+  - A bérlőnek ingyenes, „Ellenőrzött” jelvény 2990 Ft.
+  - A bérbeadónak sikerdíj **a havi bérleti díj 25–50%-a** (mediánnál kb. 65–130 ezer Ft). Ez olcsóbb a közvetítőnél és a 15%-os ügynökségi díjnál, ha 12+ hónapra számolunk.
+  - Később bérleti díj-garancia biztosítói partnerrel.
+- **Számok [B]:** gyenge esetben havi 30 párosítás × 50 000 Ft = 1,5 M Ft, közepesen 150 × 70 000 Ft = 10,5 M Ft.
+- **90 napos kapu:** ≥ 1000 ellenőrzött bérlőprofil, ≥ 150 aktív kereső bérbeadó, ≥ 30 párosítás, ≥ 20% fizető bérbeadó.
+- **Jogi:**
+  - Ebktv.: a lakásbérletnél tilos a hátrányos megkülönböztetés, ezért nem lehet például származás vagy családi állapot szerint szűrni.
+  - GDPR: jövedelmi dokumentumokat kezel a platform.
+  - A KHR-önlekérdezés részleteit ellenőrizni kell **[M]**.
+- **Pont: 6,0.** Csak szűk szegmenssel és a bizalmi „útlevéllel” van esélye, általános bérlőkeresőként nem.
+
+**Források:**
+- Kínálat és árak, 2026: https://www.penzcentrum.hu/otthon/20260611/uj-korszak-johet-az-alberletpiacon-ezt-erzik-meg-hamarosan-a-berlok-1200304
+- Otthon Start hatása a bérleti díjakra: https://www.economx.hu/ingatlan/2025/12/30/az-otthon-start-tartos-arsapkat-huzott-a-budapesti-alberletpiacra-821632/
+- Közjegyzői adatok a felmondásokról: https://infostart.hu/belfold/2020/07/22/lakasberlet-a-kikoltozni-nem-akaro-berlotol-tartanak-legjobban-a-tulajdonosok
+- Rentingo: https://privatbankar.hu/ingatlan/van-elet-az-airbnb-utan-alaposan-felforgatna-az-alberletpiacot-egy-magyar-startup-313075
+- Fővárosi Lakásügynökség: https://www.economx.hu/ingatlan/2025/11/27/terezvaros-csatlakozik-a-fovarosi-lakasugynokseghez-820071/
+- Külföldi minták: https://www.startbase.com/organization/findemieter-de/ , https://zillow.mediaroom.com/2016-06-15-Renters-on-Zillow-Have-Competitive-Edge-with-New-Renter-Profile
