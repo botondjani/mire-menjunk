@@ -4,6 +4,43 @@
 
 ---
 
+## Új ötletkör (4. kör): a legfrissebb ajánlás
+
+**Szigorított szűrő [D]:**
+1. bizonyított fizetős kereslet (az inkumbensnek sok értékelése vagy ismert ára van);
+2. gyenge vagy utált inkumbensek;
+3. **a technológia megbízhatóan működik iPhone-on**, determinisztikusan, nem heurisztikára épül;
+4. van programozott SEO-felület;
+5. visszatérő használat.
+
+### Kalibráció (fontos)
+Ha ugyanezzel a skálával a **Vaultaire-t magát** értékelem (pillanat 7, fizetési hajlandóság 8, verseny 2, moat 6, gyakoriság 8, SEO 7), **6,5 pontot kap.** Ez azt jelenti, hogy a 7-es küszöb ezen a skálán szigorúbb, mint maga a minta, mert a „verseny” szempont bünteti a bizonyított, zsúfolt piacokat. Ezért **a Vaultaire-szint, vagyis 6,5 felett a „tovább” jelzést használom**, és mindkét számot kiírom.
+
+| Ötlet | Pill. | Fiz. hajl. | Verseny | Moat | Gyak. | SEO | **Össz.** | Megbízható tech? | Bizonyíték |
+|---|---|---|---|---|---|---|---|---|---|
+| **Őszinte tárhely- és fotótisztító** (hasonló képek, screenshotok, nagy videók, swipe-review), lifetime, tracker nélkül | 9 | 8 | 4 | 4 | 7 | 7 | **6,9** | **Igen** (PhotoKit, Vision feature print, AVFoundation; a törlés a „Recently Deleted” mappába megy) | A Cleanup (Codeway) **744 000 értékelés, #3 Utilities (US), heti 7,99 $**. Egy független audit heti előfizetéseket és sok trackert talált a top cleanereknél. A panaszok többsége a számlázásról szól. Az Apple natív „Duplicates” albuma főleg a pontos duplikátumokat fogja meg |
+| **Helyi útnyilvántartó / mileage log** (az USA-n kívül: UK, DE, AU, HU), lifetime | 6 | 8 | 4 | 8 | 9 | 7 | **6,9** | **Részben.** Az iOS-es automatikus útfelismerés kihagy utakat (a Stride értékeléseiben is ez a panasz), ezért kell kézi és félautomata mód is | Driversnote havi 11 $; a MileIQ 2026-ban drágult; a Stride ingyenes, 98 000 értékelés, de csak USA és IRS, és a pontos helyadatot a felhasználóhoz köti |
+| Allergiakártya-fordító (ellenőrzött fordítással) | 8 | 6 | 7 | 6 | 3 | 8 | 6,7 | Igen (statikus tartalom) | Equal Eats havi 14,99 $ (32 értékelés); Etsy-kártya 18,99 $. **Kockázat:** egy hibás fordítás életveszélyes lehet, és az anyanyelvi ellenőrzés költséges |
+| Teleprompter (hangkövetés, lifetime) | 6 | 8 | 3 | 4 | 7 | 5 | 5,8 | Igen | PromptSmart Pro kb. 11 000 értékelés, 29,99 $; a Teleprompter Pro (141 000+ értékelés) már kínál lifetime-ot, így nincs utált inkumbens |
+| (Korábbiak) Room Check / átíró / napszámláló / útlevélfotó / ID-másolat | | | | | | | 5,5 / 6,7 / 6,4 / 5,9 / 5,2 | | Lásd lent |
+
+### Ajánlás: az őszinte tárhelytisztító
+- **A Vaultaire-recept legtisztább megismétlése.** Fotókönyvtár-domén, utált heti előfizetéses inkumbensek, „pay once, no trackers, nothing leaves your phone” pozíció. Compare-oldalak a Cleanup, a Cleaner Kit és a Swipewipe ellen, ugyanúgy, ahogy a Vaultaire a Keepsafe és a kalkulátor-appok ellen.
+- **Az éles pillanatot maga az iOS hozza létre:** „iPhone Storage Full”. Rendszeresen visszatér, így a lifetime ár indokolt.
+- **A technológia determinisztikus.** Nincs hamis biztonságérzet, és a törlés visszavonható 30 napig.
+- **Programozott SEO:** app-specifikus tárhely-útmutatók („how to free up space from WhatsApp / Instagram / TikTok on iPhone”, „what is System Data”), mindegyik saját, ellenőrzött lépésekkel és képernyőképekkel. Plusz compare- és alternatíva-oldalak.
+- **Fő kockázatok:**
+  - Az ASO-ban a „cleaner” kulcsszavakon nagy, fizetett felhasználószerzésre építő szereplők ülnek. Ezért itt a Google-SEO és a compare-oldalak fontosabbak, mint a Vaultaire-nél.
+  - Az Apple bővítheti a natív funkciókat.
+  - Kicsi őszinte, egyszeri árú versenytársak már vannak (pl. Simple Photo Cleaner, 2,99 $), de terjesztés nélkül.
+- **Árazás [D]:** az ingyenes szkennelés mindent megmutat, és az első 100 törlés is ingyenes. Utána lifetime 14,99–19,99 $. Ártesztben a Vaultaire-horgony (1,99 / 19,99 / 39,99) is.
+
+**B-terv: helyi útnyilvántartó.** Ennél van a legerősebb lock-in és napi használat, ezért a Vaultaire-féle 60. napos bizalmi görbe itt működhet. A magyar (NAV-os útnyilvántartás) és a német (Fahrtenbuch) piac indulásnak is jó. Kockázat: az automatikus útfelismerés megbízhatósága és az országonkénti szabálymodulok.
+
+**1. heti döntő teszt mindkettőre:** Keyword Planner-volumen a 10–10 kulcsszóra. A tisztítónál egy 2 napos prototípus is kell (hasonló képek csoportosítása egy 20 000 képes könyvtáron, a pontosság kézi mintavétellel).
+
+---
+
 ## 0. Technikai felülvizsgálat (3. kör): a Room Check iPhone-on nem megbízható
 
 **Ítélet: a Room Check iPhone-on nem tud megbízhatóan működni.** A technikai korlát miatt a pontszám **kb. 5,5-re** esik. A 7-es küszöb alá kerül, ezért **a fő ajánlás a B-terv (helyben futó interjú-átíró)**. Annak a technológiája bizonyított, ott csak a piaci kockázat marad.
@@ -354,3 +391,15 @@ Az ASO-ból jövő, store-on belüli forgalom nincs benne. Ez felfelé torzítha
 - iOS Wi-Fi-szkennelés tiltása (Apple DTS): https://developer.apple.com/forums/thread/788302
 - V380-portok és ONVIF: https://www.ispyconnect.com/camera/v380 , https://www.toughdev.com/content/2019/08/v380-pro-wireless-cctv-camera-with-night-vision-and-rtsp-support/
 - Előlapi kamera és IR: https://www.loopinsight.com/2015/08/31/a-quick-iphone-camera-science-experiment/
+
+**Új ötletkör (4. kör)**
+- Cleanup App Store (744 000 értékelés, heti 7,99 $): https://apps.apple.com/us/app/cleanup-phone-storage-cleaner/id1510944943
+- Független audit a cleaner-appokról: https://connortumbleson.com/2025/01/13/predatory-ios-cleanup-applications/
+- Cleaner-panaszok elemzése: https://unstar.app/blog/phone-cleaner-storage-apps-ranked-cleaner-kit-smart-cleaner-2026
+- Egyszeri árú cleaner: https://apps.apple.com/us/app/id6751852093
+- iOS Duplicates album: https://petapixel.com/how-to-delete-duplicate-photos-on-iphone/
+- Stride (98 000 értékelés): https://apps.apple.com/us/app/-/id1041591359
+- MileIQ-drágulás: https://www.triplog.net/blog/mileiq-alternatives
+- Driversnote-árazás: https://www.capterra.com/p/218160/Driversnote/
+- Equal Eats: https://apps.apple.com/app/id1574293110
+- PromptSmart és Teleprompter Pro: https://apps.apple.com/app/id894811756 , https://primalvideo.com/?p=2101618
