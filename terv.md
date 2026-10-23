@@ -4,7 +4,33 @@
 
 ---
 
-## Új ötletkör (4. kör): a legfrissebb ajánlás
+## Magyar niche-ek (5. kör): a legfrissebb ajánlás
+
+**Szempontok:** Magyarországon indítható, időszerű, a technológia megbízható, és üzletileg is működik. A számítások **[B]**, a feltételezések kiírva. Az adószabályok értelmezését **adótanácsadónak kell átnéznie**, mert a források között ellentmondás van.
+
+| Niche | Miért most? | Üzlet röviden | Pont |
+|---|---|---|---|
+| **1. Bróker- és kriptóadó-kalkulátor böngészőben, feltöltés nélkül** (Revolut, Trading 212, XTB, IBKR, kripto → SZJA-bevallás sorai, MNB-árfolyammal) | **DAC8:** 2026. jan. 1-től a kriptoszolgáltatók regisztrálnak a NAV-nál, és **a 2026-os ügyletek adatait a NAV 2027-ben megkapja.** A 2027. május 20-i bevallás az első, ahol a NAV „lát”. A Revolutnak a források szerint 0,5–2,3 millió magyar ügyfele van (ellentmondó adatok), és a befektető felhasználói 2024-ben **97%-kal nőttek**. A bevallási szezon jan.–máj. között van, **most (október) indulva a SEO-oldalaknak 3–6 hónapjuk van beérni.** | **Fizetési hajlandóság igazolt:** könyvelő 15–40 ezer Ft, Taxingo Pro havi 2990 Ft, Koinly/Blockpit kb. 49 €/év. **Rés:** a Taxingo fiókot kér, szerverre tölt fel, és nem támogatja a Trading 212-t és a kriptót. Ár **[D]:** 9990 Ft/adóév, egyszeri fizetés (nincs előfizetés). Gyenge, közepes és jó esetben **kb. 100 / 1000 / 4000 fizető szezononként, ez kb. 1 / 10 / 40 millió Ft bruttó.** Skálázás: ugyanaz a motor lengyel, cseh és szlovák szabálymodullal, mert a DAC8 EU-szintű | **7,3** |
+| 2. Napelem és akku megtérülés-kalkulátor | **Otthoni Energiatároló Program 2026** (100 mrd Ft keret, legfeljebb 2,5 millió Ft támogatás, kb. 40 000 család). A szaldós elszámolás kifutása miatt sokan most döntenek | Csak lead-generálás telepítőknek (darabár **[M]**). Nem app és nem lifetime. A program pályázati körei lezárulhatnak, és erős a verseny (Bankmonitor, telepítők) | 5,8 |
+| 3. Albérlet-átadás: fotós, időbélyeges jegyzőkönyv | 2026. jan. 1-től **tilos a rövid távú kiadás Terézvárosban**, Erzsébetvárosban szigorodott. Több lakás kerülhet a hosszú távú bérleti piacra | Ritka használat (évi 1–2), 1–3 ezer Ft-os fizetési hajlandóság. A ProofSnap már magyar SEO-val céloz kaucióvitákat. Kicsi üzlet | 5,5 |
+| 4. Otthon Start kalkulátor | 2025. szept. óta **33 000+ szerződés**, átlag kb. 35 millió Ft | Lead-generálás hitelközvetítőknek. A bankok, a Bankmonitor és a Portfolio uralják. A modellhez nem illik | 5,0 |
+| 5. Útnyilvántartó (magyar) | Nincs erős időszerű ok | Az átalányadózóknak nem kell. A RoadRecord online szolgáltatás. Széttagolt piac | 5,8 |
+
+### Ajánlás: 1. Bróker- és kriptóadó-kalkulátor („SZJA-bevallás külföldi brókerrel, 10 perc alatt, feltöltés nélkül”)
+- **Miért ez?** A pillanat a lehető legélesebb (törvényi határidő), évente visszatér, a fizetési hajlandóság bizonyított, és van egy új félelemkeltő esemény is (DAC8). A **helyi feldolgozás itt valódi érték:** pénzügyi adatokról van szó, és a fő versenytárs szerverre tölt fel. **A technológia determinisztikus:** CSV-feldolgozás, MNB-árfolyamtáblák (évente egy statikus fájl), FIFO-számítás. Nincs heurisztika.
+- **Modell:** web-first, nem iPhone-app. Minden a böngészőben fut, nincs fiók. Fizetés merchant of recorddal (Paddle vagy Lemon Squeezy, ez kezeli az áfát), offline ellenőrizhető licenckulccsal, így nincs saját backend.
+- **Programozott SEO:** bróker × jövedelemtípus × év, például „Trading 212 osztalék adózás 2026”, „Revolut kamat adó”, „XTB adóbevallás sorok”, „kripto veszteség elszámolás”, „W-8BEN”. Brókerenként egy-egy eszközoldal, amely az adott bróker CSV-jét importálja.
+- **Fő kockázatok:**
+  - Adóértelmezési hiba és felelősség. Ezért kell adótanácsadói átnézés (költsége **[M]**), és disclaimer.
+  - Szezonalitás: a bevétel 80%+-a március és május közé esik **[B]**.
+  - A brókerek CSV-formátuma változhat.
+  - A Taxingo árat csökkenthet, vagy helyi módra válthat.
+  - Később a NAV előre kitöltheti a bevallást.
+- **Időzítés:** a 2027-es szezonhoz **december végéig** kész kell lennie az eszköznek, a SEO-oldalaknak pedig **most** el kell indulniuk.
+
+---
+
+## Új ötletkör (4. kör)
 
 **Szigorított szűrő [D]:**
 1. bizonyított fizetős kereslet (az inkumbensnek sok értékelése vagy ismert ára van);
@@ -403,3 +429,16 @@ Az ASO-ból jövő, store-on belüli forgalom nincs benne. Ez felfelé torzítha
 - Driversnote-árazás: https://www.capterra.com/p/218160/Driversnote/
 - Equal Eats: https://apps.apple.com/app/id1574293110
 - PromptSmart és Teleprompter Pro: https://apps.apple.com/app/id894811756 , https://primalvideo.com/?p=2101618
+
+**Magyar niche-ek (5. kör)**
+- Taxingo: https://taxingo.hu/
+- Könyvelő-közvetítő és Revolut-adózás: https://szjabevallas2026.hu/blog/revolut-adozas-2026
+- NAV, DAC8 kriptoszolgáltatók: https://nav.gov.hu/sajtoszoba/hirek/A_kriptoeszkoz-szolgaltatok_uj_kotelezettsegei
+- Revolut magyar ügyfélszám: https://www.economx.hu/befektetes/2025/08/20/revolut-nincs-versenytarsunk-fintech-novekedes-814648/ , https://privatbankar.hu/cikkek/szemelyes_penzugyek/megvannak-az-idei-revolut-fejlesztesek--az-orszag-otodik-legnagyobb-bankja-lehetne.html
+- Koinly és Blockpit árak: https://www.capitalo.de/krypto/ratgeber/krypto-steuer-software
+- Otthoni Energiatároló Program: https://bankmonitor.hu/mediatar/cikk/kozeleg-a-hatarido-februar-2-ig-beadhato-az-otthoni-energiatarolo-program-palyazata/
+- Terézvárosi tilalom: https://www.penzcentrum.hu/otthon/20260519/vegleges-tiltas-lep-eletbe-a-fovaros-sziveben-rengeteg-ingatlantulajdonos-bukja-el-emiatt-a-biztos-bevetelt-1198922/amp
+- Erzsébetváros: https://www.economx.hu/ingatlan/2025/11/19/erzsebetvarosban-is-nekimentek-az-airbnb-lakasoknak-819613/
+- ProofSnap: https://getproofsnap.com/kaucio-visszafizetese-bizonyitek-alberlet.html
+- Otthon Start (MNB): https://www.mnb.hu/letoltes/hitelezesi-folyamatok-flyer-2026q1.pdf
+- RoadRecord: https://apps.apple.com/hu/app/roadrecord-%C3%BAtnyilv%C3%A1ntart%C3%B3/id1441553506
