@@ -1,3 +1,12 @@
+/* Saját kiszolgálású betűtípusok (latin + magyar ékezetek), hogy a látogatók IP-címe ne menjen a Google-höz. */
+@font-face { font-family: "Bricolage Grotesque"; font-weight: 600; font-style: normal; font-display: swap; src: url("fonts/bricolage-600.woff2") format("woff2"); }
+@font-face { font-family: "Bricolage Grotesque"; font-weight: 700; font-style: normal; font-display: swap; src: url("fonts/bricolage-700.woff2") format("woff2"); }
+@font-face { font-family: "Bricolage Grotesque"; font-weight: 800; font-style: normal; font-display: swap; src: url("fonts/bricolage-800.woff2") format("woff2"); }
+@font-face { font-family: "Figtree"; font-weight: 400; font-style: normal; font-display: swap; src: url("fonts/figtree-400.woff2") format("woff2"); }
+@font-face { font-family: "Figtree"; font-weight: 500; font-style: normal; font-display: swap; src: url("fonts/figtree-500.woff2") format("woff2"); }
+@font-face { font-family: "Figtree"; font-weight: 600; font-style: normal; font-display: swap; src: url("fonts/figtree-600.woff2") format("woff2"); }
+@font-face { font-family: "Figtree"; font-weight: 700; font-style: normal; font-display: swap; src: url("fonts/figtree-700.woff2") format("woff2"); }
+
 /* Koncepció: esti Budapest – sötét, appszerű felület, a villamos-sárga csak jelzőszín
    (dátumcímke, aktív fül, "Összes"). Vízszintes szekciók képes kártyákkal, alul lebegő navigáció. */
 :root {
@@ -648,3 +657,5 @@ dialog::backdrop { background: rgb(0 0 0 / .6); backdrop-filter: blur(3px); }
 .page-head.compact .title-btn { font-size: 1.25rem; flex: 1 1 auto; overflow: hidden; }
 .page-head.compact .title-btn > span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .page-head.compact .free-chip { padding: 6px 10px; }
+
+#sheetTitle:focus { outline: none; }

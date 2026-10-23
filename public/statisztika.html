@@ -7,9 +7,13 @@
   <title>Statisztika – Hova menjünk?</title>
   <meta name="theme-color" content="#0e0e10">
   <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Figtree:wght@400;500;600;700&display=swap">
   <style>
+    @font-face { font-family: "Bricolage Grotesque"; font-weight: 700; font-display: swap; src: url("fonts/bricolage-700.woff2") format("woff2"); }
+    @font-face { font-family: "Bricolage Grotesque"; font-weight: 800; font-display: swap; src: url("fonts/bricolage-800.woff2") format("woff2"); }
+    @font-face { font-family: "Figtree"; font-weight: 400; font-display: swap; src: url("fonts/figtree-400.woff2") format("woff2"); }
+    @font-face { font-family: "Figtree"; font-weight: 500; font-display: swap; src: url("fonts/figtree-500.woff2") format("woff2"); }
+    @font-face { font-family: "Figtree"; font-weight: 600; font-display: swap; src: url("fonts/figtree-600.woff2") format("woff2"); }
+    @font-face { font-family: "Figtree"; font-weight: 700; font-display: swap; src: url("fonts/figtree-700.woff2") format("woff2"); }
     :root {
       --bg: #0e0e10; --surface: #18181b; --surface-2: #222226; --ink: #f4f4f5; --muted: #a1a1aa; --line: #2b2b30;
       --bar: #ffd100; --bar-hover: #ffe55c; color-scheme: dark;
@@ -70,7 +74,7 @@
   <div id="out"><p class="state">Betöltés…</p></div>
 </main>
 <script type="module">
-  import * as auth from './auth.js?v=16';
+  import * as auth from './auth.js?v=17';
   const out = document.getElementById('out');
   const esc = (s) => String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
   const num = (n) => Number(n || 0).toLocaleString('hu-HU');

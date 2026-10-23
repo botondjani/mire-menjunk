@@ -8,7 +8,7 @@ Budapest programjai egy helyen: koncertek, bulik, kiállítások, színház. Nap
   - `public/e/<id>/index.html` – megosztó oldalak rövid, olvasható linkkel (pl. `e/dj-krush-akvarium-okt24/`), Open Graph előnézettel és schema.org Event adatokkal (Google)
   - `public/og/<id>.jpg` – márkázott 1200×630-as előnézeti kép programonként (`scraper/og.js`: fotó vagy kategóriaszínes poszter, dátum, cím, helyszín, logó)
   - `public/sitemap.xml`
-- **App** (`public/`): build nélküli, vanilla JS PWA. Szűrés napra/kategóriára, keresés, mentés (♥), megosztás (Web Share API + WhatsApp/FB/Viber/link), útvonal, offline mód.
+- **App** (`public/`): build nélküli, vanilla JS PWA, saját kiszolgálású betűtípusokkal (`public/fonts`, latin + magyar részhalmaz). Szűrés napra/kategóriára, keresés, mentés (♥), megosztás (Web Share API + WhatsApp/FB/Viber/link), útvonal, offline mód.
 - A szűrők az URL-ben vannak (pl. `?nap=hetvege&kat=Koncert`), így ezek is megoszthatók.
 
 ## Források

@@ -2,7 +2,7 @@
 // Nézetek: felfedezés (vízszintes szekciók), lista (szűrt, napokra bontva), keresés, mentett, profil.
 // Minden nézetnek van betöltő, üres és hibaállapota; a visszafordítható lépések (mentés) visszavonhatók.
 
-import * as auth from './auth.js?v=16';
+import * as auth from './auth.js?v=17';
 
 const ROOT = new URL('./', import.meta.url);
 const $ = (s, el = document) => el.querySelector(s);
@@ -999,7 +999,7 @@ function openEvent(e, push = true, { shared = false, plan = null } = {}) {
     <div class="detail-body">
       ${shared && !plan ? '<p class="shared-note">🔗 Valaki megosztotta veled ezt a programot</p>' : ''}
       <span class="kicker">${g.emoji} ${esc(e.category)}${e.youth ? ' · 🎓 Fiataloknak' : ''}</span>
-      <h2 id="sheetTitle">${esc(e.title)}</h2>
+      <h2 id="sheetTitle" tabindex="-1" autofocus>${esc(e.title)}</h2>
       <ul class="facts">
         <li>${icons.clock}<span>${esc(dateLabel(e))}${soon ? ` <em class="soon">· ${soon}</em>` : ''}</span></li>
         ${e.free || e.price ? `<li>${icons.ticket}<span>${e.free ? '<b class="free-tag">Ingyenes</b>' : `Jegy ${e.price.toLocaleString('hu-HU')} Ft-tól`}</span></li>` : ''}
@@ -1027,6 +1027,7 @@ function openEvent(e, push = true, { shared = false, plan = null } = {}) {
     </div>
   </article>`;
   if (!sheet.open) sheet.showModal();
+  else $('#sheetTitle').focus({ preventScroll: true });
   sheet.scrollTop = 0;
   if (plan) loadGuestPlan(plan);
   else if (state.myPlans.has(e.id)) loadMyPlans();

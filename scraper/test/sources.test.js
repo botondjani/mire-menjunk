@@ -163,6 +163,11 @@ test('ár és ingyenesség felismerése a szövegből', async () => {
   assert.equal(detectFree('Belépés ingyenes!'), true);
   assert.equal(detectFree('A rendezvény nem ingyenes'), false);
   assert.equal(detectFree('Szobordöntés'), false);
+  assert.equal(detectFree('Ünnepled a születésnapod? Akkor ingyenes belépőt kapsz!'), false);
+  assert.equal(detectFree('Ingyenes Jam Session Estek: BJC CAFE JAM'), true);
+  assert.equal(detectFree('12 éves kor alatt a belépés ingyenes, de regisztráció kötelező.'), false);
+  assert.equal(detectFree('A tárlat ingyenesen látogatható.'), true);
+  assert.equal(detectFree('ingyenes fotókiállítással kedveskedik'), true);
   assert.equal(detectPrice('Jegyár: 3 900 Ft, helyszínen 4.500 Ft'), 3900);
   assert.equal(detectPrice('Elővétel 2500 HUF'), 2500);
   assert.equal(detectPrice('2026. október 23.'), null);

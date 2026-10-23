@@ -210,11 +210,27 @@ export function tidyTitle(t) {
   }).join(' ');
 }
 
-/** Ingyenes-e a program a szöveg alapján ("ingyenes", "díjtalan", "szabad belépés", "free entry"). */
+/**
+ * Ingyenes-e a program. Csak egyértelmű megfogalmazás számít ("ingyenes kiállítás", "a belépés díjtalan",
+ * "ingyenesen látogatható", "szabad belépés", vagy "Ingyenes …" kezdetű cím) – a feltételes kedvezmény
+ * ("születésnaposoknak ingyenes belépő") nem.
+ */
+const FREE_PATTERNS = [
+  /^\s*(ingyenes|free)\b/,
+  /\bingyenes(en)? \S*(program|rendezvény|koncert|kiállítás|fesztivál|esemény|vásár|séta|túra|előadás|vetítés|jam|buli)/,
+  /\b(ingyenesen|díjtalanul) (látogatható|megtekinthető|vehető részt|lehet részt venni)/,
+  /\bbelépés ?:? ?(ingyenes|díjtalan|0 ?ft)|\ba belépés (ingyenes|díjtalan)|\bszabad belépés|\bfree (entry|admission)\b/,
+];
+// Ha közvetlenül előtte feltétel áll ("12 éves kor alatt", "diákoknak", "születésnaposoknak", "ha …"), nem számít.
+const FREE_CONDITION = /(alatt|alattiak|felett|éves|évesek|gyerek|diák|nyugdíjas|születésnap|kedvezmény|regisztráció|\bha\b|esetén)[^.!?]{0,40}$/;
+
 export function detectFree(text = '') {
   const t = text.toLowerCase();
-  if (/nem ingyenes|ingyenes (regisztráció|jegy ?igénylés)/.test(t)) return false;
-  return /\bingyenes(en)?\b|\bdíjtalan|szabad belépés|belépés ?: ?(ingyenes|díjtalan|0 ?ft)|\bfree (entry|admission)\b|\bingyen\b/.test(t);
+  if (/nem ingyenes/.test(t)) return false;
+  return FREE_PATTERNS.some((re) => {
+    const m = re.exec(t);
+    return m && !FREE_CONDITION.test(t.slice(Math.max(0, m.index - 60), m.index));
+  });
 }
 
 /** A legolcsóbb jegyár forintban a szövegből ("3 900 Ft", "8.000 Ft-tól", "2500 HUF"), vagy null. */

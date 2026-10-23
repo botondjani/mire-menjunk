@@ -35,6 +35,12 @@
     <li><strong>Google-belépéssel:</strong> a Google-fiókod neve, e-mail-címe és profilképe (ezeket a Google adja át a belépéskor), a mentett programok azonosítója és alapadatai (cím, dátum, helyszín, link), valamint a kiválasztott érdeklődési körök.</li>
   </ul>
 
+  <h2>Értesítések és követett helyek</h2>
+  <p>Ha belépve bekapcsolod az értesítéseket, a böngésződ által adott értesítési címet (a telefonod push-azonosítóját) és a hozzá tartozó titkosító kulcsokat tároljuk, valamint az értesítési beállításaidat (mikor és milyen értesítést kérsz) és a követett helyszíneket. Az értesítéseket a böngésződ gyártójának push-szolgáltatásán keresztül küldjük (pl. Google, Apple, Mozilla, Microsoft), titkosítva. Kikapcsolás vagy kijelentkezés után az adott eszköz azonosítóját töröljük.</p>
+
+  <h2>Helymeghatározás</h2>
+  <p>A térkép „Közelemben” gombja csak a te kérésedre kéri le a helyzetedet. A helyadatot kizárólag a böngésződben használjuk a távolságok kiszámításához; nem küldjük el és nem tároljuk.</p>
+
   <h2>Meghívók („Ki jön?”)</h2>
   <p>Ha megosztasz egy programot, a link egy meghívó: aki megnyitja, jelezheti, hogy jön-e. Ehhez a választ adó által megadott nevet és a választ tároljuk, valamint egy véletlen eszközazonosítót a böngésző helyi tárhelyén, hogy a válasz később módosítható legyen. A meghívót és a válaszokat csak az látja, akinél a link megvan. A meghívókat 60 nap után már nem jelenítjük meg.</p>
 
@@ -42,10 +48,20 @@
   <p>Névtelenül mérjük, hány látogató van, és mely programokat nyitják meg, mentik vagy osztják meg. Sütit nem használunk, és ehhez semmit nem tárolunk az eszközödön: a napi egyedi látogatót az IP-cím és a böngésző típusa alapján, naponta cserélődő titkos kulccsal képzett, visszafejthetetlen azonosító adja, amelyből személy nem azonosítható, és másnap már nem köthető össze az előzővel. Az adatokat legfeljebb 400 napig őrizzük.</p>
 
   <h2>Mire használjuk?</h2>
-  <p>Kizárólag arra, hogy a mentéseid szinkronban legyenek az eszközeid között, és hogy a kezdőlapon az érdeklődésednek megfelelő programokat ajánljunk. Az adatkezelés jogalapja a hozzájárulásod (a belépés), amit a fiókod törlésével bármikor visszavonhatsz.</p>
+  <p>Kizárólag arra, hogy a mentéseid szinkronban legyenek az eszközeid között, hogy a kezdőlapon és az értesítésekben az érdeklődésednek megfelelő programokat ajánljunk, és hogy a kért értesítéseket elküldjük. Az adatkezelés jogalapja a hozzájárulásod (a belépés), amit a fiókod törlésével bármikor visszavonhatsz.</p>
 
   <h2>Hol tároljuk?</h2>
   <p>A fiókadatok a <strong>Supabase</strong> szolgáltatásban, az Európai Unióban (Frankfurt, Németország) lévő szerveren vannak. A belépést a <strong>Google</strong> bonyolítja (OAuth); a jelszavadat mi soha nem látjuk. Az adatbázis szabályai biztosítják, hogy a mentéseidhez csak te férj hozzá.</p>
+
+  <h2>Külső szolgáltatások</h2>
+  <p>Néhány funkció külső szerverről tölt be tartalmat; ilyenkor az adott szolgáltató a böngésződ technikai adatait (pl. IP-cím) látja:</p>
+  <ul>
+    <li><strong>Térkép:</strong> a térképcsempék az OpenStreetMap Alapítványtól (tile.openstreetmap.org), a térképkönyvtár a cdnjs-ről (Cloudflare) töltődik be – csak ha megnyitod a térképet.</li>
+    <li><strong>Belépés:</strong> a Google bejelentkező gombja a Profil oldalon töltődik be; a fiókkezelő könyvtár a jsDelivr-ről érkezik, ha belépsz vagy be vagy lépve.</li>
+    <li><strong>Programképek:</strong> a programok képei a forrásoldalak (pl. We Love Budapest, a helyszínek oldalai) szervereiről töltődnek be.</li>
+    <li><strong>Útvonal és források:</strong> a Google Térkép és a forrásoldalak csak akkor nyílnak meg, ha rájuk koppintasz.</li>
+  </ul>
+  <p>A betűtípusokat és az app többi részét saját tárhelyünkről szolgáljuk ki.</p>
 
   <h2>Meddig tároljuk?</h2>
   <p>Amíg a fiókod létezik. A <strong>Profil → Fiókom törlése</strong> gombbal azonnal és véglegesen törölheted a fiókodat a hozzá tartozó mentésekkel és érdeklődési körökkel együtt.</p>
