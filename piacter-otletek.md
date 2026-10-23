@@ -1,0 +1,112 @@
+# Budapesti piactér-ötletek fiataloknak
+
+*Készült: 2026-10-23. A **[B]** jel becslést vagy nem ellenőrizhető adatot jelöl, a **[M]** azt, amit mérni kell. A videó kritériumai itt nem kötnek: lehet backend, fiók és jutalék.*
+
+## Közös alapok minden piactérhez
+- **Hidegindítás:** egy egyetem vagy egy kerület, egy kategória, és a kínálatot kézzel töltöd fel az első 4–6 hétben. A kereslet csak ezután jön.
+- **Fizetés:** Barion (magyar, van marketplace- és split-fizetés) vagy Stripe Connect. Saját pénzt nem kezelsz, így nem kell pénzforgalmi engedély. Fizikai árunál és helyben nyújtott szolgáltatásnál nem kötelező az Apple IAP.
+- **Kötelezettség:** a **DAC7** szerint a piactérnek jelentenie kell a NAV felé azokat az eladókat, akik egy évben legalább 30 eladást vagy 2000 € forgalmat érnek el. Ehhez kell egy egyszerű eladói adatgyűjtés. ÁSZF és GDPR is kell.
+- **Bizalom:** a csalások már minden nagy hazai piactéren jelen vannak (Jófogás, Marketplace, Vinted, Vatera, Foxpost; NKI). **Egyetemi e-mailes ellenőrzés és letéti fizetés** a fő megkülönböztető előny.
+- **Piacméret:** kb. 300 000 hallgató van az országban, ennek kb. 50 000-e jut kollégiumhoz. Magyarországon kb. 49 500 külföldi hallgató tanul (2025/26, +3700 fő egy év alatt). A budapesti bontás **[M]**.
+
+---
+
+## 1. Egyetemi rendezvényjegyek + biztonságos viszonteladás (szakestek, gólyabálok, kari bulik)
+- **Mi ez:** a hallgatói szervezetek (HÖK-ök, szakkollégiumok, Erasmus-szervezetek) jegyet árulnak, a vevők pedig névértéken, letéttel adhatják tovább a jegyüket. Ma ez gyakran Google Formmal és átutalással megy, a viszonteladás pedig Facebook-csoportokban.
+- **Miért most:** a TicketSwap 2026-ig a Sziget hivatalos viszonteladó partnere, így a névértékes viszonteladás elfogadottá vált. A kis egyetemi rendezvényeket viszont senki nem szolgálja ki. A Facebookos jegycsalások gyakoriak.
+- **Üzleti modell:** jegyenként 3–5% vagy 150–250 Ft vevői díj, a viszonteladásnál +5%. A szervezőnek ingyenes.
+- **Hidegindítás:** 3 szervezet (pl. egy-egy BME-, ELTE- és Corvinus-kar) ingyen. **Minden szervező hozza a saját közönségét**, ezért ez a legkönnyebben indítható piactér.
+- **Számok [B]:** havi 40 esemény × 300 jegy × 3000 Ft = 36 millió Ft forgalom. 4%-kal ez **kb. 1,4 millió Ft/hó**.
+- **90 napos kapu:** ≥ 10 szervező, ≥ 5000 eladott jegy, ≥ 30%-os szervezői visszatérés.
+- **Kockázat:** a Tixa, az Eventbrite és a Jegy.hu is beléphet. Kicsik az egységárak. A beléptetéshez QR-szkenner kell.
+- **Pont: 6,5.** Ennél a legkönnyebb a hidegindítás.
+
+## 2. Szobatárs- és albérlet-átadó piac („átveszem a szobádat”)
+- **Mi ez:** a kiköltöző bérlő átadja a lakást vagy a szobát (főbérlői jóváhagyással), a szobatárs-keresők pedig ellenőrzött hallgatói profillal találnak egymásra. Ügynöki díj nincs.
+- **Miért most:** a kollégiumi jelentkezések száma kb. négyszerese a helyeknek. A hallgatói albérletárak Budapesten egy forrás szerint 5 év alatt duplájukra nőttek. 2026. jan. 1-től tilos a rövid távú kiadás Terézvárosban, Erzsébetvárosban pedig szigorodott. A felvételi körüli hetekben az árak 8–10 ezer Ft-tal magasabbak.
+- **Üzleti modell:** ellenőrzött profil vagy kiemelés a keresőnek 2990–4990 Ft/hirdetés. Sikeres átadásnál opcionális jutalék. Később fizetős hirdetés a főbérlőknek.
+- **Hidegindítás:** egy egyetem és 2–3 kerület (pl. IX., XI.). Augusztus–szeptember és január–február a csúcs.
+- **Számok [B]:** havi 1000 fizető × 3500 Ft = **3,5 millió Ft/hó** csúcshónapban, de erős a szezonalitás.
+- **90 napos kapu:** ≥ 500 ellenőrzött profil, ≥ 50 sikeres párosítás, ≥ 8% fizető.
+- **Kockázat:** az alberlet.hu, az ingatlan.com, a Rentingo és a Facebook-csoportok. Lakáscsalások. Jogi kérdés az albérletbe adás.
+- **Pont: 6,5.** Ennél a legnagyobb a fájdalom és a fizetési hajlandóság.
+
+## 3. Diák alkalmi munkák és szívességek (költöztetés, IKEA-bútor, kutyasétáltatás, takarítás buli után)
+- **Mi ez:** a háztartások 1–4 órás feladatokra keresnek diákot, a diák egy kattintással elvállalja.
+- **Miért most:** 2026-ban minden második diák 2500 Ft feletti nettó órabért vár (2023-ban még csak 1%). A 25 év alattiak SZJA-mentessége miatt a bruttó szinte nettó (ennek 2026-os részleteit ellenőrizni kell). A háztartásoknak nincs gyors, megbízható forrásuk.
+- **Üzleti modell:** 15–20% jutalék. A foglalkoztatás **egy iskolaszövetkezettel közösen** megy (Meló-Diák vagy hasonló), így jogilag tiszta.
+- **Hidegindítás:** 2 kategória (költöztetés és bútorszerelés), 3 kerület, 30 kézzel válogatott diák. A keresletet kerületi Facebook-csoportok és lakóparkok hozzák.
+- **Számok [B]:** havi 800 munka × 3 óra × 4500 Ft ügyfélár = 10,8 millió Ft forgalom. 18%-kal ez **kb. 1,9 millió Ft/hó**.
+- **90 napos kapu:** ≥ 300 elvégzett munka, ≥ 4,6-os értékelés, ≥ 35% visszatérő ügyfél.
+- **Kockázat:** a munkajog, a felelősség és a kár (biztosítás kell). Az ügyfél és a diák megkerülheti a platformot az első munka után. Gondot jelent a megbízhatóság.
+- **Pont: 6,5.**
+
+## 4. Kolis és egyetemi cuccpiac szemeszterváltáskor („Költözéspiac”)
+- **Mi ez:** csak egyetemi e-maillel lehet regisztrálni. Bútor, tankönyv, konyhai holmi, bicikli. Kiköltözéskor egyben is eladható egy „kiköltözési csomag”.
+- **Miért most:** egyre több a külföldi hallgató (49 500 fő, +3700 egy év alatt). Az Erasmus-hallgatók félévente cserélődnek, és a piactéri csalások miatt nő a bizalmatlanság.
+- **Üzleti modell:** a hirdetés ingyenes. Kiemelés 490–990 Ft, „kiköltözési csomag” 2990 Ft. Később szállítási partner (pl. diák-fuvar az 3. ötletből).
+- **Hidegindítás:** egy egyetem, január–február és június–július csúcsokkal.
+- **Számok [B]:** szezonban havi 1500 fizető tétel × 900 Ft = **kb. 1,35 millió Ft/hó**, szezonon kívül töredéke.
+- **90 napos kapu:** ≥ 2000 hirdetés, ≥ 25% eladási arány, ≥ 5% fizető kiemelés.
+- **Kockázat:** a Vinted, a Jófogás és a Facebook ingyenes. Erős a szezonalitás. Alacsonyak az egységárak.
+- **Pont: 5,5.**
+
+## 5. Diákról diákra korrepetálás egyetemi tárgyakból (vizsgaidőszakra)
+- **Mi ez:** egy felsőbb éves, aki ötösre teljesítette a tárgyat, segít az alsóbb évesnek. Tárgykód alapján lehet keresni (pl. „BME Analízis 1”).
+- **Miért most:** a diákok egyre magasabb órabért várnak, és a magántanár drága. A vizsgaidőszak (december–január, május–június) éles, visszatérő pillanat.
+- **Üzleti modell:** 15% jutalék egy kb. 5000–7000 Ft-os órára **[B]**, vagy havi előfizetés a tutoroknak.
+- **Hidegindítás:** egy egyetem 10 legbukósabb tárgya, 30 tutor.
+- **Számok [B]:** vizsgaidőszakban havi 1200 óra × 6000 Ft × 15% = **kb. 1,1 millió Ft/hó**.
+- **90 napos kapu:** ≥ 50 aktív tutor, ≥ 600 óra, ≥ 40% ismételt foglalás.
+- **Kockázat:** a Facebook-csoportok és a Superprof. A platform megkerülése, és az AI-tanulóeszközök helyettesíthetik.
+- **Pont: 6,0.**
+
+## 6. „Hiányzik egy ember”: sportpartner és utolsó perces pályahelyek (padel, foci, röplabda)
+- **Mi ez:** a csapatok és párok hiányzó játékost keresnek, a pályák pedig kiadják az utolsó perces üres sávokat.
+- **Miért most:** Magyarországon kb. 30 000 amatőr padeljátékos van (FIP World Padel Report 2025). 2026 júliusában Budapesten debütált a CUPRA FIP Tour, és sok új klub nyílt.
+- **Üzleti modell:** 200–500 Ft játékosdíj, vagy jutalék a pályától az utolsó perces sávok után.
+- **Hidegindítás:** 3 padelklub és 1 kispályás foci-közösség.
+- **Számok [B]:** havi 4000 csatlakozás × 300 Ft = **kb. 1,2 millió Ft/hó**.
+- **Kockázat:** **a Playtomic már kínál nyitott meccseket** a budapesti padelklubokban. A focit Facebook-csoportok szervezik ingyen.
+- **Pont: 5,0.**
+
+## 7. Bérelj a diáktársadtól: szalagavatós, gólyabálos ruha, fesztiválsátor, kamera
+- **Mi ez:** magánszemélyek közötti bérlés letéttel, egyetemi és középiskolai közösségen belül.
+- **Miért most:** a szalagavatók (november–február), a gólyabálok és a fesztiválok éles, egyszeri igényt teremtenek. A drágulás és a fenntarthatóság is a bérlés felé tol. Magyarországon szinte csak a Life4Rent van jelen.
+- **Üzleti modell:** 15% jutalék + letétkezelés Barionnal. Az alkalmi ruha a legjobb belépő, mert magas az értéke és éles a pillanat.
+- **Hidegindítás:** 5 budapesti gimnázium szalagavatós szezonja (100 ruha és öltöny, kézzel feltöltve).
+- **Számok [B]:** szezonban havi 600 bérlés × 8000 Ft × 15% = **kb. 720 ezer Ft/hó**.
+- **Kockázat:** kár, vita, tisztítás és logisztika. A kínálat feltöltése nehéz.
+- **Pont: 5,5.**
+
+---
+
+## Összevetés és javaslat
+
+| # | Ötlet | Hidegindítás | Fizetési hajl. | Verseny | Becsült havi bevétel 12 hónapnál [B] | Pont |
+|---|---|---|---|---|---|---|
+| 1 | Egyetemi rendezvényjegy + viszonteladás | **Könnyű** (a szervező hozza a közönséget) | Közepes | Közepes | kb. 1,4 millió Ft | **6,5** |
+| 2 | Szobatárs- és albérlet-átadás | Közepes | **Magas** | Erős | kb. 3,5 millió Ft (csúcshónap) | **6,5** |
+| 3 | Diák alkalmi munkák | Közepes | Magas | Gyenge vagy széttagolt | kb. 1,9 millió Ft | **6,5** |
+| 5 | Korrepetálás | Közepes | Közepes | Széttagolt | kb. 1,1 millió Ft | 6,0 |
+| 4 | Kolis cuccpiac | Könnyű | Alacsony | Erős (ingyenes) | kb. 1,35 millió Ft (szezon) | 5,5 |
+| 7 | P2P bérlés (szalagavató, fesztivál) | Nehéz | Közepes | Gyenge | kb. 0,7 millió Ft (szezon) | 5,5 |
+| 6 | Sportpartner és pályák | Közepes | Alacsony | Playtomic | kb. 1,2 millió Ft | 5,0 |
+
+**Javaslat [D]:** az **1-essel** érdemes indulni, mert ott a legkönnyebb a hidegindítás és a legkisebb a kockázat: 3 szervezettel 2 héten belül élesben lehet. A **2-es vagy a 3-as** lehet a második lépés ugyanannak a hallgatói közönségnek, amikor már megvan a felhasználói bázis és az egyetemi e-mailes ellenőrzés.
+
+**Első 3 lépés:**
+1. 10 interjú hallgatói szervezőkkel (HÖK, szakkollégium, ESN): hogyan árulnak ma jegyet, mi fáj nekik.
+2. Barion marketplace-szerződés és egy egyszerű jegyoldal QR-beléptetéssel (2–3 hét).
+3. Az első 3 rendezvény ingyen. Mérni kell a jegyvásárlási konverziót és a viszonteladások arányát.
+
+## Források
+- Hallgatói lakhatás és kollégiumok: https://eduline.hu/felsooktatas/20251208_egyetemistak-lakhatas-kollegium-alberlet-lehetosegek , https://eduline.hu/felsooktatas/alberletek_felsooktatas_YLYMG5 , https://www.economx.hu/magyar-gazdasag/alberletpiac-tanevkezdes-arvisszaeses-sporolas/
+- Külföldi hallgatók: https://eduline.hu/felsooktatas/20261021_magyar-egyetemek-kulfoldi-hallgatok-szama-novekedes
+- Terézvárosi tilalom: https://www.penzcentrum.hu/otthon/20260519/vegleges-tiltas-lep-eletbe-a-fovaros-sziveben-rengeteg-ingatlantulajdonos-bukja-el-emiatt-a-biztos-bevetelt-1198922/amp
+- TicketSwap és a Sziget: https://www.vg.hu/turizmus/2025/11/sziget-fesztival-jegy
+- Piactéri csalások: https://telex.hu/techtud/2024/02/20/facebook-marketplace-csalas-internet , https://www.vg.hu/kozelet/2023/11/hemzsegnek-a-csalok-a-jofogason-es-a-facebook-marketplace-en-ezekre-figyeljen
+- Diákmunka-bérek 2026: https://www.melodiak.hu/assets/data/diakmunka-korkep-2026.pdf , https://www.economx.hu/gazdasag/2025/06/20/diakmunka-melo-diak-berminimum-oraber-811325/
+- 25 év alattiak SZJA-mentessége: https://bank360.hu/blog/ennyivel-emeli-a-diakmunkasok-netto-beret-a-25-ev-alattiak-szja-mentessege
+- Padel: https://www.padelfip.com/2026/07/cupra-fip-tour-makes-successful-debut-in-hungary/ , https://playtomic.com/clubs/budapest-padel
+- P2P bérlés (Life4Rent): https://dailynewshungary.com/a-smart-way-to-earn-from-items-you-already-own-now-available-in-hungary/
