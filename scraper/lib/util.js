@@ -209,3 +209,18 @@ export function tidyTitle(t) {
     return lw.replace(/^(\P{L}*)(\p{L})/u, (_, pre, c) => pre + c.toLocaleUpperCase('hu'));
   }).join(' ');
 }
+
+/** Ingyenes-e a program a szöveg alapján ("ingyenes", "díjtalan", "szabad belépés", "free entry"). */
+export function detectFree(text = '') {
+  const t = text.toLowerCase();
+  if (/nem ingyenes|ingyenes (regisztráció|jegy ?igénylés)/.test(t)) return false;
+  return /\bingyenes(en)?\b|\bdíjtalan|szabad belépés|belépés ?: ?(ingyenes|díjtalan|0 ?ft)|\bfree (entry|admission)\b|\bingyen\b/.test(t);
+}
+
+/** A legolcsóbb jegyár forintban a szövegből ("3 900 Ft", "8.000 Ft-tól", "2500 HUF"), vagy null. */
+export function detectPrice(text = '') {
+  const prices = [...text.matchAll(/(\d{1,3}(?:[ . ]\d{3})|\d{3,5})\s?(?:,-\s?)?(?:Ft|HUF|forint)\b/gi)]
+    .map((m) => Number(m[1].replace(/[ . ]/g, '')))
+    .filter((n) => n >= 300 && n <= 100000);
+  return prices.length ? Math.min(...prices) : null;
+}

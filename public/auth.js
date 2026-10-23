@@ -95,7 +95,7 @@ export async function signOut() {
 
 export async function loadProfile(userId) {
   const c = await client();
-  const { data, error } = await c.from('profiles').select('display_name, avatar_url, interests, notify_reminders, notify_follows, notify_weekly, remind_before, digest_hour').eq('id', userId).maybeSingle();
+  const { data, error } = await c.from('profiles').select('display_name, avatar_url, interests, notify_reminders, notify_follows, notify_weekly, remind_before, digest_hour, tonight_mode').eq('id', userId).maybeSingle();
   if (error) throw error;
   return data;
 }
@@ -206,4 +206,50 @@ export async function deleteAccount() {
   const { error } = await c.functions.invoke('delete-account', { method: 'POST' });
   if (error) throw error;
   await c.auth.signOut();
+}
+
+// ---------- „Ki jön?” meghívók ----------
+// Könnyű hívás a Supabase-könyvtár nélkül: a meghívott barátnak nem kell a teljes kliens. Belépve a saját tokenünkkel megy.
+async function rpc(fn, args) {
+  let token = null;
+  try { token = JSON.parse(localStorage.getItem(SESSION_KEY))?.access_token ?? null; } catch { /* nincs munkamenet */ }
+  const call = (t) => fetch(`${SUPABASE_URL}/rest/v1/rpc/${fn}`, {
+    method: 'POST',
+    headers: { apikey: SUPABASE_KEY, 'Content-Type': 'application/json', ...(t ? { Authorization: `Bearer ${t}` } : {}) },
+    body: JSON.stringify(args),
+  });
+  let res = await call(token);
+  if (res.status === 401 && token) res = await call(null);
+  if (!res.ok) throw new Error(`${fn}: ${res.status}`);
+  const text = await res.text();
+  return text ? JSON.parse(text) : null;
+}
+
+/** Véletlen eszközazonosító a meghívókhoz (hogy a válaszodat később módosíthasd). Csak ehhez használjuk. */
+export function deviceId() {
+  try {
+    let id = localStorage.getItem('device');
+    if (!id) localStorage.setItem('device', (id = crypto.randomUUID().replace(/-/g, '')));
+    return id;
+  } catch { return (deviceId.tmp ??= crypto.randomUUID().replace(/-/g, '')); }
+}
+
+export const createPlan = (id, e, name) => rpc('create_plan', {
+  p_id: id, p_event_id: e.id, p_device: deviceId(), p_name: name || null,
+  p_event: { title: e.title, start: e.start, end: e.end, time: e.time, venue: e.venue },
+});
+export const getPlan = (id) => rpc('get_plan', { p_id: id, p_device: deviceId() });
+export const respondPlan = (id, name, status) => rpc('respond_plan', { p_id: id, p_device: deviceId(), p_name: name, p_status: status });
+export const myPlans = () => rpc('my_plans', { p_device: deviceId() });
+export const amAdmin = () => rpc('am_i_admin', {});
+
+// ---------- mérés ----------
+/** Sütimentes, névtelen esemény a statisztikához (nem tárol semmit az eszközön). */
+export function track(n, data = {}) {
+  try {
+    const body = JSON.stringify({ n, ...data, s: matchMedia('(display-mode: standalone)').matches });
+    if (!navigator.sendBeacon?.(`${SUPABASE_URL}/functions/v1/track`, body)) {
+      fetch(`${SUPABASE_URL}/functions/v1/track`, { method: 'POST', body, keepalive: true }).catch(() => {});
+    }
+  } catch { /* a mérés soha nem törheti el az appot */ }
 }

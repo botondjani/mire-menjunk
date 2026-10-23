@@ -4,6 +4,7 @@
 //   public/sitemap.xml
 // FIXTURES=1 parses the saved HTML in scraper/test/fixtures instead of fetching.
 import { mkdir, readFile, rm, writeFile } from 'node:fs/promises';
+import { readFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import welovebudapest from './sources/welovebudapest.js';
@@ -17,7 +18,7 @@ import zenehaza from './sources/zenehaza.js';
 import durer from './sources/durer.js';
 import bjc from './sources/bjc.js';
 import dumaszinhaz from './sources/dumaszinhaz.js';
-import { addDays, detectVenue, slugify, tidyTitle, todayBudapest } from './lib/util.js';
+import { addDays, detectFree, detectPrice, detectVenue, slugify, tidyTitle, todayBudapest } from './lib/util.js';
 import { renderOg } from './og.js';
 
 // Curated sources first: on duplicates their description and image win.
@@ -111,11 +112,20 @@ function isYouth(e) {
 }
 
 /** Shared clean-up so sources agree: canonical venue names, no cancelled shows, better category fallback. */
+// Helyszínek koordinátái a térképhez (OpenStreetMap Nominatim, kézzel ellenőrizve).
+const GEO = JSON.parse(readFileSync(new URL('./lib/venues-geo.json', import.meta.url), 'utf8'));
+
 function normalize(e) {
   const venue = e.venue ? detectVenue(e.venue) || e.venue : null;
   const category = e.category === 'Szabadidő' && MUSIC_VENUES.has(venue) ? 'Koncert' : e.category;
   const out = { ...e, title: tidyTitle(e.title), venue, category };
   if (isYouth(out)) out.youth = true;
+  const text = `${e.title} ${e.description || ''}`;
+  out.free = !!e.free || detectFree(text);
+  const price = e.price ?? detectPrice(e.description || '');
+  if (price && !out.free) out.price = price;
+  if (!out.free) delete out.free;
+  if (GEO[venue]) out.geo = GEO[venue];
   return out;
 }
 

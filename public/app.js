@@ -2,7 +2,7 @@
 // Nézetek: felfedezés (vízszintes szekciók), lista (szűrt, napokra bontva), keresés, mentett, profil.
 // Minden nézetnek van betöltő, üres és hibaállapota; a visszafordítható lépések (mentés) visszavonhatók.
 
-import * as auth from './auth.js?v=14';
+import * as auth from './auth.js?v=15';
 
 const ROOT = new URL('./', import.meta.url);
 const $ = (s, el = document) => el.querySelector(s);
@@ -113,6 +113,8 @@ const state = {
   day: validDay(params.get('nap')) || DEFAULT_DAY,
   tab: { search: 'search', saved: 'saved', profile: 'profile' }[VIEWS[params.get('v')]] || 'home', // melyik alsó fül aktív
   group: FILTERS.some((g) => g.key === params.get('kat')) ? params.get('kat') : '',
+  free: params.get('ingyen') === '1',      // csak ingyenes programok
+  map: params.get('terkep') === '1',       // térképnézet a listában
   q: params.get('q') || '',
   saved: new Set(store.get('saved', [])),
   interests: store.get('interests', []),   // érdeklődési körök (FILTERS kulcsai); belépve a profilból szinkronizálva
@@ -121,6 +123,9 @@ const state = {
   authBusy: false,
   confirmDelete: false,
   follows: new Set(),                      // követett helyszínek (belépve)
+  myPlans: new Map(),                      // saját „Ki jön?” meghívóim programonként
+  myName: store.get('myName', ''),
+  plan: null,                              // a megnyitott meghívó (ha ?p= linkről jöttünk)         // a meghívókon megjelenő név
   push: 'off',                             // értesítések ezen az eszközön: on | off | denied | unsupported
   pushBusy: false,
   events: [],
@@ -157,6 +162,7 @@ async function load() {
   view.removeAttribute('aria-busy');
   // Google-ről visszatérve előbb a belépést fejezzük be, különben a címsor takarítása elvinné a ?code=-ot.
   if (auth.hasPendingSession()) await initAuth();
+  else loadMyPlans();
   render();
   route();
   updateBanner();
@@ -194,6 +200,8 @@ async function afterSignIn() {
     const [profile, remote, follows] = await Promise.all([auth.loadProfile(user.id), auth.loadSaved(), auth.loadFollows()]);
     state.profile = profile;
     state.follows = new Set(follows);
+    loadMyPlans();
+    auth.amAdmin().then((a) => { state.admin = a; if (a && state.view === 'profile' && !sheet.open) render(); }).catch(() => {});
     state.push = !auth.pushSupported() ? 'unsupported' : Notification.permission === 'denied' ? 'denied' : (await auth.pushEnabled()) ? 'on' : 'off';
     const localOnly = [...state.saved].filter((id) => !remote.includes(id));
     await auth.addSaved(user.id, localOnly.map((id) => state.byId.get(id)).filter(Boolean));
@@ -286,6 +294,7 @@ async function toggleFollow(venue) {
     return toast('Most nem sikerült – próbáld újra.');
   }
   if (!on) return toast(`Már nem követed: ${venue}`);
+  auth.track('follow');
   if (state.push === 'on') toast(`Követed: ${venue}. Szólunk, ha új programja lesz.`);
   else toast(`Követed: ${venue}. Kapcsold be az értesítéseket, hogy szóljunk.`, { label: 'Bekapcsolom', fn: enablePush });
 }
@@ -297,7 +306,7 @@ async function enablePush() {
   try {
     const r = await auth.enablePush(state.user.id);
     state.push = r === 'ok' ? 'on' : r;
-    if (r === 'ok') auth.testPush().catch(() => {});
+    if (r === 'ok') { auth.testPush().catch(() => {}); auth.track('push_on'); }
     else if (r === 'denied') toast('Az értesítések le vannak tiltva – a böngésző beállításaiban engedélyezheted.');
   } catch {
     toast('Az értesítések bekapcsolása most nem sikerült. Próbáld újra.');
@@ -314,7 +323,8 @@ async function disablePush() {
 }
 
 async function toggleSetting(key) {
-  setPref(key, !({ ...NOTIFY_DEFAULTS, ...state.profile })[key]);
+  const cur = ({ ...NOTIFY_DEFAULTS, ...state.profile })[key];
+  setPref(key, key === 'tonight_mode' ? (cur ? 0 : 1) : !cur);
 }
 
 function setPref(key, value) {
@@ -329,7 +339,7 @@ function mountSignIn() {
   if (!el || el.childElementCount) return;
   if (!initAuth.subscribed && !initAuth.started) { initAuth.started = true; initAuth(); }
   auth.mountGoogleButton(el, {
-    onStart: () => { el.classList.add('busy'); },
+    onStart: () => { el.classList.add('busy'); auth.track('signin'); },
     onError: () => { el.classList.remove('busy'); toast('A bejelentkezés most nem sikerült. Próbáld újra pár perc múlva.'); },
   }).then((ok) => { if (!ok) $('#gsiFallback')?.removeAttribute('hidden'); });
 }
@@ -394,7 +404,7 @@ function card(e) {
   return `<article class="card">
     <a class="card-link" href="${eventUrl(e)}" data-open="${e.id}" aria-label="${esc(e.title)}"></a>
     ${media(e)}
-    <span class="chip">${esc(chip(e))}</span>
+    ${e.free ? `<span class="chips"><span class="chip">${esc(chip(e))}</span><span class="chip free">Ingyenes</span></span>` : `<span class="chip">${esc(chip(e))}</span>`}
     <button class="fab save" data-save="${e.id}" aria-pressed="${saved}" aria-label="${saved ? 'Mentve – koppints az eltávolításhoz' : 'Mentés'}">${icons.heart}</button>
     <h3>${esc(e.title)}</h3>
     <div class="card-foot">
@@ -410,6 +420,7 @@ function row(e, { withDate = false } = {}) {
   const soon = startsIn(e);
   const when = isLong(e) ? `${short(e.end).replace(/\./g, '')}-ig` : withDate ? [chip(e), e.time].filter(Boolean).join(', ') : e.time;
   const parts = [when, e.venue].filter(Boolean).map(esc);
+  if (e.free) parts.push('<span class="free-tag">Ingyenes</span>');
   const meta = (soon ? [`<span class="soon">${soon}</span>`, ...parts] : parts).join(' · ') || groupOf(e).label;
   return `<article class="row-card">
     <a class="card-link" href="${eventUrl(e)}" data-open="${e.id}" aria-label="${esc(e.title)}"></a>
@@ -428,18 +439,19 @@ function mini(e) {
   return `<article class="mini">
     <a class="card-link" href="${eventUrl(e)}" data-open="${e.id}" aria-label="${esc(e.title)}"></a>
     ${media(e)}
-    <span class="chip">${esc(chip(e))}</span>
+    ${e.free ? `<span class="chips"><span class="chip">${esc(chip(e))}</span><span class="chip free">Ingyenes</span></span>` : `<span class="chip">${esc(chip(e))}</span>`}
     <button class="fab save" data-save="${e.id}" aria-pressed="${saved}" aria-label="${saved ? 'Mentve – koppints az eltávolításhoz' : 'Mentés'}">${icons.heart}</button>
     <h3>${esc(e.title)}</h3>
     <p>${esc([isLong(e) ? null : e.time, e.venue].filter(Boolean).join(' · ') || groupOf(e).label)}</p>
   </article>`;
 }
 
-function rail(title, events, link, { size = 'big', total = events.length } = {}) {
+function rail(title, events, link, { size = 'big', total = events.length, map = null } = {}) {
   if (!events.length) return '';
   return `<section class="rail rail-${size}">
     <header class="rail-head">
       <h2>${title}</h2>
+      ${map ? `<a class="rail-map" href="${map}" data-nav="${map}" aria-label="Térképen">${icons.map}</a>` : ''}
       ${link ? `<a href="${link}" data-nav="${link}">Összes <span aria-hidden="true">${total}</span></a>` : ''}
     </header>
     <div class="rail-track">${events.map(size === 'big' ? card : mini).join('')}</div>
@@ -497,7 +509,7 @@ function homeView() {
   </header>
   <nav class="quick" aria-label="Időszak">${quick.map(([k, label, n]) => `<a href="${listHref({ nap: k })}" data-nav="${listHref({ nap: k })}"><b>${label}</b><span>${n} program</span></a>`).join('')}</nav>`;
 
-  html += rail('Ma este', pick(tonight, 10, false), listHref({ nap: 'ma' }), { total: tonight.length })
+  html += rail('Ma este', pick(tonight, 10, false), listHref({ nap: 'ma' }), { total: tonight.length, map: listHref({ nap: 'ma', terkep: '1' }) })
     || '<p class="hint">Mára már nincs több programunk – nézd meg a holnapiakat.</p>';
 
   const recs = recommendations();
@@ -510,6 +522,8 @@ function homeView() {
   html += rail(`${YOUTH.emoji} Fiataloknak`, pick(youth, 12), listHref({ kat: YOUTH.key }), { size: 'mini', total: youth.length });
   const weekend = on('hetvege');
   html += rail('Hétvégén', pick(weekend, 12), listHref({ nap: 'hetvege' }), { size: 'mini', total: weekend.length });
+  const free = soon.filter((e) => e.free);
+  if (free.length >= 3) html += rail('🆓 Ingyen is jó', pick(free, 12), listHref({ nap: 'het', ingyen: '1' }), { size: 'mini', total: free.length });
   const ongoing = state.events.filter((e) => isLong(e) && e.start <= addDays(today, 7)).sort((a, b) => a.end.localeCompare(b.end));
   html += rail('Most is látogatható', pick(ongoing, 12), listHref({ nap: 'ma', kat: 'kiallitas' }), { size: 'mini', total: ongoing.length });
   const nextWeek = on('jovohet');
@@ -519,7 +533,7 @@ function homeView() {
 
 function filteredList() {
   const r = range(state.day);
-  return state.events.filter((e) => overlaps(e, r) && matchesFilter(e, state.group));
+  return state.events.filter((e) => overlaps(e, r) && matchesFilter(e, state.group) && (!state.free || e.free));
 }
 
 function listBody(items) {
@@ -527,6 +541,7 @@ function listBody(items) {
     const actions = [
       state.day !== 'het' ? '<button class="btn primary" data-day="het">Nézd meg az egész hetet</button>' : '<button class="btn primary" data-day="jovohet">Jövő heti programok</button>',
       state.group ? '<button class="btn" data-group="">Minden kategória</button>' : '',
+      state.free ? '<button class="btn" data-free>Fizetősök is</button>' : '',
     ].join('');
     return stateBox({ icon: '🔍', title: 'Erre most nincs program', text: 'Ebben az időszakban és kategóriában nem találtunk semmit. Bővítsd a szűrést:', actions });
   }
@@ -554,15 +569,133 @@ function listView() {
   return `<header class="page-head compact">
       <button class="icon-btn back" data-back aria-label="Vissza">${icons.back}</button>
       <button class="title-btn" data-pick aria-haspopup="dialog" aria-label="Kategória: ${esc(g?.label || 'Minden program')}. Koppints a váltáshoz.">
-        <span>${g ? `${g.emoji} ${esc(g.label)}` : 'Minden program'}</span>${icons.down}
+        <span>${g ? `${g.emoji} ${esc(g.label)}` : 'Minden program'}</span><small class="head-count">${items.length}</small>${icons.down}
       </button>
-      <span class="head-count">${items.length}</span>
+      <span class="head-tools">
+        <button class="free-chip" data-free aria-pressed="${state.free}">Ingyenes</button>
+        <button class="icon-btn map-toggle" data-map aria-pressed="${state.map}" aria-label="${state.map ? 'Lista nézet' : 'Térkép nézet'}">${state.map ? icons.list : icons.map}</button>
+      </span>
     </header>
     <nav class="seg compact" aria-label="Időszak">
       ${DAYS.map(([k]) => `<button data-day="${k}" aria-pressed="${state.day === k}">${DAY_SHORT[k]}</button>`).join('')}
       ${datePicker()}
     </nav>
-    ${listBody(items)}${footer()}`;
+    ${state.map ? mapBody(items) : `${listBody(items)}${footer()}`}`;
+}
+
+// ---------- térkép ----------
+const LEAFLET = 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min';
+let leafletPromise;
+function loadLeaflet() {
+  leafletPromise ??= new Promise((resolve, reject) => {
+    const css = document.createElement('link');
+    css.rel = 'stylesheet';
+    css.href = `${LEAFLET}.css`;
+    document.head.append(css);
+    const js = document.createElement('script');
+    js.src = `${LEAFLET}.js`;
+    js.onload = () => resolve(window.L);
+    js.onerror = () => { leafletPromise = null; reject(new Error('leaflet')); };
+    document.head.append(js);
+  });
+  return leafletPromise;
+}
+
+function mapBody(items) {
+  const missing = items.filter((e) => !e.geo).length;
+  return `<div class="map-wrap"><div id="map" class="map" role="region" aria-label="Programok térképen"></div>
+      <button class="locate" data-locate>${icons.locate}<span>Közelemben</span></button></div>
+    ${missing ? `<p class="hint">${missing} programnak nincs pontos helye a térképen – <button class="link" data-map>lista nézet</button></p>` : ''}
+    <div id="venuePanel" class="venue-panel"><p class="muted">Koppints egy helyszínre a térképen, és megmutatjuk, mi van ott.</p></div>`;
+}
+
+let mapState = null; // { map, L, user, venues }
+const km = (a, b) => {
+  const r = Math.PI / 180;
+  const x = (b[1] - a[1]) * r * Math.cos(((a[0] + b[0]) / 2) * r);
+  const y = (b[0] - a[0]) * r;
+  return Math.sqrt(x * x + y * y) * 6371;
+};
+const kmLabel = (d) => (d < 1 ? `${Math.round(d * 1000 / 50) * 50} m` : `${d.toFixed(1).replace('.', ',')} km`);
+
+async function initMap(items) {
+  const el = $('#map');
+  if (!el) return;
+  let L;
+  try { L = await loadLeaflet(); } catch {
+    el.innerHTML = '<p class="state">A térkép most nem tölthető be. <button class="link" data-map>Lista nézet</button></p>';
+    return;
+  }
+  if (!el.isConnected) return;
+  mapState?.map.remove();
+  const map = L.map(el, { zoomControl: false, attributionControl: true }).setView([47.4979, 19.0602], 12);
+  // OpenStreetMap-csempék; sötét módban CSS-szűrő sötétíti őket (styles.css: .map.dark).
+  el.classList.toggle('dark', matchMedia('(prefers-color-scheme: dark)').matches && document.documentElement.dataset.theme !== 'light');
+  L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+  }).addTo(map);
+  const venues = new Map();
+  for (const e of items) {
+    if (!e.geo) continue;
+    const key = e.venue;
+    if (!venues.has(key)) venues.set(key, { name: key, geo: e.geo, events: [] });
+    venues.get(key).events.push(e);
+  }
+  const markers = [];
+  for (const v of venues.values()) {
+    const icon = L.divIcon({ className: 'pin-wrap', html: `<span class="pin"><b>${v.events.length}</b></span>`, iconSize: [36, 36], iconAnchor: [18, 18] });
+    const m = L.marker(v.geo, { icon, title: v.name, keyboard: true }).addTo(map);
+    m.on('click', () => showVenue(v.name));
+    markers.push(m);
+  }
+  if (markers.length > 1) map.fitBounds(L.featureGroup(markers).getBounds().pad(0.15), { maxZoom: 14 });
+  else if (markers.length === 1) map.setView(markers[0].getLatLng(), 14);
+  mapState = { map, L, venues, user: mapState?.user || null };
+  if (mapState.user) placeUser();
+  auth.track('map');
+}
+
+function showVenue(name) {
+  const v = mapState?.venues.get(name);
+  const panel = $('#venuePanel');
+  if (!v || !panel) return;
+  const dist = mapState.user ? ` · ${kmLabel(km(mapState.user, v.geo))}` : '';
+  const route = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(`${v.name}, Budapest`)}&travelmode=transit`;
+  panel.innerHTML = `<header class="venue-head"><div><h2>${esc(v.name)}</h2><small>${v.events.length} program${dist}</small></div>
+      <a class="pill" href="${route}" target="_blank" rel="noopener">Útvonal</a>
+      <button class="pill" data-follow="${esc(v.name)}" aria-pressed="${state.follows.has(v.name)}">${state.follows.has(v.name) ? '✓ Követed' : '+ Követés'}</button></header>
+    <div class="rows">${v.events.slice(0, 30).map((e) => row(e, { withDate: true })).join('')}</div>`;
+  panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+function placeUser() {
+  const { map, L, user } = mapState;
+  mapState.userMarker?.remove();
+  mapState.userMarker = L.marker(user, { icon: L.divIcon({ className: 'me-wrap', html: '<span class="me-dot"></span>', iconSize: [22, 22], iconAnchor: [11, 11] }), interactive: false }).addTo(map);
+}
+
+function locate() {
+  if (!navigator.geolocation) return toast('A böngésződ nem tudja megmondani, hol vagy.');
+  const btn = $('[data-locate]');
+  btn?.classList.add('busy');
+  navigator.geolocation.getCurrentPosition((pos) => {
+    btn?.classList.remove('busy');
+    if (!mapState) return;
+    mapState.user = [pos.coords.latitude, pos.coords.longitude];
+    placeUser();
+    // A legközelebbi helyszín kártyája rögtön látszik.
+    const nearest = [...mapState.venues.values()].sort((a, b) => km(mapState.user, a.geo) - km(mapState.user, b.geo))[0];
+    const far = !nearest || km(mapState.user, nearest.geo) > 30;
+    if (far) mapState.map.setView([47.4979, 19.0602], 12);
+    else mapState.map.setView(mapState.user, 14);
+    if (nearest && !far) showVenue(nearest.name);
+    if (far) toast('Úgy tűnik, most nem Budapesten vagy – a belvárost mutatjuk.');
+    auth.track('near');
+  }, () => {
+    btn?.classList.remove('busy');
+    toast('Nem kaptunk helyadatot – engedélyezd a helymeghatározást a böngészőben.');
+  }, { enableHighAccuracy: false, timeout: 10000, maximumAge: 300000 });
 }
 
 /** Naptár gomb: a natív dátumválasztó nyílik, a következő 30 napból lehet választani. */
@@ -687,11 +820,11 @@ function profileView() {
         ? `<div class="danger-confirm"><p>Biztosan törlöd a fiókodat? A mentéseid a fiókodból végleg törlődnek (ezen a telefonon megmaradnak).</p>
             <div class="state-actions"><button class="btn" data-delete-cancel>Mégse</button><button class="btn danger" data-delete-confirm ${state.authBusy ? 'disabled' : ''}>${state.authBusy ? 'Törlés…' : 'Igen, törlöm'}</button></div></div>`
         : '<button class="link danger-link" data-delete>Fiókom törlése</button>'}
-      <p class="fineprint"><a href="adatvedelem.html">Adatvédelmi tájékoztató</a></p>
+      <p class="fineprint">${state.admin ? '<a href="statisztika.html">📊 Statisztika</a> · ' : ''}<a href="adatvedelem.html">Adatvédelmi tájékoztató</a></p>
     </section>`;
 }
 
-const NOTIFY_DEFAULTS = { notify_reminders: true, notify_follows: true, notify_weekly: true, remind_before: 120, digest_hour: 10 };
+const NOTIFY_DEFAULTS = { notify_reminders: true, notify_follows: true, notify_weekly: true, remind_before: 120, digest_hour: 10, tonight_mode: 1 };
 
 /** Mintaprogram az értesítés-előnézethez: lehetőleg a saját mentettjeiből, különben a ma esti kínálatból. */
 function sampleEvent() {
@@ -712,6 +845,7 @@ function notifyPanel() {
   const prefs = `<div class="prefs">
       ${pref('notify_reminders', '⏰', 'Emlékeztető', 'Mielőtt kezdődik, amit elmentettél', choices('remind_before', [[60, '1 órával'], [120, '2 órával'], [180, '3 órával'], [0, 'Aznap reggel']]))}
       ${pref('notify_weekly', '🎉', 'Hétvégi tippek', 'Csütörtökönként 3 program, ami neked szól')}
+      ${pref('tonight_mode', '🌙', 'Esti tippek', 'Délután 4-kor 3 program az estére', choices('tonight_mode', [[1, 'Pénteken és szombaton'], [2, 'Minden nap']]))}
       ${pref('notify_follows', '📍', 'Új program a kedvenc helyeiden', 'Naponta legfeljebb egyszer')}
       ${p.notify_weekly || p.notify_follows ? `<div class="pref-time"><span>Mikor jöjjenek a tippek?</span>${choices('digest_hour', [[10, '☀️ Délelőtt'], [17, '🌆 Délután']])}</div>` : ''}
     </div>`;
@@ -763,9 +897,25 @@ function footer() {
 function render() {
   view.innerHTML = { home: homeView, list: listView, search: searchView, saved: savedView, profile: profileView }[state.view]();
   if (state.view === 'profile' && !state.user) mountSignIn();
+  trackView();
+  if (state.view === 'list' && state.map) initMap(filteredList());
+  else if (mapState) { mapState.map.remove(); mapState = { user: mapState.user }; }
   document.querySelectorAll('.tabbar [data-tab]').forEach((b) => b.setAttribute('aria-current', b.dataset.tab === state.tab ? 'page' : 'false'));
   updateBadge();
   syncQuery();
+}
+
+/** Nézetváltásonként egy névtelen „view” esemény; az elsőnél azt is, honnan jött (más oldal / megosztott link). */
+let trackedView = null;
+function trackView() {
+  if (trackedView === state.view) return;
+  let r;
+  if (trackedView === null) {
+    try { r = document.referrer && new URL(document.referrer).host !== location.host ? new URL(document.referrer).host.replace(/^www\./, '') : undefined; } catch { /* nincs */ }
+    if (!r && location.pathname.includes('/e/')) r = 'megosztott link';
+  }
+  trackedView = state.view;
+  auth.track('view', { v: state.view, r });
 }
 
 function updateBadge() {
@@ -783,6 +933,8 @@ function syncQuery() {
   if (state.view === 'list') {
     if (state.day !== DEFAULT_DAY) p.set('nap', state.day);
     if (state.group) p.set('kat', state.group);
+    if (state.free) p.set('ingyen', '1');
+    if (state.map) p.set('terkep', '1');
   }
   if (state.view === 'search' && state.q) p.set('q', state.q);
   const url = new URL(ROOT);
@@ -796,6 +948,8 @@ function go(href) {
   state.view = VIEWS[p.get('v')] || 'home';
   state.day = validDay(p.get('nap')) || DEFAULT_DAY;
   state.group = p.get('kat') || '';
+  state.free = p.get('ingyen') === '1';
+  state.map = p.get('terkep') === '1';
   state.limit = PAGE;
   render();
   window.scrollTo({ top: 0 });
@@ -814,9 +968,12 @@ function back() {
 // ---------- részletek ----------
 const eventUrl = (e) => new URL(`e/${e.id}/`, ROOT).href;
 
-function openEvent(e, push = true, { shared = false } = {}) {
+function openEvent(e, push = true, { shared = false, plan = null } = {}) {
   if (!e) return;
   if (push) history.pushState({ id: e.id }, '', eventUrl(e));
+  auth.track('open', { e: e.id, r: shared ? 'megosztott link' : undefined });
+  const pid = newPlanId();
+  state.plan = null;
   const saved = state.saved.has(e.id);
   const g = groupOf(e);
   const soon = startsIn(e);
@@ -826,26 +983,29 @@ function openEvent(e, push = true, { shared = false } = {}) {
     <button class="fab close" data-close aria-label="Bezárás">${icons.close}</button>
     ${media(e, 'hero')}
     <div class="detail-body">
-      ${shared ? '<p class="shared-note">🔗 Valaki megosztotta veled ezt a programot</p>' : ''}
+      ${shared && !plan ? '<p class="shared-note">🔗 Valaki megosztotta veled ezt a programot</p>' : ''}
       <span class="kicker">${g.emoji} ${esc(e.category)}${e.youth ? ' · 🎓 Fiataloknak' : ''}</span>
       <h2 id="sheetTitle">${esc(e.title)}</h2>
       <ul class="facts">
         <li>${icons.clock}<span>${esc(dateLabel(e))}${soon ? ` <em class="soon">· ${soon}</em>` : ''}</span></li>
+        ${e.free || e.price ? `<li>${icons.ticket}<span>${e.free ? '<b class="free-tag">Ingyenes</b>' : `Jegy ${e.price.toLocaleString('hu-HU')} Ft-tól`}</span></li>` : ''}
         ${e.venue ? `<li>${icons.pin}<span>${esc(e.venue)}</span><button class="pill" data-follow="${esc(e.venue)}" aria-pressed="${state.follows.has(e.venue)}">${state.follows.has(e.venue) ? '✓ Követed' : '+ Követés'}</button></li>` : ''}
       </ul>
+      ${plan ? '<section class="rsvp loading" id="rsvp" aria-busy="true"><div class="rsvp-head"><span class="rsvp-emoji">🙋</span><div><b>Meghívó betöltése…</b></div></div></section>' : ''}
       <div class="actions">
-        <button class="btn primary" data-share="${e.id}">${icons.share} Megosztás</button>
+        <button class="btn primary" data-share="${e.id}" data-pid="${pid}">${icons.share} Ki jön?</button>
         <button class="btn" data-save="${e.id}" aria-pressed="${saved}">${icons.heart} ${saved ? 'Mentve' : 'Mentés'}</button>
       </div>
+      ${plan ? '' : ownerCard(e)}
       ${e.description ? `<p class="desc">${esc(e.description)}</p>` : ''}
       <div class="links">
         ${e.links.map((l) => `<a class="row" href="${esc(l.url)}" target="_blank" rel="noopener">${icons.ticket}<span>Részletek, jegyek<small>${esc(l.name)} oldalán</small></span>${icons.out}</a>`).join('')}
         <a class="row" href="${directions}" target="_blank" rel="noopener">${icons.pin}<span>Útvonal tömegközlekedéssel<small>Google Térkép</small></span>${icons.out}</a>
       </div>
-      <div class="share-row" aria-label="Küldés">
-        <a href="https://wa.me/?text=${encodeURIComponent(shareText(e))}" target="_blank" rel="noopener">WhatsApp</a>
-        <a href="https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(eventUrl(e))}" target="_blank" rel="noopener">Facebook</a>
-        <a href="viber://forward?text=${encodeURIComponent(shareText(e))}">Viber</a>
+      <div class="share-row" aria-label="Meghívó küldése" data-invite="${e.id}" data-pid="${pid}">
+        <a href="https://wa.me/?text=${encodeURIComponent(shareText(e, pid))}" target="_blank" rel="noopener">WhatsApp</a>
+        <a href="https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(inviteUrl(e, pid))}" target="_blank" rel="noopener">Facebook</a>
+        <a href="viber://forward?text=${encodeURIComponent(shareText(e, pid))}">Viber</a>
         <button data-copy="${e.id}">Link másolása</button>
       </div>
       ${shared ? '<button class="btn wide" data-close>Több program ma estére →</button>' : ''}
@@ -854,6 +1014,8 @@ function openEvent(e, push = true, { shared = false } = {}) {
   </article>`;
   if (!sheet.open) sheet.showModal();
   sheet.scrollTop = 0;
+  if (plan) loadGuestPlan(plan);
+  else if (state.myPlans.has(e.id)) loadMyPlans();
   document.title = `${e.title} | Hova menjünk?`;
 }
 
@@ -871,7 +1033,8 @@ function route() {
   if (!m) return closeEvent(false);
   const id = decodeURIComponent(m[1]);
   const e = state.byId.get(id);
-  if (e && (e.end || e.start) >= today) return openEvent(e, false, { shared: !history.state });
+  const plan = new URLSearchParams(location.search).get('p');
+  if (e && (e.end || e.start) >= today) return openEvent(e, false, { shared: !history.state, plan: PLAN_ID.test(plan || '') ? plan : null });
   // Lejárt vagy eltűnt program: a kezdőlapon elmagyarázzuk, és hasonlókat ajánlunk.
   state.expired = id;
   state.view = 'home';
@@ -887,22 +1050,129 @@ function shareLine(e) {
   const when = e.end ? `${short(e.start)} – ${short(e.end)}` : `${cap(dayName(e.start) === 'Ma' ? 'ma' : dayName(e.start) === 'Holnap' ? 'holnap' : WEEKDAYS[weekday(e.start)])}${e.time ? ` ${e.time}` : ''}`;
   return `Ezt nézd: ${e.title} ${groupOf(e).emoji} ${[when, e.venue].filter(Boolean).join(' · ')}. Jössz?`;
 }
-const shareText = (e) => `${shareLine(e)} 👉 ${eventUrl(e)}`;
+const shareText = (e, pid) => `${shareLine(e)} Jelezz itt 👉 ${inviteUrl(e, pid)}`;
 
-async function share(e) {
-  const data = { title: e.title, text: shareLine(e), url: eventUrl(e) };
-  if (navigator.share) {
-    try { await navigator.share(data); return; } catch (err) { if (err.name === 'AbortError') return; }
-  }
-  copy(e);
+// ---------- „Ki jön?” meghívók ----------
+// Minden megosztás egy kis meghívó: a link végén ?p=<azonosító>, a barát egy koppintással jelezhet.
+const PLAN_ID = /^[A-Za-z0-9]{8,16}$/;
+function newPlanId() {
+  const abc = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz23456789';
+  return [...crypto.getRandomValues(new Uint8Array(10))].map((b) => abc[b % abc.length]).join('');
+}
+const inviteUrl = (e, pid) => `${eventUrl(e)}?p=${pid}`;
+const displayName = () => state.profile?.display_name || state.user?.user_metadata?.full_name || state.myName || '';
+const createdPlans = new Set();
+
+/** A meghívót a háttérben hozzuk létre, hogy a megosztás azonnal (a koppintás közben) induljon. */
+function ensurePlan(e, pid) {
+  if (createdPlans.has(pid)) return;
+  createdPlans.add(pid);
+  store.set('hasPlans', true);
+  auth.createPlan(pid, e, displayName()).then(() => loadMyPlans()).catch(() => createdPlans.delete(pid));
+  auth.track('share', { e: e.id });
 }
 
-async function copy(e) {
+async function loadMyPlans() {
+  if (!store.get('hasPlans', false) && !state.user) return;
   try {
-    await navigator.clipboard.writeText(eventUrl(e));
-    toast('Link kimásolva – illeszd be egy üzenetbe');
+    const plans = await auth.myPlans();
+    state.myPlans = new Map();
+    for (const p of plans || []) state.myPlans.set(p.event_id, [...(state.myPlans.get(p.event_id) || []), p]);
+    const card = $('#rsvp[data-owner]');
+    if (card && sheet.open) card.outerHTML = ownerCard(state.byId.get(card.dataset.owner));
+  } catch { /* offline: a következő megnyitáskor újra */ }
+}
+
+const STATUS = { going: ['👍', 'jön'], maybe: ['🤔', 'talán'], no: ['🙅', 'nem tud'] };
+function peopleLine(responses) {
+  const going = responses.filter((r) => r.status === 'going');
+  const maybe = responses.filter((r) => r.status === 'maybe');
+  if (!going.length && !maybe.length) return '';
+  const faces = [...going, ...maybe].slice(0, 5).map((r) => `<span class="face${r.status === 'maybe' ? ' maybe' : ''}" title="${esc(r.name)}">${esc(r.name.trim()[0]?.toUpperCase() || '?')}</span>`).join('');
+  const others = going.filter((r) => !r.me).map((r) => r.name);
+  const list = `${others.slice(0, 3).join(', ')}${others.length > 3 ? ` és még ${others.length - 3}` : ''}`;
+  const meGoing = going.some((r) => r.me);
+  const goingText = meGoing ? (others.length ? `Te és ${list} jöttök` : 'Te jössz') : others.length ? `${list} jön` : '';
+  const text = [goingText, maybe.length ? `${maybe.length} talán` : ''].filter(Boolean).join(' · ');
+  return `<div class="people"><div class="faces">${faces}</div><span>${esc(text)}</span></div>`;
+}
+
+/** A meghívott barát kártyája: ki hív, ki jön már, és a válaszgombok. */
+function guestCard(plan) {
+  const me = plan.responses.find((r) => r.me);
+  const btn = (st, label) => `<button data-rsvp="${st}" aria-pressed="${me?.status === st}">${label}</button>`;
+  return `<section class="rsvp" id="rsvp" data-plan="${esc(plan.id)}">
+      <div class="rsvp-head"><span class="rsvp-emoji" aria-hidden="true">🙋</span>
+        <div><b>${plan.owner_name ? `${esc(plan.owner_name)} hív` : 'Meghívtak'}</b><small>${me ? (me.status === 'going' ? 'Szuper, szóltunk neki! 🎉' : 'Megkapta a válaszod. Bármikor módosíthatod.') : 'Jössz? Egy koppintás, és tudni fogja.'}</small></div></div>
+      ${peopleLine(plan.responses)}
+      <div class="rsvp-btns">${btn('going', '👍 Jövök')}${btn('maybe', '🤔 Talán')}${btn('no', 'Most nem')}</div>
+      <form class="rsvp-name" hidden><input name="n" maxlength="40" autocomplete="given-name" placeholder="A neved, hogy tudja, ki vagy" required><button class="btn primary">Küldés</button></form>
+    </section>`;
+}
+
+/** A szervező kártyája: összesítve, ki jelzett vissza a meghívóira. */
+function ownerCard(e) {
+  const plans = state.myPlans.get(e?.id);
+  if (!e || !plans?.length) return `<div id="rsvp" data-owner="${esc(e?.id || '')}" hidden></div>`;
+  const responses = plans.flatMap((p) => p.responses.filter((r) => !r.me));
+  return `<section class="rsvp mine" id="rsvp" data-owner="${esc(e.id)}">
+      <div class="rsvp-head"><span class="rsvp-emoji" aria-hidden="true">🎟️</span>
+        <div><b>Ki jön?</b><small>${responses.length ? 'A meghívóidra érkezett válaszok' : 'Még senki nem jelzett vissza – küldd el másnak is!'}</small></div></div>
+      ${peopleLine(responses)}
+      ${responses.filter((r) => r.status === 'no').length ? `<p class="muted small">${responses.filter((r) => r.status === 'no').map((r) => esc(r.name)).join(', ')} most nem tud jönni.</p>` : ''}
+    </section>`;
+}
+
+async function loadGuestPlan(pid) {
+  try {
+    const plan = await auth.getPlan(pid);
+    const slot = $('#rsvp');
+    if (!plan || !slot || !sheet.open) return;
+    state.plan = plan;
+    slot.outerHTML = plan.is_owner ? ownerCard(state.byId.get(plan.event_id)) : guestCard(plan);
   } catch {
-    showLink(eventUrl(e));
+    $('#rsvp')?.remove();
+  }
+}
+
+async function rsvp(status, name) {
+  const plan = state.plan;
+  if (!plan) return;
+  name = (name || state.myName || state.profile?.display_name || '').trim();
+  if (!name) {
+    const form = $('.rsvp-name');
+    form.hidden = false;
+    form.dataset.status = status;
+    form.querySelector('input').focus();
+    return;
+  }
+  if (name !== state.myName) { state.myName = name; store.set('myName', name); }
+  try {
+    state.plan = await auth.respondPlan(plan.id, name, status);
+    $('#rsvp').outerHTML = guestCard(state.plan);
+    auth.track('rsvp', { e: plan.event_id });
+    if (status === 'going' && !state.saved.has(plan.event_id) && state.byId.has(plan.event_id)) toggleSave(plan.event_id, { quiet: true });
+    toast(status === 'going' ? 'Szóltunk neki – elmentettük neked is' : 'Elküldtük a válaszod', null, { icon: STATUS[status][0], ms: 1800 });
+  } catch {
+    toast('Most nem sikerült elküldeni – próbáld újra.');
+  }
+}
+
+async function share(e, pid = newPlanId()) {
+  ensurePlan(e, pid);
+  const url = inviteUrl(e, pid);
+  if (navigator.share) {
+    try { await navigator.share({ title: e.title, text: shareLine(e), url }); return; } catch (err) { if (err.name === 'AbortError') return; }
+  }
+  copy(url);
+}
+
+async function copy(url) {
+  try {
+    await navigator.clipboard.writeText(url);
+    toast('Link kimásolva – küldd el a barátaidnak', null, { ms: 1800 });
+  } catch {
+    showLink(url);
   }
 }
 
@@ -922,7 +1192,7 @@ function showLink(url) {
   box.querySelector('input').select();
 }
 
-function toggleSave(id, { undo = false } = {}) {
+function toggleSave(id, { undo = false, quiet = false } = {}) {
   state.saved.has(id) ? state.saved.delete(id) : state.saved.add(id);
   store.set('saved', [...state.saved]);
   const on = state.saved.has(id);
@@ -938,6 +1208,8 @@ function toggleSave(id, { undo = false } = {}) {
       .catch(() => toast('A fiókodba most nem sikerült szinkronizálni – ezen a telefonon megvan.'));
   }
   if (on) celebrate(id);
+  auth.track(on ? 'save' : 'unsave', { e: id });
+  if (quiet) { if (state.view === 'saved' && !sheet.open) render(); return; }
   if (undo) toast(on ? 'Visszatéve' : 'Visszavonva', null, { ms: 1200 });
   else if (on && state.user && state.push === 'off' && !store.get('pushNudged', false)) {
     store.set('pushNudged', true);
@@ -985,7 +1257,9 @@ $('#toast').addEventListener('click', (ev) => {
 
 // ---------- események ----------
 document.addEventListener('click', (ev) => {
-  const el = ev.target.closest('[data-choice],[data-follow],[data-push-on],[data-push-off],[data-push-test],[data-signin],[data-signout],[data-delete],[data-delete-cancel],[data-delete-confirm],[data-interest],[data-pick],[data-tab],[data-nav],[data-back],[data-more],[data-day],[data-group],[data-q],[data-clear],[data-open],[data-save],[data-share],[data-copy],[data-close],[data-retry],[data-dismiss],[data-prune]');
+  const inviteLink = ev.target.closest('[data-invite] a');
+  if (inviteLink) { const row = inviteLink.closest('[data-invite]'); ensurePlan(state.byId.get(row.dataset.invite), row.dataset.pid); }
+  const el = ev.target.closest('[data-map],[data-locate],[data-free],[data-rsvp],[data-choice],[data-follow],[data-push-on],[data-push-off],[data-push-test],[data-signin],[data-signout],[data-delete],[data-delete-cancel],[data-delete-confirm],[data-interest],[data-pick],[data-tab],[data-nav],[data-back],[data-more],[data-day],[data-group],[data-q],[data-clear],[data-open],[data-save],[data-share],[data-copy],[data-close],[data-retry],[data-dismiss],[data-prune]');
   if (!el) return;
   const d = el.dataset;
   const find = (id) => state.byId.get(id);
@@ -1013,6 +1287,9 @@ document.addEventListener('click', (ev) => {
   } else if (d.nav) { ev.preventDefault(); go(d.nav); }
   else if ('back' in d) back();
   else if ('more' in d) { state.limit += PAGE; state.view === 'search' ? ($('#results').innerHTML = searchResults()) : render(); }
+  else if ('map' in d) { state.map = !state.map; render(); window.scrollTo({ top: 0 }); }
+  else if ('locate' in d) locate();
+  else if ('free' in d) { state.free = !state.free; state.limit = PAGE; render(); }
   else if (d.day !== undefined) { state.day = d.day; state.limit = PAGE; render(); window.scrollTo({ top: 0 }); }
   else if ('pick' in d) openPicker();
   else if (d.group !== undefined) { $('#picker')?.close(); state.group = d.group; state.limit = PAGE; render(); window.scrollTo({ top: 0 }); }
@@ -1020,8 +1297,9 @@ document.addEventListener('click', (ev) => {
   else if ('clear' in d) { state.q = ''; render(); $('#q').focus(); }
   else if (d.open) { ev.preventDefault(); openEvent(find(d.open)); }
   else if (d.save) toggleSave(d.save);
-  else if (d.share) share(find(d.share));
-  else if (d.copy) copy(find(d.copy));
+  else if (d.share) share(find(d.share), d.pid);
+  else if (d.copy) { const row = el.closest('[data-pid]'); const e = find(d.copy); ensurePlan(e, row.dataset.pid); copy(inviteUrl(e, row.dataset.pid)); }
+  else if (d.rsvp) rsvp(d.rsvp);
   else if ('close' in d) closeEvent();
   else if ('retry' in d) { view.innerHTML = $('#skeleton').innerHTML; load(); }
   else if ('dismiss' in d) { state.expired = null; render(); }
@@ -1072,7 +1350,7 @@ $('#installBtn').addEventListener('click', async () => {
   const { outcome } = await installEvent.userChoice;
   installEvent = null;
   $('#installBtn').hidden = true;
-  if (outcome === 'accepted') toast('Telepítve – a kezdőképernyőn találod');
+  if (outcome === 'accepted') { toast('Telepítve – a kezdőképernyőn találod'); auth.track('install'); }
 });
 if ('serviceWorker' in navigator) navigator.serviceWorker.register(new URL('sw.js', ROOT)).catch(() => {});
 
@@ -1085,6 +1363,9 @@ const icons = {
   search: svg('<circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/>'),
   back: svg('<path d="M15 5l-7 7 7 7"/>'),
   down: svg('<path d="m6 9 6 6 6-6"/>'),
+  map: svg('<path d="M9 4.5 3.5 6.5v13l5.5-2 6 2 5.5-2v-13l-5.5 2-6-2z"/><path d="M9 4.5v13M15 6.5v13"/>'),
+  list: svg('<path d="M8 6h12M8 12h12M8 18h12"/><circle cx="4" cy="6" r="1"/><circle cx="4" cy="12" r="1"/><circle cx="4" cy="18" r="1"/>'),
+  locate: svg('<circle cx="12" cy="12" r="3.5"/><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3"/><circle cx="12" cy="12" r="7.5"/>'),
   calendar: svg('<rect x="3.5" y="5" width="17" height="15.5" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4"/>'),
   close: svg('<path d="M6 6l12 12M18 6 6 18"/>'),
   clock: svg('<circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/>'),
@@ -1098,4 +1379,11 @@ load();
 document.addEventListener('change', (ev) => {
   const key = ev.target.dataset?.setting;
   if (key && state.user) toggleSetting(key);
+});
+
+document.addEventListener('submit', (ev) => {
+  const form = ev.target.closest('.rsvp-name');
+  if (!form) return;
+  ev.preventDefault();
+  rsvp(form.dataset.status, form.elements.n.value);
 });

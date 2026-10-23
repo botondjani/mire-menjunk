@@ -252,7 +252,13 @@ main {
 .title-btn span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .title-btn svg { width: 20px; height: 20px; color: var(--muted); }
 .title-btn:hover { background: var(--surface-2); }
-.head-count { margin-left: auto; padding: 4px 10px; border-radius: 999px; background: var(--surface-2); color: var(--muted); font-size: .85rem; font-weight: 600; }
+.head-count { padding: 2px 8px; border-radius: 999px; background: var(--surface-2); color: var(--muted); font: 600 .78rem var(--body); }
+.head-tools { margin-left: auto; display: flex; align-items: center; gap: 6px; flex: none; }
+.free-chip {
+  padding: 7px 12px; border-radius: 999px; border: 1px solid var(--line); background: transparent;
+  color: var(--ink); font: 700 .82rem var(--body); white-space: nowrap;
+}
+.free-chip[aria-pressed="true"] { background: #22c55e; border-color: #22c55e; color: #052e14; }
 
 .seg.compact { gap: 0; margin-top: 6px; padding-top: 0; padding-bottom: 0; }
 .seg.compact button {
@@ -554,3 +560,91 @@ dialog::backdrop { background: rgb(0 0 0 / .6); backdrop-filter: blur(3px); }
 .on-badge::before { content: "●"; margin-right: 5px; font-size: .7em; vertical-align: 1px; }
 .muted.small { font-size: .85rem; margin-top: 10px; }
 @media (prefers-reduced-motion: reduce) { .np, .np.back { animation: none; } }
+
+/* ---------- „Ki jön?” ---------- */
+.rsvp {
+  margin-top: 16px; padding: 16px; border-radius: 18px;
+  background: linear-gradient(135deg, color-mix(in srgb, var(--accent) 16%, var(--surface-2)), var(--surface-2));
+  border: 1px solid color-mix(in srgb, var(--accent) 30%, var(--line));
+}
+.rsvp.mine { background: var(--surface-2); border-color: var(--line); }
+.rsvp.loading { opacity: .6; }
+.rsvp-head { display: flex; gap: 12px; align-items: center; }
+.rsvp-emoji { font-size: 1.7rem; line-height: 1; }
+.rsvp-head div { display: grid; gap: 2px; }
+.rsvp-head b { font: 700 1.08rem/1.25 var(--display); }
+.rsvp-head small { color: var(--muted); font-size: .88rem; }
+.people { display: flex; align-items: center; gap: 10px; margin-top: 12px; font-size: .9rem; font-weight: 600; }
+.faces { display: flex; }
+.face {
+  width: 30px; height: 30px; margin-left: -8px; display: grid; place-items: center; border-radius: 50%;
+  background: var(--accent); color: var(--accent-ink); font: 800 .85rem var(--display); border: 2px solid var(--surface-2);
+}
+.face:first-child { margin-left: 0; }
+.face.maybe { background: var(--line); color: var(--ink); }
+.rsvp-btns { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-top: 14px; }
+.rsvp-btns button {
+  padding: 11px 6px; border-radius: 14px; border: 1px solid var(--line); background: var(--surface);
+  color: var(--ink); font: 700 .9rem var(--body);
+}
+.rsvp-btns button[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.rsvp-name { display: flex; gap: 8px; margin-top: 10px; }
+.rsvp-name[hidden] { display: none; }
+.rsvp-name input {
+  flex: 1; min-width: 0; padding: 11px 12px; border-radius: 12px; border: 1px solid var(--line);
+  background: var(--surface); color: var(--ink); font: inherit;
+}
+
+/* ---------- ingyenes / ár ---------- */
+.chips { position: absolute; top: 10px; left: 10px; z-index: 1; display: flex; flex-wrap: wrap; gap: 5px; max-width: calc(100% - 64px); }
+.mini .chips { top: 8px; left: 8px; max-width: calc(100% - 52px); }
+.chips .chip { position: static; }
+.chip.free { background: #22c55e; color: #052e14; }
+.free-tag { color: #4ade80; font-weight: 700; }
+:root[data-theme="light"] .free-tag { color: #15803d; }
+@media (prefers-color-scheme: light) { :root:not([data-theme="dark"]) .free-tag { color: #15803d; } }
+
+/* ---------- térkép ---------- */
+.rail-head .rail-map { margin-left: auto; display: grid; place-items: center; width: 36px; height: 36px; border-radius: 50%; background: var(--surface-2); color: var(--ink); align-self: center; }
+.rail-head .rail-map svg { width: 18px; height: 18px; }
+.map-toggle[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
+.map-wrap { position: relative; margin: 10px calc(-1 * var(--gutter-r)) 0 calc(-1 * var(--gutter-l)); }
+.map { height: min(58dvh, 520px); background: var(--surface); z-index: 0; }
+.map.dark .leaflet-tile-pane { filter: invert(1) hue-rotate(180deg) brightness(.9) contrast(.85) saturate(.6); }
+.map .state { padding-top: 120px; }
+.leaflet-container { font: inherit; background: var(--surface); }
+.leaflet-control-attribution { font-size: 10px; background: rgb(0 0 0 / .45) !important; color: #ddd !important; }
+.leaflet-control-attribution a { color: #fff !important; }
+.pin-wrap { background: none; border: 0; }
+.pin {
+  display: grid; place-items: center; width: 36px; height: 36px; border-radius: 50% 50% 50% 6px; transform: rotate(-45deg);
+  background: var(--accent); color: var(--accent-ink); font: 800 .85rem var(--display);
+  box-shadow: 0 4px 12px rgb(0 0 0 / .35); border: 2px solid #141414;
+}
+.pin::before { content: ""; }
+.pin { line-height: 1; }
+.pin b { transform: rotate(45deg); }
+.me-wrap { background: none; border: 0; }
+.me-dot { display: block; width: 22px; height: 22px; border-radius: 50%; background: #3b82f6; border: 3px solid #fff; box-shadow: 0 0 0 6px rgb(59 130 246 / .25); }
+.locate {
+  position: absolute; z-index: 500; right: 12px; bottom: 12px; display: inline-flex; align-items: center; gap: 6px;
+  padding: 10px 14px; border-radius: 999px; border: 0; background: var(--ink); color: var(--bg); font: 700 .88rem var(--body);
+  box-shadow: 0 6px 18px rgb(0 0 0 / .3);
+}
+.locate svg { width: 18px; height: 18px; }
+.locate.busy { opacity: .6; }
+.venue-panel { margin-top: 14px; }
+.venue-head { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+.venue-head div { flex: 1; min-width: 0; }
+.venue-head h2 { margin: 0; font: 700 1.2rem/1.2 var(--display); }
+.venue-head small { color: var(--muted); }
+.venue-head .pill {
+  flex: none; padding: 6px 11px; border-radius: 999px; border: 1px solid var(--line); background: transparent;
+  color: var(--ink); font: 700 .8rem var(--body); text-decoration: none;
+}
+.venue-head .pill[aria-pressed="true"] { background: var(--surface-2); color: var(--muted); }
+
+/* a lista fejléce: a cím zsugorodhat, az eszközök mindig kiférnek */
+.page-head.compact .title-btn { font-size: 1.25rem; flex: 1 1 auto; overflow: hidden; }
+.page-head.compact .title-btn > span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.page-head.compact .free-chip { padding: 6px 10px; }

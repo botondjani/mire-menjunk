@@ -1,4 +1,4 @@
-import { detectCategory } from '../lib/util.js';
+import { detectCategory, detectFree, detectPrice } from '../lib/util.js';
 
 // A38 publishes its whole programme as an iCalendar feed.
 const FEED = 'https://www.a38.hu/hu/ical/programok';
@@ -47,6 +47,9 @@ export default {
             category: detectCategory(title, start.time >= '22:00' ? 'Buli' : 'Koncert'),
             venue: 'A38 Hajó',
             description: desc.split('\n').map((l) => l.trim()).filter((l) => l && l !== title && !/^https?:/.test(l)).slice(0, 3).join(' · ').slice(0, 300) || null,
+            // Az ár és az „ingyenes” sokszor a leírás végén van, ezért a teljes szövegből nézzük.
+            free: detectFree(desc),
+            price: detectPrice(desc),
           });
         }
         ev = null;

@@ -1,6 +1,6 @@
 // Offline támogatás: az app héja cache-ből, az adat hálózatról (offline: utolsó ismert).
-const VERSION = 'v14';
-const SHELL = ['./', 'index.html', 'app.js?v=14', 'auth.js?v=14', 'styles.css?v=14', 'adatvedelem.html', 'manifest.webmanifest', 'icons/icon.svg', 'icons/icon-192.png'];
+const VERSION = 'v15';
+const SHELL = ['./', 'index.html', 'app.js?v=15', 'auth.js?v=15', 'styles.css?v=15', 'adatvedelem.html', 'manifest.webmanifest', 'icons/icon.svg', 'icons/icon-192.png'];
 
 self.addEventListener('install', (e) => {
   e.waitUntil(caches.open(`shell-${VERSION}`).then((c) => c.addAll(SHELL)).then(() => self.skipWaiting()));
@@ -28,7 +28,7 @@ self.addEventListener('fetch', (e) => {
   if (e.request.method !== 'GET') return;
   if (url.origin !== location.origin) {
     // Képek a forrásoldalakról: cache-first, hogy offline is látszódjanak a mentettek.
-    if (e.request.destination === 'image') {
+    if (e.request.destination === 'image' && !url.hostname.endsWith('tile.openstreetmap.org')) {
       e.respondWith(caches.open(`img-${VERSION}`).then(async (c) => (await c.match(e.request))
         || fetch(e.request).then((res) => { c.put(e.request, res.clone()); return res; })));
     }

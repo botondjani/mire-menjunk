@@ -29,7 +29,8 @@ export default {
         time: `${when[2]}:${when[3]}`,
         category: 'Koncert',
         venue: 'Budapest Jazz Club',
-        description: [clean(card.find('[itemprop="description"]').text()).slice(0, 260), price ? `Jegy: ${price} Ft-tól` : ''].filter(Boolean).join(' · ') || null,
+        description: clean(card.find('[itemprop="description"]').text()).slice(0, 260) || null,
+        price: Number(price) || null,
       });
     });
     return events;

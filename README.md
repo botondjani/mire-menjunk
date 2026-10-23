@@ -42,6 +42,13 @@ A cél a válogatott, érdekes programok – a nagy jegyértékesítők teljes k
 - **Értesítések** (Web Push), a profilban személyre szabhatóan: emlékeztető a mentett program előtt (1/2/3 órával vagy aznap reggel; kiállításnál az utolsó napon), csütörtöki „Hétvégi tippek” az érdeklődési körök alapján, és napi összesítő a követett helyek új programjairól (délelőtt vagy délután). A `supabase/functions/notify` Edge Functiont óránként a `pg_cron` hívja (`notify-hourly`); a VAPID privát kulcs és az időzítő kulcsa a Supabase Vaultban van. Táblák: `follows`, `push_subscriptions`, `notifications_sent`. iPhone-on csak a kezdőképernyőre telepített appban működik.
 - Beállítás: Google Cloud OAuth-kliens → Supabase Authentication → Providers → Google; URL Configuration: Site URL és Redirect URL a Pages-cím (`…/mire-menjunk/**`).
 
+## Közösségi funkciók és mérés
+- **„Ki jön?” meghívók:** minden megosztott link egy meghívó (`e/<id>/?p=<azonosító>`). A barát belépés nélkül, egy névvel jelezhet (Jövök / Talán / Most nem), a szervező látja a válaszokat, és – ha be van lépve és kér értesítést – push-t kap. Táblák: `plans`, `plan_responses`; csak `security definer` függvényeken át érhetők el (`create_plan`, `get_plan`, `respond_plan`, `my_plans`).
+- **Térkép:** a listában a térkép gombbal; a helyszínek koordinátái a `scraper/lib/venues-geo.json`-ban (OpenStreetMap Nominatim, kézzel ellenőrizve). Új helyszínnél ide kell felvenni. Csempék: OpenStreetMap, Leaflet (cdnjs).
+- **Ingyenes / ár:** a scraper `free` és `price` mezője (forrásadat vagy a leírásból felismerve: `detectFree`, `detectPrice`).
+- **Mérés:** sütimentes, a `track` Edge Function írja az `analytics` táblába (napi sózott hash, semmi nem kerül az eszközre). Összesítő: `statisztika.html` (csak az `admins` táblában szereplő felhasználónak).
+- **Esti tippek:** 16 órakor 3 esti program (profilban: péntek–szombat / minden nap / ki).
+
 ## Parancsok
 ```bash
 npm ci

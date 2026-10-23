@@ -2,6 +2,8 @@
 // - Emlékeztető: a mentett program előtt a választott idővel (1/2/3 óra, vagy aznap reggel 9-kor), kiállításnál az utolsó napon.
 // - Követett helyek: naponta egyszer összesítő az új programokról, a választott órában (10 vagy 17).
 // - Hétvégi tippek: csütörtökönként 3 program a hétvégére az érdeklődési körök alapján.
+// - Esti tippek: 16 órakor 3 esti program (péntek–szombat vagy minden nap).
+// - „Ki jön?”: a meghívóra érkező válaszról szól a szervezőnek (adatbázis-trigger hívja, { rsvp }).
 import { createClient } from 'npm:@supabase/supabase-js@2.117.2';
 import webpush from 'npm:web-push@3.6.7';
 
@@ -13,7 +15,7 @@ const cors = {
 };
 
 type Ev = { id: string; title: string; start: string; end: string | null; time: string | null; venue: string | null; category: string; youth?: boolean; image?: string | null };
-type Prefs = { id: string; interests: string[]; notify_reminders: boolean; notify_follows: boolean; notify_weekly: boolean; remind_before: number; digest_hour: number };
+type Prefs = { id: string; interests: string[]; notify_reminders: boolean; notify_follows: boolean; notify_weekly: boolean; remind_before: number; digest_hour: number; tonight_mode: number };
 
 // Ugyanaz a csoportosítás, mint az appban (public/app.js GROUPS + Fiataloknak).
 const GROUPS: Record<string, string[]> = {
@@ -37,6 +39,16 @@ const iso = (d: Date) => d.toISOString().slice(0, 10);
 const MONTHS = ['jan.', 'febr.', 'márc.', 'ápr.', 'máj.', 'jún.', 'júl.', 'aug.', 'szept.', 'okt.', 'nov.', 'dec.'];
 const shortDate = (s: string) => `${MONTHS[+s.slice(5, 7) - 1]} ${+s.slice(8, 10)}.`;
 const eventUrl = (e: Ev) => `${SITE}e/${encodeURIComponent(e.id)}/`;
+
+/** 3 program: egynaposak és képesek előre, csoportonként egy, hogy változatos legyen. */
+function pick3(list: Ev[]) {
+  const single = (e: Ev) => !(e.end && e.end !== e.start);
+  const sorted = [...list].sort((a, b) => Number(single(b)) - Number(single(a)) || Number(!!b.image) - Number(!!a.image));
+  const picks: Ev[] = [];
+  for (const e of sorted) if (picks.length < 3 && !picks.some((x) => x.category === e.category)) picks.push(e);
+  for (const e of sorted) if (picks.length < 3 && !picks.includes(e)) picks.push(e);
+  return picks;
+}
 
 async function sendAll(subs: Sub[], note: Note) {
   let ok = 0;
@@ -72,6 +84,19 @@ Deno.serve(async (req) => {
 
   if (!cronSecret || req.headers.get('x-cron-secret') !== cronSecret) return json({ error: 'forbidden' }, 403);
 
+  if (body.rsvp) {
+    const r = body.rsvp;
+    const { data: subs } = await admin.from('push_subscriptions').select('*').eq('user_id', r.owner_id);
+    const head = { going: `🙋 ${r.name} jön!`, maybe: `🤔 ${r.name} talán jön`, no: `${r.name} most nem tud jönni` }[r.status as string] ?? r.name;
+    const sent = await sendAll(subs ?? [], {
+      title: head,
+      body: r.title ? `${r.title} – nézd meg, ki jön még` : 'Nézd meg, ki jön még',
+      url: `${SITE}e/${encodeURIComponent(r.event_id)}/?p=${encodeURIComponent(r.plan_id)}`,
+      tag: `plan-${r.plan_id}`,
+    });
+    return json({ sent });
+  }
+
   const res = await fetch(`${SITE}data/events.json`, { headers: { 'Cache-Control': 'no-cache' } });
   const events: Ev[] = (await res.json()).events;
   const byId = new Map(events.map((e) => [e.id, e]));
@@ -81,7 +106,7 @@ Deno.serve(async (req) => {
 
   const [{ data: subs }, { data: profiles }, { data: saved }, { data: follows }] = await Promise.all([
     admin.from('push_subscriptions').select('*'),
-    admin.from('profiles').select('id, interests, notify_reminders, notify_follows, notify_weekly, remind_before, digest_hour'),
+    admin.from('profiles').select('id, interests, notify_reminders, notify_follows, notify_weekly, remind_before, digest_hour, tonight_mode'),
     admin.from('saved_events').select('user_id, event_id'),
     admin.from('follows').select('user_id, venue, seeded'),
   ]);
@@ -167,12 +192,7 @@ Deno.serve(async (req) => {
       if (p?.notify_weekly === false || !digestDue(userId) || sent.has(`${userId}|weekly|${today}`)) continue;
       const keys = p?.interests?.length ? p.interests : [];
       const mine = weekend.filter((e) => !savedBy.get(userId)?.has(e.id) && (!keys.length || keys.some((k) => matches(e, k))));
-      // Egyedi napos, képes programok előre; csoportonként egy, hogy változatos legyen.
-      const single = (e: Ev) => !(e.end && e.end !== e.start);
-      mine.sort((a, b) => Number(single(b)) - Number(single(a)) || Number(!!b.image) - Number(!!a.image));
-      const picks: Ev[] = [];
-      for (const e of mine) if (picks.length < 3 && !picks.some((x) => x.category === e.category)) picks.push(e);
-      for (const e of mine) if (picks.length < 3 && !picks.includes(e)) picks.push(e);
+      const picks = pick3(mine);
       if (!picks.length) continue;
       once(userId, 'weekly', today);
       const kat = keys.length === 1 ? `&kat=${encodeURIComponent(keys[0])}` : '';
@@ -185,9 +205,33 @@ Deno.serve(async (req) => {
     }
   }
 
+  // 4) Esti tippek 16 órakor: ma 17 óra utáni programok az érdeklődés szerint.
+  const dow = now.getUTCDay();
+  if (hour >= 16) {
+    const tonight = events.filter((e) => e.start === today && (!e.end || e.end === e.start) && e.time && e.time >= '17:00');
+    const savedIds = new Map<string, Set<string>>();
+    for (const r of saved ?? []) savedIds.set(r.user_id, (savedIds.get(r.user_id) ?? new Set()).add(r.event_id));
+    for (const userId of subsOf.keys()) {
+      const mode = prefs.get(userId)?.tonight_mode ?? 1;
+      if (!mode || (mode === 1 && dow !== 5 && dow !== 6) || sent.has(`${userId}|tonight|${today}`)) continue;
+      const keys = prefs.get(userId)?.interests ?? [];
+      const mine = tonight.filter((e) => !savedIds.get(userId)?.has(e.id) && (!keys.length || keys.some((k) => matches(e, k))));
+      const picks = pick3(mine.length >= 2 ? mine : tonight.filter((e) => !savedIds.get(userId)?.has(e.id)));
+      if (!picks.length) continue;
+      once(userId, 'tonight', today);
+      pushed += await sendAll(subsOf.get(userId)!, {
+        title: '🌙 Ma esti tippek',
+        body: picks.map((e) => `${e.time} ${e.title}`).join(' · '),
+        url: `${SITE}?v=lista&nap=ma`,
+        tag: 'tonight',
+      });
+    }
+  }
+
   for (let i = 0; i < mark.length; i += 500) await admin.from('notifications_sent').upsert(mark.slice(i, i + 500), { ignoreDuplicates: true });
   for (const f of seeded) await admin.from('follows').update({ seeded: true }).eq('user_id', f.user_id).eq('venue', f.venue);
   // Régi napló takarítása
   await admin.from('notifications_sent').delete().lt('sent_at', new Date(Date.now() - 90 * 86400000).toISOString());
+  await admin.from('analytics').delete().lt('ts', new Date(Date.now() - 400 * 86400000).toISOString());
   return json({ pushed, marked: mark.length, seeded: seeded.length });
 });

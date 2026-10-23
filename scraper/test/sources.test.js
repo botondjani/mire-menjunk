@@ -157,3 +157,13 @@ test('Dumaszínház: csak budapesti előadások', async () => {
   assert.ok(!events.some((x) => /Szeged|Ózd|Szolnok/.test(x.venue)));
   assert.equal(events.find((x) => x.title.startsWith('Bezzeg mi')).venue, 'MIXÁT Dumaklub');
 });
+
+test('ár és ingyenesség felismerése a szövegből', async () => {
+  const { detectFree, detectPrice } = await import('../lib/util.js');
+  assert.equal(detectFree('Belépés ingyenes!'), true);
+  assert.equal(detectFree('A rendezvény nem ingyenes'), false);
+  assert.equal(detectFree('Szobordöntés'), false);
+  assert.equal(detectPrice('Jegyár: 3 900 Ft, helyszínen 4.500 Ft'), 3900);
+  assert.equal(detectPrice('Elővétel 2500 HUF'), 2500);
+  assert.equal(detectPrice('2026. október 23.'), null);
+});
