@@ -119,6 +119,8 @@ function normalize(e) {
   const venue = e.venue ? detectVenue(e.venue) || e.venue : null;
   const category = e.category === 'Szabadidő' && MUSIC_VENUES.has(venue) ? 'Koncert' : e.category;
   const out = { ...e, title: tidyTitle(e.title), venue, category };
+  // Csak http(s) linkek és képek kerülhetnek ki (egy feltört forrás ne tudjon javascript: linket csempészni).
+  if (!/^https?:\/\//i.test(out.image || '')) out.image = null;
   if (isYouth(out)) out.youth = true;
   const text = `${e.title} ${e.description || ''}`;
   out.free = !!e.free || detectFree(text);
@@ -274,7 +276,8 @@ function sharePage(template, e) {
     <meta name="twitter:card" content="summary_large_image">
     ${image ? `<meta name="twitter:image" content="${esc(image)}">` : ''}
     <script type="application/ld+json">${JSON.stringify(ld).replace(/</g, '\\u003c')}</script>`;
-  return template.replace(/<!--OG-->[\s\S]*?<!--\/OG-->/, head);
+  // Függvénnyel cserélünk, hogy a címben lévő „$&”-féle minták ne értelmeződjenek.
+  return template.replace(/<!--OG-->[\s\S]*?<!--\/OG-->/, () => head);
 }
 
 /** Branded share images for events in the next 60 days (and ongoing ones); 6 at a time. */
@@ -302,7 +305,7 @@ async function renderShareImages(events) {
 async function main() {
   console.log(`Gyűjtés (${today})…`);
   const all = (await Promise.all(SOURCES.map(collect))).flat();
-  const upcoming = all.filter((e) => (e.end || e.start) >= today && !CANCELLED.test(e.title)).map(normalize);
+  const upcoming = all.filter((e) => (e.end || e.start) >= today && !CANCELLED.test(e.title) && /^https?:\/\//i.test(e.url || '')).map(normalize);
   const events = dedupe(upcoming).sort((a, b) => a.start.localeCompare(b.start) || a.title.localeCompare(b.title, 'hu'));
   assignIds(events);
   await enrichImages(events);

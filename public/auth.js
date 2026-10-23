@@ -145,7 +145,7 @@ export async function pushEnabled() {
 }
 
 /** Engedélykérés + feliratkozás + mentés a fiókba. 'denied' | 'unsupported' | 'ok' */
-export async function enablePush(userId) {
+export async function enablePush() {
   if (!pushSupported()) return 'unsupported';
   if (await Notification.requestPermission() !== 'granted') return 'denied';
   const reg = await navigator.serviceWorker.ready;
@@ -153,7 +153,7 @@ export async function enablePush(userId) {
     || await reg.pushManager.subscribe({ userVisibleOnly: true, applicationServerKey: keyBytes(VAPID_PUBLIC) });
   const { endpoint, keys } = sub.toJSON();
   const c = await client();
-  const { error } = await c.from('push_subscriptions').upsert({ endpoint, user_id: userId, p256dh: keys.p256dh, auth: keys.auth }, { onConflict: 'endpoint' });
+  const { error } = await c.rpc('save_push_subscription', { p_endpoint: endpoint, p_p256dh: keys.p256dh, p_auth: keys.auth });
   if (error) throw error;
   return 'ok';
 }

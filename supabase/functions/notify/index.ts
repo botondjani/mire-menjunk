@@ -50,9 +50,16 @@ function pick3(list: Ev[]) {
   return picks;
 }
 
+// Csak ismert push-szolgáltatók végpontjaira küldünk (ugyanez a szabály az adatbázisban is).
+const PUSH_ENDPOINT = /^https:\/\/(fcm\.googleapis\.com|updates\.push\.services\.mozilla\.com|[a-z0-9.-]+\.notify\.windows\.com|web\.push\.apple\.com|[a-z0-9.-]+\.push\.apple\.com)\//;
+
 async function sendAll(subs: Sub[], note: Note) {
   let ok = 0;
   await Promise.all(subs.map(async (s) => {
+    if (!PUSH_ENDPOINT.test(s.endpoint)) {
+      await admin.from('push_subscriptions').delete().eq('endpoint', s.endpoint);
+      return;
+    }
     try {
       await webpush.sendNotification({ endpoint: s.endpoint, keys: { p256dh: s.p256dh, auth: s.auth } }, JSON.stringify(note), { TTL: 3 * 3600 });
       ok++;

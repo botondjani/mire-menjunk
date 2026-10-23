@@ -18,6 +18,6 @@
     "@expo-google-fonts/figtree": "^0.4.1",
     "@resvg/resvg-js": "^2.6.2",
     "cheerio": "^1.2.0",
-    "sharp": "^0.34.5"
+    "sharp": "^0.35.5"
   }
 }

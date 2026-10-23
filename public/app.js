@@ -2,7 +2,7 @@
 // Nézetek: felfedezés (vízszintes szekciók), lista (szűrt, napokra bontva), keresés, mentett, profil.
 // Minden nézetnek van betöltő, üres és hibaállapota; a visszafordítható lépések (mentés) visszavonhatók.
 
-import * as auth from './auth.js?v=15';
+import * as auth from './auth.js?v=16';
 
 const ROOT = new URL('./', import.meta.url);
 const $ = (s, el = document) => el.querySelector(s);
@@ -124,8 +124,9 @@ const state = {
   confirmDelete: false,
   follows: new Set(),                      // követett helyszínek (belépve)
   myPlans: new Map(),                      // saját „Ki jön?” meghívóim programonként
-  myName: store.get('myName', ''),
-  plan: null,                              // a megnyitott meghívó (ha ?p= linkről jöttünk)         // a meghívókon megjelenő név
+  myName: store.get('myName', ''),         // a meghívókon megjelenő név
+  plan: null,                              // a megnyitott meghívó (ha ?p= linkről jöttünk)
+  admin: false,
   push: 'off',                             // értesítések ezen az eszközön: on | off | denied | unsupported
   pushBusy: false,
   events: [],
@@ -244,6 +245,9 @@ async function signOut() {
   state.profile = null;
   state.follows = new Set();
   state.push = 'off';
+  state.admin = false;
+  state.myPlans = new Map();
+  loadMyPlans();
   render();
   toast('Kijelentkeztél. A mentéseid ezen a telefonon megmaradnak.');
 }
@@ -252,9 +256,14 @@ async function deleteAccount() {
   state.authBusy = true;
   render();
   try {
+    await auth.disablePush().catch(() => {});
     await auth.deleteAccount();
     state.user = null;
     state.profile = null;
+    state.follows = new Set();
+    state.push = 'off';
+    state.admin = false;
+    state.myPlans = new Map();
     state.confirmDelete = false;
     toast('A fiókodat és a hozzá tartozó adatokat töröltük.');
   } catch {
@@ -380,6 +389,8 @@ window.addEventListener('offline', updateBanner);
 window.addEventListener('online', () => { updateBanner(); load(); });
 
 // ---------- építőelemek ----------
+/** Csak http(s) link mehet ki a forrásadatokból (javascript: és társai nem). */
+const safeUrl = (u) => (/^https?:\/\//i.test(u || '') ? u : null);
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
 const norm = (s) => s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
 
@@ -392,7 +403,7 @@ function media(e, cls = 'media') {
   const g = groupOf(e);
   return `<div class="${cls}" style="--hue:${g.hue}">
     <div class="poster" aria-hidden="true"><span>${g.emoji}</span></div>
-    ${e.image ? `<img src="${esc(e.image)}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.remove()">` : ''}
+    ${safeUrl(e.image) ? `<img src="${esc(e.image)}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.remove()">` : ''}
   </div>`;
 }
 
@@ -618,16 +629,18 @@ const km = (a, b) => {
 };
 const kmLabel = (d) => (d < 1 ? `${Math.round(d * 1000 / 50) * 50} m` : `${d.toFixed(1).replace('.', ',')} km`);
 
+let mapRun = 0;
 async function initMap(items) {
   const el = $('#map');
   if (!el) return;
+  const run = ++mapRun; // gyors szűrőváltásnál csak a legutolsó rajzol
   let L;
   try { L = await loadLeaflet(); } catch {
     el.innerHTML = '<p class="state">A térkép most nem tölthető be. <button class="link" data-map>Lista nézet</button></p>';
     return;
   }
-  if (!el.isConnected) return;
-  mapState?.map.remove();
+  if (!el.isConnected || run !== mapRun) return;
+  mapState?.map?.remove();
   const map = L.map(el, { zoomControl: false, attributionControl: true }).setView([47.4979, 19.0602], 12);
   // OpenStreetMap-csempék; sötét módban CSS-szűrő sötétíti őket (styles.css: .map.dark).
   el.classList.toggle('dark', matchMedia('(prefers-color-scheme: dark)').matches && document.documentElement.dataset.theme !== 'light');
@@ -649,8 +662,8 @@ async function initMap(items) {
     m.on('click', () => showVenue(v.name));
     markers.push(m);
   }
-  if (markers.length > 1) map.fitBounds(L.featureGroup(markers).getBounds().pad(0.15), { maxZoom: 14 });
-  else if (markers.length === 1) map.setView(markers[0].getLatLng(), 14);
+  if (markers.length > 1) map.fitBounds(L.featureGroup(markers).getBounds().pad(0.15), { maxZoom: 14, animate: false });
+  else if (markers.length === 1) map.setView(markers[0].getLatLng(), 14, { animate: false });
   mapState = { map, L, venues, user: mapState?.user || null };
   if (mapState.user) placeUser();
   auth.track('map');
@@ -807,7 +820,7 @@ function profileView() {
   const savedCount = state.events.filter((e) => state.saved.has(e.id)).length;
   return `<header class="page-head"><div><h1>Profil</h1></div></header>
     <section class="me">
-      ${avatar ? `<img src="${esc(avatar)}" alt="" referrerpolicy="no-referrer">` : `<span class="me-initial">${esc((name || '?')[0].toUpperCase())}</span>`}
+      ${safeUrl(avatar) ? `<img src="${esc(avatar)}" alt="" referrerpolicy="no-referrer">` : `<span class="me-initial">${esc((name || '?')[0].toUpperCase())}</span>`}
       <div><b>${esc(name)}</b><small>${esc(u.email || '')}</small></div>
     </section>
     <p class="muted sync-note">♥ ${savedCount} közelgő mentett program, szinkronban minden eszközödön.</p>
@@ -895,11 +908,12 @@ function footer() {
 }
 
 function render() {
+  // A régi térképet a DOM cseréje előtt bontjuk le, különben a futó animációi a már eltűnt elemekre hivatkoznak.
+  if (mapState?.map) { mapState.map.remove(); mapState = { user: mapState.user }; }
   view.innerHTML = { home: homeView, list: listView, search: searchView, saved: savedView, profile: profileView }[state.view]();
   if (state.view === 'profile' && !state.user) mountSignIn();
   trackView();
   if (state.view === 'list' && state.map) initMap(filteredList());
-  else if (mapState) { mapState.map.remove(); mapState = { user: mapState.user }; }
   document.querySelectorAll('.tabbar [data-tab]').forEach((b) => b.setAttribute('aria-current', b.dataset.tab === state.tab ? 'page' : 'false'));
   updateBadge();
   syncQuery();
@@ -999,7 +1013,7 @@ function openEvent(e, push = true, { shared = false, plan = null } = {}) {
       ${plan ? '' : ownerCard(e)}
       ${e.description ? `<p class="desc">${esc(e.description)}</p>` : ''}
       <div class="links">
-        ${e.links.map((l) => `<a class="row" href="${esc(l.url)}" target="_blank" rel="noopener">${icons.ticket}<span>Részletek, jegyek<small>${esc(l.name)} oldalán</small></span>${icons.out}</a>`).join('')}
+        ${e.links.filter((l) => safeUrl(l.url)).map((l) => `<a class="row" href="${esc(l.url)}" target="_blank" rel="noopener">${icons.ticket}<span>Részletek, jegyek<small>${esc(l.name)} oldalán</small></span>${icons.out}</a>`).join('')}
         <a class="row" href="${directions}" target="_blank" rel="noopener">${icons.pin}<span>Útvonal tömegközlekedéssel<small>Google Térkép</small></span>${icons.out}</a>
       </div>
       <div class="share-row" aria-label="Meghívó küldése" data-invite="${e.id}" data-pid="${pid}">
@@ -1060,7 +1074,7 @@ function newPlanId() {
   return [...crypto.getRandomValues(new Uint8Array(10))].map((b) => abc[b % abc.length]).join('');
 }
 const inviteUrl = (e, pid) => `${eventUrl(e)}?p=${pid}`;
-const displayName = () => state.profile?.display_name || state.user?.user_metadata?.full_name || state.myName || '';
+const displayName = () => (state.profile?.display_name || state.user?.user_metadata?.full_name || state.myName || '').slice(0, 40);
 const createdPlans = new Set();
 
 /** A meghívót a háttérben hozzuk létre, hogy a megosztás azonnal (a koppintás közben) induljon. */
@@ -1127,7 +1141,8 @@ async function loadGuestPlan(pid) {
   try {
     const plan = await auth.getPlan(pid);
     const slot = $('#rsvp');
-    if (!plan || !slot || !sheet.open) return;
+    if (!slot || !sheet.open) return;
+    if (!plan) { slot.outerHTML = '<p class="shared-note">🔗 Valaki megosztotta veled ezt a programot</p>'; return; }
     state.plan = plan;
     slot.outerHTML = plan.is_owner ? ownerCard(state.byId.get(plan.event_id)) : guestCard(plan);
   } catch {
