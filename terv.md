@@ -1,175 +1,207 @@
-# Vaultaire-recept, saját kiadásban: terv
+# Vaultaire-recept, saját kiadásban: terv (2. változat)
 
-*Készült: 2026-10-23. A Vaultaire-számok a founder saját, nem auditált adatai. A **[D]** jel saját döntést jelöl, a **[B]** becslést vagy nem ellenőrizhető adatot, a **[M]** azt, amit még mérni kell.*
+*Készült: 2026-10-23, kritikus felülvizsgálat után. A Vaultaire-számok a founder saját, nem auditált adatai. A **[D]** jel saját döntést jelöl, a **[B]** becslést vagy nem ellenőrizhető adatot, a **[M]** azt, amit még mérni kell. Kulcsszóvolument egyik elérhető connector sem adott (a Semrushön nincs API-egység, a Similarweben nincs kredit), ezért a fizetési hajlandóságot proxykból ítélem meg: fizető versenytársak, bevételbecslések, értékelésszámok.*
 
 ---
 
 ## 1. Összefoglaló és ajánlás
 
-**Ajánlás: „ID Copy Guard”** (munkanév **[D]**). Egyetlen funkciója van: egy biztonságos igazolványmásolat 10 másodperc alatt. A felhasználó egyszer beszkenneli a személyijét vagy útlevelét, és amikor valaki (főbérlő, hotel, munkáltató, autókölcsönző) másolatot kér, egy gombbal kap egy példányt. Ezen a példányon rajta van a „Csak [címzett] részére, [cél], [dátum]” vízjel, ki vannak takarva a felesleges mezők (okmányszám, MRZ, aláírás), a metaadatok (EXIF/GPS) törölve vannak, a kép pedig lapított, így a vízjel nem szedhető le egyszerűen. Minden a készüléken fut, nincs fiók és nincs szerver.
+**Az 1. változat ajánlását (ID Copy Guard) elvetem.** A fizetős kereslet mellett nincs bizonyíték:
+- a versenytárs appoknak nincs értékelésük;
+- az egyik versenytárs lifetime ára 4,99 $;
+- a francia és a holland állam ingyenes eszközt ad ugyanerre;
+- az iOS Markup ingyen tud szöveget írni a képre;
+- a szükség pillanatában senki nem tölt le és fizet ki egy appot, hanem egyszerűen elküldi a fotót.
 
-- **Pontszám: 7,0/10.** Ez a küszöbön van, nem fölötte, és a fizetési hajlandóság még nincs bizonyítva. Ezért a sorrend: **először egy ingyenes, böngészős eszköz és SEO-oldalak, az iPhone-app csak akkor jön, ha a 4. hét végi kapun átmegy.**
-- **B-terv (pivot):** útlevél- és vízumfotó-készítő, helyi feldolgozással, „egyszer fizetsz, a családnak korlátlan” modellel (6,5/10). Erre a 30. és a 90. napi kapunál lehet váltani. Ugyanaz a márka és ugyanaz a közönség („az okmányaim biztonságban”).
-- **Elvetve:** számlakészítő (Magyarországon NAV-adatszolgáltatás kell, globálisan telített), statikus QR (ingyenes és telített), fájlkonverter (sok ingyenes, helyben futó versenytárs), Vaultaire-klón (az Apple és a Vaultaire maga is lefedi).
+Újraszámolva **5,2/10**.
+
+**Új ajánlás: „Room Check”** (munkanév **[D]**). Egy 5 perces szobaellenőrzés rejtett kamerákra Airbnb-ben, hotelben, bérelt lakásban. Három dolgot csinál:
+1. megkeresi a Wi-Fi-hálózaton a kamerára utaló eszközöket;
+2. a telefon kamerájával segít megtalálni a lencsecsillanást és az infra-LED-et;
+3. végigvezet egy szobánkénti ellenőrzőlistán.
+
+Helyben fut, nincs fiók, nincs szerver, és **nincs automatikusan megújuló heti előfizetés.**
+
+- **Pontszám: 6,9/10.** Ez a küszöb alatt van. **Csak akkor lesz 7+, ha az 1. heti technikai teszt sikerül** (3 valódi kamerából legalább 2-t felismer). Ha nem, leállok vagy pivotálok.
+- **Miért ez a legjobb a vizsgáltak közül?** Ez hasonlít legjobban a Vaultaire szerkezetére:
+  - erős félelem (egy önérdekelt felmérés szerint a vendégek 59%-a aggódik);
+  - konkrét pillanat (megérkezés a szállásra);
+  - óriási tájékoztató jellegű keresési igény („how to find hidden cameras in airbnb”);
+  - **utált, átverős inkumbensek** (heti előfizetéses detektorappok, panaszokkal a lemondásra és a pontatlanságra);
+  - az Apple nem ad rá megoldást.
+
+  A fizetési hajlandóságnak van proxyja is: a „Camera Detector App” becsült bevétele kb. 90 000 $/hó (Adapty, kiugró érték), egy Flippa-hirdetés 4494 $/hó profitot állít 2 millió letöltéssel, a Fing pedig fizetős funkcióként árulja a kamerakeresést.
+- **B-terv:** helyben futó interjú-átíró kutatóknak és újságíróknak (6,7). Ennek bizonyított a fizetős piaca, de erős az ingyenes, helyben futó verseny.
+
+### A legfontosabb kritikai felismerés
+2026-ban **minden „egy funkció, helyben fut, 3 hét alatt kész” rést már 5–10 AI-val épített klón foglal el.** Az ID-másolat, a Schengen-számláló és a böngészős átírás piacán is sok a 2025–26-os, értékelés nélküli app. **Maga a termék nem moat.** A győztest a terjesztés (a SEO végrehajtása) és a bizalom dönti el. Ez a Vaultaire-nél is így volt: zsúfolt kategóriába lépett be, és kb. 120 útmutatóval, összehasonlító oldalakkal és 30 nyelvvel nyert. Ezért a fő szűrőm: **legyen bizonyított fizetős kereslet, és legyenek gyenge vagy utált inkumbensek.**
 
 ---
 
 ## 2. Vaultaire-tanulságok
 
-### 2.1 A forrásellentmondás feloldása
-Ugyanannak az oldalnak (stork.ai) a két cikke ellentmond egymásnak: az egyik Google-organikus forgalmat és Keyword Plannert ír, a másik App Store-keresést (ASO). **A vaultaire.app oldal szerint mindkettő igaz.** Van rajta kb. 120 útmutató (/guides/), külön /compare/ oldalak (kb. 10 versenytárs-összehasonlítás, például Keepsafe vagy kalkulátor-appok), /scenarios/ és /tools/ szekció, és kb. 30 nyelven érhető el. Az App Store-linkek követett paraméterekkel mennek (`/go/app-store?ct=…&src=…`), vagyis a webes forgalmat mérik. **Következtetés [B]:** a Google-tartalom adja a keresletet, az ASO a store-on belüli konverziót. A kettő arányát nem tudjuk.
+### 2.1 A forrásellentmondás
+A stork.ai két cikke ellentmond egymásnak: az egyik Google-organikus forgalmat és Keyword Plannert ír, a másik ASO-t. **A vaultaire.app szerint mindkettő igaz.** Van rajta kb. 120 útmutató, /compare/ oldalak (kb. 10, többek közt a Keepsafe és a kalkulátor-appok ellen), /scenarios/ és /tools/ szekció, kb. 30 nyelv, és az App Store-linkek követett paraméterrel mennek. A két csatorna arányát nem tudjuk **[B]**.
 
-### 2.2 Mitől működött, és mi ismételhető?
+### 2.2 Mi ismételhető?
 
-| Tényező | Mi történt | Ismételhető? |
-|---|---|---|
-| Éles, érzelmi igény | Félelem, hogy kényes fotók vagy fájlok rossz kézbe kerülnek | **Igen.** Kell egy félelemvezérelt, konkrét pillanat |
-| Bizalom mint termék | AES-256-GCM, PBKDF2, nincs fiók, nincs szerver, a kulcs nincs a cégnél, a korlátokat nyíltan leírják | **Igen.** A helyi működés az ígéret lényege, nem extra |
-| Gyűlölt inkumbensek | Régi vault-appok (Keepsafe: havi 9,99 $, éves 23,99 $), hirdetések, gyanús felhő | **Részben.** Csak ott, ahol a piacvezető drága vagy gyanús |
-| Lifetime-horgony | Heti 1,99 / éves 19,99 / lifetime 39,99 $, a bevétel 80%+-a lifetime | **Igen.** A heti ár „drágává” teszi a havi gondolkodást, a lifetime kedvezőnek tűnik |
-| Bizalmi csúcs a 60. napon | Napi használat mellett a fizetés később jön | **Nem automatikus.** Csak napi használatú appnál működik. Ritka használatnál a fizetés a szükség pillanatában történik, vagy elmarad |
-| Lock-in | A fájlok bent vannak, a váltás fáj | **Részben.** Gyengébb lock-in is kell (tárolt okmány, megosztási napló) |
-| Napi célzott útmutató | Search Console és Keyword Planner alapján ott, ahol van megjelenés, de kevés a kattintás, belső linkekkel | **Igen.** Ez a fő motor, és fegyelem kérdése |
-| Időzítés és AI | Kb. 3 hetes MVP AI-ügynökökkel, első iOS-app | **Igen.** Ma ez még könnyebb |
-| Apple saját funkciói | Az iOS 18-ban Face ID-val zárható a Rejtett album és az appok | **Ellenérv.** A klónnak az Apple a legnagyobb versenytársa |
-| 10% web→app konverzió | Founder-adat | **[B] Felső határként** kezelem, nem tervezési alapként |
-
-**A lényeg:** a recept nem a „vault”, hanem ez a sorrend: *félelemvezérelt, gyakori keresés → hasznos válaszoldal → helyi, fiók nélküli app → egyszeri fizetés.*
+| Tényező | Vaultaire | Ismételhető? | Room Check |
+|---|---|---|---|
+| Éles, érzelmi igény | Félelem a kényes fotók kiszivárgásától | Igen | Félelem a rejtett kamerától, konkrét pillanatban |
+| Utált inkumbensek | Régi vault-appok, hirdetések, gyanús felhő | Részben | **Igen.** Heti előfizetéses „detektorok”, 99,9%-os ígéretek, nehéz lemondás |
+| Helyi működés mint bizalom | Nincs szerver, a kulcs nincs a cégnél | Igen | Nincs fiók, a szkennelés eredménye nem hagyja el a telefont |
+| Lifetime-horgony | 1,99 / 19,99 / 39,99 $, a bevétel 80%+-a lifetime | Igen | Nem megújuló utazási bérlet és lifetime |
+| Bizalmi csúcs a 60. napon | Napi használat | **Nem.** Ritka használatnál nem jön el | A fizetés a megérkezéskor történik, vagy elmarad |
+| Lock-in | Bent vannak a fájlok | Részben | Gyenge (szállásnapló). Ez kockázat |
+| Napi célzott útmutató | Search Console-vezérelt | Igen | Igen, hírvezérelt témákkal együtt |
+| Apple saját funkciói | Rejtett album, zárható appok | Ellenérv | Az Apple nem ad ilyet. Az iOS nem mutat MAC-címet, ez technikai korlát |
 
 ---
 
-## 3. Ötletek értékelése
+## 3. Ötletek értékelése (újraszámolva)
 
-Skála: 1–10. A súlyok **[D]**: éles pillanat 20%, fizetési hajlandóság 25%, verseny 15%, moat 10%, gyakoriság 10%, SEO 20%.
+Súlyok **[D]**: éles pillanat 20%, fizetési hajlandóság 25%, verseny 15%, moat 10%, gyakoriság 10%, SEO 20%.
 
-| Ötlet | Éles pillanat | Fizetési hajl. | Verseny és árak (forrás) | Moat | Gyakoriság | SEO | **Össz.** |
-|---|---|---|---|---|---|---|---|
-| **ID Copy Guard** (vízjel, kitakarás, EXIF-törlés, tárolt okmány) | 9: „küldd át az útleveled” | 5: nem bizonyított; állami ingyenes eszközök (FR, NL), az appoknak nincs értékelése | 7: Safe2Share ID (19, egyszeri), ID-Shield (lifetime 199 IAP), WatermarkYourID (heti 0,99 / éves 1,99 / lifetime 4,99), webes ingyenesek; nincs domináns szereplő | 5: tárolt okmány és napló, preset-adatbázis | 4: évi néhány alkalom | 8: hosszú farok (címzett × okmány × ország), jogi háttéranyag | **7,0** |
-| Útlevél- és vízumfotó (B-terv) | 9: határidő | 8: bizonyított, 5–23 $/fotó | 4: PhotoAiD 13,95; Passport Photo Online 22,95; Visafoto 5,20; IDPhoto4You ingyenes; SEO-ban erős szereplők | 5: specifikáció-adatbázis | 2: évekig nem kell | 7: ország × okmány, de erős a verseny | **6,5** |
-| Vaultaire-klón, szűkítve (iratszéf) | 6 | 6 | 2: Keepsafe, Private Photo Vault (39,99), Vaultaire maga, Apple Rejtett album | 6 | 7 | 4: a Vaultaire már lefedi (kb. 120 útmutató) | **5,0** |
-| Helyi fájlkonverter (HEIC→JPG stb.) | 7 | 2: mindenhol ingyenes | 2: sok ingyenes, helyben futó eszköz (PixHeic, OpenReplay, besthomepageever stb.) | 1 | 5 | 6: volumen van, a verseny brutális | **3,9** |
-| Számlakészítő | 6 | 4 | 2: ingyenes generátorok, Billingo, Számlázz.hu | 2 | 7 | 4 | **3,9**. Magyarországon a NAV Online Számla miatt a helyi, backend nélküli működés nem jogszerű |
-| Statikus QR-generátor | 5 | 2 | 2: a „lejárt dinamikus QR” fájdalom valós, de az ingyenes statikus generátor alapáru | 1 | 3 | 5 | **3,0** |
+| Ötlet | Pillanat | Fiz. hajl. | Verseny | Moat | Gyak. | SEO | **Össz.** | Bizonyíték |
+|---|---|---|---|---|---|---|---|---|
+| **Room Check** (rejtett kamera) | 9 | 7 | 5 | 5 | 5 | 8 | **6,9** | Camera Detector App kb. 90 000 $/hó **[B]**; Flippa: 4494 $/hó profit, 2 millió letöltés (saját bevallás); a Fing kamerakeresése fizetős; felmérés: 47% talált már kamerát, 64% nem tudja, hogyan keresse |
+| Helyi interjú-átíró (B-terv) | 8 | 8 | 4 | 5 | 6 | 7 | **6,7** | TurboScribe havi 10–20 $; MacWhisper kb. 100 000 $ (harmadik fél becslése); „Transcribe” app 450 értékelés, heti 3,99 $. **De:** az Aiko ingyenes és helyben fut, ott van még a Whisper Web, a BibiGPT, a yaps.ai, és a TurboScribe már magyarul is programozott SEO-t csinál |
+| Schengen / adórezidencia napszámláló | 7 | 7 | 4 | 6 | 6 | 7 | **6,4** | TaxDay havi 9,99 $ (66 értékelés, 3,8); Borderwise lifetime 69,99 $; az EES 2026. április óta automatikusan számolja a napokat. **De:** a legrégebbi Schengen-app 10 év alatt is csak 189 értékelést gyűjtött, és 2025–26-ban sok új klón jelent meg |
+| Útlevélfotó | 9 | 6 | 4 | 4 | 2 | 7 | **5,9** | PhotoAiD 13,95 $, Passport Photo Online 22,95 $. **De:** a PhotoGov digitális fotója ingyenes, más 2 $-ért old fel háttérmentést, és a legjobb app is csak 495 értékelésnél tart |
+| ID Copy Guard (az 1. változat ajánlása) | 8 | 3 | 6 | 4 | 3 | 6 | **5,2** | Állami ingyenes eszközök, az appoknak 0 értékelésük, lifetime 4,99 $ |
+| Vaultaire-klón | 6 | 6 | 2 | 6 | 7 | 4 | **5,0** | A Vaultaire maga és az Apple |
+| Fájlkonverter / számlázó / QR | — | 2–4 | 2 | 1–2 | — | — | **3–4** | Ingyenes, telített. A számlázót Magyarországon a NAV-bekötés kizárja |
 
-**A 7 alatti ötletek kiesnek.** Az útlevélfotó a jobb fizetési hajlandóság ellenére is alatta marad. Ez nem rossz ötlet, csak SEO-ban vörös óceán, és a ritka használat miatt rosszul illik a lifetime modellhez. Ezért B-terv lett.
+**Őszinte összegzés:** adat nélkül egyik ötlet sem éri el biztosan a 7-et. A Room Check a legközelebb van hozzá, és ennél a legolcsóbb a döntő teszt: két-három olcsó kamera, és egy hét alatt kiderül, működik-e a felismerés.
 
 ---
 
-## 4. A választott ötlet
+## 4. A választott ötlet: Room Check
 
-**ID Copy Guard: „Share a copy of your ID without handing over your identity.”**
+**Ígéret:** „Check your Airbnb for hidden cameras in 5 minutes. No subscription trap. Nothing leaves your phone.”
 
-**Miért ez?**
-1. **A helyi működés itt a termék lényege.** Aki az igazolványát védi, nem akarja feltölteni egy ismeretlen szerverre. A Vaultaire bizalmi pozíciója így tisztán átvihető.
-2. **Jogi és hatósági szél a hátunkban.** A holland kormány saját appot ad ki erre (KopieID), a francia állam webes eszközt (Filigrane Facile). A magyar NAIH szerint a személyi másolása általában nem indokolt (adattakarékosság, a másolatnak nincs bizonyító ereje). Az Egyesült Királyságban a Right to Rent miatt a főbérlők kötelezően másolatot tartanak. Az igény tehát valós, az angol nyelvű piacon pedig nincs állami eszköz.
-3. **Nincs domináns szereplő.** A 2025–26-ban indult appoknak egyelőre nincs látható értékelésük. Ez lehetőség, de figyelmeztető jel is: lehet, hogy kicsi a kereslet **[M]**.
-4. **A SEO-hoz jól illik.** Minden „küldjek-e másolatot X-nek?” típusú kérdésre egy előre beállított eszközoldal válaszol, így nem vékony szöveg jön létre.
+**Mit csinál (egyetlen folyamat, három lépéssel):**
+1. **Wi-Fi-szkennelés.** Bonjour/mDNS, SSDP/UPnP és ONVIF WS-Discovery felderítést futtat a szállás hálózatán, és megjelöli a kamerára utaló eszközneveket és gyártói szövegeket (RTSP-szolgáltatás, ONVIF-válasz, ismert kameragyártók).
+2. **Lencse- és infravizsgálat.** Sötét szobában az előlapi kamera látja az infra-LED-et, zseblámpával pedig a lencse csillanása keresendő. Az app kiemeli a fényes pontokat a képen.
+3. **Szobánkénti ellenőrzőlista.** Füstérzékelő, töltő, óra, légfrissítő, tükör. A végén egy helyben tárolt jelentés készül, amit fel lehet használni egy Airbnb-panaszhoz.
 
-**Ami kimarad [D]:** általános fotó- és fájlszéf, felhőszinkron, csapatfunkciók, Android (a 90 napon belül), automatikus „smart redact” minden országra (az MVP-ben csak az MRZ és a kézi kitakarás van).
+**Amit őszintén kimondunk:** a Wi-Fi-re nem csatlakozó vagy kikapcsolt kamerát a szkennelés nem találja meg. Nincs „99,9%” ígéret. A versenytársakkal szembeni pozíció pont ez az őszinteség.
 
-**Fő ellenérv, amit nyíltan vállalok:** az iOS Markup is tud szöveget írni a képre. Az érték ehhez képest négy dolog: (a) csempézett, el nem távolítható vízjel, (b) célzott sablon („hotel check-in”, „rental application”), (c) EXIF/GPS-törlés és lapítás, (d) az okmány egyszeri beszkennelése, utána bármikor újra megosztható. Ha a 4. hét végén a felhasználók nem értik ezt a különbséget, az **leállító jel**.
+**Ami kimarad [D]:**
+- mágneses „detektor” (megbízhatatlan);
+- MAC-cím-alapú gyártófelismerés (az iOS nem adja ki);
+- portszkennelés az MVP-ben (jogi és etikai szürke zóna);
+- Android, felhő, fiók.
+
+**Fő ellenérvek:**
+- A **Fing ingyenes alapszkennelése** sokaknak elég.
+- Ritka a használat, gyenge a lock-in.
+- Ha az 1. heti tesztben kevés kamerát talál meg, a termék nem ad valódi értéket. Ekkor leállok, és nem épitek „placebo-appot”.
 
 ---
 
 ## 5. Cselekvési terv
 
-### 5.1 Az első 4 hét (validáció, app nélkül)
+### 5.1 Az első 4 hét
 
 | Hét | Feladatok | Kimenet |
 |---|---|---|
-| **1.** | Kulcsszókutatás: Keyword Planner (ingyenes Ads-fiókkal), Google autocomplete és „People also ask”, Reddit- és Quora-szálak (r/HousingUK, r/travel, r/IdentityTheft), AnswerThePublic ingyenes keret. Versenytárs-bontás (3 app, 5 webeszköz). Domain és névellenőrzés (védjegy is). **Webes eszköz v0:** vízjel + kézi kitakarás + EXIF-törlés + lapított JPG/PDF, 100%-ban kliensoldalon | 60–100 kulcsszavas lista volumensávokkal, működő eszköz |
-| **2.** | Indítás: 1 eszközoldal + 10 pillér-/eszközoldal (lásd SEO-terv), Search Console, Bing Webmaster, sütimentes analitika. Várólista („Get the iPhone app”, e-mail) és fake-door CTA („Save my ID on iPhone, $X lifetime”). 3–5 magyar oldal (NAIH-téma) a helyi tanuláshoz | Élő oldal, indexelési kérelem |
-| **3.** | Napi 1 új oldal, emberi átnézéssel. Organikus jelenlét: 10 hasznos, nem spammelő válasz releváns szálakban, az eszköz linkjével, ahol a szabályok engedik. Usability-teszt 5 emberrel (Budapest: albérlők, külföldi diákok, expatok) | 15–20 indexelt oldal, 5 interjú |
-| **4.** | Adatgyűjtés és **1. kapu**. Ha átmegy: app-specifikáció, App Store Connect, előrendelés (pre-order) | Döntés |
+| **1.** | **Kulcsszó-kapu:** Keyword Planner (ingyenes Ads-fiókkal) a 20 kulcsszóra, a B-terv 10 kulcsszavára is. **Technikai kapu:** 3 kamera (Tapo vagy Wyze, egy V380-as „spy” kamera, egy USB-töltőbe rejtett kamera, összesen kb. 60–80 €) egy otthoni hálózaton. Egy Swift-prototípus (mDNS + SSDP + WS-Discovery), és egy böngészős IR- és csillanásteszt (`getUserMedia`) | Volumenlista, felismerési arány |
+| **2.** | Web v0: böngészős „Room Check” (lépésenkénti útmutató, kamerás IR- és csillanásteszt, ellenőrzőlista), 10 pillér-oldal, Search Console és Bing, sütimentes analitika, várólista és fake-door („Wi-Fi scan in the iPhone app”) | Élő oldal |
+| **3.** | Napi 1 új oldal, emberi átnézéssel. 5 interjú: Budapesten Airbnb-vendégek és hostelutazók, plusz r/travel- és r/solotravel-szálak (hasznos válaszok, spam nélkül) | 15–20 oldal, 5 interjú |
+| **4.** | **1. kapu.** Ha átmegy: az app MVP indul | Döntés |
+
+**0. kapu (7. nap, kötelező):**
+- A Wi-Fi-szkennelés **3 kamerából legalább 2-t** felismer, és nincs több 1 hamis riasztásnál egy átlagos otthoni hálózaton. Ha nem: **leállok, és a B-terv kapuja jön.**
+- A Keyword Planner szerint a top 5 kulcsszó együttes sávja érdemi (a küszöb **[D]**: legalább „10K–100K”/hó globálisan). Ha nem: B-terv.
 
 **1. kapu (28. nap):**
 
 | Mutató | Tovább | Javítás (+2 hét) | Leállás/pivot |
 |---|---|---|---|
-| Eszközhasználat: kész export / eszközoldal-látogató | ≥ 40% | 20–40% | < 20% |
-| CTA-kattintás az exportoknál („Get the app”) | ≥ 5% | 2–5% | < 2% |
-| Várólista (összesen) | ≥ 100 | 30–100 | < 30 |
-| Interjú: „fizetnék érte” (5-ből) | ≥ 2 | 1 | 0 |
-
-A 4. héten a Search Console-adatok még gyengék lesznek, mert egy új domain lassan indul. Ezért itt a viselkedési mutatók döntenek, a SEO majd a 60. napi kapunál.
+| A böngészős ellenőrzést végigcsinálók aránya | ≥ 35% | 15–35% | < 15% |
+| CTA-kattintás („Get the app”) | ≥ 6% | 2–6% | < 2% |
+| Várólista | ≥ 150 | 50–150 | < 50 |
+| Interjú: „fizetnék 5–15 $-t” (5-ből) | ≥ 2 | 1 | 0 |
 
 ### 5.2 90 napos terv
 
 | Időszak | Fókusz | Mérföldkő |
 |---|---|---|
-| **5–7. hét** | App MVP AI-ügynökökkel (kb. 3 hét, mint a Vaultaire). Közben napi oldal megy tovább | TestFlight 15–20 tesztelővel a várólistáról |
-| **8. hét** | App Store-beadás, ASO (cím: „ID Copy: Watermark & Redact”, a felirat kulcsszavas), előrendelők értesítése | Élő app (kb. a 50. nap) |
-| **9. hét (2. kapu, 60. nap)** | SEO-mérés | lásd alább |
-| **9–11. hét** | Ártesztek (lásd 7. fejezet), Search Console-vezérelt tartalom („van megjelenés, kevés a kattintás” → új cím, új oldal), 3 compare-oldal | |
-| **12. hét** | Lokalizáció a legerősebb tudatosságú piacokra: NL, FR, DE, ES (a fordítást ember nézi át) | |
-| **13. hét (3. kapu, 90. nap)** | Döntés | lásd alább |
+| 5–7. hét | App MVP AI-ügynökökkel. Multicast-entitlement kérése az Apple-től már az **5. hét elején**, mert ez átfutási idő | TestFlight 20 tesztelővel |
+| 8. hét | App Store-beadás, ASO („Hidden Camera Finder: Room Check”), értesítés a várólistának | Élő app (kb. az 50. nap) |
+| 9. hét | **2. kapu** | lásd alább |
+| 9–11. hét | Ártesztek, Search Console-vezérelt oldalak, 3 compare-oldal (Fing, „detector” appok, kézi módszer) | |
+| 12. hét | Lokalizáció: ES, DE, FR, IT, PT. A turistaforgalom miatt a magyar csak kis tétel | |
+| 13. hét | **3. kapu** | lásd alább |
 
 **2. kapu (60. nap, Search Console, utolsó 28 nap):**
-- Tovább: ≥ 10 000 megjelenés **és** ≥ 300 kattintás **és** ≥ 40 indexelt oldal.
-- Javítás: 2000–10 000 megjelenés. Ekkor a címeket és a belső linkelést kell átnézni, és a top 10 oldalt mélyíteni.
-- Pivot-jel: < 2000 megjelenés 50+ oldal mellett. Ekkor indul a B-terv (útlevélfotó) próbája két eszközoldallal, a meglévő domainen.
+- Tovább: ≥ 15 000 megjelenés **és** ≥ 400 kattintás **és** ≥ 40 indexelt oldal.
+- Javítás: 3000–15 000 megjelenés.
+- Pivot-jel: < 3000 megjelenés 50+ oldal mellett.
 
 **3. kapu (90. nap, utolsó 30 nap):**
 
-| Mutató | Tovább és skálázás | Iteráció (még 60 nap) | Leállás/pivot |
+| Mutató | Tovább | Iteráció (+60 nap) | Leállás/pivot |
 |---|---|---|---|
 | Nettó bevétel/hó | ≥ 500 $ | 100–500 $ | < 100 $ |
-| Telepítés → fizetés | ≥ 4% | 1,5–4% | < 1,5% |
-| Web → telepítés | ≥ 3% | 1–3% | < 1% |
-| Organikus kattintás/hó | növekvő, ≥ 2000 | stagnál | csökken |
+| Telepítés → fizetés | ≥ 5% | 2–5% | < 2% |
+| Refund-arány | < 5% | 5–10% | > 10% (a termék nem váltja be az ígéretét) |
+| Értékelés átlaga | ≥ 4,3 | 3,8–4,3 | < 3,8 |
 
 ---
 
 ## 6. SEO-terv
 
 ### 6.1 Oldaltípusok
-1. **Eszközoldalak (mag, 5–8 db):** `/watermark-id/`, `/redact-passport/`, `/remove-exif-from-photo/`, `/id-copy-pdf/`. A böngészőben működő eszköz van középen, alatta a magyarázat.
-2. **Címzett × okmány (programozott, preset-tel):** `/send-passport-copy-to/landlord/`, `/hotel/`, `/employer/`, `/car-rental/`, `/crypto-exchange/`, `/airbnb-host/`. Mindegyik **előre kitöltött vízjellel** nyitja meg az eszközt, és saját listát ad arról, mit takarj ki és miért.
-3. **Ország × okmány útmutatók (csak ellenőrzött adattal):** például „UK passport copy: what to redact”. Mezőtérkép, jogi hivatkozás (ICO, NAIH, AP), forrásdátum.
-4. **Kérdésoldalak (napi, Search Console-vezérelt):** például „what can someone do with a copy of my passport”.
-5. **Összehasonlítás és alternatívák:** a KopieID-vel, a Filigrane Facile-lal, az iOS Markuppal és a Safe2Share ID-vel, korrektül.
+1. **Eszközoldal (mag):** `/room-check/`, egy böngészőben futó, lépésenkénti ellenőrzés kamerás IR- és csillanásteszttel.
+2. **Helyszín × szállástípus:** `/hidden-cameras/airbnb/`, `/hotel/`, `/hostel/`, `/vrbo/`, `/changing-room/`, `/office/`. Mindegyikhez saját ellenőrzőlista-preset tartozik.
+3. **Eszköz, ahova kamerát rejtenek:** füstérzékelő, USB-töltő, óra, légfrissítő, tükör, TV, router. Mindegyikhez fotó a tipikus jelekről, saját teszttel (a saját vásárolt kameráinkról készült képekkel, ez egyedi tartalom).
+4. **Kameratípus vagy márka a hálózaton:** például „Tapo / V380 / Wyze camera on Wi-Fi: how it shows up”. Saját szkennelési képernyőképpel, a saját laborból.
+5. **Jog és teendő:** „found a hidden camera in Airbnb: what to do”, az Airbnb szabálya (2024 óta tilos a beltéri kamera), országonkénti jogi alap (csak ellenőrzött forrással).
+6. **Compare / alternatives:** Fing, „detector” appok, kézi módszer.
 
 ### 6.2 20 példa kulcsszó vagy oldalcím
-Az összes volumen **[M]**, egyiket sem ellenőriztem. A Semrush-hozzáférésen nem volt API-egység. Mérés: Keyword Planner tartományok, majd a Search Console valós megjelenései a 3–6. héttől.
+Az összes volumen **[M]** (Keyword Planner az 1. héten, utána Search Console).
 
-1. How to watermark a copy of your passport
-2. Is it safe to send a copy of my passport to a landlord?
-3. What to redact on a passport copy (and what not to)
-4. Watermark ID online without uploading
-5. What can someone do with a photo of my ID?
-6. Safely send ID to a hotel before check-in
-7. Driver's license photo for car rental: how to protect it
-8. Remove location data (EXIF) from a photo of your ID
-9. Should I send my ID to an employer before the first day?
-10. Passport copy for Airbnb host: what's actually required
-11. UK Right to Rent: how to share your passport copy safely
-12. ID copy for crypto exchange: watermark or not?
-13. How to black out the MRZ on a passport
-14. KopieID alternative for non-Dutch documents
-15. Filigrane Facile in English: watermark your documents
-16. How to make an ID copy PDF on iPhone
-17. Somebody asked for a photo of my ID on WhatsApp: scam?
-18. ID copy watermark text examples
-19. Személyi igazolvány másolat: kérheti-e a főbérlő? (HU)
-20. Hogyan küldjek biztonságosan személyi-másolatot? (HU)
+1. How to find hidden cameras in an Airbnb
+2. How to detect hidden cameras with your phone
+3. Hidden camera in smoke detector: how to tell
+4. How to find hidden cameras with iPhone (no app needed)
+5. Do hidden camera detector apps work? (tested)
+6. How to find hidden cameras on Wi-Fi network
+7. Found a hidden camera in Airbnb: what to do
+8. Airbnb camera policy 2026: what hosts can and can't do
+9. How to spot a hidden camera in a hotel room
+10. USB charger hidden camera: signs to look for
+11. Infrared camera test with your phone in the dark
+12. Two-way mirror test: does the fingernail trick work?
+13. Hidden camera in bathroom: where to check
+14. Fing vs hidden camera detector apps
+15. How a V380 spy camera shows up on Wi-Fi
+16. Are hidden cameras legal in rentals in [country]?
+17. Hidden camera checklist for solo female travelers
+18. How to check a hostel dorm for cameras
+19. Rejtett kamera Airbnb-ben: hogyan ellenőrizd? (HU)
+20. Hidden camera detector without subscription
 
-### 6.3 Oldalsablon (címzett-oldal)
-- H1 a kérdés. Alatta 2–3 mondatos válasz (featured snippet-re).
-- **Eszköz preset-tel** (a vízjel kitöltve, a kitakarási javaslat bejelölve).
-- „Mit kér jogosan a [címzett], és mit nem?” Táblázat, hivatkozott forrással.
-- Lépések képernyőképpel. Kockázatok: mit nem véd a vízjel (őszintén).
-- GYIK (3–5 kérdés), utána CTA: „Keep your ID ready on iPhone”.
-- Kapcsolódó oldalak (lásd 6.4), utolsó ellenőrzés dátuma és ki ellenőrizte.
+### 6.3 Oldalsablon
+- H1 a kérdés, alatta 2–3 mondatos válasz.
+- **Interaktív lépés** (eszköz vagy preset-lista).
+- Saját fotók vagy képernyőképek a laborból.
+- „Mit nem talál meg ez a módszer?” (őszinte blokk).
+- GYIK, utána CTA: „Scan the Wi-Fi with Room Check”.
+- 3–5 kapcsolódó link, végül az utolsó teszt dátuma és ki tesztelte.
 
 ### 6.4 Belső linkelés
-Hub-spoke szerkezet: a hub a `/send-id-copy/` és a `/guides/`, ezekre a címzett-, ország- és kérdésoldalak linkelnek. Minden új oldal 3 régebbire mutat, és 2 régebbi oldal kap linket az újra. Az eszközoldalra minden oldalról mutat link. A breadcrumb-ban és a láblécben a hubok szerepelnek. A Vaultaire mintájára az App Store-link követett paraméterrel megy (`/go/app?src=slug`), így látszik, melyik oldal konvertál.
+Hub-spoke szerkezet, két hubbal: `/hidden-cameras/` és `/room-check/`. Minden új oldal 3 régebbire mutat, és 2 régebbi oldal kap linket az újra. Az eszközoldalra minden oldalról mutat link. A CTA követett paraméterrel megy (`/go/app?src=slug`).
 
-### 6.5 A „scaled content abuse” szabály betartása
-A Google szerint a visszaélés lényege az, hogy sok oldal készül, amely főként a rangsor manipulálására szolgál és nem segít, „no matter how it's created”. Szabályaim **[D]**:
-- **Nincs oldal egyedi érték nélkül.** Minden programozott oldalnak saját preset-je, saját mezőlistája és saját forrása van. Ha ez hiányzik, nem jön létre, vagy `noindex` kap.
-- **Emberi átnézés minden oldalnál** (5 pontos ellenőrzőlista: tény, forrás, preset, érthetőség, duplikáció). Az AI csak vázlatot ír.
-- **Tempókorlát:** naponta 1–2 oldal, nincs tömeges kiöntés. Nincs több domain, nincs gépi fordítás átnézés nélkül.
-- **Ország-oldal csak ellenőrzött jogi vagy hatósági forrással**, dátummal.
+### 6.5 „Scaled content abuse”
+A Google szerint a visszaélés az, amikor sok oldal készül főként a rangsor manipulálására, „no matter how it's created”. Szabályaim **[D]**:
+- **Minden oldalon van saját, első kézből származó elem:** fotó, szkennelési képernyőkép, teszt. Ami ilyen nélkül készülne, az nem készül el.
+- Az AI csak vázlatot ír. **Minden oldalt ember néz át** 5 pontos listával: tény, forrás, saját elem, érthetőség, duplikáció.
+- Napi 1–2 oldal, nincs tömeges kiöntés. Csak egy domain, gépi fordítás átnézés nélkül nem megy ki.
+- A jogi oldalak csak hivatkozott forrással és dátummal jelennek meg.
 - Negyedévente takarítás: ami 90 nap után sem kap megjelenést, azt összevonom vagy `noindex`-et kap.
 
 ---
@@ -177,48 +209,47 @@ A Google szerint a visszaélés lényege az, hogy sok oldal készül, amely fők
 ## 7. Termék és üzleti modell
 
 ### 7.1 MVP (iPhone)
-1. Okmány beolvasása (VisionKit dokumentumkamera vagy import), több oldalra is.
-2. Egyszeri tárolás titkosítva: CryptoKit AES-GCM, kulcs a Keychainben, Face ID (LocalAuthentication), Data Protection: Complete.
-3. **Megosztás egy gombbal:** címzett- és célsablon, csempézett vízjel, MRZ-kitakarás (Vision szövegfelismerés) és kézi kitakarás, EXIF-törlés, lapított JPG vagy PDF, megosztás a share sheeten.
-4. Megosztási napló (helyben): kinek, mikor, milyen célra.
+- **Szkennelés:** Network.framework (NWBrowser a Bonjourhoz), UDP multicast az SSDP-hez és a WS-Discoveryhez (`com.apple.developer.networking.multicast` entitlement szükséges), Local Network permission. HTTP- vagy ONVIF-banner lekérése csak a már felderített eszközöktől.
+- **Kamera:** AVFoundation és Core Image, fényes pontok kiemelése (IR és csillanás), útmutatóval.
+- **Ellenőrzőlista és jelentés:** SwiftData, helyben. PDF-export a panaszhoz.
+- **Fizetés:** StoreKit 2, nincs RevenueCat és nincs analitika-SDK **[D]**.
 
-**Kimarad [D]:** iCloud-szinkron, Android, Mac, automatikus mezőfelismerés minden országra, felhős bármi, analitika-SDK (helyette csak az App Store Connect adatai).
+### 7.2 Web
+Astro statikus oldal, Cloudflare Pages, `getUserMedia`-alapú kamerás teszt kliensoldalon, sütimentes analitika, várólista Tally-űrlappal. A meglévő „mire-menjünk” repó egy másik termék, **új repót javaslok [D].**
 
-### 7.2 Stack
-- **Web:** Astro statikus oldal, kliensoldali Canvas és pdf-lib, heic2any vagy WASM-dekóder, Cloudflare Pages, sütimentes analitika (Cloudflare Web Analytics), várólista Tally-űrlappal.
-- **App:** Swift/SwiftUI, StoreKit 2 (nincs RevenueCat, így nincs külső adatkezelő **[D]**).
-- **Ehhez a repóhoz:** a meglévő „mire-menjünk” egy eseményalkalmazás Supabase-zel. **Új, külön repót javaslok [D].**
-
-### 7.3 Termékkockázatok
+### 7.3 Kockázatok
 
 | Kockázat | Kezelés |
 |---|---|
-| Adatvesztés (telefoncsere) | Alacsonyabb tét, mint a Vaultaire-nél, mert az eredeti okmány megvan. Titkosított export- és import-fájl a v1.1-ben |
-| Apple review, 4.2 (minimum functionality) | A tárolás, a napló és a sablonok miatt „app”, nem egy vízjel-szűrő. Tiszta adatvédelmi címke: „Data Not Collected” |
-| Apple review, 3.1.2 (előfizetés) | A heti előfizetés ritka használatnál review- és refund-kockázat. Lásd az árazást |
-| Jogi | Nincs jogi tanács (disclaimer). Nincs olyan állítás, hogy „védett a személyazonosság-lopás ellen”. Az EU DSA miatt kereskedői adatok kellenek az App Store-ban. Magyar vállalkozási forma és a NAV-teendők az Apple-bevétel után: könyvelővel |
-| Egyes címzettek (KYC, bank) elutasítják a vízjeles másolatot | Az oldalakon őszintén leírom, hol nem használható |
-| Hamis biztonságérzet | A „mit nem véd” blokk minden oldalon ott van |
+| Alacsony felismerési arány | A 0. kapu. Ha nem éri el a küszöböt, nincs app |
+| Hamis riasztás (pánik, rossz értékelés) | Óvatos szóhasználat („possible camera”), a gyártó és az indok kiírva |
+| Apple review, 2.3 (pontatlan állítások) | Nincs „99,9%” vagy „detects all”. Képernyőképek csak valós eredményből |
+| Multicast-entitlement elutasítása | Fallback: csak Bonjour, ez gyengébb. Ezért korán kell kérni |
+| Jogi kérdés: egy idegen hálózat szkennelése | Csak passzív felderítés (multicast), nincs portszkennelés. Az ÁSZF-ben szerepel, hogy csak olyan hálózaton használd, amire jogosan csatlakoztál |
+| Adatvesztés | Alacsony tét (a jelentés exportálható PDF) |
+| Magyar és EU-s adminisztráció | Az EU DSA miatt kereskedői adatok kellenek az App Store-ban. A vállalkozási forma és az Apple-bevétel adózása könyvelővel |
 
 ### 7.4 Árazás
-- **Késleltetett paywall [D]:** az első 3 megosztás ingyenes, teljes értékű, márkajel nélkül. A paywall a 4. megosztásnál és a második okmány tárolásánál jön. Ritka használatnál a „szükség pillanata” a fizetési pont, a 60. napos bizalmi görbe itt nem várható.
-- **Ártesztek, időben szétválasztva**, 2–2 hetes ablakokban (StoreKit 2-vel nincs natív A/B):
+- **Az inkumbensek ellen [D]:** nincs automatikusan megújuló heti előfizetés.
+- **Ingyenes:** a teljes kézi útmutató, az IR- és csillanásteszt és **1 teljes Wi-Fi-szkennelés részletes eredménnyel.** Nem rejtek el egy már megtalált „gyanús eszközt” fizetőfal mögé, mert az manipuláció.
+- **Fizetős:** korlátlan szkennelés, szállásnapló, PDF-jelentés.
+- **Ártesztek (2–2 hetes ablakok, a telepítésenkénti bevétel alapján):**
   - **A (Vaultaire-horgony):** heti 1,99 / éves 19,99 / lifetime 39,99 $.
-  - **B (alkalmi használatra szabva):** lifetime 9,99 $ egyedül.
-  - **C:** éves 7,99 / lifetime 14,99 $.
+  - **B:** 7 napos, nem megújuló Trip Pass 4,99 $ + lifetime 19,99 $.
+  - **C:** csak lifetime 14,99 $.
 
-  Döntés a telepítésenkénti bevétel alapján, nem a konverzió alapján. Előzetes várakozásom **[B]**: C vagy B nyer, mert a versenytársak 4,99–19 $ között vannak.
+  Előzetes várakozásom **[B]**: a B nyer, mert illeszkedik a „megérkeztem, most kell” pillanathoz.
 
 ### 7.5 Forgatókönyvek (90. nap, havi)
-Ezek a feltételezések következményei, nem előrejelzések. Apple-jutalék: 15% (Small Business Program).
+Ezek a feltételezések következményei, nem előrejelzések. Apple-jutalék: 15%.
 
 | | Organikus látogató/hó | Web→telepítés | Telepítés→fizetés | Átlagos fizetés | Nettó/hó |
 |---|---|---|---|---|---|
-| Gyenge | 3000 | 3% | 2% | 10 $ | **kb. 15 $** |
-| Közepes | 20 000 | 6% | 4% | 14 $ | **kb. 570 $** |
-| Jó | 80 000 | 10% (Vaultaire-plafon) | 6% | 16 $ | **kb. 6500 $** |
+| Gyenge | 3000 | 3% | 3% | 8 $ | **kb. 18 $** |
+| Közepes | 25 000 | 6% | 5% | 12 $ | **kb. 765 $** |
+| Jó | 100 000 | 10% (Vaultaire-plafon) | 7% | 14 $ | **kb. 8300 $** |
 
-Egy Vaultaire-szintű 41 000 $/hó ehhez a kategóriához **nem reális várakozás**. Ehhez napi használat vagy jóval nagyobb kereslet kellene.
+Az ASO-ból jövő, store-on belüli forgalom nincs benne. Ez felfelé torzíthat, mert a detektorappok nagy része valószínűleg App Store-keresésből él **[B]**.
 
 ---
 
@@ -226,46 +257,72 @@ Egy Vaultaire-szintű 41 000 $/hó ehhez a kategóriához **nem reális várakoz
 
 | Miért bukhat el? | Korai mérés | Mikor derül ki? |
 |---|---|---|
-| **Kicsi a keresési volumen** (a versenytársaknak nincs értékelésük) | Keyword Planner-sávok és Search Console-megjelenések | 1. hét, 60. nap |
-| **Az emberek nem fizetnek, mert ingyen is megoldható** (Markup, állami eszközök) | Fake-door CTA, interjúk, előrendelés | 28. nap |
-| Ritka használat, nincs lock-in, így alacsony a teljes élettartam-érték | Ismételt megosztás/felhasználó 30 nap alatt | 75. nap |
-| Új domain, lassú indexelés | Indexelt oldalak és megjelenések trendje | 30–60. nap |
-| Google core update, AI Overviews elviszi a kattintásokat | CTR a top 20 lekérdezésen | folyamatosan |
-| A Vaultaire vagy az Apple beépíti a funkciót | Versenytárs-figyelés havonta | — |
-| Fókuszvesztés (sok kis funkció) | Szabály: 90 napig csak az 1 fő funkció | — |
+| A technika nem találja meg a kamerákat | Labor: 3 kamera | 7. nap |
+| Kicsi a keresési volumen, vagy elviszik a nagy médiaoldalak | Keyword Planner, majd Search Console | 7. nap, 60. nap |
+| Az AI Overviews elviszi a kattintásokat | CTR a top 20 lekérdezésen | 60. naptól |
+| A Fing ingyenes szkennelése „elég jó” | Interjúk, compare-oldal konverziója | 28. nap |
+| Ritka használat, gyenge lock-in | Ismételt használat/fizető 90 nap alatt | 90. nap |
+| A heti előfizetéses versenytársak felülírják az ASO-t | Helyezés 10 store-kulcsszóra | 60–90. nap |
+| Reputációs kockázat (hamis biztonságérzet) | Refund-arány, egycsillagos értékelések | 60. naptól |
 
 ---
 
 ## 9. Nyitott kérdések
 
-1. Valós keresési volumen a 20 kulcsszóra **[M]**, Keyword Planner az 1. héten.
-2. Melyik ország a legerősebb? (NL és FR tudatos, de ott van ingyenes állami eszköz; az UK-ban a Right to Rent hajt; az USA ismeretlen.)
-3. Név és védjegy szabad-e (ID Copy Guard munkanév)? GoDaddy- és EUIPO/USPTO-ellenőrzés.
-4. Magyar vállalkozási forma, az Apple-bevétel adózása, az EU DSA-kereskedői adatok: könyvelő.
-5. Megéri-e Android 90 nap után? (A webes eszköz addig lefedi az Androidot.)
-6. A Vaultaire webes vagy ASO-forgalmi aránya ismeretlen. A videó átiratát nem láttam.
+1. Valós keresési volumenek **[M]**: Keyword Planner az 1. héten. Ha a Semrush-on vagy a Similarweben lesz egység vagy kredit, ott is lefuttatom.
+2. Megadja-e az Apple a multicast-entitlementet egy ilyen appnak? (Gyakran megadja, de ez nem garantált **[B]**.)
+3. Mekkora a valós felismerési arány átlagos Airbnb-hálózaton (vendég-VLAN, külön hálózatok)?
+4. Név és védjegy, domain.
+5. Magyar vállalkozási forma, DSA-kereskedői adatok: könyvelő.
+6. A B-terv (helyi átíró) volumene és a böngészős Whisper sebessége átlagos laptopon **[M]**.
 
 ---
 
 ## 10. Források
 
-- Vaultaire, „$2,000 a day” (Google/Keyword Planner változat): https://www.stork.ai/blog/the-2000-a-day-app-built-in-three-weeks
-- Vaultaire, „41k from a boring app” (ASO-változat): https://www.stork.ai/blog/41k-from-a-boring-appwithout-ads
-- Vaultaire főoldal és útmutatók: https://vaultaire.app/ , https://vaultaire.app/guides/
-- AlternativeTo, Vaultaire (29 $ egyszeri ár szerepel, ellentmondásos): https://alternativeto.net/software/vaultaire/about
-- Google spam policies (scaled content abuse): https://developers.google.com/search/docs/essentials/spam-policies
-- KopieID (holland kormány): https://www.government.nl/faq/how-do-i-make-a-secure-copy-of-my-id-with-the-kopieid-app
-- Filigrane Facile (francia állam): https://www.blogdumoderateur.com/filigranefacile-outil-officiel-securiser-documents/
-- NAIH állásfoglalás, okmánymásolás: https://www.naih.hu/files/Adatved_allasfoglalas_2018-3654-2-V-okmanymasolas.pdf
-- UK Right to Rent: https://www.hmrc.gov.uk/check-tenant-right-to-rent-documents/print
+**Vaultaire**
+- „$2,000 a day”: https://www.stork.ai/blog/the-2000-a-day-app-built-in-three-weeks
+- „41k from a boring app”: https://www.stork.ai/blog/41k-from-a-boring-appwithout-ads
+- Főoldal és útmutatók: https://vaultaire.app/ , https://vaultaire.app/guides/
+
+**Google**
+- Spam policies: https://developers.google.com/search/docs/essentials/spam-policies
+
+**Room Check**
+- Camera Detector App becslés (Adapty): https://adapty.io/paywall-library/camera-detector-app/
+- Flippa-hirdetések: https://flippa.com/13004235-hidden-camera-detector , https://flippa.com/11964010-find-hidden-detect-cameras
+- AppGoblin-becslés: https://www.appgoblin.info/apps/6470619397
+- Fing és a fizetős kamerakeresés: https://fing.com/?p=737
+- Felmérés (IPX1031, önérdekelt forrás): https://ipx1031.com/surveillance-rental-study
+- Detektorapp-panaszok: https://mwm.ai/apps/cam-detector-app-home-security/6450695466
+- Szkennelési módszer és korlátai: https://www.slashgear.com/1309305/how-to-scan-for-hidden-cameras-airbnb
+
+**B-terv: átíró**
+- TurboScribe: https://turboscribe.ai/learn/turboscribe-review-features-pricing-user-reviews
+- MacWhisper becslés: https://startupsemail.substack.com/p/100000-revenue-with-a-simple-mac
+- Aiko: https://sindresorhus.com/aiko
+- Transcribe app: https://apps.apple.com/us/app/-/id1673039222
+- yaps.ai: https://www.yaps.ai/zh-hans/blog/offline-transcription-qualitative-research
+- Böngészős Whisper (BibiGPT): https://api2.bibigpt.co/features/free-speech-to-text-online
+- WebGPU-támogatás: https://web.dev/blog/webgpu-supported-major-browsers
+- Roehampton AI-átírási útmutató: https://www.roehampton.ac.uk/globalassets/documents/research/ethics/guidance-on-ai-transcription-tools-for-research-projects.docx
+
+**Napszámláló**
+- Schengen Calculator: https://apps.apple.com/us/app/id1054807221
+- TaxDay: https://apps.apple.com/us/app/id1045026503
+- Borderwise: https://apps.apple.com/us/app/borderwise/id6757322787
+- DigitalKind: https://apps.apple.com/us/app/id6754875316
+- EES: https://home-affairs.ec.europa.eu/policies/schengen-borders-and-visa/smart-borders/entry-exit-system_en
+
+**Útlevélfotó**
+- Árak: https://photogov.net/knowledge/guides/us-passport-photo-cost/
+- Ingyenes alternatívák: https://www.tech-critter.com/the-best-free-passport-photo-app-for-iphone-in-2026-what-actually-works/
+- US-követelmények: https://travel.state.gov/en/passports/renew-replace/online/upload-digital-photo.html
+
+**ID-másolat (elvetve)**
 - Safe2Share ID: https://apps.apple.com/mx/app/safe2share-id/id6760613834
 - ID-Shield: https://apps.apple.com/mx/app/id-shield/id6760896003
 - WatermarkYourID: https://apps.apple.com/cd/app/watermarkyourid/id6751237772
-- Webes vízjel-eszköz (sinologic): https://www.sinologic.net/en/2025-02/how-to-quickly-add-a-watermark-to-your-id-or-identification-document.html
-- Útlevélfotó-árak (2026. szept.): https://photogov.net/knowledge/guides/us-passport-photo-cost/
-- Keepsafe App Store: https://apps.apple.com/US/app/id510873505
-- Private Photo Vault: https://apps.apple.com/app/id417571834
-- iOS 18 app-zárás és rejtés: https://appleinsider.com/inside/ios-18/tips/how-to-lock-apps-hide-apps-and-find-them-again-in-ios-18
-- HEIC-konverterek (helyben futó, ingyenes): https://www.producthunt.com/products/pixheic , https://openreplay.com/tools/heic-to-jpg/
-- Lejárt dinamikus QR-kódok: https://www.qrstuff.com/feeds/blog/dynamic-qr-codes-no-longer-scannable
-- NAV Online Számla háttér: https://adozona.hu/afa/Online_adatszolgaltatas_januartol_ismet_bov_45LJI7
+- KopieID: https://www.government.nl/faq/how-do-i-make-a-secure-copy-of-my-id-with-the-kopieid-app
+- Filigrane Facile: https://www.blogdumoderateur.com/filigranefacile-outil-officiel-securiser-documents/
+- NAIH: https://www.naih.hu/files/Adatved_allasfoglalas_2018-3654-2-V-okmanymasolas.pdf
