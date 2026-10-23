@@ -4,7 +4,27 @@
 
 ---
 
-## 1. Összefoglaló és ajánlás
+## 0. Technikai felülvizsgálat (3. kör): a Room Check iPhone-on nem megbízható
+
+**Ítélet: a Room Check iPhone-on nem tud megbízhatóan működni.** A technikai korlát miatt a pontszám **kb. 5,5-re** esik. A 7-es küszöb alá kerül, ezért **a fő ajánlás a B-terv (helyben futó interjú-átíró)**. Annak a technológiája bizonyított, ott csak a piaci kockázat marad.
+
+| Módszer | Mi működik | Miért nem megbízható iPhone-on |
+|---|---|---|
+| Wi-Fi-felderítés (mDNS, SSDP, ONVIF) | Csak az a kamera látszik, amelyik ugyanazon a hálózaton van, és válaszol | Az olcsó felhős (P2P) kamerák gyakran nem hirdetik magukat. A V380-nál az ONVIF firmware-függő. A vendéghálózatokon gyakori a kliensizoláció. Az iOS nem adja ki a MAC-címeket, így gyártó sem azonosítható |
+| A kamera saját hotspotja (SSID-k, pl. „V380_…”) | Androidon a környező hálózatok listázhatók | **Az iOS nem enged SSID-listázást** (Apple DTS). A NEHotspotHelper külön entitlementhez kötött |
+| Forgalomelemzés (SCamF: kb. 0,97 TPR; DeWiCam: 99%) | Laboreredmények | Androidon, monitor módban futott. **iOS-en nincs monitor mód**, ez kizárt |
+| ToF/LiDAR-lencsevisszaverődés (LAPD: 88,9% vs. 46% szabad szemmel) | Kutatási eredmény | **Csak Androidon** készült, nyers ToF-intenzitással. Az ARKit csak mélységet és konfidenciát ad, ez mérendő **[M]**. A visszaverődés csak kb. ±10°-os szögben látszik |
+| Zseblámpás csillanáskeresés | Közelről működik | Felhasználófüggő, sok a hamis találat. Nagyjából egy útmutatót tud digitalizálni |
+| IR-LED az előlapi kamerával | 850 nm-en gyakran látszik | 940 nm-en gyenge. Világos szobában a kamerák IR-je ki van kapcsolva, és ez modellenként eltér |
+| SD-kártyás vagy 4G-s kamera | — | **Hálózati módszer egyáltalán nem látja** |
+
+**Termékkockázat:** egy „nem találtam kamerát” eredmény **hamis biztonságérzetet** ad. Ez etikai probléma, és App Store- (2.3) és reputációs kockázat is. A legőszintébb változat csak egy „segített kézi ellenőrzés” lenne, arra pedig alacsony a fizetési hajlandóság. Androidon (SSID-listázás) jobb lenne, de ott sincs monitor mód root nélkül.
+
+**Következmény:** a 4. fejezettől a Room Check-terv csak referenciaként marad meg. **A következő lépés a B-terv (helyben futó interjú-átíró) teljes kidolgozása**, ugyanezzel a kapu-logikával. A technológiája (Whisper large-v3-turbo; WebGPU a Chrome-ban, az Edge-ben, a Safari 26-ban és a Firefox 141-ben Windowson) ismert. A fő kérdés a piac: ingyenes, helyben futó versenytársak (Aiko, Whisper Web, BibiGPT) mellett fizet-e valaki.
+
+---
+
+## 1. Összefoglaló és ajánlás (2. kör, felülírva a 0. fejezettel)
 
 **Az 1. változat ajánlását (ID Copy Guard) elvetem.** A fizetős kereslet mellett nincs bizonyíték:
 - a versenytárs appoknak nincs értékelésük;
@@ -326,3 +346,11 @@ Az ASO-ból jövő, store-on belüli forgalom nincs benne. Ez felfelé torzítha
 - KopieID: https://www.government.nl/faq/how-do-i-make-a-secure-copy-of-my-id-with-the-kopieid-app
 - Filigrane Facile: https://www.blogdumoderateur.com/filigranefacile-outil-officiel-securiser-documents/
 - NAIH: https://www.naih.hu/files/Adatved_allasfoglalas_2018-3654-2-V-okmanymasolas.pdf
+
+**Technikai felülvizsgálat (3. kör)**
+- LAPD (KAIST): https://www.cyphy.kaist.ac.kr/research/lapd , https://www.helpnetsecurity.com/2021/11/23/find-hidden-cameras-smartphone/
+- SCamF (ACSAC 2022): https://acsac.org/2022/program/final/s94.html
+- DeWiCam (IEEE TMC): https://unpaywall.org/10.1109%2FTMC.2019.2900919
+- iOS Wi-Fi-szkennelés tiltása (Apple DTS): https://developer.apple.com/forums/thread/788302
+- V380-portok és ONVIF: https://www.ispyconnect.com/camera/v380 , https://www.toughdev.com/content/2019/08/v380-pro-wireless-cctv-camera-with-night-vision-and-rtsp-support/
+- Előlapi kamera és IR: https://www.loopinsight.com/2015/08/31/a-quick-iphone-camera-science-experiment/
