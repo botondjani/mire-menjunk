@@ -22,12 +22,12 @@ import katona from './sources/katona.js';
 import vigszinhaz from './sources/vigszinhaz.js';
 import ludwig from './sources/ludwig.js';
 import artmozi from './sources/artmozi.js';
-import cinemacity from './sources/cinemacity.js';
 import { addDays, detectFree, detectGenre, detectPrice, detectVenue, slugify, tidyTitle, todayBudapest } from './lib/util.js';
 import { renderOg } from './og.js';
 
 // Curated sources first: on duplicates their description and image win.
-const SOURCES = [welovebudapest, funzine, timeout, akvarium, a38, trafo, durer, bjc, dumaszinhaz, zenehaza, tixa, katona, vigszinhaz, ludwig, artmozi, cinemacity];
+// A Cinema City a GitHub adatközponti IP-címeiről 403-mal tiltja a lekérést; az adaptere kész (cinemacity.js), magyar szerverről futtatva bekapcsolható.
+const SOURCES = [welovebudapest, funzine, timeout, akvarium, a38, trafo, durer, bjc, dumaszinhaz, zenehaza, tixa, katona, vigszinhaz, ludwig, artmozi];
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const PUBLIC = join(ROOT, 'public');
 const SITE_URL = (process.env.SITE_URL || '').replace(/\/?$/, '/');
@@ -220,7 +220,9 @@ async function enrichImages(events) {
           const html = await fetchHtml(url, 1200);
           const m = html.match(/<meta[^>]+(?:property|name)=["'](?:og:image|twitter:image)["'][^>]+content=["']([^"']+)["']/i)
             || html.match(/<meta[^>]+content=["']([^"']+)["'][^>]+(?:property|name)=["'](?:og:image|twitter:image)["']/i);
-          img = m && new URL(m[1].replace(/&amp;/g, '&'), url).href;
+          // Tartalék: a nagy borítókép (pl. a Katona előadásoldalain nincs og:image).
+          const hero = !m && html.match(/<img[^>]+class=["'][^"']*hero[^"']*["'][^>]+src=["']([^"']+)["']/i);
+          img = (m || hero) && new URL((m || hero)[1].replace(/&amp;/g, '&'), url).href;
         } catch { /* the poster fallback covers it */ }
         seen.set(url, img && !/logo|placeholder|default|favicon/i.test(img) && /^https?:\/\//.test(img) ? img : null);
       }

@@ -29,7 +29,7 @@ Budapest programjai egy helyen: koncertek, bulik, kiállítások, színház. Nap
 | Vígszínház (műsoroldal) | előadások: Vígszínház, Pesti Színház, Házi Színpad, Víg Szalon (kb. egy hét előre) |
 | Ludwig Múzeum | aktuális kiállítások és tárlatvezetések |
 | Artmozi (artmozi.hu heti műsor-JSON) | művészfilmek: Művész, Puskin, Toldi, Tabán, Kino Café – filmenként egy program, vetítő mozikkal |
-| Cinema City (nyilvános quickbook API) | a műsoron lévő és a jövő héten induló mozifilmek |
+| Cinema City (nyilvános quickbook API) | *kikapcsolva*: a GitHub szervereiről 403-mal tiltja a lekérést (az adapter kész, magyar szerverről működik) |
 
 A kártyákon látható **műfajt** (Jazz, Rock, Stand-up, Tánc, Opera…) a scraper adja (`detectGenre` a `lib/util.js`-ben), a csoportosítás a kategória szerint marad.
 
