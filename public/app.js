@@ -2,7 +2,7 @@
 // Nézetek: felfedezés (vízszintes szekciók), lista (szűrt, napokra bontva), keresés, mentett, profil.
 // Minden nézetnek van betöltő, üres és hibaállapota; a visszafordítható lépések (mentés) visszavonhatók.
 
-import * as auth from './auth.js?v=18';
+import * as auth from './auth.js?v=19';
 
 const ROOT = new URL('./', import.meta.url);
 const $ = (s, el = document) => el.querySelector(s);
@@ -20,6 +20,15 @@ const GROUPS = [
   { key: 'egyeb', label: 'Fesztivál & más', emoji: '✨', hue: 55, cats: ['Fesztivál', 'Gasztró', 'Vásár', 'Szabadidő', 'Kultúra'] },
 ];
 const groupOf = (e) => GROUPS.find((g) => g.cats.includes(e.category)) || GROUPS[GROUPS.length - 1];
+// Finomabb műfaj a kártyákon (a scraper adja), hogy első ránézésre látszódjon, miről szól a program.
+const GENRE_EMOJI = {
+  Jazz: '🎷', Rock: '🎸', Elektronikus: '🎧', Klasszikus: '🎻', 'Hip-hop': '🎤', 'Népzene & folk': '🪕', 'Soul & funk': '🕺',
+  'Indie & pop': '🎶', Koncert: '🎵', Buli: '🪩', 'Stand-up': '😂', Opera: '🎼', Tánc: '💃', Musical: '🎭', 'Slam poetry': '🎙️', Színház: '🎭',
+  Film: '🎬', Kiállítás: '🖼️', Fotó: '📷', Design: '✏️', Családi: '🧸', Fesztivál: '🎪', Gasztró: '🍷', Vásár: '🛍️',
+  Séta: '🚶', Fényparádé: '✨', Workshop: '🛠️', 'Kvíz & játék': '🎲', 'Sport & mozgás': '🧘', Előadás: '🔭', Kultúra: '🎨', Program: '📍',
+};
+const genreOf = (e) => e.genre || e.category;
+const genreLabel = (e) => `${GENRE_EMOJI[genreOf(e)] || groupOf(e).emoji} ${genreOf(e)}`;
 // Kategóriákon átívelő szűrő: a scraper jelöli (klubok, bulik, egyetemi és diákprogramok).
 const YOUTH = { key: 'fiatal', label: 'Fiataloknak', emoji: '🎓', hue: 265 };
 const FILTERS = [YOUTH, ...GROUPS];
@@ -434,7 +443,7 @@ function stateBox({ icon, title, text, actions = '' }) {
 function media(e, cls = 'media') {
   const g = groupOf(e);
   return `<div class="${cls}" style="--hue:${g.hue}">
-    <div class="poster" aria-hidden="true"><span>${g.emoji}</span></div>
+    <div class="poster" aria-hidden="true"><span>${GENRE_EMOJI[genreOf(e)] || g.emoji}</span></div>
     ${safeUrl(e.image) ? `<img src="${esc(e.image)}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.remove()">` : ''}
   </div>`;
 }
@@ -449,7 +458,7 @@ function card(e) {
     ${media(e)}
     ${e.free ? `<span class="chips"><span class="chip">${esc(chip(e))}</span><span class="chip free">Ingyenes</span></span>` : `<span class="chip">${esc(chip(e))}</span>`}
     <button class="fab save" data-save="${e.id}" aria-pressed="${saved}" aria-label="${saved ? 'Mentve – koppints az eltávolításhoz' : 'Mentés'}">${icons.heart}</button>
-    <h3>${esc(e.title)}</h3>
+    <h3><span class="genre-tag">${esc(genreLabel(e))}</span>${esc(e.title)}</h3>
     <div class="card-foot">
       <p>${meta}</p>
       <button class="icon-btn" data-share="${e.id}" aria-label="Megosztás">${icons.share}</button>
@@ -463,6 +472,7 @@ function row(e, { withDate = false } = {}) {
   const soon = startsIn(e);
   const when = isLong(e) ? `${short(e.end).replace(/\./g, '')}-ig` : withDate ? [chip(e), e.time].filter(Boolean).join(', ') : e.time;
   const parts = [when, e.venue].filter(Boolean).map(esc);
+  parts.unshift(`<span class="genre-txt" style="--hue:${groupOf(e).hue}">${esc(genreLabel(e))}</span>`);
   if (e.free) parts.push('<span class="free-tag">Ingyenes</span>');
   const meta = (soon ? [`<span class="soon">${soon}</span>`, ...parts] : parts).join(' · ') || groupOf(e).label;
   return `<article class="row-card">
@@ -484,7 +494,7 @@ function mini(e) {
     ${media(e)}
     ${e.free ? `<span class="chips"><span class="chip">${esc(chip(e))}</span><span class="chip free">Ingyenes</span></span>` : `<span class="chip">${esc(chip(e))}</span>`}
     <button class="fab save" data-save="${e.id}" aria-pressed="${saved}" aria-label="${saved ? 'Mentve – koppints az eltávolításhoz' : 'Mentés'}">${icons.heart}</button>
-    <h3>${esc(e.title)}</h3>
+    <h3><span class="genre-tag">${esc(genreLabel(e))}</span>${esc(e.title)}</h3>
     <p>${esc([isLong(e) ? null : e.time, e.venue].filter(Boolean).join(' · ') || groupOf(e).label)}</p>
   </article>`;
 }
@@ -1030,7 +1040,7 @@ function openEvent(e, push = true, { shared = false, plan = null } = {}) {
     ${media(e, 'hero')}
     <div class="detail-body">
       ${shared && !plan ? '<p class="shared-note">🔗 Valaki megosztotta veled ezt a programot</p>' : ''}
-      <span class="kicker">${g.emoji} ${esc(e.category)}${e.youth ? ' · 🎓 Fiataloknak' : ''}</span>
+      <span class="kicker">${esc(genreLabel(e))}${e.youth ? ' · 🎓 Fiataloknak' : ''}</span>
       <h2 id="sheetTitle" tabindex="-1" autofocus>${esc(e.title)}</h2>
       <ul class="facts">
         <li>${icons.clock}<span>${esc(dateLabel(e))}${soon ? ` <em class="soon">· ${soon}</em>` : ''}</span></li>

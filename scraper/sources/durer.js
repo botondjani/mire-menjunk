@@ -29,6 +29,7 @@ export default {
         category: detectCategory(`${a.name} ${genres}`, /életmód|kultúra/i.test(genres) ? 'Szabadidő' : 'Koncert'),
         venue: 'Dürer Kert',
         description: clean(a.description).slice(0, 300) || null,
+        tags: genres || undefined,
       }];
     });
   },

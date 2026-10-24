@@ -172,3 +172,11 @@ test('ár és ingyenesség felismerése a szövegből', async () => {
   assert.equal(detectPrice('Elővétel 2500 HUF'), 2500);
   assert.equal(detectPrice('2026. október 23.'), null);
 });
+
+test('műfaj: gyerekprogram, stand-up, jazz', async () => {
+  const { detectCategory, detectGenre } = await import('../lib/util.js');
+  assert.equal(detectCategory('Gyerekprogramok: Fogi Színház: Süsü, a sárkány', 'Koncert'), 'Családi');
+  assert.equal(detectGenre({ category: 'Koncert', title: 'Trio est', venue: 'Budapest Jazz Club' }), 'Jazz');
+  assert.equal(detectGenre({ category: 'Színház', title: 'Valami', source: 'dumaszinhaz' }), 'Stand-up');
+  assert.equal(detectGenre({ category: 'Koncert', title: 'Thrash Mosh Club: metal est' }), 'Rock');
+});

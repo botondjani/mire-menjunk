@@ -659,3 +659,14 @@ dialog::backdrop { background: rgb(0 0 0 / .6); backdrop-filter: blur(3px); }
 .page-head.compact .free-chip { padding: 6px 10px; }
 
 #sheetTitle:focus { outline: none; }
+
+/* ---------- műfajcímke ---------- */
+.genre-tag {
+  display: table; margin-bottom: 6px; padding: 3px 8px; border-radius: 999px;
+  background: rgb(0 0 0 / .45); color: #fff; font: 700 .72rem/1.3 var(--body); letter-spacing: .01em;
+  backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+}
+.mini .genre-tag { font-size: .66rem; padding: 2px 7px; margin-bottom: 4px; }
+.genre-txt { color: hsl(var(--hue) 75% 72%); font-weight: 700; }
+:root[data-theme="light"] .genre-txt { color: hsl(var(--hue) 60% 38%); }
+@media (prefers-color-scheme: light) { :root:not([data-theme="dark"]) .genre-txt { color: hsl(var(--hue) 60% 38%); } }

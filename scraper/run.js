@@ -18,7 +18,7 @@ import zenehaza from './sources/zenehaza.js';
 import durer from './sources/durer.js';
 import bjc from './sources/bjc.js';
 import dumaszinhaz from './sources/dumaszinhaz.js';
-import { addDays, detectFree, detectPrice, detectVenue, slugify, tidyTitle, todayBudapest } from './lib/util.js';
+import { addDays, detectFree, detectGenre, detectPrice, detectVenue, slugify, tidyTitle, todayBudapest } from './lib/util.js';
 import { renderOg } from './og.js';
 
 // Curated sources first: on duplicates their description and image win.
@@ -128,6 +128,8 @@ function normalize(e) {
   if (price && !out.free) out.price = price;
   if (!out.free) delete out.free;
   if (GEO[venue]) out.geo = GEO[venue];
+  out.genre = detectGenre(out);
+  delete out.tags;
   return out;
 }
 

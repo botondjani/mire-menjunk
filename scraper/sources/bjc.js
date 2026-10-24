@@ -1,5 +1,5 @@
 import * as cheerio from 'cheerio';
-import { clean } from '../lib/util.js';
+import { clean, detectCategory } from '../lib/util.js';
 
 // Budapest Jazz Club: program cards carry schema.org/Event microdata.
 const URL = 'https://www.bjc.hu/programok/osszes-program/';
@@ -27,7 +27,7 @@ export default {
         start: when[1],
         end: null,
         time: `${when[2]}:${when[3]}`,
-        category: 'Koncert',
+        category: detectCategory(title, 'Koncert'),
         venue: 'Budapest Jazz Club',
         description: clean(card.find('[itemprop="description"]').text()).slice(0, 260) || null,
         price: Number(price) || null,

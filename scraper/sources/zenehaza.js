@@ -45,6 +45,7 @@ export default {
         venue: 'Magyar Zene Háza',
         description: [o.location?.name, o.isSoldOut ? 'Minden jegy elkelt' : null].filter(Boolean).join(' · ') || null,
         free: !!o.isFree,
+        tags: genres || undefined,
       }];
     });
   },

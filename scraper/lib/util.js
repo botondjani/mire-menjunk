@@ -70,16 +70,62 @@ export const CATEGORIES = [
 ];
 
 /** Picks a unified category from free text (title, url slug, source category). */
+// Finomabb műfaj a kártyákra (csak megjelenítés; a csoportosítás a kategória szerint marad).
+// Kategóriánként csak az oda illő műfajok jöhetnek szóba, így egy „tánc” szó nem tesz táncelőadássá egy koncertet.
+const MUSIC = [
+  [/jazz|swing|-blues-|bebop|big-band/, 'Jazz'],
+  [/klasszikus|filharmon|orgona|kamarazene|vonosnegyes|zongoraest|szimfon|barokk|kortars-zene|classical/, 'Klasszikus'],
+  [/techno|-house-|drum-and-bass|-dnb-|-trance-|psytrance|-psy-|elektronikus|electronic|-rave-|-dj-|dj-set|-edm-/, 'Elektronikus'],
+  [/metal|-punk|hardcore|-rock|grunge|-pogo|stoner|-emo-/, 'Rock'],
+  [/hip-?hop|-rap-|rapper|-trap-|grime/, 'Hip-hop'],
+  [/nepzene|-folk|tanchaz|vilagzene|world-music|balkan|klezmer|cigany/, 'Népzene & folk'],
+  [/-soul|funk|r-n-b|-rnb-|reggae|-ska-|dub-|afrobeat|latin|cumbia|disco/, 'Soul & funk'],
+  [/indie|-pop-|alter|singer-songwriter|dream-pop|synth|shoegaze|-pop/, 'Indie & pop'],
+];
+const STAGE = [
+  [/stand-?up|dumaszinhaz|dumaklub|onallo-est|comedy|-humor/, 'Stand-up'],
+  [/-opera|operett/, 'Opera'],
+  [/balett|-tanc|tancszinhaz|tanceloadas|dance|koreograf/, 'Tánc'],
+  [/musical/, 'Musical'],
+  [/-slam/, 'Slam poetry'],
+];
+const LEISURE = [
+  [/stand-?up|dumaszinhaz|dumaklub|comedy/, 'Stand-up'],
+  [/kviz|quiz|tarsas|boardgame|bingo/, 'Kvíz & játék'],
+  [/-seta|setak-|-tura-|walking|vezetett/, 'Séta'],
+  [/fenyfesztival|lumina|lights|fenyparad|fenyfest/, 'Fényparádé'],
+  [/workshop|kurzus|alkotomuhely/, 'Workshop'],
+  [/-joga|yoga|-futas|-sport/, 'Sport & mozgás'],
+  [/csillag|planetarium|tudomany|-talk-|beszelgetes|kerekasztal|eloadas/, 'Előadás'],
+];
+const GENRES = {
+  Koncert: [MUSIC, 'Koncert'], Buli: [MUSIC.filter(([, g]) => g !== 'Klasszikus'), 'Buli'], Színház: [STAGE, 'Színház'],
+  Kiállítás: [[[/-photo-|fotografi|foto-?kiallitas|press-photo/, 'Fotó'], [/design/, 'Design']], 'Kiállítás'],
+  Szabadidő: [LEISURE, 'Program'], Kultúra: [[...LEISURE, ...STAGE], 'Kultúra'],
+};
+const GENRE_BY_VENUE = { 'Budapest Jazz Club': 'Jazz', 'Corvin Dumaszínház': 'Stand-up', 'MIXÁT Dumaklub': 'Stand-up' };
+
+export function detectGenre({ category, title = '', description = '', tags = '', venue = '', source = '' }) {
+  if (source === 'dumaszinhaz' || (GENRE_BY_VENUE[venue] && category === 'Koncert')) {
+    return source === 'dumaszinhaz' ? 'Stand-up' : GENRE_BY_VENUE[venue];
+  }
+  const [rules, fallback] = GENRES[category] || [[], category];
+  const t = `-${toAscii(`${title} ${tags} ${(description || '').slice(0, 600)}`).replace(/[^a-z0-9]+/g, '-')}-`;
+  for (const [re, genre] of rules) if (re.test(t)) return genre;
+  return fallback;
+}
+
 export function detectCategory(text, fallback = 'Szabadidő') {
   const t = `-${toAscii(text).replace(/[^a-z0-9]+/g, '-')}-`;
   const rules = [
-    [/kiallitas|tarlat|muzeum|galeria/, 'Kiállítás'],
+    [/kiallitas|tarlat|muzeum|galeria|press-photo|fotokiallitas/, 'Kiállítás'],
+    [/gyerekprogram|gyerekeknek|csaladi|csaladok|babszinhaz|mesejatek/, 'Családi'],
+    [/gyerek|csalad/, 'Családi'],
     [/koncert|zenekar|jazz|orgona|filharmon|unnep-\d|liszt/, 'Koncert'],
     [/buli|party|-dj-|klubest|-rave-/, 'Buli'],
     [/szinhaz|eloadas|musical|opera|balett|tanc|slam/, 'Színház'],
     [/film|-mozi|vetites|klipszemle/, 'Film'],
     [/fesztival|het-budapest|showcase/, 'Fesztivál'],
-    [/gyerek|csalad|halloweeni-csaladi|workshop-gyerek/, 'Családi'],
     [/gasztro|vacsora|-bor-|borfesztival|-sor-|sorfesztival|fozes|kostolo|street-food|whisky|spirit|-wine-/, 'Gasztró'],
     [/vasar|placc|toy-show|market|bolhapiac/, 'Vásár'],
   ];
