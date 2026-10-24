@@ -171,3 +171,31 @@
 - Kerékpárlopás: https://hvg.hu/itthon/20120917_biciklilopas_osszel , https://www.welovecycling.com/hu/varosi-kerekparozas/egyre-novekszik-a-szervezett-kerekparlopasok-szama-hollandiaban-es-egyeb-nem-tul-jo-hirek/
 - Kutyák Budapesten: https://welovebudapest.com/2019/10/14/az-andrassyn-vonultak-kutyak-es-gazdaik-megtartottak-az-i-kutyas-critical-masst-fotogaleria/ , https://telex.hu/belfold/2022/06/25/kutya-varos-kutyatartas-urulek-vizelet-koztisztasag-neveles
 - Külföldi hallgatók: https://eduline.hu/felsooktatas/20261021_magyar-egyetemek-kulfoldi-hallgatok-szama-novekedes
+
+---
+
+# 3. kör: további piactér-ötletek (16–22)
+
+| # | Ötlet | Miért most | Üzleti modell | Hidegindítás | Fő kockázat | Pont |
+|---|---|---|---|---|---|---|
+| 16 | **„Megnézem helyetted”: lakásmegtekintés és érkezési ügyintézés érkező külföldi hallgatóknak**, helyi diákokkal | Kb. 49 500 külföldi hallgató van az országban (+3700 fő egy év alatt). A külföldi diákok a kaucióscsalások első számú célpontjai, és minden útmutató azt tanácsolja, hogy „küldj valakit megnézni, mielőtt fizetsz”. Ilyen fizetős szolgáltatást nem találtam | Fix díj megtekintésenként (15–25 ezer Ft, videóhívással és ellenőrzőlistával), 25% jutalék. Kiegészítők: SIM, bankszámla, tartózkodási engedély ügyintézésében kísérés | 3 egyetem nemzetközi irodája és az ESN, 30 ellenőrzött helyi diák | Szezonális (augusztus–szeptember, január–február). A Housiko és hasonló lakásplatformok, a buddy-programok ingyenesek | **6,5** |
+| 17 | **Rendezvényműszak-app** (pult, beléptetés, információs pont, építés; napi vagy félnapos műszakok) | A nagy budapesti események diákmunkásokat keresnek (pl. 2026-os BL-döntő: vendégirányítás, választható műszakhosszal). A fesztiválszezon évente visszatér | Óránkénti árrés (10–20%) iskolaszövetkezeti partnerrel. A szervező a gyors, megbízható feltöltésért fizet | 3 rendezvényszervező és 2 klub, 200 diák egy hónap alatt | A meglévő diákszövetkezetek (Meló-Diák stb.) már szerveznek rendezvénymunkát. Lemondások, no-show | 6,0 |
+| 18 | **Ellenőrzött diák-bébiszitterek** (este, hétvégén, beugró) | Budapesti átlagos bébiszitter-órabér: **2822 Ft** (VG, 2025). A drágulás és a kétkeresős családok miatt nő az igény | 15–20% jutalék vagy havi családi tagság. Visszatérő igény | 2 kerület, 40 ellenőrzött hallgató (pedagógia, pszichológia szak) | A Lurkó Bébiszitter piacvezető, a Babysits nemzetközi. Gyerekbiztonság miatti felelősség, erkölcsi bizonyítvány kell | 5,5 |
+| 19 | **Jegyzetpiac:** kidolgozott tételek és összefoglalók tárgykód szerint | Vizsgaidőszak évente kétszer. Külföldön a Stuvia (NL) bizonyította a modellt. Digitális termék, nincs logisztika | 20–30% jutalék egy 990–2990 Ft-os jegyzeten | BME, ELTE és Corvinus bukós tárgyai, 50 ötös jegyű szerző | **Szerzői jog:** a tanári anyagokból készült jegyzetek jogi kockázatot hordoznak, ezt jogász nézze át. Az egyetemek ellenállhatnak. Ingyenes Facebook- és Drive-csoportok | 5,5 |
+| 20 | **Kisrendezvény-freelancerek** (DJ, fotós, dekoráció gólyabálra, szülinapra, kari bulira) | A fiatal alkotók gigeket keresnek, a hallgatói szervezetek és a magánbulik olcsó, megbízható szolgáltatót | 15% jutalék | 30 freelancer, 10 szervező (az 1-es ötlettel közös vevőkör) | Alacsony egységárak. A Facebook és a szájhagyomány | 5,5 |
+| 21 | **Hétköznapi üres terek kis csoportoknak** (bárok különterme, tetőteraszok, közösségi terek születésnapra, szakestre, társasjáték-estre) | A helyek hétköznap kihasználatlanok. A fiatal csoportok olcsó, privát helyet keresnek | 10–15% jutalék vagy fogyasztási minimum utáni díj | 25 hely a VII., VIII. és IX. kerületben | A helyek közvetlenül is foglalhatók. Alacsony átlagos kosárérték | 5,0 |
+| 22 | **Last-minute szépségipari időpontok diákáron** (fodrász, barber, műköröm üres sávjai) | A szalonoknak drága az üres időpont, a fiatalok árérzékenyek | Jutalék az üres sávok után | 30 szalon 2 kerületben | **A Salonic (magyar) és a Treatwell már erős.** A márkaérték-féltés miatt a szalonok nem szívesen adnak kedvezményt | 4,5 |
+
+## Meta-tanulság 22 ötlet után
+A budapesti, fiataloknak szóló piacterek **5–6,5 pont között szóródnak**. A lokális piac kicsi, és a Facebook-csoportok ingyenes alternatívát kínálnak. A győztest valószínűleg nem az ötlet dönti el, hanem:
+1. **Az alapító illeszkedése:** van-e hozzáférésed egy közösséghez (egyetem, HÖK, ESN, kutyás csoportok)?
+2. **A legolcsóbb hidegindítás:** az a jó, ahol egy szereplő hozza a másik oldalt (szervező → jegyvevők; egyetemi nemzetközi iroda → külföldi hallgatók).
+3. **A gyakoriság:** a heti visszatérő igény (kutya, bébiszitter) jobb élettartam-értéket ad, mint az évente egyszeri.
+
+**Top 4 mind a 22-ből:** **1** (rendezvényjegy), **9** (diák-mikroprojektek), **16** (megtekintés külföldieknek), **14** (kutyasétáltatás).
+
+**Források (3. kör):**
+- Külföldi hallgatók és lakáscsalások: https://housiko.com/en-hu/blog/how-to-rent-an-apartment-in-budapest-as-a-foreigner , https://www.study.eu/article/finding-an-apartment-as-a-student-5-telltale-signs-that-youre-being-scammed , https://eduline.hu/felsooktatas/20261021_magyar-egyetemek-kulfoldi-hallgatok-szama-novekedes
+- BL-döntő diákmunka: https://www.penzcentrum.hu/karrier/20260428/itt-a-hatalmas-lehetoseg-ha-ingyen-vennel-reszt-a-budapesti-bl-donton-nem-atveres-meg-penzt-is-fizetnek-erte-1197741
+- Bébiszitter-órabér: https://www.vg.hu/extra/2025/01/oraber-takarito-bebiszitter-bernovekedes , https://www.babysits.com/nanny/budapest--Hungary/
+- Szerzői jog (Szjt.): https://www.sztnh.gov.hu/en/print/7885
