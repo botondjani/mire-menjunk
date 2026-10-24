@@ -199,3 +199,73 @@ A budapesti, fiataloknak szóló piacterek **5–6,5 pont között szóródnak**
 - BL-döntő diákmunka: https://www.penzcentrum.hu/karrier/20260428/itt-a-hatalmas-lehetoseg-ha-ingyen-vennel-reszt-a-budapesti-bl-donton-nem-atveres-meg-penzt-is-fizetnek-erte-1197741
 - Bébiszitter-órabér: https://www.vg.hu/extra/2025/01/oraber-takarito-bebiszitter-bernovekedes , https://www.babysits.com/nanny/budapest--Hungary/
 - Szerzői jog (Szjt.): https://www.sztnh.gov.hu/en/print/7885
+
+---
+
+# Mélyelemzés: 22. Last-minute szépségipari időpontok diákáron
+
+## Ítélet
+**Önálló kedvezményes piactérként 4,5/10, a mélyelemzés ezt nem javítja.** A probléma kisebb, mint amilyennek látszik, a kínálati oldalt nehéz felhozni, erős szereplők vannak a piacon, és a kedvezmény rontja a szalonok rendes árait. **Két átalakított változat jobb (5,0–5,5)**, lásd lent. Ha mégis tesztelnéd, egy 2 hetes, kézzel működtetett Instagram-teszt elég, app nem kell hozzá.
+
+## 1. Piac
+- **Árak:** a Fresha budapesti listáin a férfi hajvágás kb. 7500–8500 Ft, a hajvágás és szakálligazítás együtt 11 000 Ft. Egy mesterfodrász szerint Budapesten a fodrásznál az átlagköltés 30 000 Ft (Pénzcentrum, 2025).
+- **Kereslet trendje:** egy 46 000 nő hajápolási szokásait vizsgáló felmérés szerint a legalább háromhavonta fodrászhoz járók aránya **4,3 százalékponttal alacsonyabb, mint a 2020–21-es pandémiás mélyponton** (Economx, 2025. okt.). Az árérzékenység tehát valós, és ez az ötlet melletti legerősebb érv.
+- **Kínálat:** az ágazatban az 1–2 fős mikrovállalkozások a jellemzők (BKIK). A budapesti szalonok száma **[M]** (KSH STADAT, TEÁOR 96.02).
+
+## 2. Mekkora valójában a probléma?
+- **No-show:** a független benchmarkok szerint alacsony. A Zenoti szerint 1–4%, a Booksy amerikai felmérése szerint legfeljebb kb. 2%. A gyakran idézett **20% szoftvereladók marketinganyagaiból származik**, független adattal nem ellenőrizhető.
+- **Következtetés:** az üres sávok nagy része nem a lemondásokból jön, hanem **strukturálisan gyenge idősávokból** (hétköznap délelőtt). Ezeket a fiatalok (diákok, rugalmas munkaidősök) tényleg ki tudnák tölteni, de a szalon csak mélyebb kedvezménnyel adja oda őket.
+- Arról, hogy a last-minute sávok hány százaléka tölthető ki, nincs megbízható adat **[M]**.
+
+## 3. Verseny Budapesten
+- **Salonic** (magyar): saját bevallás szerint **6000+ szolgáltató**, vásárlói appal együtt. Egy „last-minute” fül hozzáadása neki triviális.
+- **Fresha**: jelen van Budapesten. Globálisan kb. 130 000 helyszín. Korábban **20% jutalékot** vett az új ügyfelek után, 2025-ben forrásonként eltérően előfizetésre váltott **[M]**.
+- **Treatwell és Booksy** magyarországi jelenléte nem igazolt **[M]**.
+- **Ingyenes csatorna:** a szalonok Instagram- és Facebook-sztorijai („felszabadult egy időpont holnap 10-re”). Ez a valódi alternatíva.
+
+## 4. Nemzetközi minták
+| Cég | Modell | Kimenet |
+|---|---|---|
+| **WhatSalon** (Dublin, 2012) | Beépül a szalonszoftverekbe, és kitölti az üres sávokat | **A Constellation Software felvásárolta 2018-ban, kb. 15 millió €-ért** |
+| **Last Call Beauty** (Lyon, 2026. ápr.) | Webapp, 20–50% last-minute kedvezmény | Kb. 3 hónap alatt **1640 felhasználó, 850 foglalás** (kb. 280/hó). Az alapítóknak **saját szalonhálózatuk** van, ez oldotta meg az induláskori kínálatot |
+| **Beautified** (New York) | Aznapi foglalás | 1,2 millió $ seed, alapítói vita után bezárt |
+| PrettyQuick (Chicago), Popcorn (Tokió) | Last-minute kedvezmény | A kimenetel ismeretlen. A felhasználói tapasztalatok vegyesek |
+
+**Tanulság:** a pénz **a szalonok szoftveres integrációjában** volt (WhatSalon), nem a fogyasztói kedvezményes appban.
+
+## 5. Egységgazdaságtan [B]
+- Diák-célcsoportnál az átlagos kosár kb. 8000 Ft (barber) és 15 000 Ft (női vágás) között van. A kedvezmény 20–30%, a jutalék 15% a kedvezményes ár után, ez **kb. 1000–2000 Ft foglalásonként**.
+- **Havi 1 millió Ft bevételhez kb. 600–800 foglalás kell havonta.** A Last Call Beauty saját szalonhálózattal kb. 280/hó tempóval indult.
+- **Gyakoriság:** 4–8 hetente, ami piactérhez képest jó.
+
+## 6. Fő kockázatok
+1. **Kannibalizáció (a Groupon-csapda):** a törzsvendégek megtanulják kivárni a kedvezményt, ezért a szalon kilép.
+2. **Kínálati oldal:** az 1–2 fős szalonok nem fognak egy újabb felületen sávokat feltölteni. Integráció nélkül ez kézimunka.
+3. **A Salonic vagy a Fresha** egy funkcióval lemásolhatja.
+4. **Kedvezményféltés:** a prémium szalonok nem akarnak „olcsó” platformon látszani.
+
+## 7. Jobb változatok
+| Változat | Leírás | Bevétel | Pont |
+|---|---|---|---|
+| **A. „Felszabadult időpont” szolgáltatás szalonoknak** | Várólista-SMS („értesíts, ha felszabadul”) és automatikus Instagram-sztori a szabad sávokról. Kedvezmény nélkül, a szalon saját árán | Szalonoknak havi 4990–9990 Ft. A WhatSalon-precedens miatt ez a fenntarthatóbb modell. Kérdés, van-e Salonic- vagy Fresha-integráció **[M]** | 5,0 |
+| **B. Modell-piactér** | Fodrásztanulók, akadémiák és junior stylistok modellt keresnek vizsgához és gyakorláshoz. A diákok ingyen vagy jelképes áron (1–3 ezer Ft) kapnak vágást | Az akadémia fizet modellenként vagy havi díjat. **Időszerű:** a fodrászlátogatás visszaesett, a diákok árérzékenyek. Az igényt nem ellenőriztem **[M]** | 5,5 |
+| Eredeti: diákkedvezményes last-minute piactér | Lásd fent | 15% jutalék | 4,5 |
+
+## 8. Ha mégis tesztelnéd: 2 hetes kézi teszt, app nélkül
+1. Egy Instagram-fiók („Budapest Last Minute Szépség”), **15 szalon a VII. és VIII. kerületben**. A sávokat te posztolod, a foglalás DM-ben megy.
+2. **Mérőszámok:** feltöltött sávok, kitöltési arány, átlagos kedvezmény, a szalonok visszatérése.
+3. **Kapu:**
+   - Tovább: kitöltés ≥ 30%, a szalonok ≥ 60%-a a második héten is posztol, átlagos kedvezmény ≤ 25%.
+   - **Leállás:** kitöltés < 15%, vagy a szalonok fele kilép.
+4. Ezzel párhuzamosan **3 fodrászakadémiával** egy beszélgetés a B-változatról (modellek).
+
+## Források
+- Felmérés a fodrászlátogatás csökkenéséről: https://www.economx.hu/gazdasag/2025/10/28/fodraszat-felmeres-szepsegapolas-szolgaltatas-hajvagas-szalon-fodrasz-818384/
+- Átlagköltés és árak: https://www.penzcentrum.hu/cimke/fodr%C3%A1sz , https://www.fresha.com/lp/nl/tt/kinderkappers/hu-boedapest
+- Salonic: https://apps.apple.com/ch/app/salonic-partner/id6450750153 , https://voov.hu/en/work/salonic
+- Fresha modell: https://pabau.com/blog/fresha-review/ , https://www.aap.com.au/aapreleases/cision20230327ae53431
+- No-show adatok: https://schedulingkit.com/hub/industry-guides/salon-industry-scheduling-statistics , https://www.salontoday.com/news/no-shows-does-your-city-have-a-high-rate , https://scratchmagazine.co.uk/news/beauty-salon-no-shows-uk-locations-highest-rates
+- WhatSalon: https://www.cbinsights.com/company/whatsalon
+- Last Call Beauty: https://en.lebonbon.fr/lyon/lifestyle/last-call-beauty-platform-in-lyon-beauty-appointments-50-percent/
+- Beautified: https://app.dealroom.co/companies/beautified
+- BKIK szépségipari kutatás: https://bkik.hu/download/24/szepsegipar
