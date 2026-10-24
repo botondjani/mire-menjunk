@@ -6,7 +6,7 @@
 
 ## 1. Összefoglaló
 
-- **Termék:** böngészőben (és később appként) futó helyesírás-gyakorló **2–6. osztályosoknak**, **diszgráfia-barát móddal**. Nincs fiók, nincs reklám, nincs követés, nincs szerver. A gyakorlás offline is megy.
+- **Termék (3. változat):** **webes gyakorlóplatform** (később natív app), elsőként helyesírással, **1–8. osztály**, **diszgráfia-barát móddal**. Szülői és szakemberi fiók, a gyereknek csak becenév-profil. **Nincs reklám, nem adunk el adatot.** Tárgyfüggetlen feladatmotor, így később bővíthető (szorzótábla, nyelvtan, angol).
 - **Munkanév [D]:** „Betűvadász” (névellenőrzés **[M]**).
 - **Pozíció:** *„A helyesírás-gyakorló, amit a fejlesztőpedagógus is ajánl: rövid napi gyakorlás, tollbamondás, a gyerek saját hibáira építve.”*
 - **Miért most:**
@@ -51,7 +51,7 @@
 1. **Tollbamondás:** profi felolvasó hangja + a gyerek gépel, betűszintű javítással.
 2. **Hibanapló és ismétlés:** a gyerek saját hibáit hozza vissza 1, 3 és 7 nap múlva.
 3. **Diszgráfia-barát mód:** nagyobb betűköz, könnyen olvasható betűtípus, lassabb hang, szótagolás, kevesebb inger, rövid (5 perces) adagok.
-4. **Szülői összesítő** a gyerek eszközén (szerver nélkül).
+4. **Szülői összesítő** bármely eszközről (szülői fiókkal), heti e-mail-összesítővel.
 
 ---
 
@@ -61,7 +61,7 @@
 - **Szabálycsomagok, 1. fázis:** **j/ly** (a „nagy kedvenc”), **hosszú-rövid magánhangzók** (i/í, o/ó, ö/ő, u/ú, ü/ű), **hosszú-rövid mássalhangzók** (pl. -tt, -ll).
 - **Feladattípusok:** választás (j vagy ly), kiegészítés, tollbamondás, „keresd a hibát”.
 - **Évfolyam-szintezés** a kerettanterv 1–4. és 5–8. szakaszához igazítva **[M]**: a szólistákat egy tanító validálja.
-- **Hibanapló és ismétlés:** helyben, IndexedDB-ben.
+- **Hibanapló és ismétlés:** profilonként, szinkronizálva (offline is működik).
 - **Diszgráfia-barát mód** (kapcsoló).
 - **Szülői összesítő:** napi percek, pontosság, a leggyakoribb hibák.
 - **Ingyenes próbacsomag:** a j/ly 1. szintje teljes egészében.
@@ -86,19 +86,37 @@ Fiók, felhő, közösségi funkciók, ranglista, chat, AI-javítás szerveren, 
 
 ---
 
-## 6. Technológia (szerver nélkül)
-- **Frontend:** statikus PWA (pl. SvelteKit vagy Astro), Service Worker az offline működéshez, IndexedDB a haladáshoz és a hibanaplóhoz.
-- **Hang:** előre rögzített, tömörített hangfájlok, offline cache-elve.
-- **Hosting:** Cloudflare Pages (ingyenes vagy olcsó), saját domain.
-- **Fizetés:** Lemon Squeezy vagy Paddle (merchant of record, kezeli az ÁFA-t), **5% + 0,50 $** tranzakciónként. Licenckulcs-ellenőrzés a szolgáltató API-jával a böngészőből, utána offline tárolva **[M: CORS és ellenőrzési folyamat]**. Tartalék: egyszerű feloldókód.
-- **Mérés:** sütimentes, gyerekoldalon csak összesített oldalletöltés (Cloudflare Web Analytics). Felhasználói szintű követés nincs.
-- **Appcsomagolás (később):** Capacitor, Apple Kids kategória (nincs harmadik féltől származó analitika, szülői kapu a vásárlás előtt), Google Families-szabályok.
-- **Karbantartás:** évi kb. 2–5 nap **[B]**.
+## 6. Technológia (3. változat: webes platform, könnyű backenddel)
+
+**Döntés [D]:** a „szerver nélkül, fiók nélkül” elv **itt nem érték, hanem korlát.** Egy gyakorló appban nincs olyan érzékeny tartalom, mint egy fotószéfben vagy egy adóügyben. A backend viszont olyan funkciókat ad, amelyekért fizetnek, és amelyek a bővítést lehetővé teszik:
+- **több eszköz:** a gyerek tableten gyakorol, a szülő a telefonján látja;
+- **szakemberi és tanítói felület:** osztály- és csoportkód, feladatkiosztás, csoportos riport. **Ez a B2B-bevétel és a moat**;
+- **több tárgy egy fiókban**, egy előfizetéssel;
+- **tartalomfrissítés kiadás nélkül** és **termékadatok** (melyik szónál hibáznak a legtöbben). Ezek javítják a pedagógiai minőséget.
+
+**Ami megmarad az eredeti elvből:** **nincs reklám, nem adunk el adatot, minimális gyerekadat**, és a próbáláshoz nem kell fiók (vendégmód).
+
+**Architektúra:**
+- **Frontend:** webapp (PWA) pl. SvelteKit vagy Next.js. **Offline-first:** a feladatcsomagok és a hangok cache-elve, a haladás helyben is mentődik, és netkapcsolatnál szinkronizál.
+- **Backend:** **Supabase** (Auth + Postgres + Row Level Security + Storage), **EU-régió** (Frankfurt). Ezt a stacket a repó már használja.
+- **Fiókmodell:** **csak a szülőnek vagy a szakembernek van fiókja** (e-mail vagy Google). A gyerek csak **becenév-profil** e-mail és valódi név nélkül, avatarral.
+- **Tárgyfüggetlen feladatmotor (a bővítés kulcsa):** a tartalom adat, nem kód. Egy JSON-sémában vannak a feladattípusok: választás, kiegészítés, tollbamondás, párosítás, sorbarendezés, számolás. **Új tárgy = új tartalomcsomag, ugyanazzal a motorral** (szorzótábla, nyelvtan, angol szavak).
+- **Ismétlés és hibanapló:** szerveren tárolt, profilonkénti statisztika.
+- **Hang:** előre rögzített fájlok CDN-ről, offline cache-elve.
+- **Fizetés:** Lemon Squeezy vagy Paddle (merchant of record, ÁFA). Az előfizetés- és vásárlásállapot webhookkal kerül a Supabase-be (Edge Function).
+- **E-mail:** tranzakciós levelek (belépés, nyugta, heti szülői összesítő), pl. Resend.
+- **Mérés:** saját, minimális eseménynapló (feladat kész, pontosság) **a saját adatbázisban**. Harmadik féltől származó analitika a gyerekfelületen nincs.
+- **Natív app (később):** Capacitor vagy React Native ugyanarra a backendre. Apple Kids és Google Families szabályok.
+- **Üzemeltetés:** kb. **10–20 ezer Ft/hó** (Supabase Pro kb. 25 $, e-mail, domain) **[B]**, plusz folyamatos karbantartás. **Ez már nem „egyszer lefejlesztem”.** Számolj heti néhány órával.
 
 ---
 
 ## 7. Jogi és adminisztráció
-- **GDPR:** gyermekadatot nem gyűjtünk és nem továbbítunk, minden az eszközön marad. Egyszerű adatkezelési tájékoztató kell.
+- **GDPR (backenddel már komolyabb):**
+  - A fiókot a **szülő** hozza létre, ő adja a hozzájárulást a gyerekprofilhoz. A magyar digitális hozzájárulási korhatárt ellenőrizni kell **[M]**.
+  - **Adattakarékosság:** a gyereknél csak becenév és gyakorlási adat. Nincs e-mail, nincs fotó, nincs pontos életkor (elég az évfolyam).
+  - **EU-s adattárolás** (Supabase Frankfurt), adatfeldolgozói szerződés (DPA) a szolgáltatókkal.
+  - Adatkezelési tájékoztató, törlési és exportgomb a szülői felületen. A szakemberi felülethez a szakember adatkezelői vagy -feldolgozói szerepét is tisztázni kell **[M: jogász]**.
 - **Fogyasztóvédelem:** digitális tartalomnál a 14 napos elállási jog alóli kifejezett lemondás a vásárláskor (a merchant of record kezeli) **[M]**.
 - **Vállalkozási forma:** egyéni vállalkozó, átalányadó vagy kft. Könyvelővel kell eldönteni **[M]**. A merchant of record kifizetése bevételként könyvelendő.
 - **Védjegy és név:** ellenőrzés az SZTNH-nál **[M]**.
@@ -121,7 +139,7 @@ Fiók, felhő, közösségi funkciók, ranglista, chat, AI-javítás szerveren, 
 **Miért így [D]:**
 - A Vaultaire-nél a lifetime adta a bevétel 80%+-át, mert a heti és az éves ár mellett olcsónak tűnt.
 - Itt az éves ár a horgony: **„2,3 év áráért örökre, mind a 8 osztályon át”**. Ez a szülőnek erős érv, mert a gyerek évekig használja.
-- Szerver nélkül is működik: a merchant of record kezeli az előfizetést, az app időnként a szolgáltató API-ján ellenőrzi a licencet.
+- Az előfizetés- és vásárlásállapotot a merchant of record webhookja írja a backendbe.
 
 **Az „örökös” határa:** a helyesírás-csomag minden bővítése benne van. **Az új tárgyak (pl. szorzótábla) külön termékek** lesznek, kedvezménnyel a meglévő vásárlóknak. Így a „for life” ígéret tartható, és marad bevétel a jövőre.
 
@@ -206,7 +224,7 @@ j vagy ly; ly-os szavak; j-s szavak; j ly feladatok; j ly gyakorló; j ly tollba
 | **2. Első eladások** | 2027. febr. 28. | **≥ 150 vásárlás**, refund < 5%, **≥ 30%** a 7. napon is gyakorol | 50–150 | < 50 |
 | **3. Megtérülés felé** | 2027. jún. 30. | **≥ 400 vásárlás** (fedezeti pont), ≥ 15 aktív ajánló szakember | 200–400 | < 200: leállás vagy pivot (pl. csak szakembereknek szóló eszköz) |
 
-**Mért adatok szerver nélkül:** merchant-of-record riport (vásárlás, refund), Search Console (megjelenés, kattintás), sütimentes oldalstatisztika, **önkéntes**, névtelen gombnyomásos visszajelzés az appban („Hasznos volt ma?”).
+**Mért adatok:** merchant-of-record riport (vásárlás, refund), Search Console (megjelenés, kattintás), sütimentes oldalstatisztika, **önkéntes**, névtelen gombnyomásos visszajelzés az appban („Hasznos volt ma?”).
 
 ---
 
@@ -224,7 +242,7 @@ j vagy ly; ly-os szavak; j-s szavak; j ly feladatok; j ly gyakorló; j ly tollba
 | Hét | Feladat |
 |---|---|
 | 7. | Szerződés a tanítóval és a fejlesztőpedagógussal. Szólisták (j/ly, hosszú-rövid magánhangzók). Design-rendszer |
-| 8. | PWA-váz, feladatmotor, IndexedDB, hibanapló és ismétlés |
+| 8. | PWA-váz, **tárgyfüggetlen feladatmotor** (JSON-séma), Supabase (Auth, RLS, EU-régió), szülői fiók + gyerekprofilok, offline cache és szinkron, hibanapló |
 | 9. | Tollbamondás és hang (felvétel: 2 nap stúdió). Diszgráfia-mód |
 | 10. (ünnepek) | Szülői összesítő, ingyenes próbacsomag, licencfolyamat (Lemon Squeezy vagy Paddle) |
 | 11. | Béta 20 családdal és 10 szakemberrel. Hibajavítás. Adatkezelési tájékoztató, ÁSZF |
