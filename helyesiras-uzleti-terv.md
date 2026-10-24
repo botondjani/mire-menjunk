@@ -14,7 +14,7 @@
   2. A **diszlexiás és diszgráfiás gyerekek aránya 7–10%**, ez több mint 200 ezer tanuló. Az iskolai fejlesztés **heti 1 kiscsoportos óra, ami nagyon kevés**, ezért a szülők otthoni megoldást keresnek.
   3. A szülők tudatosabbak a képernyőidővel kapcsolatban, és az iskolákban 2024 óta korlátozott a telefonhasználat. A **reklámmentes, hasznos** app pozíció erős.
   4. A szabályzat (**AkH. 12, 2015**) stabil, ezért a tartalom **egyszer elkészíthető**.
-- **Üzleti modell:** egyszeri vásárlás (**3990 Ft egy gyereknek, 5990 Ft családi [D]**), ingyenes próbacsomag, szakemberi licenc.
+- **Üzleti modell (2. változat):** ingyenes próba, éves horgony 2990 Ft, **örökös családi csomag 6990 Ft (főajánlat) [D]**, szakemberi licenc.
 - **Matek:** a fix költség kb. **0,8–1,2 millió Ft**, ez kb. **350–500 eladásnál** térül meg. Közepes forgatókönyv szerint az első 12 hónap **kb. 6 millió Ft nettó**, jó esetben kb. 21 millió Ft **[B]**.
 - **Fő kockázat:** a kereslet volumene és az ingyenes alternatívák. Ezt **2 hét alatt, kb. 100 ezer Ft-ból** lehet validálni, mielőtt fejlesztenél.
 
@@ -28,7 +28,11 @@
 | **B. Diszgráfiás vagy diszlexiás gyerekek szülei** | Az iskolai fejlesztés heti 1 óra, kevés. Napi otthoni gyakorlás kell | **7–10%, ez 200 ezer+ tanuló** (több becslés). Ebből a 2–6. osztályosok kb. 100 ezer | **Igen, ez a legerősebb szegmens.** Magánfejlesztésre is költenek (óradíj **[M]**) |
 | **C. Fejlesztőpedagógusok, logopédusok, tanítók** | Kell egy házi feladatnak kiadható, követhető gyakorló | 74–75 ezer pedagógus, ebből fejlesztők **[M]** | Kis összeget fizetnek, de **ők a fő ajánlók** |
 
-**Fő célcsoport az első 6 hónapban [D]: a B szegmens (diszgráfiás gyerekek szülei), a C-n keresztül.** Ennek okai: magasabb a fizetési hajlandóság, világos az üzenet, és a fejlesztők ajánlása hiteles. Az A szegmenst a SEO hozza.
+**Célzás (2. változat) [D]: a termék mindenkinek szól (1–8. osztály), és a SEO mindenkit céloz.** A diszgráfiás szegmens nem kizárás, hanem **megkülönböztető előny és második csatorna**:
+- **Üzenet:** *„Helyesírás-gyakorló minden gyereknek, a diszgráfiás gyerekeknek is.”*
+- **A szegmens (minden szülő):** SEO, szülői csoportok, iskolakezdési kampány. Ez a tömeg.
+- **B és C szegmens (diszgráfia, fejlesztők):** szakmai ajánlások. Ez a hitelesség, és ez különböztet meg az ingyenes Okosdoboztól.
+- **Felnőttek:** nem az MVP része (más felület kell). Később külön „felnőtt mód” vagy külön termék lehet.
 
 ---
 
@@ -105,20 +109,34 @@ Fiók, felhő, közösségi funkciók, ranglista, chat, AI-javítás szerveren, 
 ## 8. Árazás [D]
 | Csomag | Ár (bruttó) | Tartalom |
 |---|---|---|
-| Ingyenes próba | 0 Ft | j/ly 1. szint, diszgráfia-mód kipróbálása |
-| **Egy gyerek** | **3990 Ft egyszeri** | Minden szabálycsomag, az összes jövőbeli bővítés |
-| **Családi (max. 4 gyerek)** | **5990 Ft egyszeri** | Ugyanez, több profil egy eszközön |
-| **Szakemberi licenc** | **14 990 Ft/év** vagy 29 990 Ft egyszeri | Feladatsor-összeállítás, linkes kiosztás, 30 gyerek |
+*(2. változat: Vaultaire-típusú horgony, „örökös” főajánlattal)*
 
-**Ártesztek:** 2990 vs. 3990 Ft (2–2 hét, időben szétválasztva), a döntés a látogatónkénti bevétel alapján. **A 3990 az alapárajánlat:** a diszgráfiás szegmens értékérzete magasabb, és egy magánfejlesztő óra ennél többe kerül **[M]**.
+| Csomag | Ár (bruttó) | Tartalom |
+|---|---|---|
+| Ingyenes próba | 0 Ft | j/ly 1. szint, diszgráfia-mód kipróbálása |
+| Éves (horgony) | 2990 Ft/év, automatikus megújítással | Minden szabálycsomag, max. 4 gyerekprofil |
+| **Örökös családi (főajánlat)** | **6990 Ft egyszeri** | **Minden helyesírási csomag és jövőbeli bővítés örökre, max. 4 gyerek, 1–8. osztályig** |
+| Szakemberi licenc | 14 990 Ft/év vagy 29 990 Ft egyszeri | Feladatsor-összeállítás, linkes kiosztás, 30 gyerek |
+
+**Miért így [D]:**
+- A Vaultaire-nél a lifetime adta a bevétel 80%+-át, mert a heti és az éves ár mellett olcsónak tűnt.
+- Itt az éves ár a horgony: **„2,3 év áráért örökre, mind a 8 osztályon át”**. Ez a szülőnek erős érv, mert a gyerek évekig használja.
+- Szerver nélkül is működik: a merchant of record kezeli az előfizetést, az app időnként a szolgáltató API-ján ellenőrzi a licencet.
+
+**Az „örökös” határa:** a helyesírás-csomag minden bővítése benne van. **Az új tárgyak (pl. szorzótábla) külön termékek** lesznek, kedvezménnyel a meglévő vásárlóknak. Így a „for life” ígéret tartható, és marad bevétel a jövőre.
+
+**Ártesztek (2–2 hét, időben szétválasztva, a látogatónkénti bevétel alapján):**
+- **A:** 2990/év + 6990 örökös.
+- **B:** havi 990 Ft + 2990/év + 6990 örökös. A havi ár erősebb horgony.
+- **C:** csak örökös, 4990 Ft.
 
 ---
 
 ## 9. Egységgazdaságtan [B]
-- **Egy gyerekes csomag:** 3990 Ft bruttó. ÁFA nélkül 3142 Ft. Díj: 5% × 3990 = 200 Ft + 0,50 $ ≈ 180 Ft. **Nettó kb. 2760 Ft.**
-- **Családi:** 5990 Ft → ÁFA nélkül 4717 Ft, díj kb. 480 Ft → **nettó kb. 4240 Ft.**
+- **Örökös családi:** 6990 Ft bruttó. ÁFA nélkül 5504 Ft. Díj: 5% × 6990 = 350 Ft + 0,50 $ ≈ 180 Ft. **Nettó kb. 4970 Ft.**
+- **Éves:** 2990 Ft → ÁFA nélkül 2354 Ft, díj kb. 330 Ft → **nettó kb. 2020 Ft/év.**
 - **Szakemberi (éves):** 14 990 Ft → **nettó kb. 11 060 Ft.**
-- **Átlagos nettó bevétel vásárlásonként (mix: 70% egy gyerek, 25% családi, 5% szakember):** **kb. 3550 Ft.**
+- **Átlagos nettó bevétel első vásárlásonként (mix [B]: 75% örökös, 20% éves, 5% szakember):** **kb. 4690 Ft** (az 1. változat 3550 Ft-ja helyett, kb. +32%, ha a vásárlási arány nem esik). Az éves megújítások ezen felül jönnek.
 - **Változó költség:** gyakorlatilag nulla (statikus hosting).
 - **Ügyfélszerzési költség:** SEO és ajánlás, nincs fizetett hirdetés. A saját időt nem számolom.
 
@@ -133,7 +151,7 @@ Fiók, felhő, közösségi funkciók, ranglista, chat, AI-javítás szerveren, 
 | Apple + Google fejlesztői fiók (később) | kb. 45 ezer Ft |
 | **Összesen** | **kb. 0,8–1,2 millió Ft** |
 
-**Fedezeti pont: kb. 230–340 vásárlás** (3550 Ft átlaggal). Biztonsági ráhagyással **kb. 350–500**.
+**Fedezeti pont: kb. 170–260 vásárlás** (4690 Ft átlaggal). Biztonsági ráhagyással **kb. 300–400**.
 
 ---
 
