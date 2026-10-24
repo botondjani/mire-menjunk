@@ -15,7 +15,7 @@
   3. A szülők tudatosabbak a képernyőidővel kapcsolatban, és az iskolákban 2024 óta korlátozott a telefonhasználat. A **reklámmentes, hasznos** app pozíció erős.
   4. A szabályzat (**AkH. 12, 2015**) stabil, ezért a tartalom **egyszer elkészíthető**.
 - **Üzleti modell:** egyszeri vásárlás (**3990 Ft egy gyereknek, 5990 Ft családi [D]**), ingyenes próbacsomag, szakemberi licenc.
-- **Matek:** a fix költség kb. **0,8–1,2 millió Ft**, ez kb. **350–500 eladásnál** térül meg. Közepes forgatókönyv szerint az első 12 hónap **kb. 6 millió Ft nettó**, jó esetben kb. 17 millió Ft **[B]**.
+- **Matek:** a fix költség kb. **0,8–1,2 millió Ft**, ez kb. **350–500 eladásnál** térül meg. Közepes forgatókönyv szerint az első 12 hónap **kb. 6 millió Ft nettó**, jó esetben kb. 21 millió Ft **[B]**.
 - **Fő kockázat:** a kereslet volumene és az ingyenes alternatívák. Ezt **2 hét alatt, kb. 100 ezer Ft-ból** lehet validálni, mielőtt fejlesztenél.
 
 ---
@@ -141,9 +141,9 @@ Fiók, felhő, közösségi funkciók, ranglista, chat, AI-javítás szerveren, 
 
 | | Organikus látogató/hó (12. hónapra) | Vásárlási arány (látogatóból) | Vásárlás/év | Nettó/év |
 |---|---|---|---|---|
-| **Gyenge** | 3000 | 0,8% | kb. 200 | **kb. 0,7 millió Ft** (nem térül meg) |
+| **Gyenge** | 3000 | 0,8% | kb. 140 | **kb. 0,5 millió Ft** (nem térül meg) |
 | **Közepes** | 20 000 | 1,5% | kb. 1700 | **kb. 6 millió Ft** |
-| **Jó** | 50 000 | 2% | kb. 4800 | **kb. 17 millió Ft** |
+| **Jó** | 50 000 | 2% | kb. 5900 | **kb. 21 millió Ft** |
 
 *Feltételezések:* lineáris SEO-felfutás 0-ról a 12. havi szintig. A nyári hónapokban (július–augusztus) a forgalom fele. A fejlesztői ajánlások forgalma ebben benne van.
 
