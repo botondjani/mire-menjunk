@@ -2,7 +2,7 @@
 // Nézetek: felfedezés (vízszintes szekciók), lista (szűrt, napokra bontva), keresés, mentett, profil.
 // Minden nézetnek van betöltő, üres és hibaállapota; a visszafordítható lépések (mentés) visszavonhatók.
 
-import * as auth from './auth.js?v=17';
+import * as auth from './auth.js?v=18';
 
 const ROOT = new URL('./', import.meta.url);
 const $ = (s, el = document) => el.querySelector(s);
@@ -138,6 +138,37 @@ const state = {
 const PAGE = 40;
 
 // ---------- adat ----------
+let loadedAt = 0;
+
+/** Háttérfrissítés: ha az app sokáig nyitva volt (pl. egy háttérben hagyott fülön), csendben letöltjük a friss listát. */
+async function refreshData() {
+  loadedAt = Date.now();
+  try {
+    const res = await fetch(new URL('data/events.json', ROOT), { cache: 'no-cache' });
+    if (!res.ok) return;
+    const data = await res.json();
+    if (data.updated === state.updated) return updateBanner();
+    state.events = data.events.filter((e) => (e.end || e.start) >= today).sort(byTime);
+    state.byId = new Map(data.events.map((e) => [e.id, e]));
+    state.updated = data.updated;
+    updateBanner();
+    // Nyitott részletek vagy gépelés közben nem rajzolunk újra, hogy ne vesszen el semmi.
+    if (sheet.open || document.activeElement?.id === 'q' || state.map) return;
+    const y = window.scrollY;
+    render();
+    window.scrollTo({ top: y });
+  } catch { /* offline: marad a meglévő lista */ }
+}
+
+function onReturn() {
+  if (document.hidden || !state.events.length) return;
+  // Éjfél után a „ma/holnap” minden számítása elcsúszna: ilyenkor tiszta újratöltés.
+  if (bpNow().slice(0, 10) !== today) return location.reload();
+  if (Date.now() - loadedAt > 15 * 60e3) refreshData();
+}
+document.addEventListener('visibilitychange', onReturn);
+window.addEventListener('pageshow', (ev) => { if (ev.persisted) onReturn(); });
+
 async function load() {
   view.setAttribute('aria-busy', 'true');
   try {
@@ -147,6 +178,7 @@ async function load() {
     state.events = data.events.filter((e) => (e.end || e.start) >= today).sort(byTime);
     state.byId = new Map(data.events.map((e) => [e.id, e]));
     state.updated = data.updated;
+    loadedAt = Date.now();
   } catch {
     view.removeAttribute('aria-busy');
     const offline = !navigator.onLine;
