@@ -18,11 +18,16 @@ import zenehaza from './sources/zenehaza.js';
 import durer from './sources/durer.js';
 import bjc from './sources/bjc.js';
 import dumaszinhaz from './sources/dumaszinhaz.js';
+import katona from './sources/katona.js';
+import vigszinhaz from './sources/vigszinhaz.js';
+import ludwig from './sources/ludwig.js';
+import artmozi from './sources/artmozi.js';
+import cinemacity from './sources/cinemacity.js';
 import { addDays, detectFree, detectGenre, detectPrice, detectVenue, slugify, tidyTitle, todayBudapest } from './lib/util.js';
 import { renderOg } from './og.js';
 
 // Curated sources first: on duplicates their description and image win.
-const SOURCES = [welovebudapest, funzine, timeout, akvarium, a38, trafo, durer, bjc, dumaszinhaz, zenehaza, tixa];
+const SOURCES = [welovebudapest, funzine, timeout, akvarium, a38, trafo, durer, bjc, dumaszinhaz, zenehaza, tixa, katona, vigszinhaz, ludwig, artmozi, cinemacity];
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const PUBLIC = join(ROOT, 'public');
 const SITE_URL = (process.env.SITE_URL || '').replace(/\/?$/, '/');
@@ -204,15 +209,22 @@ async function enrichImages(events) {
     byHost.get(host).push([e, link.url]);
   }
   let found = 0;
+  const seen = new Map(); // ugyanaz az eseményoldal (pl. egy darab több előadása) csak egyszer kerül lekérésre
   await Promise.all([...byHost.values()].map(async (jobs) => {
-    for (const [e, url] of jobs.slice(0, 120)) {
-      try {
-        const html = await fetchHtml(url, 1200);
-        const m = html.match(/<meta[^>]+(?:property|name)=["'](?:og:image|twitter:image)["'][^>]+content=["']([^"']+)["']/i)
-          || html.match(/<meta[^>]+content=["']([^"']+)["'][^>]+(?:property|name)=["'](?:og:image|twitter:image)["']/i);
-        const img = m && new URL(m[1].replace(/&amp;/g, '&'), url).href;
-        if (img && !/logo|placeholder|default|favicon/i.test(img)) { e.image = img; found++; }
-      } catch { /* the poster fallback covers it */ }
+    let fetched = 0;
+    for (const [e, url] of jobs) {
+      if (!seen.has(url)) {
+        if (fetched++ >= 120) break;
+        let img = null;
+        try {
+          const html = await fetchHtml(url, 1200);
+          const m = html.match(/<meta[^>]+(?:property|name)=["'](?:og:image|twitter:image)["'][^>]+content=["']([^"']+)["']/i)
+            || html.match(/<meta[^>]+content=["']([^"']+)["'][^>]+(?:property|name)=["'](?:og:image|twitter:image)["']/i);
+          img = m && new URL(m[1].replace(/&amp;/g, '&'), url).href;
+        } catch { /* the poster fallback covers it */ }
+        seen.set(url, img && !/logo|placeholder|default|favicon/i.test(img) && /^https?:\/\//.test(img) ? img : null);
+      }
+      if (seen.get(url)) { e.image = seen.get(url); found++; }
     }
   }));
   console.log(`  Képek: ${missing.length} hiányzott, ${found} pótolva az eseményoldalakról.`);

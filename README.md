@@ -25,6 +25,13 @@ Budapest programjai egy helyen: koncertek, bulik, kiállítások, színház. Nap
 | Dumaszínház (budapesti előadások) | stand-up |
 | Magyar Zene Háza (a naptár szerveroldali adatai) | koncertek, családi programok |
 | Tixa (főoldal + budapesti helyszínoldalak JSON-LD-je) | klubkoncertek: Dürer, Turbina, Budapest Park, Instant/Fogas, Gödör, Muzikum, Toldi, Robot, KAZI, Három Holló |
+| Katona József Színház (műsoroldal) | előadások: Katona, Kamra, Sufni; angol feliratos előadások |
+| Vígszínház (műsoroldal) | előadások: Vígszínház, Pesti Színház, Házi Színpad, Víg Szalon (kb. egy hét előre) |
+| Ludwig Múzeum | aktuális kiállítások és tárlatvezetések |
+| Artmozi (artmozi.hu heti műsor-JSON) | művészfilmek: Művész, Puskin, Toldi, Tabán, Kino Café – filmenként egy program, vetítő mozikkal |
+| Cinema City (nyilvános quickbook API) | a műsoron lévő és a jövő héten induló mozifilmek |
+
+A kártyákon látható **műfajt** (Jazz, Rock, Stand-up, Tánc, Opera…) a scraper adja (`detectGenre` a `lib/util.js`-ben), a csoportosítás a kategória szerint marad.
 
 A **Fiataloknak** címkét a scraper adja (`isYouth` a `run.js`-ben): bulik, egyetemisták kedvelt klubjainak koncertjei, és kulcsszavak (egyetem, diák, slam, stand-up, kvíz, techno…).
 

@@ -2,7 +2,7 @@
 // Nézetek: felfedezés (vízszintes szekciók), lista (szűrt, napokra bontva), keresés, mentett, profil.
 // Minden nézetnek van betöltő, üres és hibaállapota; a visszafordítható lépések (mentés) visszavonhatók.
 
-import * as auth from './auth.js?v=19';
+import * as auth from './auth.js?v=20';
 
 const ROOT = new URL('./', import.meta.url);
 const $ = (s, el = document) => el.querySelector(s);
@@ -577,7 +577,11 @@ function homeView() {
   html += rail('Hétvégén', pick(weekend, 12), listHref({ nap: 'hetvege' }), { size: 'mini', total: weekend.length });
   const free = soon.filter((e) => e.free);
   if (free.length >= 3) html += rail('🆓 Ingyen is jó', pick(free, 12), listHref({ nap: 'het', ingyen: '1' }), { size: 'mini', total: free.length });
-  const ongoing = state.events.filter((e) => isLong(e) && e.start <= addDays(today, 7)).sort((a, b) => a.end.localeCompare(b.end));
+  const stage = soon.filter((e) => e.category === 'Színház' && e.start <= addDays(today, 7));
+  html += rail('🎭 Színházban', pick(stage, 12), listHref({ kat: 'szinpad' }), { size: 'mini', total: stage.length });
+  const films = state.events.filter((e) => e.category === 'Film' && e.start <= addDays(today, 7));
+  html += rail('🎬 Moziban', pick(films, 14), listHref({ kat: 'szinpad' }), { size: 'mini', total: films.length });
+  const ongoing = state.events.filter((e) => isLong(e) && e.category !== 'Film' && e.start <= addDays(today, 7)).sort((a, b) => a.end.localeCompare(b.end));
   html += rail('Most is látogatható', pick(ongoing, 12), listHref({ nap: 'ma', kat: 'kiallitas' }), { size: 'mini', total: ongoing.length });
   const nextWeek = on('jovohet');
   html += rail('Jövő héten', pick(nextWeek, 12), listHref({ nap: 'jovohet' }), { size: 'mini', total: nextWeek.length });
@@ -611,7 +615,10 @@ function listBody(items) {
   for (const [day, evs] of groups) html += `<section><h2 class="day sticky">${dayName(day)} <small>${evs.length}</small></h2><div class="rows">${evs.map((e) => row(e)).join('')}</div></section>`;
   if (dated.length > state.limit) html += `<button class="btn more" data-more>Még ${Math.min(PAGE, dated.length - state.limit)} program <small>(${state.limit} / ${dated.length})</small></button>`;
   if (ongoing.length && dated.length <= state.limit) {
-    html += `<section><h2 class="day sticky">Most is látogatható <small>${ongoing.length}</small></h2><div class="rows">${ongoing.sort((a, b) => a.end.localeCompare(b.end)).slice(0, 24).map((e) => row(e)).join('')}</div></section>`;
+    const films = ongoing.filter((e) => e.category === 'Film');
+    const rest = ongoing.filter((e) => e.category !== 'Film').sort((a, b) => a.end.localeCompare(b.end));
+    if (rest.length) html += `<section><h2 class="day sticky">Most is látogatható <small>${rest.length}</small></h2><div class="rows">${rest.slice(0, 24).map((e) => row(e)).join('')}</div></section>`;
+    if (films.length) html += `<section><h2 class="day sticky">Moziban <small>${films.length}</small></h2><div class="rows">${films.slice(0, 40).map((e) => row(e)).join('')}</div></section>`;
   }
   return html;
 }

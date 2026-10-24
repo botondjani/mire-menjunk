@@ -1,6 +1,6 @@
 // Offline támogatás: az app héja cache-ből, az adat hálózatról (offline: utolsó ismert).
-const VERSION = 'v19';
-const SHELL = ['./', 'index.html', 'app.js?v=19', 'auth.js?v=19', 'styles.css?v=19', 'fonts/figtree-400.woff2', 'fonts/figtree-600.woff2', 'fonts/bricolage-800.woff2', 'adatvedelem.html', 'manifest.webmanifest', 'icons/icon.svg', 'icons/icon-192.png'];
+const VERSION = 'v20';
+const SHELL = ['./', 'index.html', 'app.js?v=20', 'auth.js?v=20', 'styles.css?v=20', 'fonts/figtree-400.woff2', 'fonts/figtree-600.woff2', 'fonts/bricolage-800.woff2', 'adatvedelem.html', 'manifest.webmanifest', 'icons/icon.svg', 'icons/icon-192.png'];
 
 self.addEventListener('install', (e) => {
   e.waitUntil(caches.open(`shell-${VERSION}`).then((c) => c.addAll(SHELL)).then(() => self.skipWaiting()));

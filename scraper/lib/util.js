@@ -31,6 +31,12 @@ export function parseHuDateRange(text) {
       return m ? isoDate(+y, m, +d) : null;
     })
     .filter(Boolean);
+  // Egy hónapon belüli tartomány: "2026. október 20–25."
+  const same = text.match(/(\d{4})\.\s*([a-záéíóöőúüű]+)\s+(\d{1,2})\.?\s*[–-]\s*(\d{1,2})\./i);
+  if (dates.length <= 1 && same && MONTHS[same[2].toLowerCase()]) {
+    const m = MONTHS[same[2].toLowerCase()];
+    dates.splice(0, dates.length, isoDate(+same[1], m, +same[3]), isoDate(+same[1], m, +same[4]));
+  }
   if (!dates.length) return null;
   const time = text.match(/\b(\d{1,2}):(\d{2})\b/);
   return {
@@ -157,7 +163,15 @@ const VENUES = [
   [/arkki/i, 'Arkki Műhely'],
   [/g[oö]d[oö]r/i, 'Gödör'],
   [/muzikum/i, 'Muzikum'],
+  [/toldi (art)?mozi/i, 'Toldi Mozi'],
   [/\btoldi\b/i, 'Toldi Klub'],
+  [/m[uű]v[eé]sz (art)?mozi/i, 'Művész Mozi'],
+  [/puskin (art)?mozi/i, 'Puskin Mozi'],
+  [/kino caf[eé]/i, 'Kino Cafe Mozi'],
+  [/tab[aá]n (art)?mozi/i, 'Tabán artmozi'],
+  [/katona j[oó]zsef/i, 'Katona József Színház'],
+  [/v[ií]gsz[ií]nh[aá]z/i, 'Vígszínház'],
+  [/pesti sz[ií]nh[aá]z/i, 'Pesti Színház'],
   [/^robot$|\bROBOT\b/, 'Robot'],
   [/\bkazi\b/i, 'KAZI'],
   [/h[aá]rom holl[oó]/i, 'Három Holló'],

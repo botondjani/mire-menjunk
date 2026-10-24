@@ -180,3 +180,56 @@ test('műfaj: gyerekprogram, stand-up, jazz', async () => {
   assert.equal(detectGenre({ category: 'Színház', title: 'Valami', source: 'dumaszinhaz' }), 'Stand-up');
   assert.equal(detectGenre({ category: 'Koncert', title: 'Thrash Mosh Club: metal est' }), 'Rock');
 });
+
+const raw = (file) => readFileSync(new URL(`./fixtures/${file}`, import.meta.url), 'utf8');
+
+test('Katona: előadások dátummal, időponttal, helyszínnel', async () => {
+  const { default: katona } = await import('../sources/katona.js');
+  const events = katona.parse(raw('katona.html'), { today: '2026-10-24' });
+  assert.ok(events.length >= 50, `csak ${events.length}`);
+  const e = events.find((x) => x.title === 'Chicago');
+  assert.equal(e.start, '2026-10-24');
+  assert.equal(e.time, '15:00');
+  assert.equal(e.venue, 'Katona József Színház');
+  assert.match(e.description, /Kamra/);
+  assert.ok(events.every((x) => /^2026-1[0-2]-\d\d$|^2027-/.test(x.start)));
+});
+
+test('Vígszínház: helyi idő, eredeti kép, helyszín', async () => {
+  const { default: vig } = await import('../sources/vigszinhaz.js');
+  const events = vig.parse(raw('vigszinhaz.html'));
+  assert.ok(events.length >= 10);
+  const e = events.find((x) => x.title === 'A Pál utcai fiúk');
+  assert.equal(e.time, '14:30'); // 12:30 UTC → 14:30 Budapest
+  assert.match(e.image, /^https:\/\/vigszinhaz\.hu\/media\//);
+  assert.ok(events.some((x) => x.venue === 'Pesti Színház' || x.venue === 'Vígszínház'));
+});
+
+test('Ludwig: kiállítások tartománnyal és tárlatvezetések', async () => {
+  const { default: ludwig } = await import('../sources/ludwig.js');
+  const events = ludwig.parse(raw('ludwig.html'), { today: '2026-10-24' });
+  const walk = events.find((x) => x.title.startsWith('Walk This Way'));
+  assert.equal(walk.start, '2026-10-09');
+  assert.equal(walk.end, '2027-01-31');
+  assert.equal(walk.category, 'Kiállítás');
+  assert.ok(events.some((x) => x.time === '16:00'));
+});
+
+test('Artmozi: filmenként egy program, mozikkal', async () => {
+  const { default: artmozi } = await import('../sources/artmozi.js');
+  const events = artmozi.parse(raw('artmozi.json'), { today: '2026-10-24' });
+  assert.ok(events.length >= 20);
+  assert.ok(events.every((e) => e.category === 'Film' && e.url.startsWith('https://artmozi.hu/')));
+  assert.ok(events.some((e) => /Művész|Puskin|Toldi/.test(e.venue)));
+  assert.equal(new Set(events.map((e) => e.url)).size, events.length);
+});
+
+test('Cinema City: műsoron lévő filmek', async () => {
+  const { default: cc } = await import('../sources/cinemacity.js');
+  const events = cc.parse(raw('cinemacity.json'), { today: '2026-10-24' });
+  assert.ok(events.length >= 20);
+  const e = events[0];
+  assert.equal(e.category, 'Film');
+  assert.equal(e.end, '2026-10-30');
+  assert.match(e.image, /^https:\/\//);
+});
