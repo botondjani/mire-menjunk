@@ -146,3 +146,28 @@
 - Rentingo: https://privatbankar.hu/ingatlan/van-elet-az-airbnb-utan-alaposan-felforgatna-az-alberletpiacot-egy-magyar-startup-313075
 - Fővárosi Lakásügynökség: https://www.economx.hu/ingatlan/2025/11/27/terezvaros-csatlakozik-a-fovarosi-lakasugynokseghez-820071/
 - Külföldi minták: https://www.startbase.com/organization/findemieter-de/ , https://zillow.mediaroom.com/2016-06-15-Renters-on-Zillow-Have-Competitive-Edge-with-New-Renter-Profile
+
+---
+
+# 2. kör: további piactér-ötletek (9–15)
+
+| # | Ötlet | Miért most | Üzleti modell | Hidegindítás Budapesten | Fő kockázat | Pont |
+|---|---|---|---|---|---|---|
+| 9 | **Diák-mikroprojektek cégeknek** („első portfólió”: social-tartalom, design, adatelemzés, kutatás, 1–4 hetes fix díjas feladatok) | **Szűkül a junior munkaerőpiac:** a KCL szerint az AI-intenzív brit cégeknél 5,8%-kal kevesebb a junior pozíció egy év alatt, a Stanford AI Index szerint a 22–25 éves szoftverfejlesztők foglalkoztatása kb. 20%-kal esett 2022 óta. A magyar HR-esek azt a pályakezdőt keresik, aki már valós üzleti feladaton dolgozott (Economx, 2026. aug.) | A cég fix projektdíjat fizet (30–150 ezer Ft), ebből 20% jutalék. A diák iskolaszövetkezeten keresztül van foglalkoztatva | 20 KKV az egyetemi karrierirodákon keresztül, és 50 válogatott diák (BME, Corvinus, MOME) | Minőségingadozás. A cég és a diák megkerülheti a platformot. A Fiverr és az Upwork | **6,5** |
+| 10 | **Helyi UGC-alkotók × kávézók, bárok, üzletek** (rövid videós csomagok) | Kb. 2,3 millió magyar TikTok-felhasználó (dátum nélküli adat). A kisvállalkozásnak rövid videó kell, de ügynökségre nincs pénze | Csomagár (pl. 3 videó 45 ezer Ft), 20% jutalék. Később havi előfizetés a helyeknek | 30 hely a VII. és VIII. kerületben, 40 alkotó a MOME-ról, a METU-ról és a BKF-ről | Kis költségkeretek, sok az egyszeri vásárló. Az alkotók közvetlenül is elérhetők | 6,0 |
+| 11 | **Javítási piactér** (telefonkijelző, laptop, bicikli, ruha), árajánlat-összehasonlítás és futáros elvitel | Az **EU javításhoz való jogról szóló irányelvének** átültetési határideje 2026. július 31. volt. A fiatalokat a fenntarthatóság is a javítás felé tolja | A javító fizet ajánlatonként 500–1500 Ft-ot, vagy 10% jutalékot | Telefonkijelző-javítás 3 kerületben, 15 szervizzel | **Az irányelv egy ingyenes európai javítókereső platformot is előír.** A Google Maps az alapértelmezett keresőhely | 5,5 |
+| 12 | **Ellenőrzött használtbicikli- és e-bike-piac** (vázszám-ellenőrzés, szervizes átvizsgálás, letéti fizetés) | A lopott kerékpárok kis része kerül elő (egy európai becslés szerint 5–10%), és az e-bike-ok drágák. Nem találtam magyar vázszám-ellenőrző szolgáltatást **[M]** | 4990 Ft átvizsgálás + 5% jutalék | 3 szervizpartner, tavaszi szezon | Erős szezonalitás. A Jófogás és a Facebook ingyenes. Lopott-kerékpár-adatbázishoz nincs hozzáférés | 5,5 |
+| 13 | **Óradíjas kreatív terek** (podcast-, fotóstúdió, próbaterem, táncterem) | Az alkotói és podcastos hullám miatt nő az igény. A stúdiók nappal és hétköznap kihasználatlanok | 15% jutalék a foglalás után | 20 stúdió és próbaterem (a budapesti óradíjak **[M]**) | A stúdióknak saját foglalójuk van. Kis piac | 5,5 |
+| 14 | **Ellenőrzött diák-kutyasétáltatók és kutyaszitterek** | **Kb. 500 000 kutya Budapesten** (ZöldEb-becslés, 2019). A hibrid munka miatt a kutya napközben gyakran egyedül van. Nehéz megbízható embert találni | 15–20% jutalék. **Heti ismétlődő igény, ezért magas az élettartam-érték** | 2 kerület (pl. XI., XIII.), 40 ellenőrzött diák, kutyás Facebook-csoportok | Bizalom és baleset (biztosítás kell). A Rover vagy Pawshake jelenléte Magyarországon **[M]**. A platform megkerülése | **6,0** |
+| 15 | **Személyes nyelvpraxis expat ↔ magyar** (kávézós beszélgetés díjért) | Kb. 49 500 külföldi hallgató van az országban, és nekik kell a magyar. A magyar fiataloknak angol beszédgyakorlat kell | 4–6 ezer Ft/óra, 15% jutalék | 2 egyetem, 3 partnerkávézó | Az italki és a Preply online. Az ingyenes tandem-meetupok | 5,0 |
+
+**A 2. kör legjobbjai:** a **9-es** (az időzítés a legerősebb: szűkül a pályakezdő munkaerőpiac, és cégnél szerzett tapasztalat kell), valamint a **14-es** (heti visszatérő igény, ezért itt a legjobb az élettartam-érték). Összességében **a legkönnyebb indulás továbbra is az 1-es** (rendezvényjegy).
+
+**Források (2. kör):**
+- Pályakezdők Magyarországon: https://www.economx.hu/belfold/2026/08/30/palyakezdo-munkaeropiac-diakmunka/ , https://telex.hu/belfold/2026/02/14/palyavalasztas-egyetemi-felveteli-munkaeropiac-vegzosok-jelentkezes
+- AI és junior munkaerőpiac: https://intuitionlabs.ai/pdfs/ai-entry-level-employment-hiring-data.pdf , https://brandsit.pl/?p=1986305
+- TikTok Magyarországon: https://privatbankar.hu/cikkek/makro/mi-is-az-a-tiktok-es-ami-meg-fontosabb-hogyan-keresnek-penzt.html
+- Javításhoz való jog: https://hvg.hu/360/20260728_premium-hirlevelek-van-hozza-kozlony-javitashoz-valo-jog-eu-szabalyozas , https://www.iom3.org/resource/eu-introduces-consumer-right-to-repair-rules.html
+- Kerékpárlopás: https://hvg.hu/itthon/20120917_biciklilopas_osszel , https://www.welovecycling.com/hu/varosi-kerekparozas/egyre-novekszik-a-szervezett-kerekparlopasok-szama-hollandiaban-es-egyeb-nem-tul-jo-hirek/
+- Kutyák Budapesten: https://welovebudapest.com/2019/10/14/az-andrassyn-vonultak-kutyak-es-gazdaik-megtartottak-az-i-kutyas-critical-masst-fotogaleria/ , https://telex.hu/belfold/2022/06/25/kutya-varos-kutyatartas-urulek-vizelet-koztisztasag-neveles
+- Külföldi hallgatók: https://eduline.hu/felsooktatas/20261021_magyar-egyetemek-kulfoldi-hallgatok-szama-novekedes
