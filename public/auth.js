@@ -176,9 +176,10 @@ export async function testPush() {
 
 export async function loadSaved() {
   const c = await client();
-  const { data, error } = await c.from('saved_events').select('event_id');
+  const { data, error } = await c.from('saved_events').select('event_id, event');
   if (error) throw error;
-  return data.map((r) => r.event_id);
+  // A fiókban tárolt pillanatkép is jön, hogy a lejárt mentések is olvashatók maradjanak.
+  return data.map((r) => ({ id: r.event_id, ...(r.event || {}) }));
 }
 
 /** A program adatait is eltároljuk, hogy a profilban akkor is olvasható maradjon, ha már nincs a listában. */
@@ -188,7 +189,7 @@ export async function addSaved(userId, events) {
   const rows = events.map((e) => ({
     user_id: userId,
     event_id: e.id,
-    event: { title: e.title, start: e.start, end: e.end, time: e.time, venue: e.venue, url: e.links?.[0]?.url ?? e.url },
+    event: { title: e.title, start: e.start, end: e.end, time: e.time, venue: e.venue, url: e.links?.[0]?.url ?? e.url, image: (e.image || '').length < 600 ? e.image : null, category: e.category, genre: e.genre },
   }));
   const { error } = await c.from('saved_events').upsert(rows, { onConflict: 'user_id,event_id', ignoreDuplicates: true });
   if (error) throw error;

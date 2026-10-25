@@ -2,7 +2,7 @@
 // Nézetek: felfedezés (vízszintes szekciók), lista (szűrt, napokra bontva), keresés, mentett, profil.
 // Minden nézetnek van betöltő, üres és hibaállapota; a visszafordítható lépések (mentés) visszavonhatók.
 
-import * as auth from './auth.js?v=24';
+import * as auth from './auth.js?v=25';
 
 const ROOT = new URL('./', import.meta.url);
 const $ = (s, el = document) => el.querySelector(s);
@@ -111,6 +111,14 @@ function validDay(k) {
 }
 
 const isLong = (e) => e.end && daysBetween(e.start, e.end) > 3;
+// Becsült hossz percben: ennyi után egy mai, időponttal megadott program már „véget ért”, és lekerül a listákról.
+const DURATION = { Koncert: 180, Buli: 360, Színház: 180, Film: 150, Kiállítás: 90, Családi: 120 };
+function isOver(e) {
+  if (!e.time || (e.end && e.end !== e.start) || e.start !== today) return false;
+  const [h, m] = bpNow().slice(11, 16).split(':').map(Number);
+  const [eh, em] = e.time.split(':').map(Number);
+  return h * 60 + m > eh * 60 + em + (DURATION[e.category] ?? 180);
+}
 const overlaps = (e, [from, to]) => e.start <= to && (e.end || e.start) >= from;
 const byTime = (a, b) => a.start.localeCompare(b.start) || (a.time || '99').localeCompare(b.time || '99');
 
@@ -130,6 +138,7 @@ const state = {
   map: params.get('terkep') === '1',       // térképnézet a listában
   q: params.get('q') || '',
   saved: new Set(store.get('saved', [])),
+  savedSnap: store.get('savedSnap', {}),   // a mentett programok adatai, hogy lejárat után is megmaradjanak
   interests: upgradeKeys(store.get('interests', [])),   // érdeklődési körök (FILTERS kulcsai); belépve a profilból szinkronizálva
   user: null,                              // belépett felhasználó (Supabase), vagy null
   profile: null,
@@ -157,6 +166,41 @@ function groupParam(k) {
 // ---------- adat ----------
 let loadedAt = 0;
 
+const snapOf = (e) => ({ id: e.id, title: e.title, start: e.start, end: e.end || null, time: e.time || null, venue: e.venue || null,
+  image: e.image || null, category: e.category, genre: e.genre, url: e.links?.[0]?.url || e.url || null });
+
+/** A mentett programok pillanatképe (a listából idővel kikerülnek, de a „Régebbi kedvelt események” közt maradjanak). */
+function rememberSaved(extra = []) {
+  let changed = false;
+  for (const id of state.saved) {
+    const e = state.byId.get(id);
+    if (e && !state.savedSnap[id]) { state.savedSnap[id] = snapOf(e); changed = true; }
+  }
+  for (const snap of extra) if (snap?.id && !state.savedSnap[snap.id]) { state.savedSnap[snap.id] = snap; changed = true; }
+  if (changed) store.set('savedSnap', state.savedSnap);
+}
+
+function setEvents(data) {
+  state.all = data.events.filter((e) => (e.end || e.start) >= today).sort(byTime);
+  state.events = state.all.filter((e) => !isOver(e));
+  state.byId = new Map(data.events.map((e) => [e.id, e]));
+  state.updated = data.updated;
+  rememberSaved();
+}
+
+/** Az idő múlásával a ma már véget ért programok lekerülnek; ha változott valami, csendben újrarajzolunk. */
+function tick() {
+  if (!state.all || document.hidden) return;
+  const next = state.all.filter((e) => !isOver(e));
+  if (next.length === state.events.length) return;
+  state.events = next;
+  if (sheet.open || document.activeElement?.id === 'q' || state.map) return;
+  const y = window.scrollY;
+  render();
+  window.scrollTo({ top: y });
+}
+setInterval(tick, 5 * 60e3);
+
 /** Háttérfrissítés: ha az app sokáig nyitva volt (pl. egy háttérben hagyott fülön), csendben letöltjük a friss listát. */
 async function refreshData() {
   loadedAt = Date.now();
@@ -165,9 +209,7 @@ async function refreshData() {
     if (!res.ok) return;
     const data = await res.json();
     if (data.updated === state.updated) return updateBanner();
-    state.events = data.events.filter((e) => (e.end || e.start) >= today).sort(byTime);
-    state.byId = new Map(data.events.map((e) => [e.id, e]));
-    state.updated = data.updated;
+    setEvents(data);
     updateBanner();
     // Nyitott részletek vagy gépelés közben nem rajzolunk újra, hogy ne vesszen el semmi.
     if (sheet.open || document.activeElement?.id === 'q' || state.map) return;
@@ -182,6 +224,7 @@ function onReturn() {
   // Éjfél után a „ma/holnap” minden számítása elcsúszna: ilyenkor tiszta újratöltés.
   if (bpNow().slice(0, 10) !== today) return location.reload();
   if (Date.now() - loadedAt > 15 * 60e3) refreshData();
+  else tick();
 }
 document.addEventListener('visibilitychange', onReturn);
 window.addEventListener('pageshow', (ev) => { if (ev.persisted) onReturn(); });
@@ -192,9 +235,7 @@ async function load() {
     const res = await fetch(new URL('data/events.json', ROOT), { cache: 'no-cache' });
     if (!res.ok) throw new Error(res.status);
     const data = await res.json();
-    state.events = data.events.filter((e) => (e.end || e.start) >= today).sort(byTime);
-    state.byId = new Map(data.events.map((e) => [e.id, e]));
-    state.updated = data.updated;
+    setEvents(data);
     loadedAt = Date.now();
   } catch {
     view.removeAttribute('aria-busy');
@@ -253,9 +294,11 @@ async function afterSignIn() {
     loadMyPlans();
     auth.amAdmin().then((a) => { state.admin = a; if (a && state.view === 'profile' && !sheet.open) render(); }).catch(() => {});
     state.push = !auth.pushSupported() ? 'unsupported' : Notification.permission === 'denied' ? 'denied' : (await auth.pushEnabled()) ? 'on' : 'off';
-    const localOnly = [...state.saved].filter((id) => !remote.includes(id));
+    const remoteIds = remote.map((r) => r.id);
+    rememberSaved(remote.filter((r) => r.title));
+    const localOnly = [...state.saved].filter((id) => !remoteIds.includes(id));
     await auth.addSaved(user.id, localOnly.map((id) => state.byId.get(id)).filter(Boolean));
-    state.saved = new Set([...state.saved, ...remote]);
+    state.saved = new Set([...state.saved, ...remoteIds]);
     store.set('saved', [...state.saved]);
     if (profile?.interests?.length) {
       state.interests = upgradeKeys(profile.interests);
@@ -762,9 +805,9 @@ function showVenue(name) {
   const panel = $('#venuePanel');
   if (!v || !panel) return;
   const dist = mapState.user ? ` · ${kmLabel(km(mapState.user, v.geo))}` : '';
-  const route = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(`${v.name}, Budapest`)}&travelmode=transit`;
+  const route = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${v.name}, Budapest`)}`;
   panel.innerHTML = `<header class="venue-head"><div><h2>${esc(v.name)}</h2><small>${v.events.length} program${dist}</small></div>
-      <a class="pill" href="${route}" target="_blank" rel="noopener">Útvonal</a>
+      <a class="pill" href="${route}" target="_blank" rel="noopener">Google Térkép</a>
       <button class="pill" data-follow="${esc(v.name)}" aria-pressed="${state.follows.has(v.name)}">${state.follows.has(v.name) ? '✓ Követed' : '+ Követés'}</button></header>
     <div class="rows">${v.events.slice(0, 30).map((e) => row(e, { withDate: true })).join('')}</div>`;
   panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
@@ -888,12 +931,37 @@ function searchView() {
 
 function savedView() {
   const items = state.events.filter((e) => state.saved.has(e.id));
-  const gone = [...state.saved].filter((id) => !state.events.some((e) => e.id === id)).length;
-  const note = gone ? `<p class="hint">${gone} mentett programod már lejárt. <button class="link" data-prune>Lejártak törlése</button></p>` : '';
+  const upcomingIds = new Set(items.map((e) => e.id));
+  const past = [...state.saved].filter((id) => !upcomingIds.has(id))
+    .map((id) => state.savedSnap[id] || state.byId.get(id)).filter(Boolean)
+    .sort((a, b) => (b.end || b.start).localeCompare(a.end || a.start));
+  const unknown = [...state.saved].filter((id) => !upcomingIds.has(id) && !state.savedSnap[id] && !state.byId.get(id)).length;
+  const pastSection = past.length || unknown ? `<section class="past">
+      <div class="past-head"><h2 class="day">Régebbi kedvelt események <small>${past.length + unknown}</small></h2><button class="link" data-prune>Törlés</button></div>
+      <div class="rows">${past.map(pastRow).join('')}</div>
+      ${unknown ? `<p class="hint">${unknown} régi mentésről már nincs adatunk.</p>` : ''}
+    </section>` : '';
   return `<header class="page-head"><div><h1>Mentett</h1><p>${items.length} közelgő program</p></div></header>
-    ${note}
     ${items.length ? `<div class="rows">${items.map((e) => row(e, { withDate: true })).join('')}</div>`
-    : stateBox({ icon: '♡', title: 'Még nincs mentett programod', text: 'Nyomd meg a szív gombot egy kártyán, és itt megtalálod – akkor is, ha legközelebb nincs net.', actions: '<button class="btn primary" data-tab="home">Programok felfedezése</button>' })}`;
+    : stateBox({ icon: '♡', title: 'Nincs közelgő mentett programod', text: 'Nyomd meg a szív gombot egy kártyán, és itt megtalálod – akkor is, ha legközelebb nincs net.', actions: '<button class="btn primary" data-tab="home">Programok felfedezése</button>' })}
+    ${pastSection}`;
+}
+
+/** Lejárt mentett program: halványabb sor, a dátummal; a forrásoldalra visz (a részletek már nem aktuálisak). */
+function pastRow(e) {
+  const g = groupOf(e);
+  const when = e.end && e.end !== e.start ? `${short(e.start)} – ${short(e.end)}` : `${short(e.start)}${e.time ? ` ${e.time}` : ''}`;
+  const href = safeUrl(e.url) || eventUrl(e);
+  return `<article class="row-card is-past">
+    <a class="card-link" href="${esc(href)}" target="_blank" rel="noopener" aria-label="${esc(e.title)}"></a>
+    ${media(e, 'thumb')}
+    <div class="rc-body">
+      <p class="rc-kicker"><span class="rc-genre" style="--hue:${g.hue}">${esc(genreLabel(e))}</span><i aria-hidden="true">·</i><span>${esc(when)}</span></p>
+      <h3>${esc(e.title)}</h3>
+      ${e.venue ? `<p class="rc-venue">${esc(e.venue)}</p>` : ''}
+    </div>
+    <button class="icon-btn save" data-save="${esc(e.id)}" aria-pressed="true" aria-label="Eltávolítás a mentettek közül">${icons.heart}</button>
+  </article>`;
 }
 
 const LOGO_SVG = '<svg class="logo" viewBox="0 0 512 512" aria-hidden="true"><rect width="512" height="512" rx="116" fill="#FFD100"/><path d="M256 448C218 398 112 322 112 220a144 144 0 0 1 288 0c0 102-106 178-144 228z" fill="#141414"/><path d="M206 192a50 50 0 1 1 74 44c-16 9-24 19-24 40" fill="none" stroke="#FFD100" stroke-width="36" stroke-linecap="round" stroke-linejoin="round"/><circle cx="256" cy="330" r="22" fill="#FFD100"/></svg>';
@@ -1114,7 +1182,7 @@ function openEvent(e, push = true, { shared = false, plan = null } = {}) {
   const saved = state.saved.has(e.id);
   const g = groupOf(e);
   const soon = startsIn(e);
-  const directions = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(`${e.venue || e.title}, Budapest`)}&travelmode=transit`;
+  const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${e.venue || e.title}, Budapest`)}`;
   sheet.innerHTML = `<article class="detail">
     <div class="grabber" aria-hidden="true"></div>
     <button class="fab close" data-close aria-label="Bezárás">${icons.close}</button>
@@ -1130,14 +1198,14 @@ function openEvent(e, push = true, { shared = false, plan = null } = {}) {
       </ul>
       ${plan ? '<section class="rsvp loading" id="rsvp" aria-busy="true"><div class="rsvp-head"><span class="rsvp-emoji">🙋</span><div><b>Meghívó betöltése…</b></div></div></section>' : ''}
       <div class="actions">
-        <button class="btn primary" data-share="${e.id}" data-pid="${pid}">${icons.share} Ki jön?</button>
+        <button class="btn primary" data-share="${e.id}" data-pid="${pid}">${icons.share} Megosztás</button>
         <button class="btn" data-save="${e.id}" aria-pressed="${saved}">${icons.heart} ${saved ? 'Mentve' : 'Mentés'}</button>
       </div>
       ${plan ? '' : ownerCard(e)}
       ${e.description ? `<p class="desc">${esc(e.description)}</p>` : ''}
       <div class="links">
         ${e.links.filter((l) => safeUrl(l.url)).map((l) => `<a class="row" href="${esc(l.url)}" target="_blank" rel="noopener">${icons.ticket}<span>Részletek, jegyek<small>${esc(l.name)} oldalán</small></span>${icons.out}</a>`).join('')}
-        <a class="row" href="${directions}" target="_blank" rel="noopener">${icons.pin}<span>Útvonal tömegközlekedéssel<small>Google Térkép</small></span>${icons.out}</a>
+        ${e.venue ? `<a class="row" href="${mapsUrl}" target="_blank" rel="noopener">${icons.pin}<span>${esc(e.venue)}<small>Megnyitás a Google Térképen</small></span>${icons.out}</a>` : ''}
       </div>
       <div class="share-row" aria-label="Meghívó küldése" data-invite="${e.id}" data-pid="${pid}">
         <a href="https://wa.me/?text=${encodeURIComponent(shareText(e, pid))}" target="_blank" rel="noopener">WhatsApp</a>
@@ -1334,6 +1402,7 @@ function showLink(url) {
 function toggleSave(id, { undo = false, quiet = false } = {}) {
   state.saved.has(id) ? state.saved.delete(id) : state.saved.add(id);
   store.set('saved', [...state.saved]);
+  rememberSaved();
   const on = state.saved.has(id);
   document.querySelectorAll(`[data-save="${CSS.escape(id)}"]`).forEach((b) => {
     b.setAttribute('aria-pressed', on);
@@ -1448,10 +1517,12 @@ document.addEventListener('click', (ev) => {
   else if ('prune' in d) {
     const before = [...state.saved];
     state.saved = new Set(before.filter((id) => state.events.some((e) => e.id === id)));
+    for (const id of before) if (!state.saved.has(id)) delete state.savedSnap[id];
+    store.set('savedSnap', state.savedSnap);
     store.set('saved', [...state.saved]);
     if (state.user) auth.removeSaved(state.user.id, before.filter((id) => !state.saved.has(id))).catch(() => {});
     render();
-    toast('Lejárt programok törölve', { label: 'Visszavonás', fn: () => { state.saved = new Set(before); store.set('saved', before); render(); } });
+    toast('Régebbi mentések törölve', { label: 'Visszavonás', fn: () => { state.saved = new Set(before); store.set('saved', before); render(); } });
   }
 });
 
@@ -1476,6 +1547,35 @@ document.addEventListener('input', (ev) => {
 });
 
 sheet.addEventListener('click', (ev) => { if (ev.target === sheet) closeEvent(); });
+
+// Lehúzással bezárható részletek (mobilon): a lap az ujjat követi, elég nagy vagy gyors húzásra bezárul.
+let drag = null;
+sheet.addEventListener('touchstart', (ev) => {
+  drag = sheet.scrollTop <= 0 && ev.touches.length === 1 ? { y: ev.touches[0].clientY, t: Date.now(), dy: 0 } : null;
+}, { passive: true });
+sheet.addEventListener('touchmove', (ev) => {
+  if (!drag) return;
+  const dy = ev.touches[0].clientY - drag.y;
+  if (!drag.dy && dy < 0) { drag = null; return; } // felfelé: sima görgetés
+  drag.dy = Math.max(0, dy);
+  sheet.style.transition = 'none';
+  sheet.style.transform = `translateY(${drag.dy}px)`;
+  if (ev.cancelable) ev.preventDefault();
+}, { passive: false });
+sheet.addEventListener('touchend', () => {
+  if (!drag) return;
+  const { dy, t } = drag;
+  drag = null;
+  const fast = dy > 50 && dy / Math.max(1, Date.now() - t) > 0.5;
+  sheet.style.transition = 'transform .22s cubic-bezier(.2, .8, .2, 1)';
+  if (dy > 130 || fast) {
+    sheet.style.transform = 'translateY(100%)';
+    setTimeout(() => { closeEvent(); sheet.style.transform = ''; sheet.style.transition = ''; }, 200);
+  } else {
+    sheet.style.transform = '';
+    setTimeout(() => { sheet.style.transition = ''; }, 230);
+  }
+});
 sheet.addEventListener('cancel', (ev) => { ev.preventDefault(); closeEvent(); });
 window.addEventListener('popstate', route);
 

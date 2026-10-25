@@ -792,3 +792,11 @@ input[type="search"]::-webkit-search-cancel-button, input[type="search"]::-webki
   .tiles .tile:first-child { grid-column: auto; }
   .venue-track { margin-left: 0; margin-right: 0; padding-left: 0; padding-right: 0; grid-auto-columns: 180px; }
 }
+
+/* ---------- régebbi kedvelt események ---------- */
+.past { margin-top: 30px; }
+.past-head { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
+.past-head .link { color: var(--muted); font-size: .85rem; }
+.row-card.is-past { opacity: .62; }
+.row-card.is-past .thumb { filter: grayscale(.6); }
+@media (hover: hover) { .row-card.is-past:hover { opacity: .9; } }
