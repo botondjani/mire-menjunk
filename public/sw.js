@@ -1,6 +1,6 @@
 // Offline támogatás: az app héja cache-ből, az adat hálózatról (offline: utolsó ismert).
-const VERSION = 'v20';
-const SHELL = ['./', 'index.html', 'app.js?v=20', 'auth.js?v=20', 'styles.css?v=20', 'fonts/figtree-400.woff2', 'fonts/figtree-600.woff2', 'fonts/bricolage-800.woff2', 'adatvedelem.html', 'manifest.webmanifest', 'icons/icon.svg', 'icons/icon-192.png'];
+const VERSION = 'v21';
+const SHELL = ['./', 'index.html', 'app.js?v=21', 'auth.js?v=21', 'styles.css?v=21', 'fonts/figtree-400.woff2', 'fonts/figtree-600.woff2', 'fonts/bricolage-800.woff2', 'adatvedelem.html', 'manifest.webmanifest', 'icons/icon.svg', 'icons/icon-192-v2.png'];
 
 self.addEventListener('install', (e) => {
   e.waitUntil(caches.open(`shell-${VERSION}`).then((c) => c.addAll(SHELL)).then(() => self.skipWaiting()));
@@ -56,7 +56,7 @@ self.addEventListener('push', (e) => {
   e.waitUntil(self.registration.showNotification(n.title || 'Hova menjünk?', {
     body: n.body,
     tag: n.tag,
-    icon: new URL('icons/icon-192.png', self.registration.scope).href,
+    icon: new URL('icons/icon-192-v2.png', self.registration.scope).href,
     badge: new URL('icons/badge-96.png', self.registration.scope).href,
     data: { url: n.url || self.registration.scope },
   }));

@@ -19,7 +19,8 @@ type Prefs = { id: string; interests: string[]; notify_reminders: boolean; notif
 
 // Ugyanaz a csoportosítás, mint az appban (public/app.js GROUPS + Fiataloknak).
 const GROUPS: Record<string, string[]> = {
-  zene: ['Koncert'], buli: ['Buli'], kiallitas: ['Kiállítás'], szinpad: ['Színház', 'Film'], csalad: ['Családi'],
+  zene: ['Koncert'], buli: ['Buli'], kiallitas: ['Kiállítás'], szinhaz: ['Színház'], mozi: ['Film'], csalad: ['Családi'],
+  szinpad: ['Színház', 'Film'], // régi kulcs (a „Színház & film” szétválása előtti mentett érdeklődés)
   egyeb: ['Fesztivál', 'Gasztró', 'Vásár', 'Szabadidő', 'Kultúra'],
 };
 const matches = (e: Ev, key: string) => (key === 'fiatal' ? !!e.youth : (GROUPS[key] ?? []).includes(e.category));

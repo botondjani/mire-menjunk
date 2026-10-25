@@ -670,3 +670,72 @@ dialog::backdrop { background: rgb(0 0 0 / .6); backdrop-filter: blur(3px); }
 .genre-txt { color: hsl(var(--hue) 75% 72%); font-weight: 700; }
 :root[data-theme="light"] .genre-txt { color: hsl(var(--hue) 60% 38%); }
 @media (prefers-color-scheme: light) { :root:not([data-theme="dark"]) .genre-txt { color: hsl(var(--hue) 60% 38%); } }
+
+/* ---------- profil (új) ---------- */
+.profile-hero { margin-top: 10px; padding: 22px 18px 16px; border-radius: 24px; text-align: center;
+  background: radial-gradient(120% 90% at 50% 0%, color-mix(in srgb, var(--accent) 22%, var(--surface)), var(--surface) 70%);
+  border: 1px solid var(--line); }
+.profile-hero .avatar { width: 76px; height: 76px; border-radius: 50%; object-fit: cover; display: grid; place-items: center; margin: 0 auto;
+  box-shadow: 0 0 0 4px var(--bg), 0 0 0 6px var(--accent); }
+.profile-hero .me-initial { font-size: 2rem; }
+.profile-hero .who { margin-top: 12px; display: grid; gap: 2px; }
+.profile-hero h1 { margin: 0; font: 800 1.45rem/1.15 var(--display); letter-spacing: -.02em; }
+.profile-hero small { color: var(--muted); font-size: .88rem; overflow: hidden; text-overflow: ellipsis; }
+.stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 16px; }
+.stats > * { display: grid; gap: 1px; padding: 10px 4px; border-radius: 14px; background: var(--surface-2); border: 0; color: var(--ink); text-decoration: none; font: inherit; }
+.stats b { font: 800 1.3rem/1.1 var(--display); }
+.stats span { color: var(--muted); font-size: .76rem; font-weight: 600; }
+
+.pgroup { margin-top: 26px; }
+.pgroup-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.pgroup-title { margin: 0 0 4px; font: 800 1.15rem/1.2 var(--display); letter-spacing: -.02em; }
+.pgroup-sub { margin: 0 0 12px; color: var(--muted); font-size: .9rem; }
+.pcard { padding: 14px 16px; border-radius: 18px; background: var(--surface); border: 1px solid var(--line); margin-top: 8px; }
+
+.tastes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+.taste { display: flex; align-items: center; gap: 8px; padding: 12px 12px; border-radius: 14px; text-align: left;
+  border: 1px solid var(--line); background: var(--surface); color: var(--ink); font: 650 .92rem var(--body); }
+.taste span { font-size: 1.15rem; }
+.taste[aria-pressed="true"] { border-color: hsl(var(--hue) 70% 55%); background: color-mix(in srgb, hsl(var(--hue) 70% 50%) 22%, var(--surface)); }
+.taste[aria-pressed="true"]::after { content: "✓"; margin-left: auto; font-weight: 800; color: hsl(var(--hue) 75% 65%); }
+:root[data-theme="light"] .taste[aria-pressed="true"]::after { color: hsl(var(--hue) 60% 38%); }
+@media (prefers-color-scheme: light) { :root:not([data-theme="dark"]) .taste[aria-pressed="true"]::after { color: hsl(var(--hue) 60% 38%); } }
+
+.notify-top { display: flex; gap: 12px; align-items: flex-start; }
+.notify-top .bell { flex: none; width: 42px; height: 42px; display: grid; place-items: center; border-radius: 13px; background: var(--surface-2); font-size: 1.3rem; }
+.notify-top b { font: 700 1.02rem var(--display); }
+.notify-top p { margin: 3px 0 0; color: var(--muted); font-size: .88rem; line-height: 1.4; }
+.notify-card .btn.wide { margin-top: 14px; }
+.prefs-more { margin-top: 12px; border-top: 1px solid var(--line); padding-top: 10px; }
+.prefs-more summary { cursor: pointer; font-weight: 700; font-size: .9rem; color: var(--muted); list-style: none; display: flex; align-items: center; gap: 6px; }
+.prefs-more summary::-webkit-details-marker { display: none; }
+.prefs-more summary::after { content: "▾"; transition: transform .2s; }
+.prefs-more[open] summary::after { transform: rotate(180deg); }
+.prefs-more .prefs { margin-top: 6px; }
+
+.slist { border-radius: 18px; overflow: hidden; border: 1px solid var(--line); background: var(--surface); }
+.srow { display: flex; align-items: center; gap: 12px; width: 100%; min-height: 54px; padding: 10px 14px; border: 0; border-top: 1px solid var(--line);
+  background: transparent; color: var(--ink); text-decoration: none; text-align: left; font: 600 .95rem var(--body); }
+.slist > .srow:first-child { border-top: 0; }
+.srow-icon { flex: none; width: 32px; height: 32px; display: grid; place-items: center; border-radius: 10px; background: var(--surface-2); font-size: 1rem; }
+.srow-text { flex: 1; min-width: 0; display: grid; }
+.srow-text small { color: var(--muted); font-weight: 500; font-size: .8rem; }
+.srow-end { color: var(--muted); font-size: 1.3rem; line-height: 1; }
+.srow.danger { color: var(--hot); }
+.srow.danger-confirm { display: block; }
+.srow.danger-confirm p { margin: 0; font-size: .9rem; font-weight: 500; }
+.srow.danger-confirm .state-actions { justify-content: flex-start; margin-top: 12px; }
+.srow-main { flex: 1; min-width: 0; display: flex; align-items: center; gap: 12px; padding: 0; border: 0; background: none; color: inherit; font: inherit; text-align: left; }
+.srow-x { flex: none; display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; border: 0; background: var(--surface-2); color: var(--muted); }
+.srow-x svg { width: 16px; height: 16px; }
+
+.login-hero { margin-top: 10px; padding: 26px 20px 20px; border-radius: 24px; text-align: center; border: 1px solid var(--line);
+  background: radial-gradient(120% 90% at 50% 0%, color-mix(in srgb, var(--accent) 20%, var(--surface)), var(--surface) 70%); }
+.login-hero .logo { width: 64px; height: 64px; margin: 0 auto 14px; border-radius: 18px; box-shadow: 0 10px 30px rgb(255 209 0 / .25); }
+.login-hero h2 { margin: 0; font: 800 1.35rem/1.2 var(--display); letter-spacing: -.02em; text-wrap: balance; }
+.login-hero .perks { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; margin: 16px 0 18px; }
+.login-hero .perks li { display: inline-flex; align-items: center; gap: 6px; padding: 6px 10px 6px 6px; border-radius: 999px; background: var(--surface-2); font-size: .82rem; font-weight: 600; }
+.login-hero .perks span { width: 22px; height: 22px; font-size: .75rem; border-radius: 50%; background: var(--bg); }
+.login-hero .fineprint { margin-top: 12px; }
+
+.gsi[hidden] { display: none; }

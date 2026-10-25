@@ -2,7 +2,7 @@
 // Nézetek: felfedezés (vízszintes szekciók), lista (szűrt, napokra bontva), keresés, mentett, profil.
 // Minden nézetnek van betöltő, üres és hibaállapota; a visszafordítható lépések (mentés) visszavonhatók.
 
-import * as auth from './auth.js?v=20';
+import * as auth from './auth.js?v=21';
 
 const ROOT = new URL('./', import.meta.url);
 const $ = (s, el = document) => el.querySelector(s);
@@ -12,13 +12,17 @@ const banner = $('#banner');
 
 // A forrásokból jövő 11 kategóriát 6 könnyen átlátható csoportba vonjuk össze.
 const GROUPS = [
-  { key: 'zene', label: 'Zene', emoji: '🎵', hue: 350, cats: ['Koncert'] },
+  { key: 'zene', label: 'Koncert', emoji: '🎵', hue: 350, cats: ['Koncert'] },
   { key: 'buli', label: 'Buli', emoji: '🪩', hue: 290, cats: ['Buli'] },
+  { key: 'szinhaz', label: 'Színház', emoji: '🎭', hue: 25, cats: ['Színház'] },
+  { key: 'mozi', label: 'Mozi', emoji: '🎬', hue: 0, cats: ['Film'] },
   { key: 'kiallitas', label: 'Kiállítás', emoji: '🖼️', hue: 205, cats: ['Kiállítás'] },
-  { key: 'szinpad', label: 'Színház & film', emoji: '🎭', hue: 25, cats: ['Színház', 'Film'] },
   { key: 'csalad', label: 'Családi', emoji: '🧸', hue: 150, cats: ['Családi'] },
-  { key: 'egyeb', label: 'Fesztivál & más', emoji: '✨', hue: 55, cats: ['Fesztivál', 'Gasztró', 'Vásár', 'Szabadidő', 'Kultúra'] },
+  { key: 'egyeb', label: 'Szabadidő', emoji: '🌿', hue: 95, cats: ['Fesztivál', 'Gasztró', 'Vásár', 'Szabadidő', 'Kultúra'] },
 ];
+// Régi kulcs (a „Színház & film” szétvált): mentett érdeklődésekben és régi linkekben.
+const LEGACY_GROUPS = { szinpad: ['szinhaz', 'mozi'] };
+const upgradeKeys = (keys) => [...new Set((keys || []).flatMap((k) => LEGACY_GROUPS[k] || [k]))];
 const groupOf = (e) => GROUPS.find((g) => g.cats.includes(e.category)) || GROUPS[GROUPS.length - 1];
 // Finomabb műfaj a kártyákon (a scraper adja), hogy első ránézésre látszódjon, miről szól a program.
 const GENRE_EMOJI = {
@@ -70,7 +74,7 @@ function dateLabel(e) {
 /** Rövid címke a kártya sarkába: "MA", "HOLNAP", "SZO 24", vagy "DEC 4-IG". */
 function chip(e) {
   if (isLong(e) && e.start <= today) return e.end === today ? 'Utolsó nap' : `${short(e.end).replace(/\./g, '')}-ig`;
-  if (e.start === today) return 'Ma';
+  if (e.start <= today && (e.end || e.start) >= today) return 'Ma'; // ma is tart (pl. pénteken kezdődött)
   if (e.start === tomorrow) return 'Holnap';
   return `${WD_SHORT[weekday(e.start)]} ${+e.start.slice(8)}`;
 }
@@ -121,12 +125,12 @@ const state = {
   view: VIEWS[params.get('v')] || 'home',
   day: validDay(params.get('nap')) || DEFAULT_DAY,
   tab: { search: 'search', saved: 'saved', profile: 'profile' }[VIEWS[params.get('v')]] || 'home', // melyik alsó fül aktív
-  group: FILTERS.some((g) => g.key === params.get('kat')) ? params.get('kat') : '',
+  group: groupParam(params.get('kat')),
   free: params.get('ingyen') === '1',      // csak ingyenes programok
   map: params.get('terkep') === '1',       // térképnézet a listában
   q: params.get('q') || '',
   saved: new Set(store.get('saved', [])),
-  interests: store.get('interests', []),   // érdeklődési körök (FILTERS kulcsai); belépve a profilból szinkronizálva
+  interests: upgradeKeys(store.get('interests', [])),   // érdeklődési körök (FILTERS kulcsai); belépve a profilból szinkronizálva
   user: null,                              // belépett felhasználó (Supabase), vagy null
   profile: null,
   authBusy: false,
@@ -145,6 +149,10 @@ const state = {
   expired: null,   // lejárt megosztott link azonosítója
 };
 const PAGE = 40;
+function groupParam(k) {
+  const key = LEGACY_GROUPS[k]?.[0] || k;
+  return FILTERS.some((g) => g.key === key) ? key : '';
+}
 
 // ---------- adat ----------
 let loadedAt = 0;
@@ -250,7 +258,8 @@ async function afterSignIn() {
     state.saved = new Set([...state.saved, ...remote]);
     store.set('saved', [...state.saved]);
     if (profile?.interests?.length) {
-      state.interests = profile.interests;
+      state.interests = upgradeKeys(profile.interests);
+      if (state.interests.join() !== profile.interests.join()) auth.saveInterests(user.id, state.interests).catch(() => {});
       store.set('interests', state.interests);
     } else if (state.interests.length) {
       await auth.saveInterests(user.id, state.interests);
@@ -391,7 +400,7 @@ function mountSignIn() {
   auth.mountGoogleButton(el, {
     onStart: () => { el.classList.add('busy'); auth.track('signin'); },
     onError: () => { el.classList.remove('busy'); toast('A bejelentkezés most nem sikerült. Próbáld újra pár perc múlva.'); },
-  }).then((ok) => { if (!ok) $('#gsiFallback')?.removeAttribute('hidden'); });
+  }).then((ok) => { if (!ok) { el.hidden = true; $('#gsiFallback')?.removeAttribute('hidden'); } });
 }
 
 /** "Neked ajánljuk": a választott érdeklődési körök és a mentett programok helyszínei, kategóriái alapján. */
@@ -452,7 +461,7 @@ function card(e) {
   const saved = state.saved.has(e.id);
   const soon = startsIn(e);
   const parts = [isLong(e) ? null : e.time, e.venue].filter(Boolean).map(esc);
-  const meta = (soon ? [`<span class="soon">${soon}</span>`, ...parts] : parts).join(' · ') || groupOf(e).label;
+  const meta = (soon ? [`<span class="soon">${soon}</span>`, ...parts] : parts).join(' · ') || esc(dateLabel(e));
   return `<article class="card">
     <a class="card-link" href="${eventUrl(e)}" data-open="${e.id}" aria-label="${esc(e.title)}"></a>
     ${media(e)}
@@ -495,7 +504,7 @@ function mini(e) {
     ${e.free ? `<span class="chips"><span class="chip">${esc(chip(e))}</span><span class="chip free">Ingyenes</span></span>` : `<span class="chip">${esc(chip(e))}</span>`}
     <button class="fab save" data-save="${e.id}" aria-pressed="${saved}" aria-label="${saved ? 'Mentve – koppints az eltávolításhoz' : 'Mentés'}">${icons.heart}</button>
     <h3><span class="genre-tag">${esc(genreLabel(e))}</span>${esc(e.title)}</h3>
-    <p>${esc([isLong(e) ? null : e.time, e.venue].filter(Boolean).join(' · ') || groupOf(e).label)}</p>
+    <p>${esc([isLong(e) ? null : e.time, e.venue].filter(Boolean).join(' · ') || dateLabel(e))}</p>
   </article>`;
 }
 
@@ -569,7 +578,7 @@ function homeView() {
   if (recs.length) html += rail('✨ Neked ajánljuk', pick(recs, 12), null, { size: 'mini' });
   else if (!state.interests.length) html += `<button class="nudge" data-tab="profile"><span>✨</span><b>Mi érdekel?</b> Jelöld be a kedvenc műfajaidat, és ajánlunk neked programokat.</button>`;
 
-  html += `<nav class="shortcuts" aria-label="Kategóriák">${[...FILTERS, { key: '', label: 'Minden', emoji: '🗂️', hue: 230 }].map((g) => `<a href="${listHref(g.key ? { kat: g.key } : {})}" data-nav="${listHref(g.key ? { kat: g.key } : {})}" style="--hue:${g.hue}"><span>${g.emoji}</span>${esc(g.label.replace(' & ', ' &\u00a0'))}</a>`).join('')}</nav>`;
+  html += `<nav class="shortcuts" aria-label="Kategóriák">${FILTERS.map((g) => `<a href="${listHref(g.key ? { kat: g.key } : {})}" data-nav="${listHref(g.key ? { kat: g.key } : {})}" style="--hue:${g.hue}"><span>${g.emoji}</span>${esc(g.label.replace(' & ', ' &\u00a0'))}</a>`).join('')}</nav>`;
 
   const youth = soon.filter((e) => e.youth);
   html += rail(`${YOUTH.emoji} Fiataloknak`, pick(youth, 12), listHref({ kat: YOUTH.key }), { size: 'mini', total: youth.length });
@@ -578,9 +587,9 @@ function homeView() {
   const free = soon.filter((e) => e.free);
   if (free.length >= 3) html += rail('🆓 Ingyen is jó', pick(free, 12), listHref({ nap: 'het', ingyen: '1' }), { size: 'mini', total: free.length });
   const stage = soon.filter((e) => e.category === 'Színház' && e.start <= addDays(today, 7));
-  html += rail('🎭 Színházban', pick(stage, 12), listHref({ kat: 'szinpad' }), { size: 'mini', total: stage.length });
+  html += rail('🎭 Színházban', pick(stage, 12), listHref({ kat: 'szinhaz' }), { size: 'mini', total: stage.length });
   const films = state.events.filter((e) => e.category === 'Film' && e.start <= addDays(today, 7));
-  html += rail('🎬 Moziban', pick(films, 14), listHref({ kat: 'szinpad' }), { size: 'mini', total: films.length });
+  html += rail('🎬 Moziban', pick(films, 14), listHref({ kat: 'mozi' }), { size: 'mini', total: films.length });
   const ongoing = state.events.filter((e) => isLong(e) && e.category !== 'Film' && e.start <= addDays(today, 7)).sort((a, b) => a.end.localeCompare(b.end));
   html += rail('Most is látogatható', pick(ongoing, 12), listHref({ nap: 'ma', kat: 'kiallitas' }), { size: 'mini', total: ongoing.length });
   const nextWeek = on('jovohet');
@@ -840,61 +849,81 @@ function savedView() {
     : stateBox({ icon: '♡', title: 'Még nincs mentett programod', text: 'Nyomd meg a szív gombot egy kártyán, és itt megtalálod – akkor is, ha legközelebb nincs net.', actions: '<button class="btn primary" data-tab="home">Programok felfedezése</button>' })}`;
 }
 
+const LOGO_SVG = '<svg class="logo" viewBox="0 0 512 512" aria-hidden="true"><rect width="512" height="512" rx="116" fill="#FFD100"/><path d="M256 448C218 398 112 322 112 220a144 144 0 0 1 288 0c0 102-106 178-144 228z" fill="#141414"/><path d="M206 192a50 50 0 1 1 74 44c-16 9-24 19-24 40" fill="none" stroke="#FFD100" stroke-width="36" stroke-linecap="round" stroke-linejoin="round"/><circle cx="256" cy="330" r="22" fill="#FFD100"/></svg>';
+const isIOS = /iP(hone|ad|od)/.test(navigator.userAgent);
+const standalone = () => matchMedia('(display-mode: standalone)').matches || navigator.standalone;
+
+/** Beállításlista-sor: ikon, cím, alcím, jobb oldalon nyíl vagy saját elem. */
+const settingsRow = ({ icon, title, sub = '', attrs = '', tag = 'button', danger = false, end = '›' }) => `<${tag} class="srow${danger ? ' danger' : ''}" ${attrs}>
+    <span class="srow-icon" aria-hidden="true">${icon}</span><span class="srow-text">${title}${sub ? `<small>${sub}</small>` : ''}</span><span class="srow-end" aria-hidden="true">${end}</span></${tag}>`;
+
+function interestsSection() {
+  const chips = FILTERS.map((g) => `<button class="taste" style="--hue:${g.hue}" data-interest="${g.key}" aria-pressed="${state.interests.includes(g.key)}"><span aria-hidden="true">${g.emoji}</span>${esc(g.label)}</button>`).join('');
+  return `<section class="pgroup">
+      <h2 class="pgroup-title">Ízlésem</h2>
+      <p class="pgroup-sub">Ezek alapján ajánlunk programokat a kezdőlapon${state.user ? ' és az értesítésekben' : ''}.</p>
+      <div class="tastes">${chips}</div>
+    </section>`;
+}
+
+function appSection() {
+  const rows = [];
+  if (!standalone()) {
+    if (installEvent) rows.push(settingsRow({ icon: '📲', title: 'Telepítés a kezdőképernyőre', sub: 'Gyorsabb, és offline is működik', attrs: 'data-install' }));
+    else if (isIOS) rows.push(settingsRow({ icon: '📲', title: 'Tedd ki a kezdőképernyőre', sub: 'Safari: Megosztás → Főképernyőhöz adás', tag: 'div', end: '' }));
+  }
+  if (state.admin) rows.push(settingsRow({ icon: '📊', title: 'Statisztika', tag: 'a', attrs: 'href="statisztika.html"' }));
+  rows.push(settingsRow({ icon: '🔒', title: 'Adatvédelem', tag: 'a', attrs: 'href="adatvedelem.html"' }));
+  if (state.user) {
+    rows.push(settingsRow({ icon: '↩️', title: 'Kijelentkezés', attrs: 'data-signout', end: '' }));
+    rows.push(state.confirmDelete
+      ? `<div class="srow danger-confirm"><p>Biztosan törlöd a fiókodat? A fiókodban tárolt mentések, követések és beállítások végleg törlődnek (ezen a telefonon a mentéseid megmaradnak).</p>
+          <div class="state-actions"><button class="btn" data-delete-cancel>Mégse</button><button class="btn danger" data-delete-confirm ${state.authBusy ? 'disabled' : ''}>${state.authBusy ? 'Törlés…' : 'Igen, törlöm'}</button></div></div>`
+      : settingsRow({ icon: '🗑️', title: 'Fiókom törlése', attrs: 'data-delete', danger: true, end: '' }));
+  }
+  return `<section class="pgroup"><h2 class="pgroup-title">${state.user ? 'Fiók' : 'Az app'}</h2><div class="slist">${rows.join('')}</div></section>`;
+}
+
 function profileView() {
   const u = state.user;
-  const meta = u?.user_metadata || {};
-  const name = state.profile?.display_name || meta.full_name || meta.name || u?.email;
-  const avatar = state.profile?.avatar_url || meta.avatar_url;
-  const chips = FILTERS.map((g) => `<button data-interest="${g.key}" aria-pressed="${state.interests.includes(g.key)}">${g.emoji} ${esc(g.label)}</button>`).join('');
-  const interests = `<section class="panel">
-      <h2>Mi érdekel?</h2>
-      <p class="muted">Ezek alapján állítjuk össze a „Neked ajánljuk” sort a kezdőlapon.</p>
-      <div class="interest-chips">${chips}</div>
-    </section>`;
   if (!u) {
     return `<header class="page-head"><div><h1>Profil</h1></div></header>
-      <section class="login-card">
-        <h2>Lépj be, és mindenhol veled lesznek a mentéseid</h2>
+      <section class="login-hero">
+        ${LOGO_SVG}
+        <h2>Lépj be, és veled lesznek a programjaid</h2>
         <ul class="perks">
-          <li><span>♥</span>A mentett programjaid szinkronban a telefonodon és a gépeden</li>
-          <li><span>✨</span>Ajánlások a kedvenc műfajaid és helyeid alapján</li>
-          <li><span>🔔</span>Emlékeztető a program előtt, és szólunk, ha a kedvenc helyeiden új program van</li>
+          <li><span>♥</span>Mentések minden eszközödön</li>
+          <li><span>✨</span>Ajánlások az ízlésed szerint</li>
+          <li><span>🔔</span>Emlékeztető, mielőtt kezdődik</li>
         </ul>
         <div id="gsi" class="gsi" aria-label="Belépés Google-fiókkal"></div>
         <button id="gsiFallback" class="btn google" data-signin hidden ${state.authBusy ? 'disabled' : ''}>${icons.google}${state.authBusy ? 'Átirányítás a Google-höz…' : 'Belépés Google-fiókkal'}</button>
-        <p class="fineprint">Csak a neved, az e-mail-címed és a profilképed látjuk. Bármikor törölheted a fiókodat. <a href="adatvedelem.html">Adatvédelem</a></p>
+        <p class="fineprint">Csak a neved, az e-mail-címed és a profilképed látjuk. Belépés nélkül is minden működik.</p>
       </section>
-      ${interests}`;
+      ${interestsSection()}
+      ${appSection()}`;
   }
+  const meta = u.user_metadata || {};
+  const name = state.profile?.display_name || meta.full_name || meta.name || u.email;
+  const avatar = state.profile?.avatar_url || meta.avatar_url;
   const savedCount = state.events.filter((e) => state.saved.has(e.id)).length;
-  return `<header class="page-head"><div><h1>Profil</h1></div></header>
-    <section class="me">
-      ${safeUrl(avatar) ? `<img src="${esc(avatar)}" alt="" referrerpolicy="no-referrer">` : `<span class="me-initial">${esc((name || '?')[0].toUpperCase())}</span>`}
-      <div><b>${esc(name)}</b><small>${esc(u.email || '')}</small></div>
+  const planCount = [...state.myPlans.values()].reduce((n, list) => n + list.length, 0);
+  return `<section class="profile-hero">
+      ${safeUrl(avatar) ? `<img class="avatar" src="${esc(avatar)}" alt="" referrerpolicy="no-referrer">` : `<span class="avatar me-initial">${esc((name || '?')[0].toUpperCase())}</span>`}
+      <div class="who"><h1>${esc(name)}</h1><small>${esc(u.email || '')}</small></div>
+      <div class="stats">
+        <button data-tab="saved"><b>${savedCount}</b><span>mentett</span></button>
+        <a href="#follows"><b>${state.follows.size}</b><span>követett hely</span></a>
+        <div><b>${planCount}</b><span>meghívó</span></div>
+      </div>
     </section>
-    <p class="muted sync-note">♥ ${savedCount} közelgő mentett program, szinkronban minden eszközödön.</p>
+    ${interestsSection()}
     ${notifyPanel()}
     ${followsPanel()}
-    ${interests}
-    <section class="panel account">
-      <button class="btn" data-signout>Kijelentkezés</button>
-      ${state.confirmDelete
-        ? `<div class="danger-confirm"><p>Biztosan törlöd a fiókodat? A mentéseid a fiókodból végleg törlődnek (ezen a telefonon megmaradnak).</p>
-            <div class="state-actions"><button class="btn" data-delete-cancel>Mégse</button><button class="btn danger" data-delete-confirm ${state.authBusy ? 'disabled' : ''}>${state.authBusy ? 'Törlés…' : 'Igen, törlöm'}</button></div></div>`
-        : '<button class="link danger-link" data-delete>Fiókom törlése</button>'}
-      <p class="fineprint">${state.admin ? '<a href="statisztika.html">📊 Statisztika</a> · ' : ''}<a href="adatvedelem.html">Adatvédelmi tájékoztató</a></p>
-    </section>`;
+    ${appSection()}`;
 }
 
 const NOTIFY_DEFAULTS = { notify_reminders: true, notify_follows: true, notify_weekly: true, remind_before: 120, digest_hour: 10, tonight_mode: 1 };
-
-/** Mintaprogram az értesítés-előnézethez: lehetőleg a saját mentettjeiből, különben a ma esti kínálatból. */
-function sampleEvent() {
-  const timed = (e) => e.time && e.venue;
-  return state.events.find((e) => state.saved.has(e.id) && timed(e) && (e.end || e.start) >= today)
-    || state.events.find((e) => timed(e) && e.start === today)
-    || state.events.find(timed) || state.events[0];
-}
 
 function notifyPanel() {
   const p = { ...NOTIFY_DEFAULTS, ...state.profile };
@@ -906,47 +935,45 @@ function notifyPanel() {
     </div>`;
   const prefs = `<div class="prefs">
       ${pref('notify_reminders', '⏰', 'Emlékeztető', 'Mielőtt kezdődik, amit elmentettél', choices('remind_before', [[60, '1 órával'], [120, '2 órával'], [180, '3 órával'], [0, 'Aznap reggel']]))}
-      ${pref('notify_weekly', '🎉', 'Hétvégi tippek', 'Csütörtökönként 3 program, ami neked szól')}
       ${pref('tonight_mode', '🌙', 'Esti tippek', 'Délután 4-kor 3 program az estére', choices('tonight_mode', [[1, 'Pénteken és szombaton'], [2, 'Minden nap']]))}
+      ${pref('notify_weekly', '🎉', 'Hétvégi tippek', 'Csütörtökönként 3 program, ami neked szól')}
       ${pref('notify_follows', '📍', 'Új program a kedvenc helyeiden', 'Naponta legfeljebb egyszer')}
       ${p.notify_weekly || p.notify_follows ? `<div class="pref-time"><span>Mikor jöjjenek a tippek?</span>${choices('digest_hour', [[10, '☀️ Délelőtt'], [17, '🌆 Délután']])}</div>` : ''}
     </div>`;
   if (state.push === 'on') {
-    return `<section class="panel">
-      <div class="panel-head"><h2>Értesítések</h2><span class="on-badge">Bekapcsolva</span></div>
-      ${prefs}
+    return `<section class="pgroup">
+      <div class="pgroup-head"><h2 class="pgroup-title">Értesítések</h2><span class="on-badge">Bekapcsolva</span></div>
+      <div class="pcard">${prefs}</div>
       <p class="muted small"><button class="link" data-push-test>Próbaértesítés</button> · <button class="link" data-push-off>Kikapcsolás ezen az eszközön</button></p>
     </section>`;
   }
-  const e = sampleEvent();
-  const tips = recommendations().slice(0, 3).map((x) => x.title).join(' · ') || 'Koncert, kiállítás és egy jó buli a hétvégére';
-  const icon = '<img src="icons/icon-192.png" alt="">';
   let cta;
   if (state.push === 'denied') cta = '<p class="notice-line">Az értesítések le vannak tiltva ennél az oldalnál – a böngésző (vagy a telefon) beállításaiban engedélyezheted.</p>';
-  else if (state.push === 'unsupported') cta = /iP(hone|ad)/.test(navigator.userAgent)
-    ? '<p class="notice-line">iPhone-on: Megosztás → <b>Főképernyőhöz adás</b>, majd onnan nyisd meg az appot, és itt bekapcsolhatod.</p>'
+  else if (state.push === 'unsupported') cta = isIOS
+    ? '<p class="notice-line">iPhone-on előbb tedd ki az appot a kezdőképernyőre (Megosztás → Főképernyőhöz adás), és onnan megnyitva kapcsold be.</p>'
     : '<p class="notice-line">Ez a böngésző nem támogatja az értesítéseket.</p>';
-  else cta = `<button class="btn primary wide bell" data-push-on ${state.pushBusy ? 'disabled' : ''}>${state.pushBusy ? 'Egy pillanat…' : '🔔 Kérem az értesítéseket'}</button>`;
-  return `<section class="panel notify-hero">
-      <div class="np-stack" aria-hidden="true">
-        <div class="np back">${icon}<div><small>Hova menjünk? · csüt.</small><b>🎉 Hétvégi tippek neked</b><span>${esc(tips)}</span></div></div>
-        <div class="np">${icon}<div><small>Hova menjünk? · most</small><b>⏰ ${esc(e?.title || 'A mentett programod')}</b><span>${p.remind_before ? `${p.remind_before / 60} óra múlva kezdődik` : 'Ma'}${e?.time ? ` · ${e.time}` : ''}${e?.venue ? ` · ${esc(e.venue)}` : ''}</span></div></div>
+  else cta = `<button class="btn primary wide" data-push-on ${state.pushBusy ? 'disabled' : ''}>${state.pushBusy ? 'Egy pillanat…' : 'Értesítések bekapcsolása'}</button>`;
+  return `<section class="pgroup">
+      <h2 class="pgroup-title">Értesítések</h2>
+      <div class="pcard notify-card">
+        <div class="notify-top"><span class="bell" aria-hidden="true">🔔</span>
+          <div><b>Ne maradj le semmiről</b><p>Emlékeztető a mentett programjaid előtt, esti és hétvégi tippek – te döntöd el, mit és mikor.</p></div></div>
+        ${cta}
+        <details class="prefs-more"><summary>Mit és mikor kérsz?</summary>${prefs}</details>
       </div>
-      <h2>Ne maradj le semmiről</h2>
-      <p class="muted">Szólunk, mielőtt kezdődik, amit elmentettél, és csütörtökön hozzuk a hétvégi tippeket. Te döntöd el, mit és mikor – spam nélkül.</p>
-      ${cta}
-      <h3 class="prefs-title">Szabd személyre</h3>
-      ${prefs}
     </section>`;
 }
 
 function followsPanel() {
   const venues = [...state.follows].sort((a, b) => a.localeCompare(b, 'hu'));
-  return `<section class="panel">
-      <h2>Követett helyek</h2>
+  const upcoming = (v) => state.events.filter((e) => e.venue === v).length;
+  return `<section class="pgroup" id="follows">
+      <h2 class="pgroup-title">Követett helyek</h2>
       ${venues.length
-    ? `<div class="interest-chips">${venues.map((v) => `<button class="followed" data-follow="${esc(v)}" aria-label="${esc(v)} – követés leállítása">${esc(v)} <span aria-hidden="true">×</span></button>`).join('')}</div>`
-    : '<p class="muted">Egy program részleteinél a helyszín mellett nyomd meg a „+ Követés” gombot, és szólunk, ha új programja lesz.</p>'}
+    ? `<div class="slist">${venues.map((v) => `<div class="srow">
+          <button class="srow-main" data-venue="${esc(v)}"><span class="srow-icon" aria-hidden="true">📍</span><span class="srow-text">${esc(v)}<small>${upcoming(v)} közelgő program</small></span></button>
+          <button class="srow-x" data-follow="${esc(v)}" aria-label="${esc(v)} – követés leállítása">${icons.close}</button></div>`).join('')}</div>`
+    : '<p class="pgroup-sub">Egy program részleteinél a helyszín mellett nyomd meg a „+ Követés” gombot, és szólunk, ha új programja lesz.</p>'}
     </section>`;
 }
 
@@ -1010,7 +1037,7 @@ function go(href) {
   state.from = { view: state.view, q: state.q, scroll: window.scrollY };
   state.view = VIEWS[p.get('v')] || 'home';
   state.day = validDay(p.get('nap')) || DEFAULT_DAY;
-  state.group = p.get('kat') || '';
+  state.group = groupParam(p.get('kat'));
   state.free = p.get('ingyen') === '1';
   state.map = p.get('terkep') === '1';
   state.limit = PAGE;
@@ -1324,11 +1351,13 @@ $('#toast').addEventListener('click', (ev) => {
 document.addEventListener('click', (ev) => {
   const inviteLink = ev.target.closest('[data-invite] a');
   if (inviteLink) { const row = inviteLink.closest('[data-invite]'); ensurePlan(state.byId.get(row.dataset.invite), row.dataset.pid); }
-  const el = ev.target.closest('[data-map],[data-locate],[data-free],[data-rsvp],[data-choice],[data-follow],[data-push-on],[data-push-off],[data-push-test],[data-signin],[data-signout],[data-delete],[data-delete-cancel],[data-delete-confirm],[data-interest],[data-pick],[data-tab],[data-nav],[data-back],[data-more],[data-day],[data-group],[data-q],[data-clear],[data-open],[data-save],[data-share],[data-copy],[data-close],[data-retry],[data-dismiss],[data-prune]');
+  const el = ev.target.closest('[data-install],[data-venue],[data-map],[data-locate],[data-free],[data-rsvp],[data-choice],[data-follow],[data-push-on],[data-push-off],[data-push-test],[data-signin],[data-signout],[data-delete],[data-delete-cancel],[data-delete-confirm],[data-interest],[data-pick],[data-tab],[data-nav],[data-back],[data-more],[data-day],[data-group],[data-q],[data-clear],[data-open],[data-save],[data-share],[data-copy],[data-close],[data-retry],[data-dismiss],[data-prune]');
   if (!el) return;
   const d = el.dataset;
   const find = (id) => state.byId.get(id);
   if (d.follow) return toggleFollow(d.follow);
+  if ('install' in d) return install();
+  if (d.venue) { state.view = 'search'; state.tab = 'search'; state.q = d.venue; state.limit = PAGE; render(); return window.scrollTo({ top: 0 }); }
   if (d.choice && state.user) { const [k, v] = d.choice.split(':'); return setPref(k, Number(v)); }
   if ('pushOn' in d) return enablePush();
   if ('pushOff' in d) return disablePush();
@@ -1409,14 +1438,16 @@ window.addEventListener('beforeinstallprompt', (ev) => {
   installEvent = ev;
   $('#installBtn').hidden = false;
 });
-$('#installBtn').addEventListener('click', async () => {
+async function install() {
   if (!installEvent) return;
   installEvent.prompt();
   const { outcome } = await installEvent.userChoice;
   installEvent = null;
   $('#installBtn').hidden = true;
+  if (state.view === 'profile') render();
   if (outcome === 'accepted') { toast('Telepítve – a kezdőképernyőn találod'); auth.track('install'); }
-});
+}
+$('#installBtn').addEventListener('click', install);
 if ('serviceWorker' in navigator) navigator.serviceWorker.register(new URL('sw.js', ROOT)).catch(() => {});
 
 const svg = (body) => `<svg viewBox="0 0 24 24" aria-hidden="true">${body}</svg>`;
