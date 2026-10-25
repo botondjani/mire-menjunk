@@ -2,7 +2,7 @@
 // Nézetek: felfedezés (vízszintes szekciók), lista (szűrt, napokra bontva), keresés, mentett, profil.
 // Minden nézetnek van betöltő, üres és hibaállapota; a visszafordítható lépések (mentés) visszavonhatók.
 
-import * as auth from './auth.js?v=21';
+import * as auth from './auth.js?v=24';
 
 const ROOT = new URL('./', import.meta.url);
 const $ = (s, el = document) => el.querySelector(s);
@@ -475,21 +475,26 @@ function card(e) {
   </article>`;
 }
 
-/** Kompakt sor a listákhoz: kis kép, cím, idő és helyszín – egy képernyőre 6-7 program fér. */
+/**
+ * Kompakt sor a listákhoz, tiszta hierarchiával: felül kis színes sor (műfaj · mikor),
+ * alatta a cím, legalul halványan a helyszín.
+ */
 function row(e, { withDate = false } = {}) {
   const saved = state.saved.has(e.id);
   const soon = startsIn(e);
-  const when = isLong(e) ? `${short(e.end).replace(/\./g, '')}-ig` : withDate ? [chip(e), e.time].filter(Boolean).join(', ') : e.time;
-  const parts = [when, e.venue].filter(Boolean).map(esc);
-  parts.unshift(`<span class="genre-txt" style="--hue:${groupOf(e).hue}">${esc(genreLabel(e))}</span>`);
-  if (e.free) parts.push('<span class="free-tag">Ingyenes</span>');
-  const meta = (soon ? [`<span class="soon">${soon}</span>`, ...parts] : parts).join(' · ') || groupOf(e).label;
+  const when = isLong(e) ? `${short(e.end).replace(/\./g, '')}-ig` : withDate ? [chip(e), e.time].filter(Boolean).join(' ') : e.time;
+  const kicker = [
+    `<span class="rc-genre" style="--hue:${groupOf(e).hue}">${esc(genreLabel(e))}</span>`,
+    soon ? `<span class="soon">${soon}</span>` : when ? `<span>${esc(when)}</span>` : '',
+  ].filter(Boolean).join('<i aria-hidden="true">·</i>');
+  const place = [e.venue ? esc(e.venue) : '', e.free ? '<span class="free-tag">Ingyenes</span>' : ''].filter(Boolean).join(' · ');
   return `<article class="row-card">
     <a class="card-link" href="${eventUrl(e)}" data-open="${e.id}" aria-label="${esc(e.title)}"></a>
     ${media(e, 'thumb')}
     <div class="rc-body">
+      <p class="rc-kicker">${kicker}</p>
       <h3>${esc(e.title)}</h3>
-      <p>${meta}</p>
+      ${place ? `<p class="rc-venue">${place}</p>` : ''}
     </div>
     <button class="icon-btn save" data-save="${e.id}" aria-pressed="${saved}" aria-label="${saved ? 'Mentve – koppints az eltávolításhoz' : 'Mentés'}">${icons.heart}</button>
   </article>`;
@@ -566,7 +571,7 @@ function homeView() {
   ].filter(([, , n]) => n);
 
   let html = `${expiredNotice()}<header class="hello">
-    <p>${esc(cap(WEEKDAYS[weekday(today)]))}, ${esc(short(today))}</p>
+    <div class="hello-top"><p>${esc(cap(WEEKDAYS[weekday(today)]))}, ${esc(short(today))}</p><button class="surprise" data-surprise>🎲 Lepj meg!</button></div>
     <h1>Mi legyen ma?</h1>
   </header>
   <nav class="quick" aria-label="Időszak">${quick.map(([k, label, n]) => `<a href="${listHref({ nap: k })}" data-nav="${listHref({ nap: k })}"><b>${label}</b><span>${n} program</span></a>`).join('')}</nav>`;
@@ -580,21 +585,46 @@ function homeView() {
 
   html += `<nav class="shortcuts" aria-label="Kategóriák">${FILTERS.map((g) => `<a href="${listHref(g.key ? { kat: g.key } : {})}" data-nav="${listHref(g.key ? { kat: g.key } : {})}" style="--hue:${g.hue}"><span>${g.emoji}</span>${esc(g.label.replace(' & ', ' &\u00a0'))}</a>`).join('')}</nav>`;
 
-  const youth = soon.filter((e) => e.youth);
-  html += rail(`${YOUTH.emoji} Fiataloknak`, pick(youth, 12), listHref({ kat: YOUTH.key }), { size: 'mini', total: youth.length });
-  const weekend = on('hetvege');
-  html += rail('Hétvégén', pick(weekend, 12), listHref({ nap: 'hetvege' }), { size: 'mini', total: weekend.length });
-  const free = soon.filter((e) => e.free);
-  if (free.length >= 3) html += rail('🆓 Ingyen is jó', pick(free, 12), listHref({ nap: 'het', ingyen: '1' }), { size: 'mini', total: free.length });
-  const stage = soon.filter((e) => e.category === 'Színház' && e.start <= addDays(today, 7));
-  html += rail('🎭 Színházban', pick(stage, 12), listHref({ kat: 'szinhaz' }), { size: 'mini', total: stage.length });
-  const films = state.events.filter((e) => e.category === 'Film' && e.start <= addDays(today, 7));
-  html += rail('🎬 Moziban', pick(films, 14), listHref({ kat: 'mozi' }), { size: 'mini', total: films.length });
-  const ongoing = state.events.filter((e) => isLong(e) && e.category !== 'Film' && e.start <= addDays(today, 7)).sort((a, b) => a.end.localeCompare(b.end));
-  html += rail('Most is látogatható', pick(ongoing, 12), listHref({ nap: 'ma', kat: 'kiallitas' }), { size: 'mini', total: ongoing.length });
-  const nextWeek = on('jovohet');
-  html += rail('Jövő héten', pick(nextWeek, 12), listHref({ nap: 'jovohet' }), { size: 'mini', total: nextWeek.length });
+  const week = on('het');
+  const sections = [
+    [`${YOUTH.emoji} Fiataloknak`, soon.filter((e) => e.youth), listHref({ kat: YOUTH.key })],
+    ['🎉 Hétvégén', on('hetvege'), listHref({ nap: 'hetvege' })],
+    ['🎵 Koncertek a héten', week.filter((e) => e.category === 'Koncert'), listHref({ nap: 'het', kat: 'zene' })],
+    ['🎭 Színházban', soon.filter((e) => e.category === 'Színház' && e.genre !== 'Stand-up' && e.start <= addDays(today, 7)), listHref({ kat: 'szinhaz' })],
+    ['😂 Stand-up', soon.filter((e) => e.genre === 'Stand-up'), listHref({ kat: 'szinhaz' })],
+    ['🎬 Moziban', state.events.filter((e) => e.category === 'Film' && e.start <= addDays(today, 7)), listHref({ kat: 'mozi' })],
+    ['🪩 Bulik', soon.filter((e) => e.category === 'Buli' && e.start <= addDays(today, 10)), listHref({ kat: 'buli' })],
+    ['🖼️ Kiállítások', state.events.filter((e) => e.category === 'Kiállítás' && e.start <= addDays(today, 7)).sort((a, b) => (a.end || a.start).localeCompare(b.end || b.start)), listHref({ nap: 'ma', kat: 'kiallitas' })],
+    ['🧸 Családi programok', soon.filter((e) => e.category === 'Családi'), listHref({ kat: 'csalad' })],
+    ['🆓 Ingyen is jó', soon.filter((e) => e.free), listHref({ nap: 'het', ingyen: '1' })],
+  ];
+  if (state.follows.size) sections.push(['📍 A kedvenc helyeiden', soon.filter((e) => state.follows.has(e.venue)), null]);
+  sections.push(['🌿 Szabadidő', state.events.filter((e) => groupOf(e).key === 'egyeb' && e.start <= addDays(today, 10)), listHref({ kat: 'egyeb' })]);
+  sections.push(['📅 Jövő héten', on('jovohet'), listHref({ nap: 'jovohet' })]);
+  sections.forEach(([title, list, link], i) => {
+    if (list.length < 2) return;
+    html += rail(title, pick(list, 12), link, { size: 'mini', total: list.length });
+    if (i === 3) html += venuesRail(); // félúton egy könnyebb, helyszínes sor töri meg a kártyákat
+  });
+  html += `<a class="btn more" href="${listHref({ nap: 'het' })}" data-nav="${listHref({ nap: 'het' })}">Az összes heti program <small>(${week.length})</small></a>`;
   return html + footer();
+}
+
+/** Népszerű helyszínek a következő két hétben: koppintásra a hely programjai (keresés). */
+function venuesRail() {
+  const horizon = addDays(today, 14);
+  const count = new Map();
+  for (const e of state.events) if (e.venue && e.start <= horizon && !isLong(e)) count.set(e.venue, (count.get(e.venue) || 0) + 1);
+  const top = [...count].filter(([, n]) => n >= 3).sort((a, b) => b[1] - a[1]).slice(0, 12);
+  if (top.length < 4) return '';
+  // A hely ikonja a leggyakoribb kategóriája (nem az első program véletlen műfaja).
+  const icon = (v) => {
+    const tally = new Map();
+    for (const e of state.events) if (e.venue === v) tally.set(groupOf(e).emoji, (tally.get(groupOf(e).emoji) || 0) + 1);
+    return [...tally].sort((a, b) => b[1] - a[1])[0]?.[0] || '📍';
+  };
+  return `<section class="rail rail-venues"><header class="rail-head"><h2>🏛️ Népszerű helyek</h2></header>
+    <div class="venue-track">${top.map(([v, n]) => `<button class="venue-tile" data-venue="${esc(v)}"><span aria-hidden="true">${icon(v)}</span><b>${esc(v)}</b><small>${n} program</small></button>`).join('')}</div></section>`;
 }
 
 function filteredList() {
@@ -817,20 +847,37 @@ function moreButton(total) {
   return total > state.limit ? `<button class="btn more" data-more>Még ${Math.min(PAGE, total - state.limit)} program <small>(${state.limit} / ${total})</small></button>` : '';
 }
 
-/** Keresés alapnézet: kategóriák, alattuk a közelgő programok időrendben, lapozható listában. */
+/** Keresés alapnézet: még nincs lista – gyors szűrők és kategóriák, hogy egy koppintással szűkíthessen. */
 function searchIdle() {
   const counts = Object.fromEntries(FILTERS.map((g) => [g.key, state.events.filter((e) => matchesFilter(e, g.key)).length]));
-  const upcoming = state.events.filter((e) => !isLong(e));
-  return `<h2 class="day">Kategóriák</h2>
+  const quick = [
+    ['🌙', 'Ma este', listHref({ nap: 'ma' })],
+    ['☀️', 'Holnap', listHref({ nap: 'holnap' })],
+    ['🎉', 'Hétvégén', listHref({ nap: 'hetvege' })],
+    ['🆓', 'Ingyenes', listHref({ nap: 'het', ingyen: '1' })],
+    ['🗺️', 'Térképen', listHref({ nap: 'ma', terkep: '1' })],
+  ];
+  return `<nav class="quick-filters" aria-label="Gyors szűrők">${quick.map(([i, l, h]) => `<a href="${h}" data-nav="${h}"><span aria-hidden="true">${i}</span>${l}</a>`).join('')}</nav>
+    <h2 class="day">Kategóriák</h2>
     <div class="tiles">${FILTERS.map((g) => `<a class="tile" href="${listHref({ kat: g.key })}" data-nav="${listHref({ kat: g.key })}" style="--hue:${g.hue}">
       <span class="tile-emoji">${g.emoji}</span><b>${g.label}</b><small>${counts[g.key]} program</small></a>`).join('')}</div>
-    <h2 class="day">Közelgő programok <small>${upcoming.length}</small></h2>
-    <div class="rows">${upcoming.slice(0, state.limit).map((e) => row(e, { withDate: true })).join('')}</div>
-    ${moreButton(upcoming.length)}`;
+    ${venuesRail()}
+    <p class="hint center">Írd be egy előadó, helyszín vagy műfaj nevét – vagy válassz fent egy szűrőt.</p>`;
+}
+
+/** „Lepj meg!”: egy véletlen jó program ma estére (vagy a következő napokra), lehetőleg képpel. */
+function surprise() {
+  const pool = (list) => list.filter((e) => !isLong(e) && e.image);
+  const tonight = pool(state.events.filter((e) => e.start === today && (!e.time || e.time >= '17:00')));
+  const soon = pool(state.events.filter((e) => e.start > today && e.start <= addDays(today, 3)));
+  const list = tonight.length >= 3 ? tonight : [...tonight, ...soon];
+  if (!list.length) return toast('Most nem találtunk meglepetést – nézz vissza később.');
+  openEvent(list[Math.floor(Math.random() * list.length)]);
+  auth.track('open', { v: 'surprise' });
 }
 
 function searchView() {
-  return `<header class="page-head"><div><h1>Keresés</h1></div></header>
+  return `<header class="page-head"><div><h1>Keresés</h1></div><button class="surprise" data-surprise>🎲 Lepj meg!</button></header>
     <label class="search">
       ${icons.search}
       <input id="q" type="search" value="${esc(state.q)}" placeholder="Előadó, helyszín, műfaj…" autocomplete="off" enterkeyhint="search" aria-label="Keresés">
@@ -1351,12 +1398,13 @@ $('#toast').addEventListener('click', (ev) => {
 document.addEventListener('click', (ev) => {
   const inviteLink = ev.target.closest('[data-invite] a');
   if (inviteLink) { const row = inviteLink.closest('[data-invite]'); ensurePlan(state.byId.get(row.dataset.invite), row.dataset.pid); }
-  const el = ev.target.closest('[data-install],[data-venue],[data-map],[data-locate],[data-free],[data-rsvp],[data-choice],[data-follow],[data-push-on],[data-push-off],[data-push-test],[data-signin],[data-signout],[data-delete],[data-delete-cancel],[data-delete-confirm],[data-interest],[data-pick],[data-tab],[data-nav],[data-back],[data-more],[data-day],[data-group],[data-q],[data-clear],[data-open],[data-save],[data-share],[data-copy],[data-close],[data-retry],[data-dismiss],[data-prune]');
+  const el = ev.target.closest('[data-surprise],[data-install],[data-venue],[data-map],[data-locate],[data-free],[data-rsvp],[data-choice],[data-follow],[data-push-on],[data-push-off],[data-push-test],[data-signin],[data-signout],[data-delete],[data-delete-cancel],[data-delete-confirm],[data-interest],[data-pick],[data-tab],[data-nav],[data-back],[data-more],[data-day],[data-group],[data-q],[data-clear],[data-open],[data-save],[data-share],[data-copy],[data-close],[data-retry],[data-dismiss],[data-prune]');
   if (!el) return;
   const d = el.dataset;
   const find = (id) => state.byId.get(id);
   if (d.follow) return toggleFollow(d.follow);
   if ('install' in d) return install();
+  if ('surprise' in d) return surprise();
   if (d.venue) { state.view = 'search'; state.tab = 'search'; state.q = d.venue; state.limit = PAGE; render(); return window.scrollTo({ top: 0 }); }
   if (d.choice && state.user) { const [k, v] = d.choice.split(':'); return setPref(k, Number(v)); }
   if ('pushOn' in d) return enablePush();

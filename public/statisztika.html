@@ -74,7 +74,7 @@
   <div id="out"><p class="state">Betöltés…</p></div>
 </main>
 <script type="module">
-  import * as auth from './auth.js?v=21';
+  import * as auth from './auth.js?v=24';
   const out = document.getElementById('out');
   const esc = (s) => String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
   const num = (n) => Number(n || 0).toLocaleString('hu-HU');
